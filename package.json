@@ -23,6 +23,7 @@
     "changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.0",
     "@chakra-ui/react": "^2.3.1",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
