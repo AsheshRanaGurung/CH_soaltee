@@ -23,7 +23,7 @@ interface IProps {
 }
 
 export const MenuGenerator: React.FC<IProps> = ({ items }) => {
-  const menuItem = items.map((item, i) => {
+  const menuItem = items.map((item) => {
     if (item.children && item.children?.length > 0) {
       return (
         <Menu key={item.name}>
@@ -42,7 +42,7 @@ export const MenuGenerator: React.FC<IProps> = ({ items }) => {
             {item.name}
           </MenuButton>
           <MenuList width={"350px"}>
-            {item.children.map((child, index) => {
+            {item.children.map((child) => {
               return (
                 <MenuItem
                   key={child.name}
