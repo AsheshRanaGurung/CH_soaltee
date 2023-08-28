@@ -1,16 +1,16 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-export const isTokenExpired = (token: string): boolean => {
-  const decodedToken = jwt.decode(token, { complete: true }) as {
-    payload: JwtPayload;
-  };
-  const now = Date.now() / 1000;
+export const isTokenExpired = (token: string) => {
+  const decodedToken = jwt.decode(token, { complete: true }) as JwtPayload;
+  const now = Date.now().valueOf() / 1000;
+
   if (
     decodedToken &&
-    decodedToken.payload.exp &&
-    decodedToken.payload.exp < now
+    typeof decodedToken.exp === "number" &&
+    decodedToken.exp < now
   ) {
     return true;
   }
+
   return false;
 };

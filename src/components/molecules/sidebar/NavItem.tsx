@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Flex, Text, Icon } from "@chakra-ui/react";
 import Item from "./Item";
-import { colors } from "src/theme/colors";
-import { RightArrowIcon } from "src/assets/svgs";
+
 import { useLocation } from "react-router-dom";
+import { colors } from "@soaltee-loyalty/theme/colors";
+import { RightArrowIcon } from "@soaltee-loyalty/assets/svgs";
 interface INavItem {
   visible: boolean;
   name: string;

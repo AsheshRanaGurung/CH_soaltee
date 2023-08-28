@@ -1,7 +1,7 @@
-import { SignupTemplate } from "../../../components/templates/authentication/register";
 import styled from "styled-components";
 import { useMutation } from "react-query";
-import { signUpApi } from "../../../service/auth/signup";
+import { SignupTemplate } from "@soaltee-loyalty/components/templates/authentication/register";
+import { signUpApi } from "@soaltee-loyalty/service/auth/signup";
 
 const Wrapper = styled.div`
   display: block;
@@ -28,10 +28,10 @@ const Signup = () => {
       console.log("This is success");
     },
     onError: () => {
-      console.log("This is error");
+      console.error("This is error");
     },
   });
-  console.log("hit");
+  console.table("hit");
   return (
     <Wrapper>
       <SignupTemplate mutate={mutate} isLoading={isLoading} />

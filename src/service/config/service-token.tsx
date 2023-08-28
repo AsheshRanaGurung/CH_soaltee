@@ -4,7 +4,7 @@ function setToken(token: any) {
   try {
     localStorage.setItem("auth", JSON.stringify(token));
   } catch (e) {
-    console.error("Error storing token", e);
+    // console.error("Error storing token", e);
   }
 }
 
@@ -12,7 +12,7 @@ function setCookie(name: string, value: any) {
   try {
     Cookies.set(name, value);
   } catch (e) {
-    console.log("error setting cookie");
+    // console.error("error setting cookie");
   }
 }
 function getToken() {
@@ -54,7 +54,7 @@ function clearCookies(name: string) {
   try {
     Cookies.remove(name);
   } catch (e) {
-    console.log(e);
+    // console.error("err")
   }
 }
 

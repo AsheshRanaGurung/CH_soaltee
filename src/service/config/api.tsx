@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import TokenService from "./service-token";
-import { isTokenExpired } from "../../utility/isTokenExpired";
+import { isTokenExpired } from "@soaltee-loyalty/utility/isTokenExpired";
 
 export const baseURL = "https://fakestoreapi.com";
 const THREE_MINUTES = 3 * 60 * 1000;

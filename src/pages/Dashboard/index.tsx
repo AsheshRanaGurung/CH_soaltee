@@ -1,4 +1,4 @@
-import { BreadCrumb } from "src/components/atoms/Breadcrumb";
+import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
 
 const Dashboard = () => {
   return (

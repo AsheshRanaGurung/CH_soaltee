@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useContext } from "react";
 import { Box } from "@chakra-ui/react";
-import Sidebar from "src/components/molecules/sidebar/Sidebar";
-import useWindowSize from "src/hooks/useWindowResize";
-import { SidebarState } from "src/hooks/useContext";
+import useWindowSize from "@soaltee-loyalty/hooks/useWindowResize";
+import Sidebar from "@soaltee-loyalty/components/molecules/sidebar/Sidebar";
+import { SidebarState } from "@soaltee-loyalty/hooks/useContext";
 
 // Define the possible layout widths
 const LAYOUT_WIDTHS = {
