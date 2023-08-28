@@ -1,128 +1,115 @@
 import {
+  Input as ChakraInput,
   FormControl,
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Input,
   InputGroup,
   InputProps,
-  TextareaProps,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { colors } from "@soaltee-loyalty/theme/colors";
-import React from "react";
-import { Control, Controller } from "react-hook-form";
-import { UseFormRegister } from "react-hook-form";
+import { RegisterOptions, UseFormRegister } from "react-hook-form";
 
-interface TextInputProps {
-  name: string;
-  control: Control<any>;
-  type: string;
+interface IInput extends InputProps {
   label?: string;
-  error?: any;
-  required?: boolean;
-  register: UseFormRegister<any>;
   helperText?: string;
+  error?: string;
+  name: string;
+  register: UseFormRegister<any>;
+  rules?: RegisterOptions;
   isRequired?: boolean;
-  disabled?: boolean;
+  isDisabled?: boolean;
+  startIcon?: React.ReactNode;
+  endIcons?: React.ReactNode;
+  onIconClick?: () => void;
+  required?: boolean;
+  labelDisabled?: string;
   variant?: string;
-  noFloating?: boolean;
-  onError?: string;
-  onCustomChange?: () => void;
-  onAdditionalChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showError?: boolean;
-  inputFocus?: boolean;
 }
-const TextInput: React.FC<TextInputProps & InputProps & TextareaProps> = ({
-  name,
-  control,
-  label,
-  type,
-  register,
-  helperText,
-  required,
-  isRequired,
-  disabled,
-  variant,
-  onError,
-  noFloating,
-  showError,
-  inputFocus,
-  onCustomChange,
-  error,
-  onAdditionalChange,
-  ...extraProps
-}) => {
-  return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { onChange, value }, fieldState: { error } }) => {
-        return (
-          <>
-            <FormControl
-              variant={"Flushed"}
-              id={name}
-              isRequired={!!isRequired}
-              isInvalid={!!error}
-              marginBottom={4}
-            >
-              {label && (
-                <FormLabel
-                  htmlFor={name}
-                  fontWeight={600}
-                  fontSize={"14px"}
-                  m={0}
-                >
-                  {label}
-                  {required && <span style={{ color: "red" }}>&nbsp;*</span>}
-                </FormLabel>
-              )}
-              <InputGroup height={type !== "textarea" ? "30px" : "auto"}>
-                <Input
-                  paddingLeft="0"
-                  placeholder={label}
-                  type={type}
-                  {...register(name)}
-                  height={"inherit"}
-                  onChange={(e) => {
-                    onChange(e);
-                    if (onCustomChange !== undefined) {
-                      onCustomChange();
-                    }
-                    if (onAdditionalChange !== undefined) {
-                      onAdditionalChange(e);
-                    }
-                  }}
-                  value={value ?? ""}
-                  isInvalid={!!error}
-                  errorBorderColor={"gray.100"}
-                  disabled={disabled}
-                  variant={variant}
-                  {...extraProps}
-                  sx={{
-                    border: "none",
-                    borderBottom: " 1px solid rgba(0, 0, 0, 0.15)",
-                    borderRadius: "0",
-                    marginBottom: "10px",
-                  }}
-                  _focusVisible={{
-                    borderBottom: `1px solid ${colors.primary} `,
-                    borderRadius: "0",
-                  }}
-                  _invalid={{
-                    borderBottom: `1px solid ${colors.red} `,
-                    borderRadius: "0",
-                  }}
-                />
-              </InputGroup>
 
-              <FormErrorMessage>{error ? error?.message : ""}</FormErrorMessage>
-              {helperText ? <FormHelperText>{helperText}</FormHelperText> : ""}
-            </FormControl>
-          </>
-        );
-      }}
-    />
+const Input = ({
+  label,
+  helperText,
+  name,
+  error,
+  rules,
+  register,
+  isDisabled,
+  labelDisabled,
+  isRequired,
+  type,
+  startIcon,
+  endIcons,
+  onIconClick,
+  required,
+  variant,
+  ...rest
+}: IInput) => {
+  return (
+    <FormControl
+      isInvalid={!!error}
+      isRequired={isRequired}
+      isDisabled={isDisabled}
+      variant={variant}
+    >
+      {label && (
+        <FormLabel htmlFor={name} fontWeight={600} fontSize={"14px"} m={0}>
+          {label}
+          {required && <span style={{ color: "red" }}>&nbsp;*</span>}
+        </FormLabel>
+      )}
+
+      {labelDisabled && (
+        <FormLabel htmlFor={name} fontWeight={600} fontSize={"14px"} m={0}>
+          {labelDisabled}
+        </FormLabel>
+      )}
+
+      <InputGroup>
+        <ChakraInput
+          id={name}
+          type={type}
+          height={"30px"}
+          border={`1px solid ${colors.primary_dark}`}
+          _placeholder={{
+            fontSize: "sm",
+            fontWeight: "400",
+            lineHeight: "lg",
+          }}
+          sx={{
+            border: "none",
+            borderBottom: " 1px solid rgba(0, 0, 0, 0.15)",
+            borderRadius: "0",
+            marginBottom: "10px",
+            paddingX: 0,
+          }}
+          _focusVisible={{
+            borderBottom: `1px solid ${colors.primary_dark} `,
+            borderRadius: "0",
+          }}
+          _invalid={{
+            borderBottom: `1px solid ${colors.red} `,
+            borderRadius: "0",
+          }}
+          {...register(name, rules)}
+          {...rest}
+        />
+        {endIcons && (
+          <InputRightElement onClick={onIconClick}>
+            {endIcons}
+          </InputRightElement>
+        )}
+      </InputGroup>
+
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+      {error && (
+        <FormErrorMessage mt={0} mb={2}>
+          {error}
+        </FormErrorMessage>
+      )}
+    </FormControl>
   );
 };
-export default TextInput;
+
+export default Input;

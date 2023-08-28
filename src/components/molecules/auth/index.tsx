@@ -18,12 +18,12 @@ const Authentication: React.FC<IProps> = ({ children }) => {
   const images = [
     {
       image: imageList.HotelImage,
-      title: "Unlock the world of soaltee rewards",
+      title: "Unlock the world of soaltee rewards one",
       text: "Our exclusive loyalty program especially designed to enhance your travel experience and provide you with a host of exciting benefits.",
     },
     {
       image: imageList.HotelImage,
-      title: "Unlock the world of soaltee rewards",
+      title: "Unlock the world of soaltee rewards two",
       text: "Our exclusive loyalty program especially designed.",
     },
     {

@@ -1,6 +1,7 @@
-import { Button } from "@chakra-ui/react";
+import { Button, useDisclosure, Text } from "@chakra-ui/react";
+import Checkbox from "@soaltee-loyalty/components/atoms/Checkbox";
+import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
 import Heading from "@soaltee-loyalty/components/atoms/Heading";
-import TextInput from "@soaltee-loyalty/components/atoms/Input";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import { colors } from "@soaltee-loyalty/theme/colors";
 import styled from "styled-components";
@@ -25,15 +26,17 @@ const AccountDetail = styled.div`
 `;
 const ForgotPassword = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 0.5em;
   margin-bottom: 50px;
   font-weight: 600;
   span {
-    color: ${colors.primary};
+    // color: ${colors.primary};
   }
 `;
 const LoginComponent: React.FC<ISignInProps> = ({ mutate }) => {
+  const { isOpen: isVisible, onToggle: onToggleVisibility } = useDisclosure();
+
   const validationSchema = yup.object().shape({
     email: yup
       .string()
@@ -53,32 +56,39 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate }) => {
       <Heading title="Welcome Back" text="Enter your details to sign in" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormWrapper>
-          <TextInput
-            className="fields"
-            type="text"
+          <FormControl
+            control="input"
             name="email"
             mb={20}
             required
             placeholder="Enter your mail"
-            control={control}
             label="Email"
             register={register}
-            error={errors.name?.message || ""}
+            error={errors.email?.message || ""}
           />
-          <TextInput
-            type="password"
-            className="fields"
-            name="password"
-            required
-            placeholder="Enter your password"
-            control={control}
-            label="Password"
+          <FormControl
+            control="password"
             register={register}
-            error={errors.password?.message || ""}
+            size="lg"
+            isVisible={isVisible}
+            onToggleVisibility={onToggleVisibility}
+            name="password"
+            placeholder={"Password"}
+            label="Enter your Password"
+            error={errors?.password?.message ?? ""}
+            required
           />
           <ForgotPassword>
-            <input type="checkbox" />
-            <span>Forgot Password ?</span>
+            <Checkbox
+              control={control}
+              name="forgot_password"
+              colorScheme="red"
+              w="auto"
+              label={<span>Remember Me</span>}
+            />
+            <Text w="100%" textAlign="right" color={colors.primary}>
+              Forgot Password?
+            </Text>
           </ForgotPassword>
           <Button
             type="submit"

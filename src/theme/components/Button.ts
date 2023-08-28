@@ -9,6 +9,16 @@ const Button = {
     primary: {
       bg: colors.primary,
       color: colors.white,
+      _disabled: {
+        _hover: {
+          background: `${colors.primary_dark}!important`,
+        },
+        svg: {
+          path: {
+            stroke: "black",
+          },
+        },
+      },
     },
   },
   sizes: {

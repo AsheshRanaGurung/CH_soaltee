@@ -5,8 +5,6 @@ import {
   FormLabel,
   Select as ChakraSelect,
   SelectProps,
-  Flex,
-  Text,
 } from "@chakra-ui/react";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
@@ -64,16 +62,8 @@ const Select = ({
         onChange={handlehange}
       >
         {options.map(({ label, value }) => (
-          <option
-            key={value}
-            value={value}
-            // TODO: change the color and font of option only
-            // _options
-            // style={{ color: selected ? "pink" : "gray" }}
-          >
-            <Flex gap={2}>
-              <Text>{label}</Text>
-            </Flex>
+          <option key={value} value={value}>
+            {label}
           </option>
         ))}
       </ChakraSelect>
