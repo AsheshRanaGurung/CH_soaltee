@@ -109,6 +109,10 @@ const TextInput: React.FC<TextInputProps & InputProps & TextareaProps> = ({
                     borderBottom: `1px solid ${colors.primary} `,
                     borderRadius: "0",
                   }}
+                  _invalid={{
+                    borderBottom: `1px solid ${colors.red} `,
+                    borderRadius: "0",
+                  }}
                 />
               </InputGroup>
 

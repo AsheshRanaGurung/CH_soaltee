@@ -1,27 +1,8 @@
-import styled from "styled-components";
 import { useMutation } from "react-query";
 import { SignupTemplate } from "@soaltee-loyalty/components/templates/authentication/register";
 import { signUpApi } from "@soaltee-loyalty/service/auth/signup";
+import Authentication from "@soaltee-loyalty/components/molecules/auth";
 
-const Wrapper = styled.div`
-  display: block;
-  margin: auto;
-  width: 40%;
-  .input-field {
-    margin-bottom: 20px;
-  }
-  .button {
-    display: block;
-    margin: auto;
-    width: 100%;
-  }
-  .title {
-    font-weight: bold;
-    font-size: 32px;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-`;
 const Signup = () => {
   const { mutate, isLoading } = useMutation(signUpApi, {
     onSuccess: () => {
@@ -32,9 +13,9 @@ const Signup = () => {
     },
   });
   return (
-    <Wrapper>
+    <Authentication>
       <SignupTemplate mutate={mutate} isLoading={isLoading} />
-    </Wrapper>
+    </Authentication>
   );
 };
 export default Signup;
