@@ -1,12 +1,12 @@
-import { Input, Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useSignup } from "./useSignup";
-
+import TextInput from "@soaltee-loyalty/components/atoms/Input";
 interface ISignupProps {
   mutate: any;
   isLoading: boolean;
 }
 const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
-  const { handleSubmit, register, errors } = useSignup();
+  const { handleSubmit, register, errors, control } = useSignup();
   const onSubmit = (data: any) => {
     mutate(data);
   };
@@ -14,20 +14,17 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="title">Signup</div>
-      <Input
-        size={"md"}
-        placeholder="Name"
-        {...register("name")}
-        className="input-field"
+      <TextInput
+        type="text"
+        name="name"
+        required
+        placeholder="name"
+        control={control}
+        label="Full Name"
+        register={register}
+        error={errors.name?.message || ""}
       />
-      {errors.name && <p>{errors.name.message}</p>}
-      <Input
-        size={"md"}
-        placeholder="Email"
-        {...register("email")}
-        className="input-field"
-      />
-      {errors.email && <p>{errors.email.message}</p>}
+
       <Button type="submit" className="button">
         Submit
       </Button>
