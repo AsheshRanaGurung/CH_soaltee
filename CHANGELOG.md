@@ -9,7 +9,7 @@
 ### Features
 
 * add additional folder ([6a3e80e](https://gitlab.com/paras205/boilerplate-react/commit/6a3e80e0283bb533435461c064b30935cd953ddf))
-* slider component ([150d29a](https://gitlab.com/paras205/boilerplate-react/commit/150d29abf913fd66d9e8fcc724e1c702a9114d31))
+* login component ([9da8c3e](https://gitlab.com/paras205/boilerplate-react/commit/9da8c3ed3142a97a439caf5080ed56106b689458))
 
 
 

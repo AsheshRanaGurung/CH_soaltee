@@ -6,6 +6,7 @@ export const useFormHook = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -13,6 +14,7 @@ export const useFormHook = () => {
   return {
     register,
     handleSubmit,
+    control,
     errors,
   };
 };
