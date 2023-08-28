@@ -1,12 +1,12 @@
 import { Input, Button } from "@chakra-ui/react";
-import { useSignup } from "./useSignup";
+import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 
 interface ISignupProps {
   mutate: any;
   isLoading: boolean;
 }
 const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
-  const { handleSubmit, register, errors } = useSignup();
+  const { handleSubmit, register, errors } = useFormHook();
   const onSubmit = (data: any) => {
     mutate(data);
   };

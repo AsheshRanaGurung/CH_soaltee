@@ -31,7 +31,6 @@ const Signup = () => {
       console.error("This is error");
     },
   });
-  console.table("hit");
   return (
     <Wrapper>
       <SignupTemplate mutate={mutate} isLoading={isLoading} />

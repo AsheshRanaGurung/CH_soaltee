@@ -1,7 +1,19 @@
 import ImageSlider from "@soaltee-loyalty/components/molecules/image-slider";
-// import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
-
-const Dashboard = () => {
+import LoginComponent from "@soaltee-loyalty/components/templates/authentication/login";
+import styled from "styled-components";
+import { colors } from "@soaltee-loyalty/theme/colors";
+import { useMutation } from "react-query";
+import { signUpApi } from "@soaltee-loyalty/service/auth/signup";
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: ${colors.secondary};
+`;
+const FormContent = styled.div`
+  width: 50%;
+  margin-left: 100px;
+`;
+const Login = () => {
   const images = [
     {
       image:
@@ -22,19 +34,23 @@ const Dashboard = () => {
       text: "Our exclusive loyalty program especially .",
     },
   ];
+  const { mutate, isLoading } = useMutation(signUpApi, {
+    onSuccess: () => {
+      console.log("This is success");
+    },
+    onError: () => {
+      console.error("This is error");
+    },
+  });
   return (
-    <>
-      {/* <BreadCrumb
-        items={[
-          { name: "Dashboard", route: "#" },
-          { name: "List", route: "#" },
-        ]}
-      /> */}
-      <div>
-        <ImageSlider images={images} />
-      </div>
-    </>
+    <Wrapper>
+      {/* <ImageContent> */}
+      <ImageSlider images={images} />
+      {/* </ImageContent> */}
+      <FormContent>
+        <LoginComponent mutate={mutate} isLoading={isLoading} />
+      </FormContent>
+    </Wrapper>
   );
 };
-
-export default Dashboard;
+export default Login;

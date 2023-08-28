@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 
-interface IProps {
-  images: string[];
+interface IImageProps {
+  image: string;
+  title: string;
+  text: string;
 }
 
+interface IProps {
+  images: IImageProps[];
+}
 interface ISliderState {
   currentIndex: number;
 }
