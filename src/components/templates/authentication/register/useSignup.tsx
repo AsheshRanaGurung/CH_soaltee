@@ -5,6 +5,7 @@ export const useSignup = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
@@ -14,5 +15,6 @@ export const useSignup = () => {
     register,
     handleSubmit,
     errors,
+    control,
   };
 };
