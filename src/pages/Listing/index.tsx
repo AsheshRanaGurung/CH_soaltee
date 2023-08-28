@@ -1,12 +1,12 @@
 import { Stack, useDisclosure } from "@chakra-ui/react";
 import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
 import { ProductForm } from "@soaltee-loyalty/components/templates/form";
-import ModalForm from "@soaltee-loyalty/components/organism/modal";
+import ModalForm from "@soaltee-loyalty/components/organisms/modal";
 import DataTable, {
   Pagination,
-} from "@soaltee-loyalty/components/organism/table";
-import TableActions from "@soaltee-loyalty/components/organism/table/TableActions";
-import { getPaginatedData } from "@soaltee-loyalty/components/organism/table/pagination";
+} from "@soaltee-loyalty/components/organisms/table";
+import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
+import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
 import { useGetProducts } from "@soaltee-loyalty/service/service-list";
 import { useMemo, useState } from "react";
 import { CellProps } from "react-table";

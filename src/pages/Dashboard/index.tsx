@@ -1,3 +1,4 @@
+import ImageSlider from "@soaltee-loyalty/components/molecules/image-slider";
 import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
 
 const Dashboard = () => {
@@ -9,7 +10,9 @@ const Dashboard = () => {
           { name: "List", route: "#" },
         ]}
       />
-      <div>Dashboard</div>
+      <div>
+        <ImageSlider />
+      </div>
     </>
   );
 };
