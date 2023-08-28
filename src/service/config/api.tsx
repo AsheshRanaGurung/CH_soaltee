@@ -47,7 +47,7 @@ axiosClient.interceptors.response.use(
             refresh_token: TokenService.getToken()?.refresh_token,
           });
         })
-        .catch((error: any) => {
+        .catch(() => {
           clearCache();
         });
     }
