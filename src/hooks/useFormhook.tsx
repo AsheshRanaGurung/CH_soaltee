@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { validationSchema } from "@soaltee-loyalty/schema/index";
-export const useFormHook = () => {
+
+interface IProps {
+  validationSchema: any;
+}
+export const useFormHook = ({ validationSchema }: IProps) => {
   const {
     register,
     handleSubmit,

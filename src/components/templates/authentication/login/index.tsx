@@ -1,53 +1,99 @@
-import { Input, Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
+import Heading from "@soaltee-loyalty/components/atoms/Heading";
+import TextInput from "@soaltee-loyalty/components/atoms/Input";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import { colors } from "@soaltee-loyalty/theme/colors";
 import styled from "styled-components";
+import * as yup from "yup";
 
 interface ISignInProps {
   mutate: any;
   isLoading: boolean;
 }
-
-const Wrapper = styled.div`
-  .title {
-    font-size: 46px;
-    font-weight: 700;
-    color: ${colors.secondary_black};
+const FormWrapper = styled.div`
+  margin-top: 5%;
+  width: 400px;
+`;
+const AccountDetail = styled.div`
+  font-weight: 600;
+  text-align: center;
+  .signup {
+    color: ${colors.primary};
+    margin-left: 10px;
+    cursor: pointer;
   }
-  .text {
-    font-size: 18px;
-    color: ${colors.secondary_black};
+`;
+const ForgotPassword = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  font-weight: 600;
+  span {
+    color: ${colors.primary};
   }
 `;
 const LoginComponent: React.FC<ISignInProps> = ({ mutate }) => {
-  const { handleSubmit, register, errors } = useFormHook();
+  const validationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Invalid email format"),
+    password: yup.string().required("Password is required"),
+  });
+  const { handleSubmit, register, control, errors } = useFormHook({
+    validationSchema,
+  });
   const onSubmit = (data: any) => {
     mutate(data);
   };
   return (
-    <Wrapper>
-      <span className="title">Welcome Back</span>
-      <p className="text">Enter your details to sign in</p>
+    <>
+      <Heading title="Welcome Back" text="Enter your details to sign in" />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          size={"md"}
-          placeholder="Name"
-          {...register("name")}
-          className="input-field"
-        />
-        {errors.name && <p>{errors.name.message}</p>}
-        <Input
-          size={"md"}
-          placeholder="Email"
-          {...register("email")}
-          className="input-field"
-        />
-        {errors.email && <p>{errors.email.message}</p>}
-        <Button type="submit" className="button">
-          Submit
-        </Button>
+        <FormWrapper>
+          <TextInput
+            className="fields"
+            type="text"
+            name="email"
+            mb={20}
+            required
+            placeholder="Enter your mail"
+            control={control}
+            label="Email"
+            register={register}
+            error={errors.name?.message || ""}
+          />
+          <TextInput
+            type="password"
+            className="fields"
+            name="password"
+            required
+            placeholder="Enter your password"
+            control={control}
+            label="Password"
+            register={register}
+            error={errors.password?.message || ""}
+          />
+          <ForgotPassword>
+            <input type="checkbox" />
+            <span>Forgot Password ?</span>
+          </ForgotPassword>
+          <Button
+            type="submit"
+            className="button"
+            width={"100%"}
+            borderRadius={"none"}
+          >
+            Submit
+          </Button>
+          <AccountDetail>
+            <span>{`Don't have an account?`}</span>
+            <span className="signup">Signup</span>
+          </AccountDetail>
+        </FormWrapper>
       </form>
-    </Wrapper>
+    </>
   );
 };
 export default LoginComponent;
