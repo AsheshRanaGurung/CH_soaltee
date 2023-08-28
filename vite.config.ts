@@ -17,6 +17,7 @@ export default defineConfig({
       "@soaltee-loyalty": path.resolve("src"),
       "@soaltee-loyalty/assets": path.resolve("src/assets"),
       "@soaltee-loyalty/schema": path.resolve("src/schema"),
+      "@soaltee-loyalty/constant": path.resolve("src/constant"),
       "@soaltee-loyalty/hooks": path.resolve("src/hooks"),
       "@soaltee-loyalty/components": path.resolve("src/components"),
       "@soaltee-loyalty/pages": path.resolve("src/pages"),

@@ -36,6 +36,18 @@ const SliderContainer = styled.div`
     opacity: 0.5;
     z-index: 1;
   }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 125px solid ${colors.primary};
+    -webkit-clip-path: polygon(0 0, 85% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(0 0, 86% 0%, 100% 100%, 0% 100%);
+    height: 100vh;
+  }
 `;
 
 const SliderImage = styled.img`

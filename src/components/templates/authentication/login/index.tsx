@@ -10,7 +10,7 @@ interface ISignInProps {
   mutate: any;
   isLoading: boolean;
 }
-const FormWrapper = styled.div`
+export const FormWrapper = styled.div`
   margin-top: 5%;
   width: 400px;
 `;
@@ -41,6 +41,7 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate }) => {
       .email("Invalid email format"),
     password: yup.string().required("Password is required"),
   });
+
   const { handleSubmit, register, control, errors } = useFormHook({
     validationSchema,
   });
