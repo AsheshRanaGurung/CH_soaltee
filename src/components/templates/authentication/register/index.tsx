@@ -1,13 +1,23 @@
 import { Button } from "@chakra-ui/react";
 import TextInput from "@soaltee-loyalty/components/atoms/Input";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import * as yup from "yup";
 
 interface ISignupProps {
   mutate: any;
   isLoading: boolean;
 }
 const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
-  const { handleSubmit, register, errors, control } = useFormHook();
+  const validationSchema = yup.object().shape({
+    name: yup.string().required("Name is required"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Invalid email format"),
+  });
+  const { handleSubmit, register, errors, control } = useFormHook({
+    validationSchema,
+  });
   const onSubmit = (data: any) => {
     mutate(data);
   };

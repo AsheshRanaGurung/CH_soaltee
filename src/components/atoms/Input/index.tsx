@@ -18,7 +18,7 @@ interface TextInputProps {
   control: Control<any>;
   type: string;
   label?: string;
-  error?: string;
+  error?: any;
   required?: boolean;
   register: UseFormRegister<any>;
   helperText?: string;
