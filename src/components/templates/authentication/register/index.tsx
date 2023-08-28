@@ -5,7 +5,7 @@ interface ISignupProps {
   mutate: any;
   isLoading: boolean;
 }
-const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
+const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
   const { handleSubmit, register, errors } = useSignup();
   const onSubmit = (data: any) => {
     mutate(data);

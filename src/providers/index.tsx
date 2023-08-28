@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Toaster } from "react-hot-toast";
 import { theme } from "../theme";
+import Layout from "src/components/organisms/layout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,9 +24,11 @@ const Provider = ({ children }: IProvider) => {
     <BrowserRouter>
       <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-          <Toaster position="bottom-right" />
-          <HelmetProvider>{children}</HelmetProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
+          <Layout>
+            <Toaster position="bottom-right" />
+            <HelmetProvider>{children}</HelmetProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </Layout>
         </QueryClientProvider>
       </ChakraProvider>
     </BrowserRouter>

@@ -1,5 +1,5 @@
-import { api } from "../api";
-import { axiosClient } from "../config/api";
+// import { api } from "../api";
+// import { axiosClient } from "../config/api";
 import { ISignup } from "~/src/interface/auth/signup";
 import axios from "axios";
 // export const signUpApi = (data: ISignup) => {
