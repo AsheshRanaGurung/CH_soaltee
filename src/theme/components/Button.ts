@@ -1,12 +1,14 @@
+import { colors } from "../colors";
+
 const Button = {
   baseStyle: {
     fontWeight: "bold",
-    borderRadius: 4,
+    borderRadius: "8px",
   },
   variants: {
     primary: {
-      bg: "#9d0000",
-      color: "white",
+      bg: colors.primary,
+      color: colors.white,
     },
   },
   sizes: {
