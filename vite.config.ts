@@ -14,6 +14,19 @@ export default defineConfig({
   resolve: {
     alias: {
       src: path.resolve("src/"),
+      "@soaltee-loyalty": path.resolve("src"),
+      "@soaltee-loyalty/assets": path.resolve("src/assets"),
+      "@soaltee-loyalty/schema": path.resolve("src/schema"),
+      "@soaltee-loyalty/hooks": path.resolve("src/hooks"),
+      "@soaltee-loyalty/components": path.resolve("src/components"),
+      "@soaltee-loyalty/pages": path.resolve("src/pages"),
+      "@soaltee-loyalty/providers": path.resolve("src/providers"),
+      "@soaltee-loyalty/routes": path.resolve("src/routes"),
+      "@soaltee-loyalty/service": path.resolve("src/service"),
+      "@soaltee-loyalty/theme": path.resolve("src/theme"),
+      "@soaltee-loyalty/translations": path.resolve("src/translations"),
+      "@soaltee-loyalty/interface": path.resolve("src/interface"),
+      "@soaltee-loyalty/utility": path.resolve("src/utility"),
     },
   },
 });

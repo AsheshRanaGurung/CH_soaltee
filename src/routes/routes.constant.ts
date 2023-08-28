@@ -8,4 +8,5 @@ export const NAVIGATION_ROUTES = {
   MASTER: "/master",
   CONFIGURATION: "/configuration",
   SETTINGS: "/settings",
+  PRODUCTS: "/products",
 };

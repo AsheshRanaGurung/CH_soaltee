@@ -1,8 +1,9 @@
 import { useRoutes } from "react-router-dom";
 import { NAVIGATION_ROUTES } from "./routes.constant";
-import Dashboard from "src/pages/Dashboard";
+import ListingPage from "@soaltee-loyalty/pages/Listing";
+import Login from "@soaltee-loyalty/pages/Auth/Login";
+import Dashboard from "@soaltee-loyalty/pages/Dashboard";
 import Signup from "../pages/Auth/signup";
-import Login from "../pages/Auth/Login";
 const routes = [
   { path: NAVIGATION_ROUTES.DASHBOARD, element: <Dashboard /> },
   { path: NAVIGATION_ROUTES.MEMBER, Element: <Signup /> },
@@ -15,6 +16,10 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.SIGNUP,
     element: <Signup />,
+  },
+  {
+    path: NAVIGATION_ROUTES.PRODUCTS,
+    element: <ListingPage />,
   },
 ];
 

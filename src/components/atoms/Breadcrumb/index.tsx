@@ -1,21 +1,16 @@
-import ChevronRightIcon from "@chakra-ui/icon";
 import {
   BreadcrumbItem,
   Breadcrumb,
   BreadcrumbLink,
   Text,
-  Flex,
-  Button,
-  Box,
-  Icon,
 } from "@chakra-ui/react";
-import { NotificationIcon } from "src/assets/svgs";
-import { getSidebarState } from "src/components/organisms/layout";
-import { colors } from "src/theme/colors";
-import { useTranslation } from "react-i18next";
+
+// import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import styled from "styled-components";
+import { colors } from "@soaltee-loyalty/theme/colors";
+import { getSidebarState } from "@soaltee-loyalty/components/organisms/layout";
 const Divider = styled.div`
   color: ${colors.light_gray};
   margin-left: 10px;
@@ -31,8 +26,8 @@ interface IBreadCrumb {
   goBack?: string;
 }
 
-export const BreadCrumb = ({ items, goBack }: IBreadCrumb) => {
-  const { t } = useTranslation();
+export const BreadCrumb = ({ items }: IBreadCrumb) => {
+  // const { t } = useTranslation();
   const navigate = useNavigate();
   const { showSidebar, setShowSidebar } = getSidebarState();
 

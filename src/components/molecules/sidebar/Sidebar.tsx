@@ -1,8 +1,7 @@
 import { Box, List, ListItem, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 // import { FiInfo } from "react-icons/fi";
-import { NAVIGATION_ROUTES } from "src/routes/routes.constant";
-import { colors } from "src/theme/colors";
+
 import NavItem from "./NavItem";
 import {
   FaUsers,
@@ -14,6 +13,8 @@ import {
 } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 import styled from "styled-components";
+import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
+import { colors } from "@soaltee-loyalty/theme/colors";
 
 const Icon = styled.div``;
 interface ISidebar {

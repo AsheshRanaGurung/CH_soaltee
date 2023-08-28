@@ -1,15 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
+import { validationSchema } from "@soaltee-loyalty/schema/index";
 export const useSignup = () => {
-  const validationSchema = yup.object().shape({
-    name: yup.string().required("Name is required"),
-    email: yup
-      .string()
-      .required("Email is required")
-      .email("Invalid email format"),
-  });
   const {
     register,
     handleSubmit,

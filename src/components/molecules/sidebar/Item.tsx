@@ -1,7 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ListItem, Link, Flex, Text } from "@chakra-ui/react";
-import { colors } from "src/theme/colors";
+import { colors } from "@soaltee-loyalty/theme/colors";
 
 const Item = ({
   name,

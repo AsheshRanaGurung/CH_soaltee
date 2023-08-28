@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Toaster } from "react-hot-toast";
 import { theme } from "../theme";
-import Layout from "src/components/organisms/layout";
+import Layout from "@soaltee-loyalty/components/organisms/layout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
