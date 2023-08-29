@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    container_name: soaltee_frontend
+    image: soaltee_frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
