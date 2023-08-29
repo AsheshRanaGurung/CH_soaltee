@@ -22,7 +22,7 @@ export const BreadCrumb = ({ name }: IBreadCrumb) => {
   return (
     <Wrapper>
       <RxHamburgerMenu onClick={() => setShowSidebar(!showSidebar)} />
-      <span>{name}</span>
+      <span color={colors.primary_dark}>{name}</span>
     </Wrapper>
   );
 };

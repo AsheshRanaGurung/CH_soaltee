@@ -1,10 +1,10 @@
 import { useRoutes } from "react-router-dom";
 import { NAVIGATION_ROUTES } from "./routes.constant";
-import ListingPage from "@soaltee-loyalty/pages/Listing";
 import Login from "@soaltee-loyalty/pages/Auth/login";
 import Dashboard from "@soaltee-loyalty/pages/Dashboard";
 import Signup from "../pages/Auth/signup";
 import PropertyPage from "@soaltee-loyalty/pages/MasterData/Property";
+import MemberPage from "@soaltee-loyalty/pages/MasterData/Member";
 import SetPassword from "@soaltee-loyalty/pages/Auth/password";
 const routes = [
   { path: NAVIGATION_ROUTES.DASHBOARD, element: <Dashboard /> },
@@ -23,13 +23,14 @@ const routes = [
     element: <Signup />,
   },
   {
+    path: NAVIGATION_ROUTES.MEMBERTIER,
+    element: <MemberPage />,
+  },
+  {
     path: NAVIGATION_ROUTES.SETPASSWORD,
     element: <SetPassword />,
   },
-  {
-    path: NAVIGATION_ROUTES.PRODUCTS,
-    element: <ListingPage />,
-  },
+
   {
     path: NAVIGATION_ROUTES.PROPERTY,
     element: <PropertyPage />,

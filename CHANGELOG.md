@@ -10,6 +10,7 @@
 ### Features
 
 * add additional folder ([6a3e80e](https://gitlab.com/paras205/boilerplate-react/commit/6a3e80e0283bb533435461c064b30935cd953ddf))
+* added password component, refactored input component ([5676063](https://gitlab.com/paras205/boilerplate-react/commit/5676063ecf247dd38bd7be2ca29c19d3b9c6d76a))
 * custom input ([d323c8f](https://gitlab.com/paras205/boilerplate-react/commit/d323c8f84f00f51287e6c564fa41478402ce5ae9))
 * login component ([f753932](https://gitlab.com/paras205/boilerplate-react/commit/f753932002845eaab1196b776d992ee5ecac0547))
 * login component ([967e159](https://gitlab.com/paras205/boilerplate-react/commit/967e159a4fe973d5e6302f108f2bd08525fcc615))

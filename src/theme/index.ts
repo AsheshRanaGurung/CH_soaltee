@@ -4,4 +4,12 @@ export const theme = extendTheme({
   components: {
     Button,
   },
+  styles: {
+    global: {
+      body: {
+        fontFamily: "'Josefin Sans', sans-serif",
+        fontWeight: 400,
+      },
+    },
+  },
 });
