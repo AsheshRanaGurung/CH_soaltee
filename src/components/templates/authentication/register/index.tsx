@@ -1,7 +1,4 @@
 import { Button, VStack } from "@chakra-ui/react";
-import TextInput from "@soaltee-loyalty/components/atoms/Input";
-import Select from "@soaltee-loyalty/components/atoms/Select";
-import { nationality } from "@soaltee-loyalty/constant/index";
 import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -11,6 +8,8 @@ import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import * as yup from "yup";
 import Heading from "@soaltee-loyalty/components/atoms/Heading";
 import { FormWrapper } from "../login";
+import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
+import { nationality } from "@soaltee-loyalty/constant/index";
 
 interface ISignupProps {
   mutate: any;
@@ -51,37 +50,37 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
       <Heading title="Sign Up" text="Enter your details to sign up" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormWrapper>
-          <TextInput
-            type="text"
+          <FormControl
+            control="input"
             name="name"
             required
-            placeholder="enter your fullname"
-            control={control}
+            placeholder="Enter your full name"
             label="Full Name"
             register={register}
             error={errors.name?.message || ""}
           />
-          <TextInput
+          <FormControl
+            control="email"
             type="email"
             name="email"
             required
             placeholder="Enter your mail"
-            control={control}
             label="Email"
             register={register}
             error={errors.email?.message || ""}
           />
-          <TextInput
+          <FormControl
+            control="input"
             type="number"
             name="mobile_number"
             required
             placeholder="Enter your mobile number"
-            control={control}
             label="Mobile Number"
             register={register}
             error={errors.mobile_number?.message || ""}
           />
-          <Select
+          <FormControl
+            control="select"
             register={register}
             name="nationality"
             placeholder="Choose your nationality"
