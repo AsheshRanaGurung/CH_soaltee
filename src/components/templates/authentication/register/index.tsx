@@ -60,7 +60,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
             error={errors.name?.message || ""}
           />
           <FormControl
-            control="email"
+            control="input"
             type="email"
             name="email"
             required
