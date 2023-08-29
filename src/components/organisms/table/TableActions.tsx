@@ -1,4 +1,4 @@
-import { DeleteIcon, ViewIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 import { Flex, IconButton, Tooltip } from "@chakra-ui/react";
 // import { EditIcon, EyeIcon, TrashIcon } from "@hiSavecrud/assets/svgs";
 import { colors } from "@soaltee-loyalty/theme/colors";
@@ -47,7 +47,8 @@ const TableActions = ({ onEdit, onView, onDelete }: ITableActions) => {
             aria-label="settings"
             bgColor={"transparent"}
             onClick={onEdit}
-            // icon={<EditIcon />}
+            color={colors.primary}
+            icon={<EditIcon />}
             sx={{
               "&:hover": {
                 bgColor: "transparent",

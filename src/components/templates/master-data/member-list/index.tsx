@@ -1,5 +1,4 @@
 import { Stack, useDisclosure } from "@chakra-ui/react";
-import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
 import { ProductForm } from "@soaltee-loyalty/components/templates/form";
 import ModalForm from "@soaltee-loyalty/components/organisms/modal";
 import DataTable, {
@@ -11,18 +10,20 @@ import { useGetProducts } from "@soaltee-loyalty/service/service-list";
 import { useMemo, useState } from "react";
 import { CellProps } from "react-table";
 
-const ListingPage = () => {
+const MemberList = () => {
   const { data: tableData, isFetching: tableDataFetching } = useGetProducts();
   const [, setUpdateId] = useState("");
 
-  const { isOpen: isProductOpen, onClose: onProductModalClose } =
-    useDisclosure();
   const {
-    isOpen: isViewProductOpen,
-    onOpen: onViewProductModalOpen,
-    onClose: onViewProductModalClose,
+    isOpen: isMemberOpen,
+    onOpen: onMemberModalOpen,
+    onClose: onMemberModalClose,
   } = useDisclosure();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isDeleteMemberOpen,
+    onOpen,
+    onClose: onDeleteMemberClose,
+  } = useDisclosure();
 
   // Pagination
   const [pageParams, setPageParams] = useState({
@@ -68,15 +69,15 @@ const ListingPage = () => {
       {
         Header: "Action",
         Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
-          // const onEdit = () => {
-          //   setUpdateId(row.original?.id);
-          //   // setIsUpdate(true);
-          //   onProductModalOpen();
-          // };
-          const onView = () => {
+          const onEdit = () => {
             setUpdateId(row.original?.id);
-            onViewProductModalOpen();
+            // setIsUpdate(true);
+            onMemberModalOpen();
           };
+          //   const onView = () => {
+          //     setUpdateId(row.original?.id);
+          //     onViewProductModalOpen();
+          //   };
           const onDelete = () => {
             onOpen();
             // setbankID(row?.original?.id);
@@ -84,8 +85,8 @@ const ListingPage = () => {
           return (
             <Stack alignItems={"flex-start"}>
               <TableActions
-                // onEdit={onEdit}
-                onView={onView}
+                onEdit={onEdit}
+                // onView={onView}
                 onDelete={onDelete}
               />
             </Stack>
@@ -99,12 +100,16 @@ const ListingPage = () => {
   console.log(paginatedData);
   return (
     <>
-      <BreadCrumb name="Membership Tier" />
+      {/* <BreadCrumb name="Membership Tier" /> */}
       <DataTable
         data={paginatedData || []}
         loading={tableDataFetching}
         columns={columns}
         btnText="Add Membership Tier"
+        onAction={() => {
+          onMemberModalClose();
+          onMemberModalOpen();
+        }}
       >
         <ProductForm />
       </DataTable>
@@ -118,43 +123,31 @@ const ListingPage = () => {
         pageSizeChange={_pageSizeChange}
       />
       <ModalForm
-        isModalOpen={isProductOpen}
-        // isLoading={isLoading || isUpdating || bankInfoFetching}
+        isModalOpen={isMemberOpen}
+        // isLoading={isLoading || isUpdating || memberInfoFetching}
         // title={isUpdate ? "Update Bank" : "Add Bank"}
-        onCloseModal={onProductModalClose}
+        onCloseModal={onMemberModalClose}
         resetButtonText={"Cancel"}
+        submitButtonText={"Add Member Tier"}
+
         // submitButtonText={isUpdate ? "Update Bank" : "Add bank"}
         // submitHandler={handleSubmit(onSubmitHandler)}
       >
-        <p>Add Product</p>
+        <p>Add Member / Edit Member</p>
       </ModalForm>
-
-      {/* view modal */}
-      <ModalForm
-        isModalOpen={isViewProductOpen}
-        // isLoading={ProductInfoFetching}
-        title="Product Details"
-        onCloseModal={onViewProductModalClose}
-        submitButtonText={"Okay"}
-        view={true}
-      >
-        <p>View Modal</p>
-      </ModalForm>
-
-      {/* view modal ends */}
 
       <ModalForm
         title={"Delete"}
         // isLoading={isDeleting}
-        isModalOpen={isOpen}
-        onCloseModal={onClose}
+        isModalOpen={isDeleteMemberOpen}
+        onCloseModal={onDeleteMemberClose}
         resetButtonText={"No"}
         submitButtonText={"Yes"}
         // handleSubmit={() => onDelete(bankID ?? "")}
       >
-        Are you sure you want to delete the Product detail?
+        Are you sure you want to delete the Member Tier ?
       </ModalForm>
     </>
   );
 };
-export default ListingPage;
+export default MemberList;

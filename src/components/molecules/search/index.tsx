@@ -1,5 +1,6 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import { Button, Input } from "@chakra-ui/react";
+import { colors } from "@soaltee-loyalty/theme/colors";
 
 export const Search = ({ setSearchValue }: any) => {
   return (
@@ -10,7 +11,10 @@ export const Search = ({ setSearchValue }: any) => {
         height="44px"
         fontSize="16px"
         fontFamily="'Urbanist', sans-serif"
-        pr={12}
+        pl={12}
+        _focusVisible={{
+          border: `1px solid ${colors.primary} `,
+        }}
         borderRadius={8}
         onChange={(e: any) => {
           setSearchValue && setSearchValue(e.target.value);
@@ -23,7 +27,6 @@ export const Search = ({ setSearchValue }: any) => {
         color="gray"
         zIndex={10}
         position="absolute"
-        right={1}
         top={1}
         borderRadius={6}
         sx={{
@@ -36,7 +39,7 @@ export const Search = ({ setSearchValue }: any) => {
             outline: "none",
           },
         }}
-        rightIcon={
+        leftIcon={
           <Search2Icon h="14px" w="14px" color="gray" bgColor={"transparent"} />
         }
       />

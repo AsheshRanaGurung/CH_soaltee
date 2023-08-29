@@ -35,9 +35,8 @@ import {
   TriangleDownIcon,
   TriangleUpIcon,
 } from "@chakra-ui/icons";
-// import { AiOutlineDoubleLeft } from "react-icons";
-
-import { DrawerComponent } from "../drawer";
+import { AiOutlinePlus } from "react-icons/ai/index";
+// import { DrawerComponent } from "../drawer";
 import { Search } from "@soaltee-loyalty/components/molecules/search";
 export function getPager(
   totalRows: number,
@@ -130,8 +129,8 @@ interface IDataTable {
   setSearchValue?: (searchValue: string) => void;
 
   //for drawer
-  title: string;
-  children: React.ReactNode;
+  title?: string;
+  children?: React.ReactNode;
 }
 
 /**
@@ -156,8 +155,8 @@ const DataTable = React.memo(
     onAction,
     rowBottomBorder,
     onDisableButton,
-    title,
-    children,
+    // title,
+    // children,
     setSearchValue,
   }: IDataTable) => {
     const tableInstance = useTable(
@@ -185,7 +184,7 @@ const DataTable = React.memo(
     return (
       <Box bgColor={colors.white} p={{ base: 0, md: 4 }} borderRadius={"8px"}>
         <Flex
-          justifyContent="space-between"
+          justifyContent="flex-end"
           alignItems="center"
           flexDirection="row"
           rowGap={2}
@@ -195,7 +194,7 @@ const DataTable = React.memo(
             <Flex position="relative">
               <Search setSearchValue={setSearchValue} />
             </Flex>
-            <DrawerComponent title={title}>{children}</DrawerComponent>
+            {/* <DrawerComponent title={title}>{children}</DrawerComponent> */}
           </Flex>
           <Flex gap={2}>
             {optionGroup && <Box bgSize={"md"}>{optionGroup}</Box>}
@@ -208,8 +207,8 @@ const DataTable = React.memo(
             {btnText && (
               <Button
                 variant={"primary"}
-                size={"fit"}
-                // leftIcon={<AddCircleIcon />}
+                size={"sm"}
+                leftIcon={<AiOutlinePlus />}
                 onClick={onAction}
                 outline="none"
                 border={"none"}
@@ -228,8 +227,8 @@ const DataTable = React.memo(
                     },
                   },
                 }}
-                padding={{ base: 2, md: 7 }}
-                margin={{ base: 2, md: 0 }}
+                padding={{ base: 2, md: 5 }}
+                margin={{ base: 2, md: 2 }}
               >
                 {btnText}
               </Button>
@@ -287,10 +286,16 @@ const DataTable = React.memo(
                         return (
                           <Th
                             {...column.getHeaderProps(
-                              column.getSortByToggleProps()
+                              column.getSortByToggleProps({
+                                style: {
+                                  minWidth: column.minWidth,
+                                  width: column.width,
+                                },
+                              })
                             )}
                             color={colors.primary}
                             key={column.id}
+                            width={10}
                           >
                             {column.render("Header")}
                             <span>
@@ -341,7 +346,20 @@ const DataTable = React.memo(
                               position="relative"
                               whiteSpace="nowrap"
                             >
-                              {cell.render("Cell")}
+                              {/* {cell.render("Cell")} */}
+                              {/* Render image in the cell */}
+                              {cell.column.Header === "Image" ? (
+                                <img
+                                  src={cell.value} // Provide the image URL
+                                  alt="Image"
+                                  style={{
+                                    maxWidth: "30%",
+                                    height: "auto",
+                                  }}
+                                />
+                              ) : (
+                                cell.render("Cell")
+                              )}
                             </Td>
                           );
                         })}

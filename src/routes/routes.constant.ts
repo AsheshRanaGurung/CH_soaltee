@@ -11,5 +11,6 @@ export const NAVIGATION_ROUTES = {
   PRODUCTS: "/products",
   PROPERTYS: "/propertys",
   PROPERTY: "/property",
+  MEMBERTIER: "/member-tier",
   SETPASSWORD: "/set-password",
 };

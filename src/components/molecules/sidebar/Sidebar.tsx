@@ -87,8 +87,13 @@ const Sidebar = ({
         //   visible: true,
         // },
         {
-          name: "Menbership Tier",
-          to: NAVIGATION_ROUTES.LOGIN,
+          name: "Property Setup",
+          to: NAVIGATION_ROUTES.PROPERTY,
+          visible: true,
+        },
+        {
+          name: "Membership Tier",
+          to: NAVIGATION_ROUTES.MEMBERTIER,
           visible: true,
         },
       ],
