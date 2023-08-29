@@ -15,7 +15,7 @@ import { FaHome } from "react-icons/fa";
 import styled from "styled-components";
 import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
 import { colors } from "@soaltee-loyalty/theme/colors";
-
+import { imageList } from "@soaltee-loyalty/assets/images";
 const Icon = styled.div``;
 interface ISidebar {
   isCollapse: boolean;
@@ -26,7 +26,6 @@ interface ISidebar {
 }
 const Sidebar = ({
   isCollapse,
-  isHovered,
   onEnterSidebar,
   onExitSidebar,
   width,
@@ -64,7 +63,7 @@ const Sidebar = ({
     },
     {
       name: "Report",
-      to: NAVIGATION_ROUTES.REPORT,
+      to: NAVIGATION_ROUTES.PROPERTY,
       icon: (
         <Icon>
           <FaChartSimple />
@@ -74,13 +73,25 @@ const Sidebar = ({
     },
     {
       name: "Master Data",
-      to: NAVIGATION_ROUTES.MASTER,
+      // to: NAVIGATION_ROUTES.MASTER,
       icon: (
         <Icon>
           <FaDatabase />
         </Icon>
       ),
       visible: true,
+      child: [
+        // {
+        //   name: "Property",
+        //   to: NAVIGATION_ROUTES.PROPERTYS,
+        //   visible: true,
+        // },
+        {
+          name: "Menbership Tier",
+          to: NAVIGATION_ROUTES.LOGIN,
+          visible: true,
+        },
+      ],
     },
     {
       name: "Point Configuration",
@@ -91,6 +102,18 @@ const Sidebar = ({
         </Icon>
       ),
       visible: true,
+      child: [
+        {
+          name: "Service",
+          to: NAVIGATION_ROUTES.LOGIN,
+          visible: true,
+        },
+        {
+          name: "Other",
+          to: NAVIGATION_ROUTES.LOGIN,
+          visible: true,
+        },
+      ],
     },
     {
       name: "Settings",
@@ -102,19 +125,6 @@ const Sidebar = ({
       ),
       visible: true,
     },
-
-    // {
-    //   name: "Master Setup",
-    //   icon: <DashboardIcon />,
-    //   visible: true,
-    //   child: [
-    //     {
-    //       name: "Member",
-    //       to: NAVIGATION_ROUTES.LOGIN,
-    //       visible: true,
-    //     },
-    //   ],
-    // },
   ];
 
   return (
@@ -136,16 +146,13 @@ const Sidebar = ({
       onMouseLeave={onExitSidebar}
       bgColor={colors.white}
     >
+      <img src={imageList.Logo} />
       <List>
         <ListItem mx={3} my={6}>
           <Link as={RouterLink} to={NAVIGATION_ROUTES.DASHBOARD}></Link>
         </ListItem>
         {navItems.map((item) => (
-          <NavItem
-            key={item.name}
-            {...item}
-            isCollapse={isCollapse && !isHovered}
-          />
+          <NavItem key={item.name} {...item} isCollapse={isCollapse} />
         ))}
       </List>
     </Box>

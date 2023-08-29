@@ -4,6 +4,7 @@ import ListingPage from "@soaltee-loyalty/pages/Listing";
 import Login from "@soaltee-loyalty/pages/Auth/login";
 import Dashboard from "@soaltee-loyalty/pages/Dashboard";
 import Signup from "../pages/Auth/signup";
+import PropertyPage from "@soaltee-loyalty/pages/MasterData/Property";
 const routes = [
   { path: NAVIGATION_ROUTES.DASHBOARD, element: <Dashboard /> },
   { path: NAVIGATION_ROUTES.MEMBER, Element: <Signup /> },
@@ -23,6 +24,10 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.PRODUCTS,
     element: <ListingPage />,
+  },
+  {
+    path: NAVIGATION_ROUTES.PROPERTY,
+    element: <PropertyPage />,
   },
 ];
 

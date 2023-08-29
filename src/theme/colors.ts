@@ -7,7 +7,7 @@ export const colors = {
   white: "#FFFFFF",
   green: "#34C759",
   text: "#585858",
-  black: "#0000",
+  black: "#00000",
   reset_btn_bg: "#FFF0F0",
   reset_btn_txt: "#F56262",
   red: "red",
@@ -23,4 +23,7 @@ export const colors = {
   accordion_bg: "#C5C9FD",
   accordion_text: "#5D619E",
   graph_stroke: "#8884d8",
+  text_black: "#535353",
+  foundation: "#F7FAFC",
+  dark_gray: "#454F5B",
 };

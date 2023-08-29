@@ -5,6 +5,7 @@ import {
   Checkbox as ChakraCheckbox,
   FormControl,
 } from "@chakra-ui/react";
+import { colors } from "@soaltee-loyalty/theme/colors";
 
 import {
   RegisterOptions,
@@ -33,7 +34,12 @@ const Checkbox = <T extends FieldValues>({
           display="flex"
           gap={2.5}
         >
-          <ChakraCheckbox {...field} isChecked={field.value} {...rest} />
+          <ChakraCheckbox
+            borderColor={colors.primary}
+            {...field}
+            isChecked={field.value}
+            {...rest}
+          />
           {label && (
             <FormLabel fontWeight={400} fontSize={"14px"} m={1}>
               {label}
