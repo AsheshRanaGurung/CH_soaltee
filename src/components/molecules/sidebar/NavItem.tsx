@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Flex, Text, Icon } from "@chakra-ui/react";
 import Item from "./Item";
-
+import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { colors } from "@soaltee-loyalty/theme/colors";
 import { RightArrowIcon } from "@soaltee-loyalty/assets/svgs";
@@ -20,10 +20,45 @@ interface INavItemChild {
   to: string;
   icon?: React.ReactNode;
 }
+const Wrapper = styled(Box)`
+  position: relative;
+  &::before {
+    content: "";
+    border-left: solid 1px #e9e9e9;
+    position: absolute;
+    height: 100%;
+    left: 41px;
+    top: -13px;
+  }
+  li {
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      height: 13px;
+      left: 2px;
+      top: 13px;
+      width: 14px;
+      border: Solid 1px #e9e9e9;
+      border-top: none;
+      border-right: none;
+      border-radius: 0 0 0 9px;
+    }
+  }
+`;
+const ItemsWrapper = styled(Item)`
+  position: relative;
+  &li::before {
+    content: "";
+    border-left: solid 1px #e9e9e9;
+    position: absolute;
+    height: 100%;
+    left: 41px;
+    top: -13px;
+  }
+`;
 const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
   const location = useLocation();
-  const match =
-    location.pathname.match(/services/g) || location.pathname.match(/forum/g);
 
   const activeParent = child?.some((item) => item.to === location.pathname);
 
@@ -31,9 +66,9 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
   const [showDropdown, setShowDropdown] = useState(activeParent);
 
   useEffect(() => {
-    setActive((!child && to === location.pathname) || to === `/${match?.[0]}`);
-  }, [location.pathname, match]);
-
+    setActive(to === location.pathname);
+  }, [location.pathname]);
+  console.log("accc", location.pathname);
   return (
     <>
       {visible ? (
@@ -47,21 +82,21 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
               mb={3}
               borderRadius={8}
               bgColor={activeParent ? colors.secondary : ""}
-              color={activeParent ? colors.primary : colors.secondary_black}
+              color={activeParent ? colors.primary : colors.text_black}
               transition="all ease-in-out"
               cursor="pointer"
               sx={{
                 "svg path": {
                   transition: "all ease-in-out",
-                  fill: `${activeParent ? colors.white : ""}`,
+                  fill: `${activeParent ? colors.white : colors.primary}`,
                 },
                 "&:hover": {
                   transition: "all ease-in-out",
-                  // bgColor: colors.secondary,
+                  bgColor: colors.secondary,
                   color: colors.primary,
                   "svg path": {
                     transition: "all ease-in-out",
-                    fill: colors.white,
+                    fill: colors.primary,
                   },
                 },
               }}
@@ -104,12 +139,12 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
               )}
             </Flex>
             {showDropdown && !isCollapse && (
-              <Box>
+              <Wrapper>
                 {child.map((c: INavItemChild) => {
                   return (
                     <React.Fragment key={c.name}>
                       {c.visible ? (
-                        <Item
+                        <ItemsWrapper
                           active={active}
                           name={c.name}
                           to={c.to}
@@ -123,7 +158,7 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
                     </React.Fragment>
                   );
                 })}
-              </Box>
+              </Wrapper>
             )}
           </>
         ) : (

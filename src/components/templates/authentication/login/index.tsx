@@ -1,11 +1,13 @@
-import { Button, useDisclosure, Text } from "@chakra-ui/react";
+import { Button, useDisclosure, Text, Link } from "@chakra-ui/react";
 import Checkbox from "@soaltee-loyalty/components/atoms/Checkbox";
 import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
 import Heading from "@soaltee-loyalty/components/atoms/Heading";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
 import { colors } from "@soaltee-loyalty/theme/colors";
 import styled from "styled-components";
 import * as yup from "yup";
+import { Link as RouterLink } from "react-router-dom";
 
 interface ISignInProps {
   mutate: any;
@@ -100,7 +102,9 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate }) => {
           </Button>
           <AccountDetail>
             <span>{`Don't have an account?`}</span>
-            <span className="signup">Signup</span>
+            <Link as={RouterLink} to={NAVIGATION_ROUTES.SIGNUP}>
+              <span className="signup">Signup</span>
+            </Link>
           </AccountDetail>
         </FormWrapper>
       </form>

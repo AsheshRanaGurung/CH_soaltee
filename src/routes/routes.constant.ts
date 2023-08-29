@@ -9,4 +9,6 @@ export const NAVIGATION_ROUTES = {
   CONFIGURATION: "/configuration",
   SETTINGS: "/settings",
   PRODUCTS: "/products",
+  PROPERTYS: "/propertys",
+  PROPERTY: "/property",
 };

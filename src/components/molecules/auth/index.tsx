@@ -11,8 +11,23 @@ const Wrapper = styled.div`
   background-color: ${colors.secondary};
 `;
 const FormContent = styled.div`
-  width: 50%;
+  width: 60%;
   margin-left: 100px;
+  img {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 150px;
+  }
+`;
+const Footer = styled.div`
+  position: absolute;
+  bottom: 30px;
+  left: 62%;
+  display: flex;
+  color: ${colors.dark_gray};
+  gap: 35px;
+  font-size: 14px;
 `;
 const Authentication: React.FC<IProps> = ({ children }) => {
   const images = [
@@ -35,7 +50,15 @@ const Authentication: React.FC<IProps> = ({ children }) => {
   return (
     <Wrapper>
       <ImageSlider images={images} />
-      <FormContent>{children}</FormContent>
+      <FormContent>
+        <img src={imageList.Logo} />
+        {children}
+        <Footer>
+          <p>Privacy policy</p>
+          <p>Terms & Services</p>
+          <p>©2017 Soaltee Hotel Limited</p>
+        </Footer>
+      </FormContent>
     </Wrapper>
   );
 };
