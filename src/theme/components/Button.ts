@@ -20,6 +20,11 @@ const Button = {
         },
       },
     },
+    outlined: {
+      bg: colors.white,
+      color: colors.primary,
+      border: `1px solid ${colors.primary}`,
+    },
   },
   sizes: {
     md: {

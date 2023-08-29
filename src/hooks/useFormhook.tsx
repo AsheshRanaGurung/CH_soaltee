@@ -9,6 +9,7 @@ export const useFormHook = ({ validationSchema }: IProps) => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
@@ -19,5 +20,6 @@ export const useFormHook = ({ validationSchema }: IProps) => {
     handleSubmit,
     control,
     errors,
+    reset,
   };
 };

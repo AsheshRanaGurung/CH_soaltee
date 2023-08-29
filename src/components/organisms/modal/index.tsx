@@ -56,14 +56,23 @@ const ModalForm: FC<IModal> = ({
             {view ? (
               <></>
             ) : (
-              <Button variant="reset" mr={3} onClick={onCloseModal} size={"md"}>
+              <Button
+                variant="outlined"
+                mr={3}
+                borderRadius="0"
+                w="100%"
+                onClick={onCloseModal}
+                size={"md"}
+              >
                 {resetButtonText}
               </Button>
             )}
             <Button
               type="submit"
+              borderRadius="0"
+              w="100%"
               onClick={() => {
-                onCloseModal();
+                // onCloseModal();
                 handleSubmit?.();
               }}
               size={"md"}
