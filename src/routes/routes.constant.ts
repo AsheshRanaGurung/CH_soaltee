@@ -11,4 +11,5 @@ export const NAVIGATION_ROUTES = {
   PRODUCTS: "/products",
   PROPERTYS: "/propertys",
   PROPERTY: "/property",
+  SETPASSWORD: "/set-password",
 };
