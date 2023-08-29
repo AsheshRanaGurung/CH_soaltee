@@ -9,6 +9,9 @@ import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pa
 import { useGetProducts } from "@soaltee-loyalty/service/service-list";
 import { useMemo, useState } from "react";
 import { CellProps } from "react-table";
+import { CreateMemberForm } from "../../form/master-data/member-form";
+import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import * as yup from "yup";
 
 const MemberList = () => {
   const { data: tableData, isFetching: tableDataFetching } = useGetProducts();
@@ -21,7 +24,7 @@ const MemberList = () => {
   } = useDisclosure();
   const {
     isOpen: isDeleteMemberOpen,
-    onOpen,
+    onOpen: onDeleteMemberOpen,
     onClose: onDeleteMemberClose,
   } = useDisclosure();
 
@@ -74,12 +77,8 @@ const MemberList = () => {
             // setIsUpdate(true);
             onMemberModalOpen();
           };
-          //   const onView = () => {
-          //     setUpdateId(row.original?.id);
-          //     onViewProductModalOpen();
-          //   };
           const onDelete = () => {
-            onOpen();
+            onDeleteMemberOpen();
             // setbankID(row?.original?.id);
           };
           return (
@@ -97,7 +96,32 @@ const MemberList = () => {
     ],
     [pageParams]
   );
-  console.log(paginatedData);
+
+  const validationSchema = yup.object().shape({
+    membershipName: yup.string().required("Membership Name is required"),
+    imageUrl: yup.string().required("Image is required"),
+    requiredPoints: yup.string().required("Point is required"),
+  });
+  const { handleSubmit, register, errors, reset } = useFormHook({
+    validationSchema,
+  });
+
+  // const { mutate } = useMutation(signUpApi, {
+  //   onSuccess: () => {
+  //     console.log("This is success");
+  //   },
+  //   onError: () => {
+  //     console.error("This is error");
+  //   },
+  // });
+  //handle form submit
+
+  const onSubmitHandler = (data: any) => {
+    console.log(data);
+    // mutate(data);
+    onMemberModalClose();
+    reset();
+  };
   return (
     <>
       {/* <BreadCrumb name="Membership Tier" /> */}
@@ -105,6 +129,7 @@ const MemberList = () => {
         data={paginatedData || []}
         loading={tableDataFetching}
         columns={columns}
+        CurrentText="Member List"
         btnText="Add Membership Tier"
         onAction={() => {
           onMemberModalClose();
@@ -129,11 +154,10 @@ const MemberList = () => {
         onCloseModal={onMemberModalClose}
         resetButtonText={"Cancel"}
         submitButtonText={"Add Member Tier"}
-
-        // submitButtonText={isUpdate ? "Update Bank" : "Add bank"}
-        // submitHandler={handleSubmit(onSubmitHandler)}
+        submitHandler={handleSubmit(onSubmitHandler)}
+        title="Add Membership Tier"
       >
-        <p>Add Member / Edit Member</p>
+        <CreateMemberForm register={register} errors={errors} />
       </ModalForm>
 
       <ModalForm

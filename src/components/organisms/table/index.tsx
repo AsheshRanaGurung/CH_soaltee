@@ -38,6 +38,7 @@ import {
 import { AiOutlinePlus } from "react-icons/ai/index";
 // import { DrawerComponent } from "../drawer";
 import { Search } from "@soaltee-loyalty/components/molecules/search";
+import { TableHeading } from "@soaltee-loyalty/components/atoms/TableHeading";
 export function getPager(
   totalRows: number,
   _: number,
@@ -150,7 +151,6 @@ const DataTable = React.memo(
     containerStyles,
     headerBackgroundColor = colors.secondary,
     btnText,
-    optionGroup,
     CurrentText,
     onAction,
     rowBottomBorder,
@@ -180,30 +180,20 @@ const DataTable = React.memo(
     } = tableInstance as unknown as any;
 
     const [hoveredRow, setHoveredRow] = useState<string | null>(null);
-
     return (
       <Box bgColor={colors.white} p={{ base: 0, md: 4 }} borderRadius={"8px"}>
         <Flex
-          justifyContent="flex-end"
+          justifyContent="space-between"
           alignItems="center"
           flexDirection="row"
           rowGap={2}
           ml={{ base: 2, md: 0 }}
         >
-          <Flex alignItems="center" gap={3}>
+          <TableHeading currentText={CurrentText} />
+          <Flex gap={2} alignItems="center">
             <Flex position="relative">
               <Search setSearchValue={setSearchValue} />
             </Flex>
-            {/* <DrawerComponent title={title}>{children}</DrawerComponent> */}
-          </Flex>
-          <Flex gap={2}>
-            {optionGroup && <Box bgSize={"md"}>{optionGroup}</Box>}
-            {CurrentText && (
-              <Text background={"#E6F0FA"} p={3} borderRadius={"5px"}>
-                {CurrentText}
-              </Text>
-            )}
-
             {btnText && (
               <Button
                 variant={"primary"}
