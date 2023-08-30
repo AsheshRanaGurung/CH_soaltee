@@ -7,11 +7,11 @@ import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
 import { colors } from "@soaltee-loyalty/theme/colors";
 import styled from "styled-components";
 import * as yup from "yup";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 interface ISignInProps {
-  mutate: any;
-  isLoading: boolean;
+  mutate?: any;
+  isLoading?: boolean;
 }
 export const FormWrapper = styled.div`
   margin-top: 5%;
@@ -36,7 +36,8 @@ const ForgotPassword = styled.div`
     // color: ${colors.primary};
   }
 `;
-const LoginComponent: React.FC<ISignInProps> = ({ mutate }) => {
+const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
+  const navigate = useNavigate();
   const { isOpen: isVisible, onToggle: onToggleVisibility } = useDisclosure();
 
   const validationSchema = yup.object().shape({
@@ -51,6 +52,8 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate }) => {
     validationSchema,
   });
   const onSubmit = (data: any) => {
+    localStorage.setItem("loginToken", "test");
+    navigate(NAVIGATION_ROUTES.DASHBOARD);
     mutate(data);
   };
   return (
@@ -95,6 +98,7 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate }) => {
           <Button
             type="submit"
             className="button"
+            isLoading={isLoading}
             width={"100%"}
             borderRadius={"none"}
           >

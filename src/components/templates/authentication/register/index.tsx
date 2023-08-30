@@ -15,25 +15,25 @@ interface ISignupProps {
   mutate: any;
   isLoading: boolean;
 }
-const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
+const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
   const [checked, setChecked] = useState({
     terms: false,
     offers: false,
   });
   const validationSchema = yup.object().shape({
-    name: yup.string().required("Name is required"),
+    fullName: yup.string().required("Name is required"),
     email: yup
       .string()
       .required("Email is required")
       .email("Invalid email format"),
-    mobile_number: yup.string().required("Mobile number is required"),
+    phoneNumber: yup.string().required("Mobile number is required"),
     nationality: yup.string().required("Nationality is required"),
   });
   const { handleSubmit, register, errors, control } = useFormHook({
     validationSchema,
   });
   const onSubmit = (data: any) => {
-    mutate(data);
+    mutate({ ...data, referalCode: "abc" });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,12 +52,12 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
         <FormWrapper>
           <FormControl
             control="input"
-            name="name"
+            name="fullName"
             required
             placeholder="Enter your full name"
             label="Full Name"
             register={register}
-            error={errors.name?.message || ""}
+            error={errors.fullName?.message || ""}
           />
           <FormControl
             control="input"
@@ -72,12 +72,12 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
           <FormControl
             control="input"
             type="number"
-            name="mobile_number"
+            name="phoneNumber"
             required
             placeholder="Enter your mobile number"
             label="Mobile Number"
             register={register}
-            error={errors.mobile_number?.message || ""}
+            error={errors.phoneNumber?.message || ""}
           />
           <FormControl
             control="select"
@@ -124,6 +124,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate }) => {
             w="100%"
             borderRadius="none"
             disabled={isSubmitDisabled}
+            isLoading={isLoading}
           >
             Sign Up
           </Button>

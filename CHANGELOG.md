@@ -3,8 +3,11 @@
 
 ### Bug Fixes
 
+* add api configuration ([1323032](https://gitlab.com/paras205/boilerplate-react/commit/1323032fdd38026b12386f8c5331ee8a3ab513f1))
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
+* responsive ([7645b1b](https://gitlab.com/paras205/boilerplate-react/commit/7645b1bc41af3b388aaf6c4cabbf857f7744a1e1))
+* responsive ([d853c6a](https://gitlab.com/paras205/boilerplate-react/commit/d853c6a06eab42cf2454cc08422320932d486b61))
 
 
 ### Features

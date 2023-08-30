@@ -151,7 +151,10 @@ const Sidebar = ({
       onMouseLeave={onExitSidebar}
       bgColor={colors.white}
     >
-      <img src={imageList.Logo} />
+      <img
+        style={{ width: "110px", display: "block", margin: "auto" }}
+        src={imageList.Logo}
+      />
       <List>
         <ListItem mx={3} my={6}>
           <Link as={RouterLink} to={NAVIGATION_ROUTES.DASHBOARD}></Link>
