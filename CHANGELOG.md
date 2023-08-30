@@ -1,13 +1,10 @@
-## 0.0.14 (2023-08-29)
+## 0.0.14 (2023-08-30)
 
 
 ### Bug Fixes
 
-* add api configuration ([1323032](https://gitlab.com/paras205/boilerplate-react/commit/1323032fdd38026b12386f8c5331ee8a3ab513f1))
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
-* responsive ([7645b1b](https://gitlab.com/paras205/boilerplate-react/commit/7645b1bc41af3b388aaf6c4cabbf857f7744a1e1))
-* responsive ([d853c6a](https://gitlab.com/paras205/boilerplate-react/commit/d853c6a06eab42cf2454cc08422320932d486b61))
 
 
 ### Features
@@ -20,7 +17,6 @@
 * login component ([f753932](https://gitlab.com/paras205/boilerplate-react/commit/f753932002845eaab1196b776d992ee5ecac0547))
 * login component ([967e159](https://gitlab.com/paras205/boilerplate-react/commit/967e159a4fe973d5e6302f108f2bd08525fcc615))
 * login component ([9da8c3e](https://gitlab.com/paras205/boilerplate-react/commit/9da8c3ed3142a97a439caf5080ed56106b689458))
-* modal form for property, working on member tier form ([836a0fa](https://gitlab.com/paras205/boilerplate-react/commit/836a0faf04605f20251d0fa09a2395acf0651526))
 
 
 

@@ -28,6 +28,7 @@ export default defineConfig({
       "@soaltee-loyalty/translations": path.resolve("src/translations"),
       "@soaltee-loyalty/interface": path.resolve("src/interface"),
       "@soaltee-loyalty/utility": path.resolve("src/utility"),
+      "@soaltee-loyalty/userPages": path.resolve("src/userPages"),
     },
   },
 });

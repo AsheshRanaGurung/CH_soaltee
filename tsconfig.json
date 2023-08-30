@@ -22,7 +22,8 @@
       "@soaltee-loyalty/theme/*": ["theme/*"],
       "@soaltee-loyalty/translations/*": ["translations/*"],
       "@soaltee-loyalty/interface/*": ["interface/*"],
-      "@soaltee-loyalty/utility/*": ["utility/*"]
+      "@soaltee-loyalty/utility/*": ["utility/*"],
+      "@soaltee-loyalty/userPages/*": ["userPages/*"]
     },
     "allowSyntheticDefaultImports": true,
     "strict": true,
