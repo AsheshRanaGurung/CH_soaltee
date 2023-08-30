@@ -14,7 +14,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const { mutate, isLoading } = useMutation(signUpApi, {
     onSuccess: (response) => {
-      toastSuccess(response?.data?.message || "Congratulations!");
+      toastSuccess(response?.data?.data?.message || "Congratulations!");
       localStorage.setItem("userInfo", response?.data?.data?.email);
       navigate(NAVIGATION_ROUTES.SUCCESS);
     },

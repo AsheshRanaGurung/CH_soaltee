@@ -5,14 +5,11 @@ import Authentication from "@soaltee-loyalty/components/molecules/auth";
 import { toastSuccess } from "@soaltee-loyalty/service/service-toast";
 import TokenService from "@soaltee-loyalty/service/config/service-token";
 import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const navigate = useNavigate();
-  const isAuthenticated = localStorage.getItem("loginToken");
-  if (isAuthenticated) {
-    return <Navigate to={NAVIGATION_ROUTES.DASHBOARD} />;
-  }
+
   const { mutate, isLoading } = useMutation(loginApi, {
     onSuccess: (response) => {
       toastSuccess("User logged in");
@@ -20,7 +17,9 @@ const Login = () => {
         access: response.data.data.token,
       };
       TokenService.setToken(tokens);
-      navigate(NAVIGATION_ROUTES.DASHBOARD);
+      if (response.data.responseCode === "200") {
+        navigate(NAVIGATION_ROUTES.DASHBOARD);
+      }
     },
 
     onError: () => {

@@ -2,7 +2,6 @@ import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
 
 export const CreateMemberForm = ({ register, errors }: any) => {
-  console.log(errors);
   return (
     <>
       <Box mx={{ base: "none", md: "auto" }}>

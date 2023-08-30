@@ -123,7 +123,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             className="button"
             w="100%"
             borderRadius="none"
-            disabled={isSubmitDisabled}
+            disabled={isSubmitDisabled || isLoading}
             isLoading={isLoading}
           >
             Sign Up
