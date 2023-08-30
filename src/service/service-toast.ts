@@ -3,6 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 const toastSuccess = (message: string) => {
   toast.success(message, {
     id: message,
+    position: "top-right",
     style: {
       border: "1px solid green",
       padding: "12px",
@@ -13,6 +14,7 @@ const toastSuccess = (message: string) => {
 const toastFail = (message: string) => {
   toast.error(message, {
     id: message,
+    position: "top-right",
     style: {
       border: "1px solid red",
       padding: "12px",

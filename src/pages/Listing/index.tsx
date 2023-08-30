@@ -96,7 +96,6 @@ const ListingPage = () => {
     ],
     [pageParams]
   );
-  console.log(paginatedData);
   return (
     <>
       <BreadCrumb name="Membership Tier" />

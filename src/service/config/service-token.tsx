@@ -1,33 +1,31 @@
-import Cookies from "js-cookie";
-
-function setToken(token: any) {
-  try {
-    localStorage.setItem("auth", JSON.stringify(token));
-  } catch (e) {
-    // console.error("Error storing token", e);
-  }
+export interface TokenDetails {
+  access: string;
 }
 
-function setCookie(name: string, value: any) {
-  try {
-    Cookies.set(name, value);
-  } catch (e) {
-    // console.error("error setting cookie");
-  }
+export interface TokenInfo {
+  is_valid: boolean;
+  exp: number;
 }
+
+function setToken(token: TokenDetails) {
+  localStorage.setItem("token", token.access);
+}
+
 function getToken() {
   try {
-    return JSON.parse(localStorage.getItem("auth") || "");
+    return {
+      access: localStorage.getItem("token") ?? "",
+    } as TokenDetails;
   } catch (e) {
     return null;
   }
 }
 
-function getTokenDetails() {
+function getTokenDetails(): TokenInfo | null {
   try {
     const token = getToken();
     return token
-      ? JSON.parse(window.atob(token.access_token.split(".")[1]))
+      ? (JSON.parse(window.atob(token.access.split(".")[1])) as TokenInfo)
       : null;
   } catch (e) {
     return null;
@@ -37,39 +35,26 @@ function getTokenDetails() {
 function isAuthenticated() {
   const tokenDetails = getTokenDetails();
   if (tokenDetails) {
-    return tokenDetails.exp * 1000 > Date.now();
+    return tokenDetails?.exp * 1000 > Date.now();
   } else {
     return false;
   }
 }
 
-function getCookies(name: string) {
-  try {
-    return Cookies.get(name);
-  } catch (e) {
-    return null;
-  }
-}
-function clearCookies(name: string) {
-  try {
-    Cookies.remove(name);
-  } catch (e) {
-    // console.error("err")
-  }
+function clearToken() {
+  localStorage.removeItem("token");
 }
 
-function clearToken() {
-  Cookies.remove("auth");
-}
+export const getRole = () => {
+  return getTokenDetails();
+};
 
 const TokenService = {
   setToken,
   getToken,
+  getTokenDetails,
   isAuthenticated,
   clearToken,
-  setCookie,
-  getCookies,
-  clearCookies,
 };
 
 export default TokenService;

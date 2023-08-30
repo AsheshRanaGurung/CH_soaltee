@@ -13,4 +13,5 @@ export const NAVIGATION_ROUTES = {
   PROPERTY: "/property",
   MEMBERTIER: "/member-tier",
   SETPASSWORD: "/set-password",
+  SUCCESS: "/success",
 };

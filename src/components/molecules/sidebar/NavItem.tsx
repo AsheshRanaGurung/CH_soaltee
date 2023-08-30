@@ -68,7 +68,6 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
   useEffect(() => {
     setActive(to === location.pathname);
   }, [location.pathname]);
-  console.log("accc", location.pathname);
   return (
     <>
       {visible ? (

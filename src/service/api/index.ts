@@ -1,6 +1,8 @@
 export const api = {
   auth: {
-    register: "/api/v1/users/register/",
+    register: "/users/save-users",
+    set_password: "/users/change-password",
+    login: "/auth/login",
   },
 };
 export interface IResponse<T = any> {
