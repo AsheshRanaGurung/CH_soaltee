@@ -9,10 +9,15 @@ import SetPassword from "@soaltee-loyalty/pages/Auth/set-password";
 import Verification from "@soaltee-loyalty/pages/Auth/verification";
 import PrivateRoute from "./privateRoute";
 import RestrictedRoute from "./restrictedRoute";
+import UserDashboard from "@soaltee-loyalty/userPages/UserDashboard";
 const routes = [
   {
     path: NAVIGATION_ROUTES.DASHBOARD,
     element: <PrivateRoute Component={Dashboard} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.USER_DASHBOARD,
+    element: <PrivateRoute Component={UserDashboard} />,
   },
   { path: NAVIGATION_ROUTES.MEMBER, Element: <Signup /> },
   {

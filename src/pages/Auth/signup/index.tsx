@@ -16,6 +16,7 @@ const Signup = () => {
     onSuccess: (response) => {
       toastSuccess(response?.data?.data?.message || "Congratulations!");
       localStorage.setItem("userInfo", response?.data?.data?.email);
+      localStorage.setItem("userRole", response?.data?.data?.role);
       navigate(NAVIGATION_ROUTES.SUCCESS);
     },
     onError: (error: AxiosError<{ message: string }>) => {
