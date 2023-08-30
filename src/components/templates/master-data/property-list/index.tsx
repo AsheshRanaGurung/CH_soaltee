@@ -5,16 +5,20 @@ import DataTable, {
 } from "@soaltee-loyalty/components/organisms/table";
 import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
 import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
-import { useGetProducts } from "@soaltee-loyalty/service/service-list";
+// import { useGetProducts } from "@soaltee-loyalty/service/service-list";
 import { useMemo, useState } from "react";
 import { CellProps } from "react-table";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import * as yup from "yup";
 import { CreatePropertyForm } from "../../form/master-data/property-form";
-
-const PropertyList = () => {
-  const { data: tableData, isFetching: tableDataFetching } = useGetProducts();
+import { useDeleteProperty } from "@soaltee-loyalty/service/master-data";
+const PropertyList = ({
+  data: tableData,
+  isLoading: tableDataFetching,
+}: any) => {
+  // const { data: tableData, isFetching: tableDataFetching } = useGetProducts();
   const [, setUpdateId] = useState("");
+  const [propertyID, setPropertyID] = useState<null | string>("");
 
   const {
     isOpen: isPropertyOpen,
@@ -52,22 +56,22 @@ const PropertyList = () => {
 
       {
         Header: "Property Name",
-        accessor: "price",
+        accessor: "name",
         width: "20%",
       },
       {
         Header: "Property Code",
-        accessor: "category",
+        accessor: "code",
         width: "20%",
       },
       {
         Header: "Phone Number",
-        accessor: "rating.count",
+        accessor: "phoneNumber",
         width: "20%",
       },
       {
         Header: "Contact person",
-        accessor: "rating.rate",
+        accessor: "contactPerson",
         width: "20%",
       },
       {
@@ -82,6 +86,7 @@ const PropertyList = () => {
           };
           const onDelete = () => {
             onDeletePropertyOpen();
+            setPropertyID(row?.original?.id);
           };
           return (
             <Stack alignItems={"flex-start"}>
@@ -122,6 +127,16 @@ const PropertyList = () => {
     reset();
   };
   // console.log(errors.code?.message);
+
+  //delete property Id
+  const { mutateAsync: deletePropertyTier, isLoading: isDeleting } =
+    useDeleteProperty();
+
+  const onDelete = (id: string) => {
+    deletePropertyTier({
+      id: id,
+    });
+  };
 
   return (
     <>
@@ -164,7 +179,9 @@ const PropertyList = () => {
         isModalOpen={isDeletePropertyOpen}
         onCloseModal={onDeletePropertyClose}
         resetButtonText={"No"}
+        isLoading={isDeleting}
         submitButtonText={"Yes"}
+        handleSubmit={() => onDelete(propertyID ?? "")}
       >
         Are you sure you want to delete the Property detail?
       </ModalForm>
