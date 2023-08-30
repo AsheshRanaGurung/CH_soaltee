@@ -72,7 +72,7 @@ const ModalForm: FC<IModal> = ({
               borderRadius="0"
               w="100%"
               onClick={() => {
-                // onCloseModal();
+                onCloseModal();
                 handleSubmit?.();
               }}
               size={"md"}

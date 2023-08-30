@@ -1,21 +1,21 @@
 import { Stack, useDisclosure } from "@chakra-ui/react";
-import { ProductForm } from "@soaltee-loyalty/components/templates/form";
+// import { ProductForm } from "@soaltee-loyalty/components/templates/form";
 import ModalForm from "@soaltee-loyalty/components/organisms/modal";
 import DataTable, {
   Pagination,
 } from "@soaltee-loyalty/components/organisms/table";
 import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
 import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
-import { useGetProducts } from "@soaltee-loyalty/service/service-list";
 import { useMemo, useState } from "react";
 import { CellProps } from "react-table";
 import { CreateMemberForm } from "../../form/master-data/member-form";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import * as yup from "yup";
+import { useDeleteMemberTier } from "@soaltee-loyalty/service/master-data";
 
-const MemberList = () => {
-  const { data: tableData, isFetching: tableDataFetching } = useGetProducts();
+const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
   const [, setUpdateId] = useState("");
+  const [memberTierID, setMemberTierID] = useState<null | string>("");
 
   const {
     isOpen: isMemberOpen,
@@ -56,17 +56,17 @@ const MemberList = () => {
 
       {
         Header: "Tier Name",
-        accessor: "price",
+        accessor: "membershipName",
         width: "20%",
       },
       {
         Header: "Points To Tier",
-        accessor: "category",
+        accessor: "requiredPoints",
         width: "40%",
       },
       {
         Header: "Image",
-        accessor: "image",
+        accessor: "imageUrl",
         width: "20%",
       },
       {
@@ -79,7 +79,7 @@ const MemberList = () => {
           };
           const onDelete = () => {
             onDeleteMemberOpen();
-            // setbankID(row?.original?.id);
+            setMemberTierID(row?.original?.id);
           };
           return (
             <Stack alignItems={"flex-start"}>
@@ -122,6 +122,16 @@ const MemberList = () => {
     onMemberModalClose();
     reset();
   };
+
+  //delete member tier
+  const { mutateAsync: deleteMemberTier, isLoading: isDeleting } =
+    useDeleteMemberTier();
+
+  const onDelete = (id: string) => {
+    deleteMemberTier({
+      id: id,
+    });
+  };
   return (
     <>
       {/* <BreadCrumb name="Membership Tier" /> */}
@@ -136,7 +146,7 @@ const MemberList = () => {
           onMemberModalOpen();
         }}
       >
-        <ProductForm />
+        <CreateMemberForm register={register} error={errors} />
       </DataTable>
 
       <Pagination
@@ -162,12 +172,12 @@ const MemberList = () => {
 
       <ModalForm
         title={"Delete"}
-        // isLoading={isDeleting}
+        isLoading={isDeleting}
         isModalOpen={isDeleteMemberOpen}
         onCloseModal={onDeleteMemberClose}
         resetButtonText={"No"}
         submitButtonText={"Yes"}
-        // handleSubmit={() => onDelete(bankID ?? "")}
+        handleSubmit={() => onDelete(memberTierID ?? "")}
       >
         Are you sure you want to delete the Member Tier ?
       </ModalForm>
