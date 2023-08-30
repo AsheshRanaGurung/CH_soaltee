@@ -14,6 +14,10 @@ export const api = {
       delete: "/property/delete-property/:id",
     },
   },
+  member_management: {
+    fetch: "/auth/get-users",
+    add: "/auth/save-users",
+  },
 };
 export interface IResponse<T = any> {
   data: T;
