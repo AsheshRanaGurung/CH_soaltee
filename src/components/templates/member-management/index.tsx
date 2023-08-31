@@ -17,6 +17,8 @@ import {
   toastSuccess,
 } from "@soaltee-loyalty/service/service-toast";
 import { AxiosError } from "axios";
+import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
+import { useNavigate } from "react-router";
 import {
   createMember,
   updateMember,
@@ -34,6 +36,8 @@ const MemberManagementList = ({
   data: tableData,
   isLoading: tableDataFetching,
 }: any) => {
+  //   const [memberID, setMemberId] = useState("");
+  const navigate = useNavigate();
   const [updateId, setUpdateID] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
 
@@ -115,7 +119,9 @@ const MemberManagementList = ({
             onMemberModalOpen();
           };
           const onView = () => {
-            console.log("onView");
+            navigate(NAVIGATION_ROUTES.PROFILE_DETAIL, {
+              state: row.original,
+            });
           };
 
           return (

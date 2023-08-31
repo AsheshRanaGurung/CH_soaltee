@@ -12,6 +12,8 @@ import RestrictedRoute from "./restrictedRoute";
 import UserDashboard from "@soaltee-loyalty/userPages/UserDashboard";
 import ServicePage from "@soaltee-loyalty/pages/PointConfig/Service";
 import MemberManagementPage from "@soaltee-loyalty/pages/MemberManagement";
+import ProfileDetail from "@soaltee-loyalty/pages/MemberManagement/ProfileDetail";
+
 const routes = [
   {
     path: NAVIGATION_ROUTES.DASHBOARD,
@@ -62,6 +64,10 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.MEMBER_MANAGEMENT,
     element: <PrivateRoute Component={MemberManagementPage} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.PROFILE_DETAIL,
+    element: <PrivateRoute Component={ProfileDetail} />,
   },
 ];
 
