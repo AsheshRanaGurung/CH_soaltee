@@ -14,6 +14,15 @@ export const getAllService = () => {
   return HttpClient.get(api.configuration.service.fetch);
 };
 
+//update service
+export const updateService = ({ id, data }: { id: string; data: IService }) => {
+  return HttpClient.post(api.configuration.service.update.replace(":id", id), {
+    data: {
+      ...data,
+    },
+  });
+};
+
 const deleteService = ({ id }: any) => {
   return HttpClient.delete(api.configuration.service.delete.replace(":id", id));
 };
@@ -22,7 +31,7 @@ export const useDeleteService = () => {
   return useMutation(deleteService, {
     onSuccess: () => {
       toastSuccess("Service deleted successfuly");
-      queryClient.invalidateQueries(api.configuration.service.fetch);
+      queryClient.refetchQueries("service");
     },
   });
 };

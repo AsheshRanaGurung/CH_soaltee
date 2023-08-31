@@ -5,24 +5,37 @@ import DataTable, {
 } from "@soaltee-loyalty/components/organisms/table";
 import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
 import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import * as yup from "yup";
 import { CreateMemberManagementForm } from "../form/member-management";
 import Switch from "@soaltee-loyalty/components/atoms/Switch";
 import { useMutation, useQueryClient } from "react-query";
-import { useCreateMember } from "@soaltee-loyalty/service/member-management";
 import {
   toastFail,
   toastSuccess,
 } from "@soaltee-loyalty/service/service-toast";
 import { AxiosError } from "axios";
+import {
+  createMember,
+  updateMember,
+} from "@soaltee-loyalty/service/member-management";
+const defaultValues = {
+  fullName: "",
+  email: "",
+  phoneNumber: "",
+  nationality: "",
+  isActive: false,
+  referalCode: "234",
+};
+
 const MemberManagementList = ({
   data: tableData,
   isLoading: tableDataFetching,
 }: any) => {
-  //   const [memberID, setMemberId] = useState("");
+  const [updateId, setUpdateID] = useState("");
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const {
     isOpen: isMemberOpen,
@@ -95,11 +108,10 @@ const MemberManagementList = ({
         Header: "Action",
         width: "10%",
 
-        Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
+        Cell: ({ row }: CellProps<{ id: string }>) => {
           const onEdit = () => {
-            console.log(row);
-            // setMemberId(row.original?.id);
-            // setIsUpdate(true);
+            setUpdateID(row.original?.id);
+            setIsUpdate(true);
             onMemberModalOpen();
           };
           const onView = () => {
@@ -125,32 +137,73 @@ const MemberManagementList = ({
   });
   const { handleSubmit, register, errors, reset } = useFormHook({
     validationSchema,
+    defaultValues,
   });
-  //   const { mutate, isLoading } = useCreateMember();
   //handle form submit
   const queryClient = useQueryClient();
-  const { mutate, isLoading } = useMutation(useCreateMember, {
+  const { mutate, isLoading } = useMutation(createMember, {
     onSuccess: (response) => {
-      toastSuccess(response?.data?.data?.message || "Congratulations!");
+      toastSuccess(response?.data?.message || "Congratulations!");
       queryClient.refetchQueries("member_management");
+      onMemberModalClose();
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.log(error?.response?.data?.message);
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
-  const onSubmitHandler = async (data: any) => {
-    console.log(data);
-    mutate({
-      fullName: data.fullName,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      nationality: data.nationality,
-      isActive: data.isActive,
-      referalCode: "234",
-    });
-    reset();
+
+  const { mutate: update, isLoading: isUpdating } = useMutation(updateMember, {
+    onSuccess: (response) => {
+      toastSuccess(response?.data?.message || "Member Updated!!");
+      queryClient.refetchQueries("member_management");
+      onMemberModalClose();
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toastFail(error?.response?.data?.message || "Something went wrong");
+    },
+  });
+  useEffect(() => {
+    if (isUpdate && updateId) {
+      const data = tableData.find((x: any) => x.id === updateId);
+      reset({
+        fullName: data.fullName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        nationality: data.nationality,
+        isActive: data.isActive,
+      });
+    }
+  }, [isUpdate, updateId]);
+  const onCloseHandler = () => {
     onMemberModalClose();
+    reset(defaultValues);
+    setUpdateID("");
+    setIsUpdate(false);
+  };
+  const onSubmitHandler = async (data: any) => {
+    //there is no api for update adjust later
+    if (updateId) {
+      update({
+        id: updateId,
+        data: {
+          fullName: data.fullName,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+          nationality: data.nationality,
+          isActive: data.isActive,
+          referalCode: "234",
+        },
+      });
+    } else {
+      mutate({
+        fullName: data.fullName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        nationality: data.nationality,
+        isActive: data.isActive,
+        referalCode: "234",
+      });
+    }
   };
 
   return (
@@ -163,7 +216,7 @@ const MemberManagementList = ({
         btnText="Add User"
         CurrentText="Member List"
         onAction={() => {
-          onMemberModalClose();
+          onCloseHandler();
           onMemberModalOpen();
         }}
       >
@@ -180,11 +233,11 @@ const MemberManagementList = ({
       />
       <ModalForm
         isModalOpen={isMemberOpen}
-        title="Add User"
-        isLoading={isLoading}
+        title={isUpdate ? "Update User" : "Add User"}
+        isLoading={isLoading || isUpdating}
         onCloseModal={onMemberModalClose}
         resetButtonText={"Cancel"}
-        submitButtonText={"Create User"}
+        submitButtonText={isUpdate ? "Update User" : "Create User"}
         submitHandler={handleSubmit(onSubmitHandler)}
       >
         <CreateMemberManagementForm register={register} errors={errors} />

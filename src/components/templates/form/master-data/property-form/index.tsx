@@ -43,7 +43,7 @@ export const CreatePropertyForm = ({ register, errors }: any) => {
             error={errors.contactPerson?.message || ""}
             required
           />
-          {/* <FormControl
+          <FormControl
             control="input"
             type="number"
             name="contactPersonPhoneNo"
@@ -52,7 +52,7 @@ export const CreatePropertyForm = ({ register, errors }: any) => {
             label={"Contact Person Phone Number"}
             error={errors.contactPersonPhoneNo?.message || ""}
             required
-          /> */}
+          />
         </Flex>
         <Spacer />
       </Box>
