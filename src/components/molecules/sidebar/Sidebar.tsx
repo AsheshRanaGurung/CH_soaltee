@@ -81,11 +81,6 @@ const Sidebar = ({
       ),
       visible: true,
       child: [
-        // {
-        //   name: "Property",
-        //   to: NAVIGATION_ROUTES.PROPERTYS,
-        //   visible: true,
-        // },
         {
           name: "Property Setup",
           to: NAVIGATION_ROUTES.PROPERTY,
@@ -110,7 +105,7 @@ const Sidebar = ({
       child: [
         {
           name: "Service",
-          to: NAVIGATION_ROUTES.LOGIN,
+          to: NAVIGATION_ROUTES.SERVICE,
           visible: true,
         },
         {

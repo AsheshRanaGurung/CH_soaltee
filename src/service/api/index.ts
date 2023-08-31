@@ -4,6 +4,13 @@ export const api = {
     set_password: "/users/change-password",
     login: "/auth/login",
   },
+  configuration: {
+    service: {
+      add: "/service-category/create-service",
+      fetch: "/service-category/get-all-service",
+      delete: "/service-category/delete-service-category/:id",
+    },
+  },
   master_data: {
     member_tier: {
       fetch: "/membership/get-all-tier",

@@ -122,11 +122,9 @@ const PropertyList = ({
 
   const onSubmitHandler = (data: any) => {
     console.log(data);
-    // mutate(data);
     onPropertyModalClose();
     reset();
   };
-  // console.log(errors.code?.message);
 
   //delete property Id
   const { mutateAsync: deletePropertyTier, isLoading: isDeleting } =

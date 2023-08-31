@@ -10,6 +10,7 @@ import Verification from "@soaltee-loyalty/pages/Auth/verification";
 import PrivateRoute from "./privateRoute";
 import RestrictedRoute from "./restrictedRoute";
 import UserDashboard from "@soaltee-loyalty/userPages/UserDashboard";
+import ServicePage from "@soaltee-loyalty/pages/PointConfig/Service";
 import MemberManagementPage from "@soaltee-loyalty/pages/MemberManagement";
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.VOUCHER,
     Element: <Login />,
+  },
+
+  {
+    path: NAVIGATION_ROUTES.SERVICE,
+    element: <PrivateRoute Component={ServicePage} />,
   },
   // { path: NAVIGATION_ROUTES.REPORT, Element: <Dashboard /> },
   // { path: NAVIGATION_ROUTES.MASTER, Element: <Signup /> },

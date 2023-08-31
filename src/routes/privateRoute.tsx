@@ -11,7 +11,6 @@ const PrivateRoute = ({ Component }: any) => {
   }
   const role = isAuthenticated && jwt_decode<DecodedToken>(isAuthenticated);
 
-  console.log("role", role);
   return (
     <div>
       {role && role?.role?.length > 0 && !role.role.includes("USER") ? (
