@@ -26,6 +26,7 @@ interface IInput extends InputProps {
   required?: boolean;
   labelDisabled?: string;
   variant?: string;
+  label_color?: string;
 }
 
 const Input = ({
@@ -44,6 +45,7 @@ const Input = ({
   onIconClick,
   required,
   variant,
+  label_color,
   ...rest
 }: IInput) => {
   return (
@@ -54,7 +56,13 @@ const Input = ({
       variant={variant}
     >
       {label && (
-        <FormLabel htmlFor={name} fontWeight={600} fontSize={"14px"} m={0}>
+        <FormLabel
+          htmlFor={name}
+          fontWeight={600}
+          fontSize={"14px"}
+          m={0}
+          color={label_color}
+        >
           {label}
           {required && <span style={{ color: "red" }}>&nbsp;*</span>}
         </FormLabel>

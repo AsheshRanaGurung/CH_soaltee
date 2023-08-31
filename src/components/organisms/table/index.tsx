@@ -280,6 +280,7 @@ const DataTable = React.memo(
                                 style: {
                                   minWidth: column.minWidth,
                                   width: column.width,
+                                  textAlign: column.textAlign,
                                 },
                               })
                             )}

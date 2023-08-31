@@ -26,4 +26,5 @@ export const colors = {
   text_black: "#535353",
   foundation: "#F7FAFC",
   dark_gray: "#454F5B",
+  black_1: "#696969",
 };

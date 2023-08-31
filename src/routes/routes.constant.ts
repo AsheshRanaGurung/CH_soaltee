@@ -10,9 +10,9 @@ export const NAVIGATION_ROUTES = {
   CONFIGURATION: "/configuration",
   SETTINGS: "/settings",
   PRODUCTS: "/products",
-  PROPERTYS: "/propertys",
   PROPERTY: "/property",
   MEMBERTIER: "/member-tier",
   SETPASSWORD: "/set-password",
   SUCCESS: "/success",
+  SERVICE: "/service",
 };

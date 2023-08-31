@@ -2,17 +2,21 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 interface IProps {
-  validationSchema: any;
+  validationSchema?: any;
+  defaultValues?: any;
 }
-export const useFormHook = ({ validationSchema }: IProps) => {
+export const useFormHook = ({ validationSchema, defaultValues }: IProps) => {
   const {
     register,
     handleSubmit,
     control,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
+    defaultValues: defaultValues,
   });
 
   return {
@@ -21,5 +25,7 @@ export const useFormHook = ({ validationSchema }: IProps) => {
     control,
     errors,
     reset,
+    watch,
+    setValue,
   };
 };
