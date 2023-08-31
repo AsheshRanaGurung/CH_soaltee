@@ -1,9 +1,7 @@
 import { IMember } from "@soaltee-loyalty/interface/member-management";
 import { api } from "../api";
 import { HttpClient } from "../config/api";
-// import axios from "axios";
 
-//get all member management
 export const getAllMembers = () => {
   return HttpClient.get(api.member_management.fetch);
 };
