@@ -1,6 +1,7 @@
 import Input from "../Input";
 import Password from "../Password";
 import Select from "../Select";
+import Switch from "../Switch";
 
 function FormControl(props: any) {
   const { control, ...rest } = props;
@@ -11,6 +12,8 @@ function FormControl(props: any) {
       return <Password {...rest} />;
     case "select":
       return <Select {...rest} />;
+    case "switch":
+      return <Switch {...rest} />;
     // case "checkbox":
     //   return <Checkbox {...rest} />;
     default:

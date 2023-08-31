@@ -43,7 +43,7 @@ const Sidebar = ({
     },
     {
       name: "Member Management",
-      to: NAVIGATION_ROUTES.MEMBER,
+      to: NAVIGATION_ROUTES.MEMBER_MANAGEMENT,
       icon: (
         <Icon>
           <FaUsers />

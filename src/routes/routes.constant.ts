@@ -3,7 +3,7 @@ export const NAVIGATION_ROUTES = {
   DASHBOARD: "/admin/dashboard",
   LOGIN: "/login",
   SIGNUP: "/signup",
-  MEMBER: "/member",
+  MEMBER_MANAGEMENT: "/member-management",
   VOUCHER: "/voucher",
   REPORT: "/report",
   MASTER: "/master",
