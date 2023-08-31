@@ -10,13 +10,14 @@ import { CellProps } from "react-table";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import * as yup from "yup";
 import { CreateServiceForm } from "../service-add";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
   toastFail,
   toastSuccess,
 } from "@soaltee-loyalty/service/service-toast";
 import {
   createServiceApi,
+  updateService,
   useDeleteService,
 } from "@soaltee-loyalty/service/point-config";
 import { AxiosError } from "axios";
@@ -25,12 +26,13 @@ import { colors } from "@soaltee-loyalty/theme/colors";
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  gap: 12%;
   text-align: center;
   position: relative;
   div {
-    /* background: red; */
     position: relative;
+    flex: 0 0 20%;
     &::after {
       content: "";
       position: absolute;
@@ -57,9 +59,15 @@ const Wrapper = styled.div`
     border-right: 1px solid #ccc;
     height: 100%;
     top: 0;
-    left: 30px;
+    left: 0;
   }
 `;
+
+const defaultValues = {
+  serviceName: "",
+  serviceCode: "",
+  membershipServiceResponseDtos: [],
+};
 
 const ServiceList = ({
   data: tableData,
@@ -164,6 +172,7 @@ const ServiceList = ({
   const { handleSubmit, register, errors, reset, watch, setValue } =
     useFormHook({
       validationSchema,
+      defaultValues,
     });
   useEffect(() => {
     if (isUpdate && updateId) {
@@ -176,32 +185,64 @@ const ServiceList = ({
       });
     }
   }, [isUpdate, updateId]);
-  const { mutate } = useMutation(createServiceApi, {
+
+  const onCloseHandler = () => {
+    reset(defaultValues);
+    setUpdateId("");
+    setIsUpdate(false);
+    onServiceModalClose();
+  };
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation(createServiceApi, {
     onSuccess: (response) => {
-      toastSuccess(response?.data?.data?.message || "Congratulations!");
+      toastSuccess(response?.data?.message || "Congratulations!");
+      queryClient.refetchQueries("service");
+      onServiceModalClose();
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toastFail(error?.response?.data?.message || "Something went wrong");
+    },
+  });
+  const { mutate: update, isLoading: isUpdating } = useMutation(updateService, {
+    onSuccess: (response) => {
+      toastSuccess(response?.data?.message || "Congratulations!");
+      queryClient.refetchQueries("service");
+      onServiceModalClose();
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
   const onSubmitHandler = (data: any) => {
-    mutate({
-      id: data.id,
-      serviceCode: data.serviceCode,
-      serviceName: data.serviceName,
-      membershipServiceRequestDto: formDataArray,
-    });
-    onServiceModalClose();
-    reset();
+    if (updateId) {
+      update({
+        id: updateId,
+        data: {
+          id: data.id,
+          serviceCode: data.serviceCode,
+          serviceName: data.serviceName,
+          membershipServiceRequestDto: formDataArray,
+        },
+      });
+    } else {
+      mutate({
+        id: data.id,
+        serviceCode: data.serviceCode,
+        serviceName: data.serviceName,
+        membershipServiceRequestDto: formDataArray,
+      });
+    }
   };
 
   const { mutateAsync: deleteService, isLoading: isDeleting } =
     useDeleteService();
 
-  const onDelete = (id: string) => {
-    deleteService({
+  const onDelete = async (id: string) => {
+    const result = await deleteService({
       id: id,
     });
+    result.status === 200 && onDeleteServiceClose();
   };
 
   return (
@@ -214,7 +255,7 @@ const ServiceList = ({
         btnText="Add Service"
         CurrentText="Point Table"
         onAction={() => {
-          onServiceModalClose();
+          onCloseHandler();
           onServiceModalOpen();
         }}
       >
@@ -231,10 +272,11 @@ const ServiceList = ({
       />
       <ModalForm
         isModalOpen={isServiceOpen}
-        title="Add Service"
+        title={isUpdate ? "Update Service" : "Add Service"}
         onCloseModal={onServiceModalClose}
+        isLoading={isLoading || isUpdating}
         resetButtonText={"Cancel"}
-        submitButtonText={"Add Service"}
+        submitButtonText={isUpdate ? "Update Service" : "Add Service"}
         submitHandler={handleSubmit(onSubmitHandler)}
       >
         <CreateServiceForm

@@ -11,7 +11,7 @@ import { CellProps } from "react-table";
 import { CreateMemberForm } from "../../form/master-data/member-form";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import * as yup from "yup";
-import { useDeleteMemberTier } from "@soaltee-loyalty/service/master-data";
+import { useDeleteMemberTier } from "@soaltee-loyalty/service/master-data/member-tier";
 
 const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
   const [, setUpdateId] = useState("");
@@ -105,16 +105,6 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
   const { handleSubmit, register, errors, reset } = useFormHook({
     validationSchema,
   });
-
-  // const { mutate } = useMutation(signUpApi, {
-  //   onSuccess: () => {
-  //     console.log("This is success");
-  //   },
-  //   onError: () => {
-  //     console.error("This is error");
-  //   },
-  // });
-  //handle form submit
 
   const onSubmitHandler = (data: any) => {
     console.log(data);

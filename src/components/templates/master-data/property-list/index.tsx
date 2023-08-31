@@ -6,19 +6,37 @@ import DataTable, {
 import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
 import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
 // import { useGetProducts } from "@soaltee-loyalty/service/service-list";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
 import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
 import * as yup from "yup";
 import { CreatePropertyForm } from "../../form/master-data/property-form";
-import { useDeleteProperty } from "@soaltee-loyalty/service/master-data";
+import { useMutation, useQueryClient } from "react-query";
+import {
+  createProperty,
+  updateProperty,
+  useDeleteProperty,
+} from "@soaltee-loyalty/service/master-data/property";
+import {
+  toastFail,
+  toastSuccess,
+} from "@soaltee-loyalty/service/service-toast";
+import { AxiosError } from "axios";
+
+const defaultValues = {
+  name: "",
+  code: "",
+  phoneNumber: "",
+  contactPerson: "",
+  contactPersonPhoneNo: "",
+};
 const PropertyList = ({
   data: tableData,
   isLoading: tableDataFetching,
 }: any) => {
-  // const { data: tableData, isFetching: tableDataFetching } = useGetProducts();
-  const [, setUpdateId] = useState("");
+  const [updateId, setUpdateId] = useState("");
   const [propertyID, setPropertyID] = useState<null | string>("");
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const {
     isOpen: isPropertyOpen,
@@ -78,10 +96,10 @@ const PropertyList = ({
         Header: "Action",
         width: "10%",
 
-        Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
+        Cell: ({ row }: CellProps<{ id: string }>) => {
           const onEdit = () => {
             setUpdateId(row.original?.id);
-            // setIsUpdate(true);
+            setIsUpdate(true);
             onPropertyModalOpen();
           };
           const onDelete = () => {
@@ -109,31 +127,80 @@ const PropertyList = ({
   });
   const { handleSubmit, register, errors, reset } = useFormHook({
     validationSchema,
+    defaultValues,
   });
-  // const { mutate } = useMutation(signUpApi, {
-  //   onSuccess: () => {
-  //     console.log("This is success");
-  //   },
-  //   onError: () => {
-  //     console.error("This is error");
-  //   },
-  // });
+
+  useEffect(() => {
+    if (isUpdate && updateId) {
+      const data = tableData.find((x: any) => x.id === updateId);
+      reset({
+        name: data?.name,
+        code: data?.code,
+        phoneNumber: data?.phoneNumber,
+        contactPerson: data?.contactPerson,
+        contactPersonPhoneNo: data?.contactPersonPhoneNo,
+      });
+    }
+  }, [isUpdate, updateId]);
+
+  const onCloseHandler = () => {
+    reset(defaultValues);
+    setUpdateId("");
+    setIsUpdate(false);
+    onPropertyModalClose();
+  };
+
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation(createProperty, {
+    onSuccess: (response) => {
+      toastSuccess(response?.data?.message || "Congratulations!");
+      queryClient.refetchQueries("property");
+      onPropertyModalClose();
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toastFail(error?.response?.data?.message || "Something went wrong");
+    },
+  });
+
+  const { mutate: update, isLoading: isUpdating } = useMutation(
+    updateProperty,
+    {
+      onSuccess: (response) => {
+        toastSuccess(response?.data?.message || "Property Updated!!");
+        queryClient.invalidateQueries("property");
+        onPropertyModalClose();
+      },
+      onError: (error: AxiosError<{ message: string }>) => {
+        toastFail(error?.response?.data?.message || "Something went wrong");
+      },
+    }
+  );
   //handle form submit
 
   const onSubmitHandler = (data: any) => {
-    console.log(data);
-    onPropertyModalClose();
-    reset();
+    if (updateId) {
+      update({
+        id: updateId,
+        data: {
+          ...data,
+          id: updateId,
+        },
+      });
+    } else {
+      mutate(data);
+    }
   };
 
   //delete property Id
   const { mutateAsync: deletePropertyTier, isLoading: isDeleting } =
     useDeleteProperty();
 
-  const onDelete = (id: string) => {
-    deletePropertyTier({
+  const onDelete = async (id: string) => {
+    const result = await deletePropertyTier({
       id: id,
     });
+    result.status === 200 && onDeletePropertyClose();
   };
 
   return (
@@ -146,7 +213,7 @@ const PropertyList = ({
         btnText="Add Property"
         CurrentText="Property List"
         onAction={() => {
-          onPropertyModalClose();
+          onCloseHandler();
           onPropertyModalOpen();
         }}
       >
@@ -163,10 +230,11 @@ const PropertyList = ({
       />
       <ModalForm
         isModalOpen={isPropertyOpen}
-        title="Add Property"
+        title={isUpdate ? "Update Property" : "Add Property"}
         onCloseModal={onPropertyModalClose}
         resetButtonText={"Cancel"}
-        submitButtonText={"Add Property"}
+        isLoading={isLoading || isUpdating}
+        submitButtonText={isUpdate ? "Update Property" : "Add Property"}
         submitHandler={handleSubmit(onSubmitHandler)}
       >
         <CreatePropertyForm register={register} errors={errors} />

@@ -5,7 +5,7 @@ import { getAllService } from "@soaltee-loyalty/service/point-config";
 import { useQuery } from "react-query";
 
 const ServicePage = () => {
-  const { data, isLoading } = useQuery("service_fetch", getAllService, {
+  const { data, isLoading } = useQuery("service", getAllService, {
     select: ({ data }) => data.datalist,
   });
   return (
