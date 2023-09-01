@@ -4,6 +4,7 @@ import EmailIcon from "./email.png";
 import ProfileBanner from "./profile_banner.png";
 import profileAvatar from "./profile_avatar.png";
 import AwardIcon from "./award.png";
+
 export const imageList = {
   HotelImage,
   Logo,

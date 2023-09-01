@@ -1,4 +1,6 @@
+import Header from "@soaltee-loyalty/components/atoms/Header";
+
 const UserDashboard = () => {
-  return <h1>User</h1>;
+  return <Header />;
 };
 export default UserDashboard;
