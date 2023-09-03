@@ -1,4 +1,4 @@
-import { IMember } from "@soaltee-loyalty/interface/member-management";
+import { IMember } from "@src/interface/member-management";
 import { api } from "../api";
 import { HttpClient } from "../config/api";
 

@@ -1,5 +1,5 @@
 import { Box, Flex, Spacer } from "@chakra-ui/react";
-import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
+import FormControl from "@src/components/atoms/FormControl";
 
 export const CreateMemberForm = ({ register, errors }: any) => {
   return (

@@ -1,9 +1,9 @@
 import { Button, useDisclosure } from "@chakra-ui/react";
 
-import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
-import Heading from "@soaltee-loyalty/components/atoms/Heading";
-import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
+import Heading from "@src/components/atoms/Heading";
+import FormControl from "@src/components/atoms/FormControl";
 import { FormWrapper } from "../authentication/login";
 
 interface ISignupProps {

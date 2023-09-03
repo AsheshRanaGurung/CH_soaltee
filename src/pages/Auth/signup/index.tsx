@@ -1,14 +1,11 @@
 import { useMutation } from "react-query";
-import { SignupTemplate } from "@soaltee-loyalty/components/templates/authentication/register";
-import { signUpApi } from "@soaltee-loyalty/service/auth";
-import Authentication from "@soaltee-loyalty/components/molecules/auth";
-import {
-  toastFail,
-  toastSuccess,
-} from "@soaltee-loyalty/service/service-toast";
+import { SignupTemplate } from "@src/components/templates/authentication/register";
+import { signUpApi } from "@src/service/auth";
+import Authentication from "@src/components/molecules/auth";
+import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
-import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 
 const Signup = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
-// import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
-import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
-import Content from "@soaltee-loyalty/components/molecules/content";
+// import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
+import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
+import Content from "@src/components/molecules/content";
 
 const Dashboard = () => {
   return (

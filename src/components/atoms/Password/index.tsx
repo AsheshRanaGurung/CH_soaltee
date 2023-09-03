@@ -2,7 +2,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { FormControlProps, IconButton } from "@chakra-ui/react";
 import { UseFormRegister } from "react-hook-form";
 import FormControl from "../FormControl";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 
 enum Type {
   TEXT = "type",

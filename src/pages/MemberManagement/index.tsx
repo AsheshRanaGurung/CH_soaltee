@@ -1,7 +1,7 @@
-import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
-import Content from "@soaltee-loyalty/components/molecules/content";
-import MemberManagementList from "@soaltee-loyalty/components/templates/member-management";
-import { getAllMembers } from "@soaltee-loyalty/service/member-management";
+import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
+import Content from "@src/components/molecules/content";
+import MemberManagementList from "@src/components/templates/member-management";
+import { getAllMembers } from "@src/service/member-management";
 import { useQuery } from "react-query";
 
 const MemberManagementPage = () => {

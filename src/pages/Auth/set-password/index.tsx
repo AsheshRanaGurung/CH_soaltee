@@ -1,12 +1,9 @@
 import { useMutation } from "react-query";
-import { setPasswordApi } from "@soaltee-loyalty/service/auth";
-import Authentication from "@soaltee-loyalty/components/molecules/auth";
-import { SetPasswordTemplate } from "@soaltee-loyalty/components/templates/set-password";
-import {
-  toastFail,
-  toastSuccess,
-} from "@soaltee-loyalty/service/service-toast";
-import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
+import { setPasswordApi } from "@src/service/auth";
+import Authentication from "@src/components/molecules/auth";
+import { SetPasswordTemplate } from "@src/components/templates/set-password";
+import { toastFail, toastSuccess } from "@src/service/service-toast";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router";
 import { AxiosError } from "axios";
 

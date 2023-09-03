@@ -1,5 +1,5 @@
 import { Flex, FormLabel, Switch as ChakraSwitch } from "@chakra-ui/react";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 import { UseFormRegister } from "react-hook-form";
 
 interface ISwitch {

@@ -1,13 +1,14 @@
-import LoginComponent from "@soaltee-loyalty/components/templates/authentication/login";
+import LoginComponent from "@src/components/templates/authentication/login";
 import { useMutation } from "react-query";
-import { loginApi } from "@soaltee-loyalty/service/auth";
-import Authentication from "@soaltee-loyalty/components/molecules/auth";
-import { toastSuccess } from "@soaltee-loyalty/service/service-toast";
-import TokenService from "@soaltee-loyalty/service/config/service-token";
-import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
+import { loginApi } from "@src/service/auth";
+import Authentication from "@src/components/molecules/auth";
+import { toastSuccess, toastFail } from "@src/service/service-toast";
+import TokenService from "@src/service/config/service-token";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router";
 import jwt_decode from "jwt-decode";
-import { DecodedToken } from "@soaltee-loyalty/interface/decodedToken";
+import { DecodedToken } from "@src/interface/decodedToken";
+import { AxiosError } from "axios";
 const Login = () => {
   const navigate = useNavigate();
 
@@ -26,8 +27,13 @@ const Login = () => {
       }
     },
 
-    onError: () => {
-      console.error("This is error");
+    onError: (err: AxiosError<{ message: string }>) => {
+      if (err && err?.response?.data?.message === "Email Not Verified") {
+        toastFail("You need to change password first");
+        return navigate(NAVIGATION_ROUTES.SETPASSWORD);
+      } else {
+        console.log("err", err);
+      }
     },
   });
   return (

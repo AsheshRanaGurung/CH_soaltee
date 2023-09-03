@@ -1,5 +1,5 @@
 import { Text } from "@chakra-ui/react";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 export const TableHeading = ({ currentText }: any) => {
   return (
     <>

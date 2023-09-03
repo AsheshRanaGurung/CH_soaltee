@@ -1,7 +1,7 @@
-import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
-import Content from "@soaltee-loyalty/components/molecules/content";
-import ServiceList from "@soaltee-loyalty/components/templates/pointConfiguration/services/service-list";
-import { getAllService } from "@soaltee-loyalty/service/point-config";
+import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
+import Content from "@src/components/molecules/content";
+import ServiceList from "@src/components/templates/pointConfiguration/services/service-list";
+import { getAllService } from "@src/service/point-config";
 import { useQuery } from "react-query";
 
 const ServicePage = () => {

@@ -28,7 +28,7 @@ import {
   TableRowProps,
 } from "@chakra-ui/react";
 
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -37,8 +37,8 @@ import {
 } from "@chakra-ui/icons";
 import { AiOutlinePlus } from "react-icons/ai/index";
 // import { DrawerComponent } from "../drawer";
-import { Search } from "@soaltee-loyalty/components/molecules/search";
-import { TableHeading } from "@soaltee-loyalty/components/atoms/TableHeading";
+import { Search } from "@src/components/molecules/search";
+import { TableHeading } from "@src/components/atoms/TableHeading";
 export function getPager(
   totalRows: number,
   _: number,

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 interface IPropIcons {
   icon?: React.ReactNode;
   bg_color?: string;

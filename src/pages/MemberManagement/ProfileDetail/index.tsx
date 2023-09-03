@@ -1,7 +1,7 @@
-import { imageList } from "@soaltee-loyalty/assets/images";
-import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
-import Content from "@soaltee-loyalty/components/molecules/content";
-import MemberProfile from "@soaltee-loyalty/components/templates/member-management/member-profile";
+import { imageList } from "@src/assets/images";
+import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
+import Content from "@src/components/molecules/content";
+import MemberProfile from "@src/components/templates/member-management/member-profile";
 
 const ProfileDetail = () => {
   return (

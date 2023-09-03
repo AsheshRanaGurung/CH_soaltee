@@ -1,8 +1,8 @@
 import { Button } from "@chakra-ui/button";
 import { Text } from "@chakra-ui/layout";
-import { imageList } from "@soaltee-loyalty/assets/images";
-import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { imageList } from "@src/assets/images";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
+import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 const Wrapper = styled.div`

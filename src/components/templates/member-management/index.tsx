@@ -1,28 +1,20 @@
 import { Stack, useDisclosure } from "@chakra-ui/react";
-import ModalForm from "@soaltee-loyalty/components/organisms/modal";
-import DataTable, {
-  Pagination,
-} from "@soaltee-loyalty/components/organisms/table";
-import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
-import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
+import ModalForm from "@src/components/organisms/modal";
+import DataTable, { Pagination } from "@src/components/organisms/table";
+import TableActions from "@src/components/organisms/table/TableActions";
+import { getPaginatedData } from "@src/components/organisms/table/pagination";
 import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
-import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
 import { CreateMemberManagementForm } from "../form/member-management";
-import Switch from "@soaltee-loyalty/components/atoms/Switch";
+import Switch from "@src/components/atoms/Switch";
 import { useMutation, useQueryClient } from "react-query";
-import {
-  toastFail,
-  toastSuccess,
-} from "@soaltee-loyalty/service/service-toast";
+import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
-import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router";
-import {
-  createMember,
-  updateMember,
-} from "@soaltee-loyalty/service/member-management";
+import { createMember, updateMember } from "@src/service/member-management";
 const defaultValues = {
   fullName: "",
   email: "",

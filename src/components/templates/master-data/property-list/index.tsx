@@ -1,14 +1,12 @@
 import { Stack, useDisclosure } from "@chakra-ui/react";
-import ModalForm from "@soaltee-loyalty/components/organisms/modal";
-import DataTable, {
-  Pagination,
-} from "@soaltee-loyalty/components/organisms/table";
-import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
-import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
-// import { useGetProducts } from "@soaltee-loyalty/service/service-list";
+import ModalForm from "@src/components/organisms/modal";
+import DataTable, { Pagination } from "@src/components/organisms/table";
+import TableActions from "@src/components/organisms/table/TableActions";
+import { getPaginatedData } from "@src/components/organisms/table/pagination";
+// import { useGetProducts } from "@src/service/service-list";
 import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
-import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
 import { CreatePropertyForm } from "../../form/master-data/property-form";
 import { useMutation, useQueryClient } from "react-query";
@@ -16,11 +14,8 @@ import {
   createProperty,
   updateProperty,
   useDeleteProperty,
-} from "@soaltee-loyalty/service/master-data/property";
-import {
-  toastFail,
-  toastSuccess,
-} from "@soaltee-loyalty/service/service-toast";
+} from "@src/service/master-data/property";
+import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 
 const defaultValues = {

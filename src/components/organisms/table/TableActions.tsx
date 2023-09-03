@@ -1,7 +1,7 @@
 import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 import { Flex, IconButton, Tooltip } from "@chakra-ui/react";
 // import { EditIcon, EyeIcon, TrashIcon } from "@hiSavecrud/assets/svgs";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 
 const TableActions = ({ onEdit, onView, onDelete }: ITableActions) => {
   return (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Flex, Spacer } from "@chakra-ui/react";
-import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
-import { nationality } from "@soaltee-loyalty/constant/index";
+import FormControl from "@src/components/atoms/FormControl";
+import { nationality } from "@src/constant/index";
 
 export const CreateMemberManagementForm = ({ register, errors }: any) => {
   const [isSwitchOpen, setIsSwitchOpen] = useState(false);

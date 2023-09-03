@@ -1,7 +1,7 @@
-import { BreadCrumb } from "@soaltee-loyalty/components/atoms/Breadcrumb";
-import Content from "@soaltee-loyalty/components/molecules/content";
-import PropertyList from "@soaltee-loyalty/components/templates/master-data/property-list";
-import { getAllProperty } from "@soaltee-loyalty/service/master-data/property";
+import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
+import Content from "@src/components/molecules/content";
+import PropertyList from "@src/components/templates/master-data/property-list";
+import { getAllProperty } from "@src/service/master-data/property";
 
 import { useQuery } from "react-query";
 

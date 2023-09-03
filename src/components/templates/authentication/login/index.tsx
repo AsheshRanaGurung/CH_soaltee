@@ -1,10 +1,10 @@
 import { Button, useDisclosure, Text, Link } from "@chakra-ui/react";
-import Checkbox from "@soaltee-loyalty/components/atoms/Checkbox";
-import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
-import Heading from "@soaltee-loyalty/components/atoms/Heading";
-import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
-import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import Checkbox from "@src/components/atoms/Checkbox";
+import FormControl from "@src/components/atoms/FormControl";
+import Heading from "@src/components/atoms/Heading";
+import { useFormHook } from "@src/hooks/useFormhook";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
+import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import * as yup from "yup";
 import { Link as RouterLink } from "react-router-dom";

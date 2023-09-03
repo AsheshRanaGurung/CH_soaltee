@@ -1,4 +1,4 @@
-import Header from "@soaltee-loyalty/components/atoms/Header";
+import Header from "@src/components/atoms/Header";
 
 const UserDashboard = () => {
   return <Header />;

@@ -1,7 +1,7 @@
 import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
-import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
-import { getAllMemberTier } from "@soaltee-loyalty/service/master-data/member-tier";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import FormControl from "@src/components/atoms/FormControl";
+import { getAllMemberTier } from "@src/service/master-data/member-tier";
+import { colors } from "@src/theme/colors";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
@@ -39,7 +39,6 @@ export const CreateServiceForm = ({
       id: id,
       rewardPercentage: value,
     };
-    console.log("lulu", newFormDataArray);
     setFormDataArray(newFormDataArray);
   };
   useEffect(() => {

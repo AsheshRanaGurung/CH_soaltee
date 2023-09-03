@@ -3,8 +3,8 @@ import { Box, Flex, Text, Icon } from "@chakra-ui/react";
 import Item from "./Item";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { colors } from "@soaltee-loyalty/theme/colors";
-import { RightArrowIcon } from "@soaltee-loyalty/assets/svgs";
+import { colors } from "@src/theme/colors";
+import { RightArrowIcon } from "@src/assets/svgs";
 interface INavItem {
   visible: boolean;
   name: string;
