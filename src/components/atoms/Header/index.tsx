@@ -33,6 +33,7 @@ const NavLink = (props: Props) => {
       as="a"
       px={2}
       py={1}
+      color={"white"}
       _hover={{
         textDecoration: "none",
       }}
@@ -51,8 +52,8 @@ export default function Header() {
   };
   return (
     <>
-      <Container maxW={"1200px"}>
-        <Box px={4} mt={4}>
+      <Container maxW={"1400px"}>
+        <Box px={4} py={4}>
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <IconButton
               size={"md"}
