@@ -43,7 +43,7 @@ const SliderContainer = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    border: 125px solid ${colors.primary};
+    /* border: 125px solid ${colors.primary}; */
     -webkit-clip-path: polygon(0 0, 85% 0%, 100% 100%, 0% 100%);
     clip-path: polygon(0 0, 86% 0%, 100% 100%, 0% 100%);
   }

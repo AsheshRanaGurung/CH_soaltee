@@ -4,6 +4,13 @@ import { api } from "../api";
 import { useMutation, useQueryClient } from "react-query";
 import { toastSuccess } from "../service-toast";
 
+export const imageApi = async (url: any) => {
+  const response = await HttpClient.get(`${url.value}`, {
+    responseType: "blob",
+  });
+  return response;
+};
+
 export const createServiceApi = (data: IService) => {
   return HttpClient.post(`${api.configuration.service.add}`, {
     data: data,

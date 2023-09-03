@@ -4,16 +4,24 @@ import ModalForm from "@src/components/organisms/modal";
 import DataTable, { Pagination } from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
 import { getPaginatedData } from "@src/components/organisms/table/pagination";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
 import { CreateMemberForm } from "../../form/master-data/member-form";
 import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
-import { useDeleteMemberTier } from "@src/service/master-data/member-tier";
+import {
+  createMemberTier,
+  updateMemberTier,
+  useDeleteMemberTier,
+} from "@src/service/master-data/member-tier";
+import { useMutation, useQueryClient } from "react-query";
+import { toastFail, toastSuccess } from "@src/service/service-toast";
+import { AxiosError } from "axios";
 
 const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
-  const [, setUpdateId] = useState("");
+  const [updateId, setUpdateId] = useState("");
   const [memberTierID, setMemberTierID] = useState<null | string>("");
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const {
     isOpen: isMemberOpen,
@@ -66,13 +74,17 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
         Header: "Image",
         accessor: "imageUrl",
         width: "20%",
+        Cell: ({ value }: any) => {
+          return <img src={value} alt="Image" width="100" />;
+        },
       },
+
       {
         Header: "Action",
         Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
           const onEdit = () => {
             setUpdateId(row.original?.id);
-            // setIsUpdate(true);
+            setIsUpdate(true);
             onMemberModalOpen();
           };
           const onDelete = () => {
@@ -97,28 +109,77 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
 
   const validationSchema = yup.object().shape({
     membershipName: yup.string().required("Membership Name is required"),
-    imageUrl: yup.string().required("Image is required"),
     requiredPoints: yup.string().required("Point is required"),
   });
-  const { handleSubmit, register, errors, reset } = useFormHook({
+  useEffect(() => {
+    if (isUpdate && updateId) {
+      const data = tableData.find((x: any) => x.id === updateId);
+      reset({
+        membershipName: data?.membershipName,
+        requiredPoints: data?.requiredPoints,
+        image: data?.imageUrl,
+      });
+    }
+  }, [isUpdate, updateId]);
+  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
     validationSchema,
   });
+  const queryClient = useQueryClient();
+  const { mutate, isLoading } = useMutation(createMemberTier, {
+    onSuccess: (response) => {
+      toastSuccess(response?.data?.message);
+      queryClient.refetchQueries("member_tier");
+      onMemberModalClose();
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toastFail(error?.response?.data?.message || "Something went wrong");
+    },
+  });
+  const { mutate: update, isLoading: isUpdating } = useMutation(
+    updateMemberTier,
+    {
+      onSuccess: (response) => {
+        toastSuccess(response?.data?.message || "Property Updated!!");
+        queryClient.invalidateQueries("member_tier");
+        onMemberModalClose();
+      },
+      onError: (error: AxiosError<{ message: string }>) => {
+        toastFail(error?.response?.data?.message || "Something went wrong");
+      },
+    }
+  );
 
   const onSubmitHandler = (data: any) => {
-    console.log(data);
-    // mutate(data);
-    onMemberModalClose();
+    const formData = new FormData();
+    const dat = {
+      membershipName: data.membershipName,
+      requiredPoints: data.requiredPoints,
+    };
+
+    formData.append("data", JSON.stringify(dat));
+    if (updateId) {
+      formData.append("image", data.image);
+      update({ id: updateId, data: formData });
+    } else {
+      formData.append("image", data.image);
+      mutate(formData);
+    }
     reset();
   };
 
   //delete member tier
   const { mutateAsync: deleteMemberTier, isLoading: isDeleting } =
     useDeleteMemberTier();
-
-  const onDelete = (id: string) => {
-    deleteMemberTier({
+  const onCloseHandler = () => {
+    setUpdateId("");
+    setIsUpdate(false);
+    onMemberModalClose();
+  };
+  const onDelete = async (id: string) => {
+    await deleteMemberTier({
       id: id,
     });
+    // result.responseCode === "200 OK" && onDeleteMemberClose();
   };
   return (
     <>
@@ -130,7 +191,7 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
         CurrentText="Member List"
         btnText="Add Membership Tier"
         onAction={() => {
-          onMemberModalClose();
+          onCloseHandler();
           onMemberModalOpen();
         }}
       >
@@ -147,15 +208,19 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
       />
       <ModalForm
         isModalOpen={isMemberOpen}
-        // isLoading={isLoading || isUpdating || memberInfoFetching}
-        // title={isUpdate ? "Update Bank" : "Add Bank"}
+        disabled={isUpdate}
+        isLoading={isLoading || isUpdating}
         onCloseModal={onMemberModalClose}
         resetButtonText={"Cancel"}
-        submitButtonText={"Add Member Tier"}
+        submitButtonText={isUpdate ? "Update Member Tier" : "Add Member Tier"}
         submitHandler={handleSubmit(onSubmitHandler)}
-        title="Add Membership Tier"
+        title={isUpdate ? "Update Member Tier" : "Add Member Tier"}
       >
-        <CreateMemberForm register={register} errors={errors} />
+        <CreateMemberForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+        />
       </ModalForm>
 
       <ModalForm

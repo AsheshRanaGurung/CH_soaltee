@@ -6,3 +6,8 @@ export interface IProperty {
   contactPerson: string;
   contactPersonPhoneNo: string;
 }
+
+export interface IMemberTier {
+  data: string;
+  image: string;
+}

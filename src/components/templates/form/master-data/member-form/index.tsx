@@ -1,7 +1,8 @@
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
+import ImageUpload from "@src/components/atoms/ImageUpload";
 
-export const CreateMemberForm = ({ register, errors }: any) => {
+export const CreateMemberForm = ({ register, errors, setValue }: any) => {
   return (
     <>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -25,7 +26,7 @@ export const CreateMemberForm = ({ register, errors }: any) => {
             error={errors?.requiredPoints?.message || ""}
             required
           />
-          <FormControl
+          {/* <FormControl
             control="input"
             type="file"
             name="imageUrl"
@@ -33,7 +34,8 @@ export const CreateMemberForm = ({ register, errors }: any) => {
             label={"Upload Image"}
             error={errors?.imageUrl?.message || ""}
             required
-          />
+          /> */}
+          <ImageUpload setValue={setValue} />
         </Flex>
         <Spacer />
       </Box>

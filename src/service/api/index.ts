@@ -17,6 +17,7 @@ export const api = {
       add: "/membership/create-tier",
       fetch: "/membership/get-all-tier",
       delete: "/membership/delete-tier/:id",
+      update: "/membership/update-tier/:id",
     },
     property_list: {
       add: "/property/save-property",
