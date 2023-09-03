@@ -1,6 +1,11 @@
-import Header from "@src/components/atoms/Header";
+import { Box } from "@chakra-ui/layout";
+import { MemberShip } from "@src/components/templates/membership-card";
 
 const UserDashboard = () => {
-  return <Header />;
+  return (
+    <Box>
+      <MemberShip />
+    </Box>
+  );
 };
 export default UserDashboard;
