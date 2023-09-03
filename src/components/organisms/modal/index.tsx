@@ -24,6 +24,7 @@ interface IModal {
   height?: string;
   overflowY?: "auto" | "visible";
   view?: boolean;
+  disabled?: boolean;
 }
 
 const ModalForm: FC<IModal> = ({
@@ -36,6 +37,7 @@ const ModalForm: FC<IModal> = ({
   submitHandler,
   resetButtonText,
   submitButtonText,
+  disabled,
   handleSubmit,
 }) => {
   return (
@@ -62,6 +64,7 @@ const ModalForm: FC<IModal> = ({
                 borderRadius="0"
                 w="100%"
                 onClick={onCloseModal}
+                isDisabled={disabled}
                 size={"md"}
               >
                 {resetButtonText}
@@ -70,6 +73,7 @@ const ModalForm: FC<IModal> = ({
             <Button
               type="submit"
               borderRadius="0"
+              isDisabled={disabled}
               w="100%"
               onClick={() => {
                 handleSubmit?.();

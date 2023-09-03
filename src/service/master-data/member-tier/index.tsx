@@ -8,7 +8,17 @@ export const getAllMemberTier = () => {
   return HttpClient.get(api.master_data.member_tier.fetch);
 };
 
-//delete member tier
+export const createMemberTier = (data: any) => {
+  return HttpClient.post(`${api.master_data.member_tier.add}`, data);
+};
+
+export const updateMemberTier = ({ id, data }: { id: string; data: any }) => {
+  return HttpClient.post(
+    api.master_data.member_tier.update.replace(":id", id),
+    data
+  );
+};
+
 export const deleteMemberTier = ({ id }: any) => {
   return HttpClient.delete(
     api.master_data.member_tier.delete.replace(":id", id)

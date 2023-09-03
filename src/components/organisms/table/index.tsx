@@ -339,18 +339,7 @@ const DataTable = React.memo(
                             >
                               {/* {cell.render("Cell")} */}
                               {/* Render image in the cell */}
-                              {cell.column.Header === "Image" ? (
-                                <img
-                                  src={cell.value} // Provide the image URL
-                                  alt="Image"
-                                  style={{
-                                    maxWidth: "30%",
-                                    height: "auto",
-                                  }}
-                                />
-                              ) : (
-                                cell.render("Cell")
-                              )}
+                              {cell.render("Cell")}
                             </Td>
                           );
                         })}

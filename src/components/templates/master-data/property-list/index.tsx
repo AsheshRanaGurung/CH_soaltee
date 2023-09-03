@@ -149,7 +149,7 @@ const PropertyList = ({
 
   const { mutate, isLoading } = useMutation(createProperty, {
     onSuccess: (response) => {
-      toastSuccess(response?.data?.message || "Congratulations!");
+      toastSuccess(response?.data?.message);
       queryClient.refetchQueries("property");
       onPropertyModalClose();
     },

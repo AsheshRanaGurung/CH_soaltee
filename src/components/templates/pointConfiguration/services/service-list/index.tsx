@@ -172,6 +172,7 @@ const ServiceList = ({
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData.find((x: any) => x.id === updateId);
+      setFormDataArray(data.membershipServiceResponseDtos);
       reset({
         id: data?.id,
         serviceName: data?.serviceName,

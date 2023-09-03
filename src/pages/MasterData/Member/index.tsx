@@ -5,7 +5,7 @@ import { getAllMemberTier } from "@src/service/master-data/member-tier";
 import { useQuery } from "react-query";
 
 const MemberPage = () => {
-  const { data, isLoading } = useQuery("member", getAllMemberTier, {
+  const { data, isLoading } = useQuery("member_tier", getAllMemberTier, {
     select: ({ data }) => data.datalist,
   });
   return (

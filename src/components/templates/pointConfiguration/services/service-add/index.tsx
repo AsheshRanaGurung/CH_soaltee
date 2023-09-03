@@ -28,18 +28,13 @@ export const CreateServiceForm = ({
   const handleInputChange = (e: any, index: number, id: number) => {
     const { value } = e.target;
     const newFormDataArray = [...formDataArray];
-
-    // Initialize the array with empty objects if it doesn't exist yet
-    while (newFormDataArray.length <= index) {
-      newFormDataArray.push({ id: "", rewardPercentage: "" });
-    }
-
     newFormDataArray[index] = {
       ...newFormDataArray[index],
       id: id,
       rewardPercentage: value,
     };
-    setFormDataArray(newFormDataArray);
+
+    setFormDataArray(newFormDataArray.filter((item) => item !== undefined));
   };
   useEffect(() => {
     setValue("membershipServiceResponseDtos", data);
