@@ -1,28 +1,23 @@
 import { Stack, useDisclosure } from "@chakra-ui/react";
-import ModalForm from "@soaltee-loyalty/components/organisms/modal";
-import DataTable, {
-  Pagination,
-} from "@soaltee-loyalty/components/organisms/table";
-import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
-import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
+import ModalForm from "@src/components/organisms/modal";
+import DataTable, { Pagination } from "@src/components/organisms/table";
+import TableActions from "@src/components/organisms/table/TableActions";
+import { getPaginatedData } from "@src/components/organisms/table/pagination";
 import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
-import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
 import { CreateServiceForm } from "../service-add";
 import { useMutation, useQueryClient } from "react-query";
-import {
-  toastFail,
-  toastSuccess,
-} from "@soaltee-loyalty/service/service-toast";
+import { toastFail, toastSuccess } from "@src/service/service-toast";
 import {
   createServiceApi,
   updateService,
   useDeleteService,
-} from "@soaltee-loyalty/service/point-config";
+} from "@src/service/point-config";
 import { AxiosError } from "axios";
 import styled from "styled-components";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 
 const Wrapper = styled.div`
   display: flex;

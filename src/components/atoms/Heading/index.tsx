@@ -1,4 +1,4 @@
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 interface IHeadingProps {
   title?: string;

@@ -8,7 +8,7 @@ import {
   InputProps,
   InputRightElement,
 } from "@chakra-ui/react";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 
 interface IInput extends InputProps {

@@ -1,4 +1,4 @@
-import { ILogin, ISetPassword, ISignup } from "@soaltee-loyalty/interface/auth";
+import { ILogin, ISetPassword, ISignup } from "@src/interface/auth";
 import { api } from "../api";
 import { HttpClient } from "../config/api";
 // import axios from "axios";

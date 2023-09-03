@@ -1,4 +1,4 @@
-import { ISelectOption } from "@soaltee-loyalty/components/atoms/Select";
+import { ISelectOption } from "@src/components/atoms/Select";
 
 export const nationality: ISelectOption[] = [
   { value: "Nepalese", label: "Nepalese" },

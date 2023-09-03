@@ -1,7 +1,7 @@
-import { IProperty } from "@soaltee-loyalty/interface/master-data";
-import { api } from "@soaltee-loyalty/service/api";
-import { HttpClient } from "@soaltee-loyalty/service/config/api";
-import { toastSuccess } from "@soaltee-loyalty/service/service-toast";
+import { IProperty } from "@src/interface/master-data";
+import { api } from "@src/service/api";
+import { HttpClient } from "@src/service/config/api";
+import { toastSuccess } from "@src/service/service-toast";
 import { useQueryClient, useMutation } from "react-query";
 // import axios from "axios";
 

@@ -1,6 +1,6 @@
-import { useSlider } from "@soaltee-loyalty/hooks/useSlider";
+import { useSlider } from "@src/hooks/useSlider";
 import styled from "styled-components";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 
 interface IImageProps {
   image: string;
@@ -46,7 +46,6 @@ const SliderContainer = styled.div`
     border: 125px solid ${colors.primary};
     -webkit-clip-path: polygon(0 0, 85% 0%, 100% 100%, 0% 100%);
     clip-path: polygon(0 0, 86% 0%, 100% 100%, 0% 100%);
-    height: 100vh;
   }
 `;
 

@@ -1,8 +1,8 @@
-import { imageList } from "@soaltee-loyalty/assets/images";
+import { imageList } from "@src/assets/images";
 import styled from "styled-components";
 import { Text } from "@chakra-ui/layout";
-import { colors } from "@soaltee-loyalty/theme/colors";
-import Icons from "@soaltee-loyalty/components/atoms/Icons";
+import { colors } from "@src/theme/colors";
+import Icons from "@src/components/atoms/Icons";
 import { AiFillMail, AiOutlinePlus } from "react-icons/ai";
 import { FaGlobeAsia, FaPhoneAlt, FaRegCalendarAlt } from "react-icons/fa";
 import { Button } from "@chakra-ui/button";
@@ -93,7 +93,6 @@ const Card = styled.div`
 const MemberProfile = () => {
   const location = useLocation();
   const { state } = location;
-  console.log("sssst", state);
   return (
     <Wrapper>
       <img className="profile-img" src={imageList.profileAvatar} />

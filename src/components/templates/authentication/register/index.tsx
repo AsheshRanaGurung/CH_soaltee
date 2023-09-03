@@ -1,15 +1,15 @@
 import { Button, VStack } from "@chakra-ui/react";
-import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
-import { useState } from "react";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { colors } from "@soaltee-loyalty/theme/colors";
-import Checkbox from "@soaltee-loyalty/components/atoms/Checkbox";
-import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import { colors } from "@src/theme/colors";
+import Checkbox from "@src/components/atoms/Checkbox";
+import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
-import Heading from "@soaltee-loyalty/components/atoms/Heading";
+import Heading from "@src/components/atoms/Heading";
 import { FormWrapper } from "../login";
-import FormControl from "@soaltee-loyalty/components/atoms/FormControl";
-import { nationality } from "@soaltee-loyalty/constant/index";
+import FormControl from "@src/components/atoms/FormControl";
+import { nationality } from "@src/constant/index";
 
 interface ISignupProps {
   mutate: any;
@@ -44,7 +44,10 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
     }));
   };
 
-  const isSubmitDisabled = !checked.terms || !checked.offers;
+  let isSubmitDisabled = !checked.terms || !checked.offers;
+  useEffect(() => {
+    isSubmitDisabled = true;
+  }, [isLoading]);
   return (
     <>
       <Heading title="Sign Up" text="Enter your details to sign up" />
@@ -123,7 +126,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             className="button"
             w="100%"
             borderRadius="none"
-            disabled={isSubmitDisabled || isLoading}
+            isDisabled={isSubmitDisabled}
             isLoading={isLoading}
           >
             Sign Up

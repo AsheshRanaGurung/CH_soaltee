@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo, useContext } from "react";
 import { Box } from "@chakra-ui/react";
-import useWindowSize from "@soaltee-loyalty/hooks/useWindowResize";
-import Sidebar from "@soaltee-loyalty/components/molecules/sidebar/Sidebar";
-import { SidebarState } from "@soaltee-loyalty/hooks/useContext";
+import useWindowSize from "@src/hooks/useWindowResize";
+import Sidebar from "@src/components/molecules/sidebar/Sidebar";
+import { SidebarState } from "@src/hooks/useContext";
+import { RxHamburgerMenu } from "react-icons/rx";
 
-// Define the possible layout widths
 const LAYOUT_WIDTHS = {
   LARGE: "265px",
   SMALL: "80px",
@@ -13,55 +13,28 @@ const LAYOUT_WIDTHS = {
 const Layout = ({ children }: ILayout) => {
   const { width } = useWindowSize();
   const [showSidebar, setShowSidebar] = useState(true);
-  // const [isHovered, setIsHovered] = useState(false);
-
-  // Update the sidebar state based on the window width
   useEffect(() => {
     if (width < 640) {
       setShowSidebar(false);
     } else {
       setShowSidebar(true);
     }
-    // setIsHovered(false);
   }, [width]);
 
-  // Toggle the sidebar's collapsed state
-  // const toggleSidebar = () => {
-  //   setShowSidebar(!showSidebar);
-  //   setIsHovered(false);
-  // };
-
-  // Calculate the current sidebar width based on its collapsed state and hovered state
   const sidebarWidth = useMemo(
     () => (showSidebar ? LAYOUT_WIDTHS.LARGE : LAYOUT_WIDTHS.SMALL),
     [showSidebar]
   );
 
-  // Handle when the user hovers over the collapsed sidebar
-  // const onEnterSidebar = () => {
-  //   if (!showSidebar) {
-  //     setIsHovered(true);
-  //   }
-  // };
-
-  // // Handle when the user stops hovering over the collapsed sidebar
-  // const onExitSidebar = () => {
-  //   if (isHovered) {
-  //     setIsHovered(false);
-  //   }
-  // };
-
   return (
     <Box display="grid" gridTemplateColumns="auto 1fr">
-      <Sidebar
-        // onEnterSidebar={onEnterSidebar}
-        // onExitSidebar={onExitSidebar}
-        // isHovered={isHovered}
-        width={sidebarWidth}
-        isCollapse={!showSidebar}
-      />
+      <Sidebar width={sidebarWidth} isCollapse={!showSidebar} />
       <Box height="100vh" maxH="100vh" overflowY="auto">
         <SidebarState.Provider value={{ showSidebar, setShowSidebar }}>
+          <RxHamburgerMenu
+            onClick={() => setShowSidebar(!showSidebar)}
+            style={{ position: "absolute", top: "24px", cursor: "pointer" }}
+          />
           <Box
             py={6}
             pb={40}

@@ -1,18 +1,18 @@
 import { useRoutes } from "react-router-dom";
 import { NAVIGATION_ROUTES } from "./routes.constant";
-import Login from "@soaltee-loyalty/pages/Auth/login";
-import Dashboard from "@soaltee-loyalty/pages/Dashboard";
+import Login from "@src/pages/Auth/login";
+import Dashboard from "@src/pages/Dashboard";
 import Signup from "../pages/Auth/signup";
-import PropertyPage from "@soaltee-loyalty/pages/MasterData/Property";
-import MemberPage from "@soaltee-loyalty/pages/MasterData/Member";
-import SetPassword from "@soaltee-loyalty/pages/Auth/set-password";
-import Verification from "@soaltee-loyalty/pages/Auth/verification";
+import PropertyPage from "@src/pages/MasterData/Property";
+import MemberPage from "@src/pages/MasterData/Member";
+import SetPassword from "@src/pages/Auth/set-password";
+import Verification from "@src/pages/Auth/verification";
 import PrivateRoute from "./privateRoute";
 import RestrictedRoute from "./restrictedRoute";
-import UserDashboard from "@soaltee-loyalty/userPages/UserDashboard";
-import ServicePage from "@soaltee-loyalty/pages/PointConfig/Service";
-import MemberManagementPage from "@soaltee-loyalty/pages/MemberManagement";
-import ProfileDetail from "@soaltee-loyalty/pages/MemberManagement/ProfileDetail";
+import UserDashboard from "@src/userPages/UserDashboard";
+import ServicePage from "@src/pages/PointConfig/Service";
+import MemberManagementPage from "@src/pages/MemberManagement";
+import ProfileDetail from "@src/pages/MemberManagement/ProfileDetail";
 
 const routes = [
   {

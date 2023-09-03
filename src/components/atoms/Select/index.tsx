@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 
 const Select = ({
   placeholder,

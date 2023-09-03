@@ -13,9 +13,9 @@ import {
 } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 import styled from "styled-components";
-import { NAVIGATION_ROUTES } from "@soaltee-loyalty/routes/routes.constant";
-import { colors } from "@soaltee-loyalty/theme/colors";
-import { imageList } from "@soaltee-loyalty/assets/images";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
+import { colors } from "@src/theme/colors";
+import { imageList } from "@src/assets/images";
 const Icon = styled.div``;
 interface ISidebar {
   isCollapse: boolean;

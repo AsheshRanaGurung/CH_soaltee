@@ -1,8 +1,8 @@
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import ImageSlider from "../image-slider";
-import { imageList } from "@soaltee-loyalty/assets/images";
-import useWindowSize from "@soaltee-loyalty/hooks/useWindowResize";
+import { imageList } from "@src/assets/images";
+import useWindowSize from "@src/hooks/useWindowResize";
 interface IProps {
   children: React.ReactNode;
 }

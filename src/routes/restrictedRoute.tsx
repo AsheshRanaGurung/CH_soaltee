@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { NAVIGATION_ROUTES } from "./routes.constant";
 import jwt_decode from "jwt-decode";
-import { DecodedToken } from "@soaltee-loyalty/interface/decodedToken";
+import { DecodedToken } from "@src/interface/decodedToken";
 
 const RestrictedRoute = ({ Component }: any) => {
   const isAuthenticated = localStorage.getItem("token");

@@ -1,6 +1,6 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import { Button, Input } from "@chakra-ui/react";
-import { colors } from "@soaltee-loyalty/theme/colors";
+import { colors } from "@src/theme/colors";
 
 export const Search = ({ setSearchValue }: any) => {
   return (

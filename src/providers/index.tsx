@@ -4,8 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { theme } from "../theme";
-import { Toaster } from "@soaltee-loyalty/service/service-toast";
-
+import { Toaster } from "@src/service/service-toast";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

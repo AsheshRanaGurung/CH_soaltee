@@ -15,7 +15,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { imageList } from "@soaltee-loyalty/assets/images";
+import { imageList } from "@src/assets/images";
 import { FaGlobeAsia } from "react-icons/fa";
 import { useState } from "react";
 

@@ -1,4 +1,4 @@
-import { IService } from "@soaltee-loyalty/interface/pointConfig";
+import { IService } from "@src/interface/pointConfig";
 import { HttpClient } from "../config/api";
 import { api } from "../api";
 import { useMutation, useQueryClient } from "react-query";

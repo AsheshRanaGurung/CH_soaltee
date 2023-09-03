@@ -1,17 +1,15 @@
 import { Stack, useDisclosure } from "@chakra-ui/react";
-// import { ProductForm } from "@soaltee-loyalty/components/templates/form";
-import ModalForm from "@soaltee-loyalty/components/organisms/modal";
-import DataTable, {
-  Pagination,
-} from "@soaltee-loyalty/components/organisms/table";
-import TableActions from "@soaltee-loyalty/components/organisms/table/TableActions";
-import { getPaginatedData } from "@soaltee-loyalty/components/organisms/table/pagination";
+// import { ProductForm } from "@src/components/templates/form";
+import ModalForm from "@src/components/organisms/modal";
+import DataTable, { Pagination } from "@src/components/organisms/table";
+import TableActions from "@src/components/organisms/table/TableActions";
+import { getPaginatedData } from "@src/components/organisms/table/pagination";
 import { useMemo, useState } from "react";
 import { CellProps } from "react-table";
 import { CreateMemberForm } from "../../form/master-data/member-form";
-import { useFormHook } from "@soaltee-loyalty/hooks/useFormhook";
+import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
-import { useDeleteMemberTier } from "@soaltee-loyalty/service/master-data/member-tier";
+import { useDeleteMemberTier } from "@src/service/master-data/member-tier";
 
 const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
   const [, setUpdateId] = useState("");
