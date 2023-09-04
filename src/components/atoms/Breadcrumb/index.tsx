@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { colors } from "@src/theme/colors";
+import Profile from "@src/components/molecules/profile";
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-left: 25px;
+  margin: 25px;
+  justify-content: space-between;
+  margin-top: 10px;
   span {
     line-height: 17px;
     color: ${colors.text_black};
@@ -19,6 +22,7 @@ export const BreadCrumb = ({ name }: IBreadCrumb) => {
   return (
     <Wrapper>
       <span color={colors.primary_dark}>{name}</span>
+      <Profile />
     </Wrapper>
   );
 };
