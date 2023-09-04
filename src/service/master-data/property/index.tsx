@@ -1,7 +1,8 @@
 import { IProperty } from "@src/interface/master-data/property";
 import { api } from "@src/service/api";
 import { HttpClient } from "@src/service/config/api";
-import { toastSuccess } from "@src/service/service-toast";
+import { toastFail, toastSuccess } from "@src/service/service-toast";
+import { AxiosError } from "axios";
 import { useQueryClient, useMutation } from "react-query";
 
 export const getAllProperty = () => {
@@ -13,7 +14,20 @@ export const createProperty = (data: IProperty) => {
     data: data,
   });
 };
-
+export const useCreateProperty = () => {
+  const queryClient = useQueryClient();
+  return useMutation(createProperty, {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries("property");
+      toastSuccess(response?.data?.message);
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toastFail(
+        error.response?.data?.message || "Cound not create member tier"
+      );
+    },
+  });
+};
 export const updateProperty = ({
   id,
   data,
@@ -31,7 +45,18 @@ export const updateProperty = ({
     }
   );
 };
-
+export const useUpdateProperty = () => {
+  const queryClient = useQueryClient();
+  return useMutation(updateProperty, {
+    onSuccess: (response) => {
+      toastSuccess(response?.data?.message);
+      queryClient.invalidateQueries("property");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toastFail(error?.response?.data?.message || "Something went wrong");
+    },
+  });
+};
 export const deletePropertyTier = ({ id }: any) => {
   return HttpClient.delete(
     api.master_data.property_list.delete.replace(":id", id)

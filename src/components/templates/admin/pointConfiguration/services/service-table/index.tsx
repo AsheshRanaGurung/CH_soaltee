@@ -2,12 +2,18 @@ import { Stack } from "@chakra-ui/react";
 import DataTable, { Pagination } from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
 import { getPaginatedData } from "@src/components/organisms/table/pagination";
-import { IMemberTierDetail } from "@src/interface/master-data/property";
+import {
+  IMemberTierOne,
+  IMembershipServiceRequest,
+  IService,
+} from "@src/interface/pointConfig";
+import { colors } from "@src/theme/colors";
 import { useMemo, useState } from "react";
 import { CellProps } from "react-table";
+import styled from "styled-components";
 
 interface IMemberTierTable {
-  tableData?: IMemberTierDetail[];
+  tableData?: IService[];
   tableDataFetching?: boolean;
   onAction?: () => void;
   title?: string;
@@ -18,7 +24,46 @@ interface IMemberTierTable {
   onDeleteData?: ((id: string) => void) | undefined;
 }
 
-const MemberTierTable: React.FC<IMemberTierTable> = ({
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 4%;
+  text-align: center;
+  position: relative;
+  div {
+    position: relative;
+    flex: 0 0 20%;
+    &::after {
+      content: "";
+      position: absolute;
+      border-right: 1px solid #ccc;
+      height: 100%;
+      top: 0;
+      right: 0px;
+    }
+  }
+  .title {
+    font-size: 14px;
+    color: ${colors.primary};
+    font-weight: 500;
+  }
+  .percent {
+    font-size: 14px;
+    color: ${colors.secondary_black};
+    font-weight: 500;
+    margin-top: 5px;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    border-right: 1px solid #ccc;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+`;
+
+const ServiceTable: React.FC<IMemberTierTable> = ({
   tableData,
   tableDataFetching,
   onAction,
@@ -46,32 +91,53 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
     () => [
       {
         Header: "S.N",
-        accessor: (_: IMemberTierDetail, index: number) =>
+        accessor: (_: IService, index: number) =>
           (pageParams.page - 1) * pageParams.limit + (index + 1),
         width: "10%",
       },
 
       {
-        Header: "Tier Name",
-        accessor: "membershipName",
+        Header: "Service",
+        accessor: "serviceName",
         width: "20%",
       },
       {
-        Header: "Points To Tier",
-        accessor: "requiredPoints",
-        width: "40%",
+        Header: "Code",
+        accessor: "serviceCode",
+        width: "10%",
       },
       {
-        Header: "Image",
-        accessor: "imageUrl",
-        width: "20%",
-        Cell: ({ value }: { value: string }) => {
-          return <img src={value} alt="Image" width="100" />;
+        Header: "Member",
+        accessor: "membershipServiceResponseDtos",
+        width: "30%",
+        textAlign: "center",
+        Cell: ({
+          row,
+        }: {
+          row: {
+            original: {
+              membershipServiceResponseDtos?: IMembershipServiceRequest[];
+            };
+          };
+        }) => {
+          return (
+            <Wrapper>
+              {row?.original?.membershipServiceResponseDtos?.map(
+                (itmm: IMemberTierOne, index: number) => (
+                  <div key={index}>
+                    <h1 className="title">{itmm.membershipTierName}</h1>
+                    <h1 className="percent">{itmm.rewardPercentage}</h1>
+                  </div>
+                )
+              )}
+            </Wrapper>
+          );
         },
       },
-
       {
         Header: "Action",
+        width: "10%",
+
         Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
           const onEdit = () => {
             onEditData && onEditData(row.original?.id);
@@ -85,12 +151,10 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
             </Stack>
           );
         },
-        width: 120,
       },
     ],
     [pageParams]
   );
-
   return (
     <>
       <DataTable
@@ -114,5 +178,4 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
     </>
   );
 };
-
-export default MemberTierTable;
+export default ServiceTable;

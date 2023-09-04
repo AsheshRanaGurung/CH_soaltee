@@ -1,76 +1,37 @@
-import { Stack, useDisclosure } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import ModalForm from "@src/components/organisms/modal";
-import DataTable, { Pagination } from "@src/components/organisms/table";
-import TableActions from "@src/components/organisms/table/TableActions";
-import { getPaginatedData } from "@src/components/organisms/table/pagination";
-import { useEffect, useMemo, useState } from "react";
-import { CellProps } from "react-table";
+import { useEffect, useState } from "react";
 import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
 import { CreateServiceForm } from "../service-add";
-import { useMutation, useQueryClient } from "react-query";
-import { toastFail, toastSuccess } from "@src/service/service-toast";
 import {
-  createServiceApi,
-  updateService,
+  useCreateService,
   useDeleteService,
-} from "@src/service/point-config";
-import { AxiosError } from "axios";
-import styled from "styled-components";
-import { colors } from "@src/theme/colors";
+  useUpdateService,
+} from "@src/service/point-config/service";
+import { IService } from "@src/interface/pointConfig";
+import ServiceTable from "../service-table";
+import { getAllMemberTier } from "@src/service/master-data/member-tier";
+import { useQuery } from "react-query";
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  gap: 4%;
-  text-align: center;
-  position: relative;
-  div {
-    position: relative;
-    flex: 0 0 20%;
-    &::after {
-      content: "";
-      position: absolute;
-      border-right: 1px solid #ccc;
-      height: 100%;
-      top: 0;
-      right: 0px;
-    }
-  }
-  .title {
-    font-size: 14px;
-    color: ${colors.primary};
-    font-weight: 500;
-  }
-  .percent {
-    font-size: 14px;
-    color: ${colors.secondary_black};
-    font-weight: 500;
-    margin-top: 5px;
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    border-right: 1px solid #ccc;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
-`;
-
+interface IServiceProps {
+  tableData: IService[];
+  tableDataFetching: boolean;
+}
 const defaultValues = {
   serviceName: "",
   serviceCode: "",
   membershipServiceResponseDtos: [],
 };
 
-const ServiceList = ({
-  data: tableData,
-  isLoading: tableDataFetching,
-}: any) => {
-  const [updateId, setUpdateId] = useState("");
+const ServiceList: React.FC<IServiceProps> = ({
+  tableData,
+  tableDataFetching,
+}) => {
   const [isUpdate, setIsUpdate] = useState(false);
-  const [serviceID, setServiceID] = useState<null | string>("");
+  const [updateId, setUpdateId] = useState("");
+  const [deleteId, setDeleteId] = useState("");
+
   const {
     isOpen: isServiceOpen,
     onOpen: onServiceModalOpen,
@@ -82,97 +43,36 @@ const ServiceList = ({
     onClose: onDeleteServiceClose,
   } = useDisclosure();
 
-  const [pageParams, setPageParams] = useState({
-    page: 1,
-    limit: 10,
-  });
-  const paginatedData = getPaginatedData({
-    tableData,
-    pageParams,
-  });
-  const _pageChange = (page: number) => {
-    setPageParams({ ...pageParams, page });
-  };
-  const _pageSizeChange = (limit: number) =>
-    setPageParams({ ...pageParams, limit, page: 1 });
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "S.N",
-        accessor: (_: any, index: number) =>
-          (pageParams.page - 1) * pageParams.limit + (index + 1),
-        width: "10%",
-      },
-
-      {
-        Header: "Service",
-        accessor: "serviceName",
-        width: "20%",
-      },
-      {
-        Header: "Code",
-        accessor: "serviceCode",
-        width: "10%",
-      },
-      {
-        Header: "Member",
-        accessor: "membershipServiceResponseDtos",
-        width: "30%",
-        textAlign: "center",
-        Cell: ({ row }: any) => {
-          return (
-            <Wrapper>
-              {row?.original?.membershipServiceResponseDtos?.map(
-                (itmm: any, index: number) => (
-                  <div key={index}>
-                    <h1 className="title">{itmm.membershipTierName}</h1>
-                    <h1 className="percent">{itmm.rewardPercentage}</h1>
-                  </div>
-                )
-              )}
-            </Wrapper>
-          );
-        },
-      },
-      {
-        Header: "Action",
-        width: "10%",
-
-        Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
-          const onEdit = () => {
-            setUpdateId(row.original?.id);
-            setIsUpdate(true);
-            onServiceModalOpen();
-          };
-          const onDelete = () => {
-            onDeleteServiceOpen();
-            setServiceID(row?.original?.id);
-          };
-          return (
-            <Stack alignItems={"flex-start"}>
-              <TableActions onEdit={onEdit} onDelete={onDelete} />
-            </Stack>
-          );
-        },
-      },
-    ],
-    [pageParams]
-  );
   const validationSchema = yup.object().shape({
     serviceName: yup.string().required("serviceName is required"),
     serviceCode: yup.string().required("serviceCode is required"),
   });
-  const [formDataArray, setFormDataArray] = useState([]);
+  const [formDataArray, setFormDataArray] = useState<IService[]>([]);
   const { handleSubmit, register, errors, reset, watch, setValue } =
     useFormHook({
       validationSchema,
       defaultValues,
     });
+  const { data } = useQuery("member_tier", getAllMemberTier, {
+    select: ({ data }) => data.datalist,
+  });
+
+  useEffect(() => {
+    if (!isUpdate) {
+      const defaultVal =
+        data?.map((item: any) => ({
+          id: item.id,
+          membershipName: item.membershipName,
+          rewardPercentage: "0",
+        })) || [];
+      if (defaultVal.length > 0) {
+        setValue("membershipServiceResponseDtos", defaultVal);
+      }
+    }
+  }, [data]);
   useEffect(() => {
     if (isUpdate && updateId) {
-      const data = tableData.find((x: any) => x.id === updateId);
-      setFormDataArray(data.membershipServiceResponseDtos);
+      const data = tableData.find((x: IService) => x.id === updateId);
       reset({
         id: data?.id,
         serviceName: data?.serviceName,
@@ -180,37 +80,18 @@ const ServiceList = ({
         membershipServiceResponseDtos: data?.membershipServiceResponseDtos,
       });
     }
-  }, [isUpdate, updateId]);
+  }, [isUpdate, updateId, tableData]);
+
+  const { mutateAsync: mutate, isLoading } = useCreateService();
+  const { mutateAsync: update, isLoading: isUpdating } = useUpdateService();
 
   const onCloseHandler = () => {
-    reset(defaultValues);
+    setDeleteId("");
     setUpdateId("");
     setIsUpdate(false);
     onServiceModalClose();
   };
-  const queryClient = useQueryClient();
-
-  const { mutate, isLoading } = useMutation(createServiceApi, {
-    onSuccess: (response) => {
-      toastSuccess(response?.data?.message || "Congratulations!");
-      queryClient.refetchQueries("service");
-      onServiceModalClose();
-    },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toastFail(error?.response?.data?.message || "Something went wrong");
-    },
-  });
-  const { mutate: update, isLoading: isUpdating } = useMutation(updateService, {
-    onSuccess: (response) => {
-      toastSuccess(response?.data?.message || "Congratulations!");
-      queryClient.refetchQueries("service");
-      onServiceModalClose();
-    },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toastFail(error?.response?.data?.message || "Something went wrong");
-    },
-  });
-  const onSubmitHandler = (data: any) => {
+  const onSubmitHandler = (data: IService) => {
     if (updateId) {
       update({
         id: updateId,
@@ -221,6 +102,7 @@ const ServiceList = ({
           membershipServiceRequestDto: formDataArray,
         },
       });
+      onCloseHandler();
     } else {
       mutate({
         id: data.id,
@@ -228,6 +110,7 @@ const ServiceList = ({
         serviceName: data.serviceName,
         membershipServiceRequestDto: formDataArray,
       });
+      onCloseHandler();
     }
   };
 
@@ -243,29 +126,28 @@ const ServiceList = ({
 
   return (
     <>
-      <DataTable
-        data={paginatedData || []}
-        loading={tableDataFetching}
-        columns={columns}
+      <ServiceTable
+        tableData={tableData}
+        tableDataFetching={tableDataFetching}
         title="Filter By"
-        btnText="Add Service"
-        CurrentText="Point Table"
+        btnText="Add Property"
+        CurrentText="Property List"
         onAction={() => {
           onCloseHandler();
           onServiceModalOpen();
         }}
-      >
-        {/* <ProductForm /> */}
-      </DataTable>
-
-      <Pagination
-        enabled={true}
-        queryPageIndex={pageParams.page}
-        queryPageSize={pageParams.limit}
-        totalCount={tableData?.length || 0}
-        pageChange={_pageChange}
-        pageSizeChange={_pageSizeChange}
+        onMemberModalOpen={onServiceModalOpen}
+        onEditData={(id: string) => {
+          setUpdateId(id);
+          setIsUpdate(true);
+          onServiceModalOpen();
+        }}
+        onDeleteData={(id: string) => {
+          setDeleteId(id);
+          onDeleteServiceOpen();
+        }}
       />
+
       <ModalForm
         isModalOpen={isServiceOpen}
         title={isUpdate ? "Update Service" : "Add Service"}
@@ -283,6 +165,7 @@ const ServiceList = ({
           setFormDataArray={setFormDataArray}
           setValue={setValue}
           watch={watch}
+          data={data}
         />
       </ModalForm>
 
@@ -293,7 +176,7 @@ const ServiceList = ({
         resetButtonText={"No"}
         isLoading={isDeleting}
         submitButtonText={"Yes"}
-        handleSubmit={() => onDelete(serviceID ?? "")}
+        handleSubmit={() => onDelete(deleteId ?? "")}
         showFooter={true}
       >
         Are you sure you want to delete the Service detail?

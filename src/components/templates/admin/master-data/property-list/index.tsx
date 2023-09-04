@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
 import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
-import { CreatePropertyForm } from "@src/components/templates/form/master-data/property-form";
+import { CreatePropertyForm } from "../property/property-add";
 import { useMutation, useQueryClient } from "react-query";
 import {
   createProperty,

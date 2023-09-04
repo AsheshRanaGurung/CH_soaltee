@@ -12,7 +12,7 @@ import { ServiceForm } from "@src/components/templates/form/profile/service";
 import { colors } from "@src/theme/colors";
 import { getAllProperty } from "@src/service/master-data/property";
 import { useQuery } from "react-query";
-import { getAllService } from "@src/service/point-config";
+import { getAllService } from "@src/service/point-config/service";
 import { ProfileFormProps } from "@src/interface/profile-points";
 
 const ProfileForm: React.FC<ProfileFormProps> = ({

@@ -10,8 +10,9 @@ import {
   useUpdateMemberTier,
 } from "@src/service/master-data/member-tier";
 import MemberTierTable from "../member-tier-table";
+import { IMemberTierDetail } from "@src/interface/master-data/property";
 interface IMemberTier {
-  tableData: any;
+  tableData: IMemberTierDetail[];
   tableDataFetching: boolean;
 }
 
@@ -21,7 +22,7 @@ const MemberList: React.FC<IMemberTier> = ({
 }) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
-  const [memberToDeleteData, setMemberToDeleteData] = useState("");
+  const [deleteId, setDeleteId] = useState("");
   const {
     isOpen: isMemberOpen,
     onOpen: onMemberModalOpen,
@@ -41,7 +42,7 @@ const MemberList: React.FC<IMemberTier> = ({
 
   useEffect(() => {
     if (isUpdate && updateId) {
-      const data = tableData.find((x: any) => x.id === updateId);
+      const data = tableData.find((x: IMemberTierDetail) => x.id === updateId);
       reset({
         membershipName: data?.membershipName,
         requiredPoints: data?.requiredPoints,
@@ -66,13 +67,13 @@ const MemberList: React.FC<IMemberTier> = ({
   const { mutateAsync: update, isLoading: isUpdating } = useUpdateMemberTier();
 
   const onCloseHandler = () => {
-    setMemberToDeleteData("");
+    setDeleteId("");
     setUpdateId("");
     setIsUpdate(false);
     onMemberModalClose();
   };
 
-  const onSubmitHandler = (data: any) => {
+  const onSubmitHandler = (data: IMemberTierDetail) => {
     const formData = new FormData();
     const dat = {
       membershipName: data.membershipName,
@@ -80,11 +81,11 @@ const MemberList: React.FC<IMemberTier> = ({
     };
     formData.append("data", JSON.stringify(dat));
     if (updateId) {
-      formData.append("image", data.image);
+      formData.append("image", data.image as Blob);
       update({ id: updateId, data: formData });
       onCloseHandler();
     } else {
-      formData.append("image", data.image);
+      formData.append("image", data.image as Blob);
       mutate(formData);
       onCloseHandler();
     }
@@ -104,13 +105,13 @@ const MemberList: React.FC<IMemberTier> = ({
           onMemberModalOpen();
         }}
         onMemberModalOpen={onMemberModalOpen}
-        onEditt={(rowData: any) => {
-          setUpdateId(rowData);
+        onEditData={(id: string) => {
+          setUpdateId(id);
           setIsUpdate(true);
           onMemberModalOpen();
         }}
-        onDeletee={(rowData: any) => {
-          setMemberToDeleteData(rowData);
+        onDeleteData={(id: string) => {
+          setDeleteId(id);
           onDeleteMemberOpen();
         }}
       />
@@ -140,7 +141,7 @@ const MemberList: React.FC<IMemberTier> = ({
         onCloseModal={onDeleteMemberClose}
         resetButtonText={"No"}
         submitButtonText={"Yes"}
-        handleSubmit={() => onDelete(memberToDeleteData)}
+        handleSubmit={() => onDelete(deleteId)}
         showFooter={true}
       >
         Are you sure you want to delete the Member Tier ?

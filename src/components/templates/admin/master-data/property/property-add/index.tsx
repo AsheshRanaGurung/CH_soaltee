@@ -1,7 +1,16 @@
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
+import { IProperty } from "@src/interface/master-data/property";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+interface IpropertyProps {
+  register: UseFormRegister<IProperty>;
+  errors: FieldErrors;
+}
 
-export const CreatePropertyForm = ({ register, errors }: any) => {
+export const CreatePropertyForm: React.FC<IpropertyProps> = ({
+  register,
+  errors,
+}) => {
   return (
     <>
       <Box mx={{ base: "none", md: "auto" }}>
