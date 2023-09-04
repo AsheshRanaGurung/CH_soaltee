@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
 import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
-import { CreateMemberManagementForm } from "../form/member-management";
+import { CreateMemberManagementForm } from "../../form/member-management";
 import Switch from "@src/components/atoms/Switch";
 import { useMutation, useQueryClient } from "react-query";
 import { toastFail, toastSuccess } from "@src/service/service-toast";

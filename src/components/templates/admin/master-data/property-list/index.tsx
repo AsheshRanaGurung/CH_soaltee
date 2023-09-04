@@ -1,45 +1,48 @@
 import { Stack, useDisclosure } from "@chakra-ui/react";
-// import { ProductForm } from "@src/components/templates/form";
 import ModalForm from "@src/components/organisms/modal";
 import DataTable, { Pagination } from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
 import { getPaginatedData } from "@src/components/organisms/table/pagination";
 import { useEffect, useMemo, useState } from "react";
 import { CellProps } from "react-table";
-import { CreateMemberForm } from "../../form/master-data/member-form";
 import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
-import {
-  createMemberTier,
-  updateMemberTier,
-  useDeleteMemberTier,
-} from "@src/service/master-data/member-tier";
+import { CreatePropertyForm } from "@src/components/templates/form/master-data/property-form";
 import { useMutation, useQueryClient } from "react-query";
+import {
+  createProperty,
+  updateProperty,
+  useDeleteProperty,
+} from "@src/service/master-data/property";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 
 const defaultValues = {
-  membershipName: "",
-  requiredPoints: "",
-  imageUrl: "",
+  name: "",
+  code: "",
+  phoneNumber: "",
+  contactPerson: "",
+  contactPersonPhoneNo: "",
 };
-const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
+const PropertyList = ({
+  data: tableData,
+  isLoading: tableDataFetching,
+}: any) => {
   const [updateId, setUpdateId] = useState("");
-  const [memberTierID, setMemberTierID] = useState<null | string>("");
+  const [propertyID, setPropertyID] = useState<null | string>("");
   const [isUpdate, setIsUpdate] = useState(false);
 
   const {
-    isOpen: isMemberOpen,
-    onOpen: onMemberModalOpen,
-    onClose: onMemberModalClose,
+    isOpen: isPropertyOpen,
+    onOpen: onPropertyModalOpen,
+    onClose: onPropertyModalClose,
   } = useDisclosure();
   const {
-    isOpen: isDeleteMemberOpen,
-    onOpen: onDeleteMemberOpen,
-    onClose: onDeleteMemberClose,
+    isOpen: isDeletePropertyOpen,
+    onOpen: onDeletePropertyOpen,
+    onClose: onDeletePropertyClose,
   } = useDisclosure();
 
-  // Pagination
   const [pageParams, setPageParams] = useState({
     page: 1,
     limit: 10,
@@ -54,8 +57,6 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
   const _pageSizeChange = (limit: number) =>
     setPageParams({ ...pageParams, limit, page: 1 });
 
-  // Pagination ends
-
   const columns = useMemo(
     () => [
       {
@@ -66,142 +67,151 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
       },
 
       {
-        Header: "Tier Name",
-        accessor: "membershipName",
+        Header: "Property Name",
+        accessor: "name",
         width: "20%",
       },
       {
-        Header: "Points To Tier",
-        accessor: "requiredPoints",
-        width: "40%",
+        Header: "Property Code",
+        accessor: "code",
+        width: "20%",
       },
       {
-        Header: "Image",
-        accessor: "imageUrl",
+        Header: "Phone Number",
+        accessor: "phoneNumber",
         width: "20%",
-        Cell: ({ value }: any) => {
-          return <img src={value} alt="Image" width="100" />;
-        },
       },
-
+      {
+        Header: "Contact person",
+        accessor: "contactPerson",
+        width: "20%",
+      },
       {
         Header: "Action",
-        Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
+        width: "10%",
+
+        Cell: ({ row }: CellProps<{ id: string }>) => {
           const onEdit = () => {
             setUpdateId(row.original?.id);
             setIsUpdate(true);
-            onMemberModalOpen();
+            onPropertyModalOpen();
           };
           const onDelete = () => {
-            onDeleteMemberOpen();
-            setMemberTierID(row?.original?.id);
+            onDeletePropertyOpen();
+            setPropertyID(row?.original?.id);
           };
           return (
             <Stack alignItems={"flex-start"}>
-              <TableActions
-                onEdit={onEdit}
-                // onView={onView}
-                onDelete={onDelete}
-              />
+              <TableActions onEdit={onEdit} onDelete={onDelete} />
             </Stack>
           );
         },
-        width: 120,
       },
     ],
     [pageParams]
   );
-
   const validationSchema = yup.object().shape({
-    membershipName: yup.string().required("Membership Name is required"),
-    requiredPoints: yup.string().required("Point is required"),
+    name: yup.string().required("Property Name is required"),
+    code: yup.string().required("Property Code is required"),
+    phoneNumber: yup.string().required("Phone Number is required"),
+    contactPerson: yup.string().required("Contact Person Name is required"),
+    contactPersonPhoneNo: yup
+      .string()
+      .required("Contact Person Phone Number is required"),
   });
+  const { handleSubmit, register, errors, reset } = useFormHook({
+    validationSchema,
+    defaultValues,
+  });
+
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData.find((x: any) => x.id === updateId);
       reset({
-        membershipName: data?.membershipName,
-        requiredPoints: data?.requiredPoints,
-        image: data?.imageUrl,
+        name: data?.name,
+        code: data?.code,
+        phoneNumber: data?.phoneNumber,
+        contactPerson: data?.contactPerson,
+        contactPersonPhoneNo: data?.contactPersonPhoneNo,
       });
     }
   }, [isUpdate, updateId]);
-  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
-    validationSchema,
-    defaultValues,
-  });
+
   const queryClient = useQueryClient();
-  const { mutate, isLoading } = useMutation(createMemberTier, {
+
+  const { mutate, isLoading } = useMutation(createProperty, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message);
-      queryClient.refetchQueries("member_tier");
-      onMemberModalClose();
+      queryClient.refetchQueries("property");
+      onPropertyModalClose();
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
+
   const { mutate: update, isLoading: isUpdating } = useMutation(
-    updateMemberTier,
+    updateProperty,
     {
       onSuccess: (response) => {
         toastSuccess(response?.data?.message || "Property Updated!!");
-        queryClient.invalidateQueries("member_tier");
-        onMemberModalClose();
+        queryClient.invalidateQueries("property");
+        onPropertyModalClose();
       },
       onError: (error: AxiosError<{ message: string }>) => {
         toastFail(error?.response?.data?.message || "Something went wrong");
       },
     }
   );
+  //handle form submit
 
   const onSubmitHandler = (data: any) => {
-    const formData = new FormData();
-    const dat = {
-      membershipName: data.membershipName,
-      requiredPoints: data.requiredPoints,
-    };
-
-    formData.append("data", JSON.stringify(dat));
     if (updateId) {
-      formData.append("image", data.image);
-      update({ id: updateId, data: formData });
+      update({
+        id: updateId,
+        data: {
+          ...data,
+          id: updateId,
+        },
+      });
     } else {
-      formData.append("image", data.image);
-      mutate(formData);
+      mutate(data);
     }
   };
 
-  //delete member tier
-  const { mutateAsync: deleteMemberTier, isLoading: isDeleting } =
-    useDeleteMemberTier();
   const onCloseHandler = () => {
+    reset(defaultValues);
     setUpdateId("");
     setIsUpdate(false);
-    onMemberModalClose();
-    reset(defaultValues);
+    onPropertyModalClose();
   };
+
+  //delete property Id
+  const { mutateAsync: deletePropertyTier, isLoading: isDeleting } =
+    useDeleteProperty();
+
   const onDelete = async (id: string) => {
-    const result = await deleteMemberTier({
+    const result = await deletePropertyTier({
       id: id,
     });
-    result.status === 200 && onDeleteMemberClose();
+    result.status === 200 && onDeletePropertyClose();
   };
+
   return (
     <>
-      {/* <BreadCrumb name="Membership Tier" /> */}
       <DataTable
         data={paginatedData || []}
         loading={tableDataFetching}
         columns={columns}
-        CurrentText="Member List"
-        btnText="Add Membership Tier"
+        title="Filter By"
+        btnText="Add Property"
+        CurrentText="Property List"
         onAction={() => {
           onCloseHandler();
-          onMemberModalOpen();
+          onPropertyModalOpen();
         }}
       >
-        <CreateMemberForm register={register} error={errors} />
+        {/* <ProductForm /> */}
       </DataTable>
 
       <Pagination
@@ -213,35 +223,31 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
         pageSizeChange={_pageSizeChange}
       />
       <ModalForm
-        isModalOpen={isMemberOpen}
-        isLoading={isLoading || isUpdating}
-        onCloseModal={onMemberModalClose}
+        isModalOpen={isPropertyOpen}
+        title={isUpdate ? "Update Property" : "Add Property"}
+        onCloseModal={onPropertyModalClose}
         resetButtonText={"Cancel"}
-        submitButtonText={isUpdate ? "Update Member Tier" : "Add Member Tier"}
+        isLoading={isLoading || isUpdating}
+        submitButtonText={isUpdate ? "Update Property" : "Add Property"}
         submitHandler={handleSubmit(onSubmitHandler)}
         showFooter={true}
-        title={isUpdate ? "Update Member Tier" : "Add Member Tier"}
       >
-        <CreateMemberForm
-          register={register}
-          errors={errors}
-          setValue={setValue}
-        />
+        <CreatePropertyForm register={register} errors={errors} />
       </ModalForm>
 
       <ModalForm
         title={"Delete"}
-        isLoading={isDeleting}
-        isModalOpen={isDeleteMemberOpen}
-        onCloseModal={onDeleteMemberClose}
+        isModalOpen={isDeletePropertyOpen}
+        onCloseModal={onDeletePropertyClose}
         resetButtonText={"No"}
+        isLoading={isDeleting}
         submitButtonText={"Yes"}
-        handleSubmit={() => onDelete(memberTierID ?? "")}
+        handleSubmit={() => onDelete(propertyID ?? "")}
         showFooter={true}
       >
-        Are you sure you want to delete the Member Tier ?
+        Are you sure you want to delete the Property detail?
       </ModalForm>
     </>
   );
 };
-export default MemberList;
+export default PropertyList;
