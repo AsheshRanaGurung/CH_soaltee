@@ -22,7 +22,7 @@ import { colors } from "@src/theme/colors";
 const Wrapper = styled.div`
   display: flex;
   justify-content: flex-start;
-  gap: 12%;
+  gap: 4%;
   text-align: center;
   position: relative;
   div {
@@ -34,7 +34,7 @@ const Wrapper = styled.div`
       border-right: 1px solid #ccc;
       height: 100%;
       top: 0;
-      right: -30px;
+      right: 0px;
     }
   }
   .title {
