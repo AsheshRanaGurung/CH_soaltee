@@ -1,14 +1,9 @@
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   IconButton,
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   useDisclosure,
   Stack,
   Image,
@@ -18,6 +13,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { imageList } from "@src/assets/images";
 import { FaGlobeAsia } from "react-icons/fa";
 import { useState } from "react";
+import Profile from "@src/components/molecules/profile";
 
 interface Props {
   children: React.ReactNode;
@@ -92,21 +88,7 @@ export default function Header() {
                   <FaGlobeAsia style={{ marginLeft: "8px" }} />
                 </Button>
               </Stack>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rounded={"full"}
-                  variant={"link"}
-                  cursor={"pointer"}
-                  minW={0}
-                >
-                  <Avatar size={"md"} src={imageList.profileAvatar} />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>Profile</MenuItem>
-                  <MenuItem>Logout</MenuItem>
-                </MenuList>
-              </Menu>
+              <Profile />
             </Flex>
           </Flex>
 

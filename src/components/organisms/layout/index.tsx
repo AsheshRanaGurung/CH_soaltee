@@ -35,11 +35,7 @@ const Layout = ({ children }: ILayout) => {
             onClick={() => setShowSidebar(!showSidebar)}
             style={{ position: "absolute", top: "24px", cursor: "pointer" }}
           />
-          <Box
-            py={6}
-            pb={40}
-            sx={{ "&::-webkit-scrollbar": { display: "none" } }}
-          >
+          <Box sx={{ "&::-webkit-scrollbar": { display: "none" } }}>
             {children}
           </Box>
         </SidebarState.Provider>
