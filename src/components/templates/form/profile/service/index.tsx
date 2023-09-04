@@ -34,7 +34,7 @@ const validationSchema: any = yup.object().shape({
     })
   ),
 });
-export const ServiceForm = ({ data, onCloseModal }: any) => {
+export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
   const { register, handleSubmit, control, errors } = useFormHook({
     validationSchema,
     defaultValues,
@@ -47,6 +47,8 @@ export const ServiceForm = ({ data, onCloseModal }: any) => {
   const { mutate, isLoading } = useMutation(createByService, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
+      handleFormSubmit(response?.data?.data?.rewardPoints);
+
       onCloseModal();
     },
     onError: (error: AxiosError<{ message: string }>) => {

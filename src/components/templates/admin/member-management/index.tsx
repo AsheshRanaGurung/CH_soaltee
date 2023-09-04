@@ -15,6 +15,7 @@ import { AxiosError } from "axios";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router";
 import { createMember, updateMember } from "@src/service/member-management";
+import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 const defaultValues = {
   fullName: "",
   email: "",
@@ -129,7 +130,7 @@ const MemberManagementList = ({
   const validationSchema = yup.object().shape({
     fullName: yup.string().required("Full Name is required"),
     email: yup.string().required("Email is required"),
-    phoneNumber: yup.string().required("Phone Number is required"),
+    phoneNumber: createPhoneNumberSchema(),
     nationality: yup.string().required("Nationality is required"),
     propertyName: yup.string().required("Property Name is required"),
   });

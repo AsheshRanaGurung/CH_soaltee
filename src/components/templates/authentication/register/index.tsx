@@ -10,6 +10,7 @@ import Heading from "@src/components/atoms/Heading";
 import { FormWrapper } from "../login";
 import FormControl from "@src/components/atoms/FormControl";
 import { nationality } from "@src/constant/index";
+import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 
 interface ISignupProps {
   mutate: any;
@@ -26,7 +27,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
       .string()
       .required("Email is required")
       .email("Invalid email format"),
-    phoneNumber: yup.string().required("Mobile number is required"),
+    phoneNumber: createPhoneNumberSchema(),
     nationality: yup.string().required("Nationality is required"),
   });
   const { handleSubmit, register, errors, control } = useFormHook({

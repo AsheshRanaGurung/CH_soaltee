@@ -9,7 +9,12 @@ const ImageUpload: React.FC<IProps> = ({ setValue }) => {
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleImageChange} />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        required
+      />
     </div>
   );
 };

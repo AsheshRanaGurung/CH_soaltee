@@ -15,7 +15,11 @@ import { useQuery } from "react-query";
 import { getAllService } from "@src/service/point-config";
 import { ProfileFormProps } from "@src/interface/profile-points";
 
-const ProfileForm: React.FC<ProfileFormProps> = ({ userId, onCloseModal }) => {
+const ProfileForm: React.FC<ProfileFormProps> = ({
+  userId,
+  onCloseModal,
+  handleFormSubmit,
+}) => {
   const { data: property } = useQuery("property", getAllProperty, {
     select: ({ data }) => data.datalist,
   });
@@ -56,12 +60,14 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ userId, onCloseModal }) => {
             <ServiceForm
               data={{ userId, serviceList, propertyList }}
               onCloseModal={onCloseModal}
+              handleFormSubmit={handleFormSubmit}
             />
           </TabPanel>
           <TabPanel>
             <ManualForm
               data={{ userId, serviceList, propertyList }}
               onCloseModal={onCloseModal}
+              handleFormSubmit={handleFormSubmit}
             />
           </TabPanel>
         </TabPanels>
