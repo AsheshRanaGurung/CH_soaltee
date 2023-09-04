@@ -1,4 +1,4 @@
-import { IProperty } from "@src/interface/master-data";
+import { IProperty } from "@src/interface/master-data/property";
 import { api } from "@src/service/api";
 import { HttpClient } from "@src/service/config/api";
 import { toastSuccess } from "@src/service/service-toast";

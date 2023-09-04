@@ -237,6 +237,7 @@ const MemberManagementList = ({
         resetButtonText={"Cancel"}
         submitButtonText={isUpdate ? "Update User" : "Create User"}
         submitHandler={handleSubmit(onSubmitHandler)}
+        showFooter={true}
       >
         <CreateMemberManagementForm register={register} errors={errors} />
       </ModalForm>

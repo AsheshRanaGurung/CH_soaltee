@@ -7,6 +7,12 @@ import { AiFillMail, AiOutlinePlus } from "react-icons/ai";
 import { FaGlobeAsia, FaPhoneAlt, FaRegCalendarAlt } from "react-icons/fa";
 import { Button } from "@chakra-ui/button";
 import { useLocation } from "react-router";
+import { useDisclosure } from "@chakra-ui/react";
+import ModalForm from "@src/components/organisms/modal";
+import ProfileForm from "@src/components/templates/form/profile";
+import { fetchOneMember } from "@src/service/member-management";
+import { useQuery } from "react-query";
+import { useEffect } from "react";
 
 const Wrapper = styled.div`
   position: relative;
@@ -93,13 +99,33 @@ const Card = styled.div`
 const MemberProfile = () => {
   const location = useLocation();
   const { state } = location;
+  const {
+    isOpen: isProfileOpen,
+    onOpen: onProfileModalOpen,
+    onClose: onProfileModalClose,
+  } = useDisclosure();
+
+  const { data, refetch } = useQuery(
+    "member",
+    () => fetchOneMember({ id: state.id }),
+    {
+      select: ({ data }) => {
+        return data.data;
+      },
+    }
+  );
+  useEffect(() => {
+    refetch();
+  }, [state, refetch]);
+
+  console.log("dataa", data);
   return (
     <Wrapper>
       <img className="profile-img" src={imageList.profileAvatar} />
       <Card>
         <div className="profile-card">
           <div>
-            <Text fontSize={"3xl"}>Sita Kumari</Text>
+            <Text fontSize={"3xl"}>{state.fullName}</Text>
             <Text>Gold Tier Member</Text>
           </div>
           <div>
@@ -109,6 +135,7 @@ const MemberProfile = () => {
               w="100%"
               borderRadius="5px"
               leftIcon={<AiOutlinePlus />}
+              onClick={onProfileModalOpen}
             >
               Add Points
             </Button>
@@ -118,24 +145,24 @@ const MemberProfile = () => {
           <div className="basic-info">
             <div className="basic-info-item">
               <Icons icon={<AiFillMail />} />
-              <Text color={colors.secondary_dark}>Email:{state.email}</Text>
+              <Text color={colors.secondary_dark}>Email : {state.email}</Text>
             </div>
             <div className="basic-info-item">
               <Icons icon={<FaGlobeAsia />} />
               <Text color={colors.secondary_dark}>
-                Nationality:{state.nationality}
+                Nationality : {state.nationality}
               </Text>
             </div>
             <div className="basic-info-item">
               <Icons icon={<FaPhoneAlt />} />
               <Text color={colors.secondary_dark}>
-                Phone number:{state.phoneNumber}
+                Phone number : {state.phoneNumber}
               </Text>
             </div>
             <div className="basic-info-item">
               <Icons icon={<FaRegCalendarAlt />} />
               <Text color={colors.secondary_dark}>
-                Last active:{"8-31-2023"}
+                Last active : {"8-31-2023"}
               </Text>
             </div>
           </div>
@@ -146,12 +173,19 @@ const MemberProfile = () => {
                 <Text color={colors.secondary_dark}>Reward Points</Text>
               </div>
               <Text textAlign={"center"} fontSize={"2xl"}>
-                3200
+                {data?.totalRewardPoints}
               </Text>
             </div>
           </div>
         </div>
       </Card>
+      <ModalForm
+        isModalOpen={isProfileOpen}
+        onCloseModal={onProfileModalClose}
+        showFooter={false}
+      >
+        <ProfileForm userId={state} onCloseModal={onProfileModalClose} />
+      </ModalForm>
     </Wrapper>
   );
 };

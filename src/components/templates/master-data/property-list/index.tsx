@@ -231,6 +231,7 @@ const PropertyList = ({
         isLoading={isLoading || isUpdating}
         submitButtonText={isUpdate ? "Update Property" : "Add Property"}
         submitHandler={handleSubmit(onSubmitHandler)}
+        showFooter={true}
       >
         <CreatePropertyForm register={register} errors={errors} />
       </ModalForm>
@@ -243,6 +244,7 @@ const PropertyList = ({
         isLoading={isDeleting}
         submitButtonText={"Yes"}
         handleSubmit={() => onDelete(propertyID ?? "")}
+        showFooter={true}
       >
         Are you sure you want to delete the Property detail?
       </ModalForm>

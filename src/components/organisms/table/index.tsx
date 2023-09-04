@@ -189,7 +189,7 @@ const DataTable = React.memo(
           rowGap={2}
           ml={{ base: 2, md: 0 }}
         >
-          <TableHeading currentText={CurrentText} />
+          <TableHeading currentText={CurrentText ?? ""} />
           <Flex gap={2} alignItems="center">
             <Flex position="relative">
               <Search setSearchValue={setSearchValue} />

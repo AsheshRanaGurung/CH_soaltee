@@ -24,6 +24,7 @@ interface IModal {
   height?: string;
   overflowY?: "auto" | "visible";
   view?: boolean;
+  showFooter?: boolean;
   disabled?: boolean;
 }
 
@@ -39,53 +40,61 @@ const ModalForm: FC<IModal> = ({
   submitButtonText,
   disabled,
   handleSubmit,
+  showFooter,
 }) => {
   return (
     <Modal isOpen={isModalOpen} onClose={onCloseModal}>
       <ModalOverlay style={{ height: "100%", width: "100%" }} />
       <ModalContent>
-        <form
-          onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-            submitHandler?.();
-          }}
-        >
-          <ModalHeader>{title}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>{children}</ModalBody>
+        {!showFooter ? (
+          <>
+            <ModalHeader>{title}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>{children}</ModalBody>
+          </>
+        ) : (
+          <form
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+              e.preventDefault();
+              submitHandler?.();
+            }}
+          >
+            <ModalHeader>{title}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>{children}</ModalBody>
 
-          <ModalFooter>
-            {view ? (
-              <></>
-            ) : (
+            <ModalFooter>
+              {view ? (
+                <></>
+              ) : (
+                <Button
+                  variant="outlined"
+                  mr={3}
+                  borderRadius="0"
+                  w="100%"
+                  onClick={onCloseModal}
+                  size={"md"}
+                >
+                  {resetButtonText}
+                </Button>
+              )}
               <Button
-                variant="outlined"
-                mr={3}
+                type="submit"
                 borderRadius="0"
                 w="100%"
-                onClick={onCloseModal}
+                onClick={() => {
+                  handleSubmit?.();
+                  // onCloseModal();
+                }}
                 isDisabled={disabled}
                 size={"md"}
+                isLoading={isLoading}
               >
-                {resetButtonText}
+                {submitButtonText}
               </Button>
-            )}
-            <Button
-              type="submit"
-              borderRadius="0"
-              isDisabled={disabled}
-              w="100%"
-              onClick={() => {
-                handleSubmit?.();
-                // onCloseModal();
-              }}
-              size={"md"}
-              isLoading={isLoading}
-            >
-              {submitButtonText}
-            </Button>
-          </ModalFooter>
-        </form>
+            </ModalFooter>
+          </form>
+        )}
       </ModalContent>
     </Modal>
   );

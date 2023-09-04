@@ -1,7 +1,7 @@
 export const api = {
   auth: {
     register: "/users/save-users",
-    set_password: "/users/change-password",
+    set_password: "/users/cprohange-password",
     login: "/auth/login",
   },
   configuration: {
@@ -30,6 +30,15 @@ export const api = {
     add: "/auth/save-users",
     fetch: "/auth/get-users",
     update: "/auth/update-user/:id",
+    fetchById: "/users/get-all-user-details/:id",
+  },
+  profile: {
+    manual: {
+      add: "/loyalty/save-loyalty-points",
+    },
+    service: {
+      add: "/loyalty/save-loyalty-points-servicewise",
+    },
   },
   user: {
     fetch: "users/get-all-details",

@@ -274,6 +274,7 @@ const ServiceList = ({
         resetButtonText={"Cancel"}
         submitButtonText={isUpdate ? "Update Service" : "Add Service"}
         submitHandler={handleSubmit(onSubmitHandler)}
+        showFooter={true}
       >
         <CreateServiceForm
           register={register}
@@ -293,6 +294,7 @@ const ServiceList = ({
         isLoading={isDeleting}
         submitButtonText={"Yes"}
         handleSubmit={() => onDelete(serviceID ?? "")}
+        showFooter={true}
       >
         Are you sure you want to delete the Service detail?
       </ModalForm>
