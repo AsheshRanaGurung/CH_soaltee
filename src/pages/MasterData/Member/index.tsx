@@ -8,7 +8,6 @@ const MemberPage = () => {
   const { data, isLoading } = useQuery("member_tier", getAllMemberTier, {
     select: ({ data }) => data.datalist,
   });
-
   return (
     <>
       <BreadCrumb name="Master Data" />

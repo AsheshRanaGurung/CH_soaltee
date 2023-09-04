@@ -2,12 +2,12 @@ import { Stack } from "@chakra-ui/react";
 import DataTable, { Pagination } from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
 import { getPaginatedData } from "@src/components/organisms/table/pagination";
-import { IMemberTierDetail } from "@src/interface/master-data/property";
+import { IProperty } from "@src/interface/master-data/property";
 import { useMemo, useState } from "react";
 import { CellProps } from "react-table";
 
 interface IMemberTierTable {
-  tableData?: IMemberTierDetail[];
+  tableData?: IProperty[];
   tableDataFetching?: boolean;
   onAction?: () => void;
   title?: string;
@@ -18,7 +18,7 @@ interface IMemberTierTable {
   onDeleteData?: ((id: string) => void) | undefined;
 }
 
-const MemberTierTable: React.FC<IMemberTierTable> = ({
+const PropertyTable: React.FC<IMemberTierTable> = ({
   tableData,
   tableDataFetching,
   onAction,
@@ -46,33 +46,36 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
     () => [
       {
         Header: "S.N",
-        accessor: (_: IMemberTierDetail, index: number) =>
+        accessor: (_: IProperty, index: number) =>
           (pageParams.page - 1) * pageParams.limit + (index + 1),
         width: "10%",
       },
 
       {
-        Header: "Tier Name",
-        accessor: "membershipName",
+        Header: "Property Name",
+        accessor: "name",
         width: "20%",
       },
       {
-        Header: "Points To Tier",
-        accessor: "requiredPoints",
-        width: "40%",
+        Header: "Property Code",
+        accessor: "code",
+        width: "20%",
       },
       {
-        Header: "Image",
-        accessor: "imageUrl",
+        Header: "Phone Number",
+        accessor: "phoneNumber",
         width: "20%",
-        Cell: ({ value }: { value: string }) => {
-          return <img src={value} alt="Image" width="100" />;
-        },
       },
-
+      {
+        Header: "Contact person",
+        accessor: "contactPerson",
+        width: "20%",
+      },
       {
         Header: "Action",
-        Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
+        width: "10%",
+
+        Cell: ({ row }: CellProps<{ id: string }>) => {
           const onEdit = () => {
             onEditData && onEditData(row.original?.id);
           };
@@ -85,12 +88,10 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
             </Stack>
           );
         },
-        width: 120,
       },
     ],
     [pageParams]
   );
-
   return (
     <>
       <DataTable
@@ -114,5 +115,4 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
     </>
   );
 };
-
-export default MemberTierTable;
+export default PropertyTable;

@@ -7,6 +7,10 @@
 * hotfix: route manage ([9c0394c](https://gitlab.com/paras205/boilerplate-react/commit/9c0394ce422983cccca2b7e439c6f699faf9c135))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
+<<<<<<< HEAD
+* remove typescript error on member tier ([2b1bd76](https://gitlab.com/paras205/boilerplate-react/commit/2b1bd76bbe0491a2ad2349510f6a2d748dc97cd9))
+=======
+>>>>>>> db6c54942b9a1975f3e420700e2bc48b4deab071
 
 
 ### Features

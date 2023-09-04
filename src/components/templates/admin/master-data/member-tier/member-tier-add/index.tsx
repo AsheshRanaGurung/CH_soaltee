@@ -1,8 +1,19 @@
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import ImageUpload from "@src/components/atoms/ImageUpload";
+import { IMemberTierDetail } from "@src/interface/master-data/property";
+import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
-export const CreateMemberForm = ({ register, errors, setValue }: any) => {
+interface IMemberProps {
+  register: UseFormRegister<IMemberTierDetail>;
+  setValue: UseFormSetValue<IMemberTierDetail>;
+  errors: FieldErrors;
+}
+export const CreateMemberForm: React.FC<IMemberProps> = ({
+  register,
+  errors,
+  setValue,
+}: any) => {
   return (
     <>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -26,15 +37,6 @@ export const CreateMemberForm = ({ register, errors, setValue }: any) => {
             error={errors?.requiredPoints?.message || ""}
             required
           />
-          {/* <FormControl
-            control="input"
-            type="file"
-            name="imageUrl"
-            register={register}
-            label={"Upload Image"}
-            error={errors?.imageUrl?.message || ""}
-            required
-          /> */}
           <ImageUpload setValue={setValue} />
         </Flex>
         <Spacer />

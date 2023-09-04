@@ -14,6 +14,7 @@ export const createMemberTier = (data: any) => {
 
 export const useCreateMemberTier = () => {
   const queryClient = useQueryClient();
+
   return useMutation(createMemberTier, {
     onSuccess: (response) => {
       queryClient.invalidateQueries("member_tier");
