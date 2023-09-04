@@ -1,6 +1,6 @@
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
-import MemberManagementList from "@src/components/templates/member-management";
+import MemberManagementList from "@src/components/templates/admin/member-management";
 import { getAllMembers } from "@src/service/member-management";
 import { useQuery } from "react-query";
 

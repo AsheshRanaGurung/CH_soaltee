@@ -4,7 +4,7 @@ import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
 import Heading from "@src/components/atoms/Heading";
 import FormControl from "@src/components/atoms/FormControl";
-import { FormWrapper } from "../authentication/login";
+import { FormWrapper } from "../login";
 
 interface ISignupProps {
   mutate: any;

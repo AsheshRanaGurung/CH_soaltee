@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
 import { setPasswordApi } from "@src/service/auth";
 import Authentication from "@src/components/molecules/auth";
-import { SetPasswordTemplate } from "@src/components/templates/set-password";
+import { SetPasswordTemplate } from "@src/components/templates/authentication/set-password";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router";

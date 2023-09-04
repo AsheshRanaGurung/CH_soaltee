@@ -1,6 +1,6 @@
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
-import ServiceList from "@src/components/templates/pointConfiguration/services/service-list";
+import ServiceList from "@src/components/templates/admin/pointConfiguration/services/service-list";
 import { getAllService } from "@src/service/point-config";
 import { useQuery } from "react-query";
 

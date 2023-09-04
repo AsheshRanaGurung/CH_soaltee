@@ -1,7 +1,7 @@
 import { imageList } from "@src/assets/images";
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
-import MemberProfile from "@src/components/templates/member-management/member-profile";
+import MemberProfile from "@src/components/templates/admin/member-management/member-profile";
 
 const ProfileDetail = () => {
   return (
