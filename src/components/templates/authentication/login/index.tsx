@@ -52,6 +52,7 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
   });
   const onSubmit = (data: any) => {
     mutate(data);
+    localStorage.setItem("userInfo", data?.email);
   };
   return (
     <>

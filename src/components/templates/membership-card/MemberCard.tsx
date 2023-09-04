@@ -13,7 +13,14 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { useQuery } from "react-query";
+import { getUserDetail } from "@src/service/user";
 export const MemberCard = () => {
+  const { data } = useQuery("user_detail", getUserDetail, {
+    select: ({ data }) => data.data,
+  });
+  const { tierName, fullName, totalRewardPoints } = data ?? "";
+
   return (
     <Grid
       gap={8}
@@ -43,13 +50,15 @@ export const MemberCard = () => {
                   }}
                 >
                   <Box position={"absolute"} zIndex={"1"}>
-                    <CardHeader color={"#F5F5F5"}>SILVER TIER</CardHeader>
+                    <CardHeader color={"#F5F5F5"}></CardHeader>
                     <CardBody>
                       <Box color={"#F5F5F5"}>
                         <Text fontSize={"14px"} fontStyle={"italic"}>
                           Member Name
                         </Text>
-                        <Heading fontSize={"21px"}>Kevin singh</Heading>
+                        <Heading fontSize={"21px"}>
+                          {fullName?.toUpperCase()}
+                        </Heading>
                       </Box>
                       <Box color={"#F5F5F5"} marginTop={"25px"}>
                         <Text fontSize={"14px"} fontStyle={"italic"}>
@@ -70,7 +79,7 @@ export const MemberCard = () => {
                     fontWeight={"400"}
                     marginBottom={"20px"}
                   >
-                    SILVER
+                    {tierName?.toUpperCase()}
                   </Heading>
                   <Progress value={80} colorScheme="green" size="sm" />
                   <Text
@@ -96,7 +105,7 @@ export const MemberCard = () => {
                     >
                       Reward Points
                     </Text>{" "}
-                    1120
+                    {totalRewardPoints}
                   </Button>
                   <Link color={"#A1233D"} display={"block"} marginTop={"20px"}>
                     Click here to redeem

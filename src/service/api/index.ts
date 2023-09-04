@@ -31,6 +31,9 @@ export const api = {
     fetch: "/auth/get-users",
     update: "/auth/update-user/:id",
   },
+  user: {
+    fetch: "users/get-all-details",
+  },
 };
 export interface IResponse<T = any> {
   data: T;
