@@ -19,8 +19,7 @@ export const MemberCard = () => {
   const { data } = useQuery("user_detail", getUserDetail, {
     select: ({ data }) => data.data,
   });
-  const { tierName, fullName, totalRewardPoints } = data ?? "";
-
+  const { tierName, fullName, totalRewardPoints, customerId } = data ?? "";
   return (
     <Grid
       gap={8}
@@ -64,7 +63,7 @@ export const MemberCard = () => {
                         <Text fontSize={"14px"} fontStyle={"italic"}>
                           Member Number{" "}
                         </Text>
-                        <Heading fontSize={"21px"}>8900002123128900</Heading>
+                        <Heading fontSize={"21px"}>{customerId}</Heading>
                       </Box>
                     </CardBody>
                   </Box>
