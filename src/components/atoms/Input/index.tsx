@@ -14,7 +14,7 @@ import { RegisterOptions, UseFormRegister } from "react-hook-form";
 interface IInput extends InputProps {
   label?: string;
   helperText?: string;
-  error?: string;
+  error?: any;
   name: string;
   register: UseFormRegister<any>;
   rules?: RegisterOptions;

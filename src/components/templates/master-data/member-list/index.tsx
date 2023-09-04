@@ -214,6 +214,7 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
         resetButtonText={"Cancel"}
         submitButtonText={isUpdate ? "Update Member Tier" : "Add Member Tier"}
         submitHandler={handleSubmit(onSubmitHandler)}
+        showFooter={true}
         title={isUpdate ? "Update Member Tier" : "Add Member Tier"}
       >
         <CreateMemberForm
@@ -231,6 +232,7 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
         resetButtonText={"No"}
         submitButtonText={"Yes"}
         handleSubmit={() => onDelete(memberTierID ?? "")}
+        showFooter={true}
       >
         Are you sure you want to delete the Member Tier ?
       </ModalForm>
