@@ -11,8 +11,8 @@ import { useDisclosure } from "@chakra-ui/react";
 import ModalForm from "@src/components/organisms/modal";
 import ProfileForm from "@src/components/templates/form/profile";
 import { fetchOneMember } from "@src/service/member-management";
-import { useQuery } from "react-query";
-import { useEffect } from "react";
+import { useQuery, useQueryClient } from "react-query";
+import { useEffect, useState } from "react";
 
 const Wrapper = styled.div`
   position: relative;
@@ -66,6 +66,7 @@ const Card = styled.div`
     border-radius: 5px;
     display: flex;
     align-items: center;
+    padding: 7px;
   }
   .reward-card-title {
     display: flex;
@@ -118,7 +119,17 @@ const MemberProfile = () => {
     refetch();
   }, [state, refetch]);
 
-  console.log("dataa", data);
+  const [rewardPoints, setRewardPoints] = useState(0);
+  useEffect(() => {
+    if (data) {
+      setRewardPoints(data.totalRewardPoints?.toFixed(2));
+    }
+  }, [data]);
+  const queryClient = useQueryClient();
+  const handleFormSubmit = async (data: any) => {
+    await queryClient.refetchQueries("member");
+    setRewardPoints((prevData) => prevData + data);
+  };
   return (
     <Wrapper>
       <img className="profile-img" src={imageList.profileAvatar} />
@@ -173,7 +184,7 @@ const MemberProfile = () => {
                 <Text color={colors.secondary_dark}>Reward Points</Text>
               </div>
               <Text textAlign={"center"} fontSize={"2xl"}>
-                {data?.totalRewardPoints}
+                {rewardPoints ?? ""}
               </Text>
             </div>
           </div>
@@ -184,7 +195,11 @@ const MemberProfile = () => {
         onCloseModal={onProfileModalClose}
         showFooter={false}
       >
-        <ProfileForm userId={state} onCloseModal={onProfileModalClose} />
+        <ProfileForm
+          userId={state}
+          handleFormSubmit={() => handleFormSubmit(data)}
+          onCloseModal={onProfileModalClose}
+        />
       </ModalForm>
     </Wrapper>
   );

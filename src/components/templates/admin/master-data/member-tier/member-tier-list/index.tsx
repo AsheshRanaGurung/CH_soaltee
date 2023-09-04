@@ -117,7 +117,7 @@ const MemberList: React.FC<IMemberTier> = ({
 
       <ModalForm
         isModalOpen={isMemberOpen}
-        disabled={isUpdate}
+        // disabled={isUpdate}
         isLoading={isLoading || isUpdating}
         onCloseModal={onMemberModalClose}
         resetButtonText={"Cancel"}

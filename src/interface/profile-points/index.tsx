@@ -1,6 +1,7 @@
 export interface ProfileFormProps {
   userId: any;
   onCloseModal: () => void;
+  handleFormSubmit: () => void;
 }
 
 //create points by service

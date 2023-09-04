@@ -32,7 +32,7 @@ const Login = () => {
         toastFail("You need to change password first");
         return navigate(NAVIGATION_ROUTES.SETPASSWORD);
       } else {
-        console.log("err", err);
+        toastFail(err?.response?.data?.message ?? "Something went wrong");
       }
     },
   });

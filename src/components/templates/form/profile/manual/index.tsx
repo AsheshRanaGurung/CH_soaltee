@@ -17,7 +17,7 @@ const validationSchema = yup.object().shape({
   rewardPoints: yup.string().required("Reward Points is required"),
 });
 
-const ManualForm = ({ data, onCloseModal }: any) => {
+const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
   const { register, handleSubmit, errors } = useFormHook({
     validationSchema,
     defaultValues,
@@ -27,6 +27,7 @@ const ManualForm = ({ data, onCloseModal }: any) => {
   const { mutate, isLoading } = useMutation(createManual, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
+      handleFormSubmit(response?.data?.data?.rewardPoints);
       onCloseModal();
     },
     onError: (error: AxiosError<{ message: string }>) => {
