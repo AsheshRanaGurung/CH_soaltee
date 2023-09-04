@@ -15,6 +15,11 @@ export const setPasswordApi = (data: ISetPassword) => {
   });
 };
 
+export const resetPasswordApi = (data: ILogin) => {
+  return HttpClient.post(`${api.auth.reset_password}`, {
+    data: data,
+  });
+};
 export const loginApi = (data: ILogin) => {
   return HttpClient.post(`${api.auth.login}`, {
     data: data,

@@ -13,6 +13,7 @@ import UserDashboard from "@src/userPages/UserDashboard";
 import ServicePage from "@src/pages/PointConfig/Service";
 import MemberManagementPage from "@src/pages/MemberManagement";
 import ProfileDetail from "@src/pages/MemberManagement/ProfileDetail";
+import ForgotPasswordPage from "@src/pages/Auth/forgot-password";
 
 const routes = [
   {
@@ -68,6 +69,10 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.PROFILE_DETAIL,
     element: <PrivateRoute Component={ProfileDetail} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.FORGOT_PASSWORD,
+    element: <RestrictedRoute Component={ForgotPasswordPage} />,
   },
 ];
 

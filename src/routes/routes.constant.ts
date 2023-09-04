@@ -16,4 +16,5 @@ export const NAVIGATION_ROUTES = {
   SUCCESS: "/success",
   PROFILE_DETAIL: "/profile-detail",
   SERVICE: "/service",
+  FORGOT_PASSWORD: "/forgot-password",
 };
