@@ -78,7 +78,7 @@ export const BookForm = () => {
                         name="nationality"
                         placeholder="Choose your nationality"
                         label="Adult"
-                        isRequired
+                        required
                         background="white"
                         height="40px"
                         color="black"
@@ -93,7 +93,7 @@ export const BookForm = () => {
                         name="nationality"
                         placeholder="Choose your nationality"
                         label="Children"
-                        isRequired
+                        required
                         background="white"
                         height="40px"
                         color="black"

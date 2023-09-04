@@ -18,6 +18,11 @@ import { useMutation, useQueryClient } from "react-query";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 
+const defaultValues = {
+  membershipName: "",
+  requiredPoints: "",
+  imageUrl: "",
+};
 const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
   const [updateId, setUpdateId] = useState("");
   const [memberTierID, setMemberTierID] = useState<null | string>("");
@@ -123,6 +128,7 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
   }, [isUpdate, updateId]);
   const { handleSubmit, register, errors, reset, setValue } = useFormHook({
     validationSchema,
+    defaultValues,
   });
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createMemberTier, {
@@ -164,7 +170,6 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
       formData.append("image", data.image);
       mutate(formData);
     }
-    reset();
   };
 
   //delete member tier
@@ -174,12 +179,13 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
     setUpdateId("");
     setIsUpdate(false);
     onMemberModalClose();
+    reset(defaultValues);
   };
   const onDelete = async (id: string) => {
-    await deleteMemberTier({
+    const result = await deleteMemberTier({
       id: id,
     });
-    // result.responseCode === "200 OK" && onDeleteMemberClose();
+    result.status === 200 && onDeleteMemberClose();
   };
   return (
     <>
@@ -208,7 +214,6 @@ const MemberList = ({ data: tableData, isLoading: tableDataFetching }: any) => {
       />
       <ModalForm
         isModalOpen={isMemberOpen}
-        disabled={isUpdate}
         isLoading={isLoading || isUpdating}
         onCloseModal={onMemberModalClose}
         resetButtonText={"Cancel"}

@@ -126,7 +126,7 @@ const MemberProfile = () => {
         <div className="profile-card">
           <div>
             <Text fontSize={"3xl"}>{state.fullName}</Text>
-            <Text>Gold Tier Member</Text>
+            <Text>{data?.tierName} Tier Member</Text>
           </div>
           <div>
             <Button

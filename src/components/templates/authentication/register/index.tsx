@@ -88,7 +88,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             name="nationality"
             placeholder="Choose your nationality"
             label="Nationality"
-            isRequired
+            required
             error={errors.nationality?.message || ""}
             options={nationality}
           />

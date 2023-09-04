@@ -1,7 +1,7 @@
 export const api = {
   auth: {
     register: "/users/save-users",
-    set_password: "/users/cprohange-password",
+    set_password: "/users/change-password",
     login: "/auth/login",
   },
   configuration: {

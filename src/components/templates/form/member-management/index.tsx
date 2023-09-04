@@ -2,8 +2,19 @@ import { useState } from "react";
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import { nationality } from "@src/constant/index";
+import { getAllProperty } from "@src/service/master-data/property";
+import { useQuery } from "react-query";
 
 export const CreateMemberManagementForm = ({ register, errors }: any) => {
+  const { data: property } = useQuery("property", getAllProperty, {
+    select: ({ data }) => data.datalist,
+  });
+  const propertyList = property?.map((item: any) => {
+    return {
+      label: item?.name,
+      value: item?.id,
+    };
+  });
   const [isSwitchOpen, setIsSwitchOpen] = useState(false);
   const toggleSwitch = () => {
     setIsSwitchOpen((initialValue) => !initialValue);
@@ -46,7 +57,7 @@ export const CreateMemberManagementForm = ({ register, errors }: any) => {
             name="nationality"
             placeholder="Choose your nationality"
             label="Nationality"
-            isRequired
+            required
             error={errors.nationality?.message || ""}
             options={nationality}
           />
@@ -56,9 +67,10 @@ export const CreateMemberManagementForm = ({ register, errors }: any) => {
             name="propertyName"
             placeholder="Choose Property Name"
             label="Property Name"
+            required
             // isRequired
             // error={errors.propertyName?.message || ""}
-            options={nationality}
+            options={propertyList || []}
           />
           <FormControl
             control="switch"
