@@ -1,4 +1,4 @@
-import { Button, useDisclosure, Text, Link } from "@chakra-ui/react";
+import { Button, useDisclosure, Link } from "@chakra-ui/react";
 import Checkbox from "@src/components/atoms/Checkbox";
 import FormControl from "@src/components/atoms/FormControl";
 import Heading from "@src/components/atoms/Heading";
@@ -7,7 +7,7 @@ import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import * as yup from "yup";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 interface ISignInProps {
   mutate?: any;
@@ -38,7 +38,7 @@ const ForgotPassword = styled.div`
 `;
 const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
   const { isOpen: isVisible, onToggle: onToggleVisibility } = useDisclosure();
-
+  const navigate = useNavigate();
   const validationSchema = yup.object().shape({
     email: yup
       .string()
@@ -89,9 +89,15 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
               w="auto"
               label={<span>Remember Me</span>}
             />
-            <Text w="100%" textAlign="right" color={colors.primary}>
+            <Button
+              bg={"transparent"}
+              w="100%"
+              textAlign="right"
+              color={colors.primary}
+              onClick={() => navigate(NAVIGATION_ROUTES.FORGOT_PASSWORD)}
+            >
               Forgot Password?
-            </Text>
+            </Button>
           </ForgotPassword>
           <Button
             type="submit"

@@ -3,6 +3,7 @@ export const api = {
     register: "/users/save-users",
     set_password: "/users/change-password",
     login: "/auth/login",
+    reset_password: "/users/reset-password",
   },
   configuration: {
     service: {
