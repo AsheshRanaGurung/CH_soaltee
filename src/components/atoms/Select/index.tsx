@@ -28,10 +28,10 @@ const Select = ({
   isRequired,
   required,
   enabled,
+  isSelected,
   ...rest
 }: ISelect) => {
   const [selected, setSelected] = useState(false);
-
   const handlehange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelected(!!event.target.value);
   };
@@ -68,7 +68,11 @@ const Select = ({
           onChange={handlehange}
         >
           {options.map(({ label, value }) => (
-            <option key={value} value={value}>
+            <option
+              key={value}
+              value={value}
+              disabled={isSelected?.includes(value)}
+            >
               {label}
             </option>
           ))}
@@ -93,6 +97,7 @@ export interface ISelect extends SelectProps {
   isRequired?: boolean;
   required?: boolean;
   enabled?: boolean;
+  isSelected?: any;
 }
 export default Select;
 
