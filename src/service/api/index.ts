@@ -10,7 +10,7 @@ export const api = {
       add: "/service-category/create-service",
       fetch: "/service-category/get-all-service",
       delete: "/service-category/delete-service-category/:id",
-      update: "/service-category/update-service/:id",
+      update: "/service-category/update-service-category/:id",
     },
   },
   master_data: {

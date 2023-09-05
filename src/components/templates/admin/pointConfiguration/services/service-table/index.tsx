@@ -115,7 +115,7 @@ const ServiceTable: React.FC<IMemberTierTable> = ({
       {
         Header: "Member",
         accessor: "membershipServiceResponseDtos",
-        width: "30%",
+        width: "50%",
         textAlign: "center",
         Cell: ({
           row,
@@ -131,8 +131,8 @@ const ServiceTable: React.FC<IMemberTierTable> = ({
               {row?.original?.membershipServiceResponseDtos?.map(
                 (itmm: IMemberTierOne, index: number) => (
                   <div key={index}>
-                    <h1 className="title">{itmm.membershipTierName}</h1>
-                    <h1 className="percent">{itmm.rewardPercentage}</h1>
+                    <h1 className="title">{itmm.membershipName}</h1>
+                    <h1 className="percent">{`${itmm.rewardPercentage}%`}</h1>
                   </div>
                 )
               )}

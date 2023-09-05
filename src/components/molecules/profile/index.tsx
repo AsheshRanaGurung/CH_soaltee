@@ -27,7 +27,9 @@ const Profile = () => {
         <MenuItem>Profile</MenuItem>
         <MenuItem
           onClick={() => {
-            localStorage.removeItem("token"), navigate(NAVIGATION_ROUTES.LOGIN);
+            localStorage.removeItem("token"),
+              localStorage.removeItem("userInfo"),
+              navigate(NAVIGATION_ROUTES.LOGIN);
           }}
         >
           Logout

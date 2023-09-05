@@ -130,8 +130,8 @@ const ServiceList: React.FC<IServiceProps> = ({
         tableData={tableData}
         tableDataFetching={tableDataFetching}
         title="Filter By"
-        btnText="Add Property"
-        CurrentText="Property List"
+        btnText="Add Service"
+        CurrentText="Service List"
         onAction={() => {
           onCloseHandler();
           onServiceModalOpen();

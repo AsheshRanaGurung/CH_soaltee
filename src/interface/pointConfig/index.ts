@@ -3,7 +3,7 @@ export interface IMembershipServiceRequest {
   rewardPercentage?: number | string;
 }
 export interface IMemberTierOne {
-  membershipTierName?: string;
+  membershipName?: string;
   rewardPercentage?: number | string;
 }
 export interface IService {
