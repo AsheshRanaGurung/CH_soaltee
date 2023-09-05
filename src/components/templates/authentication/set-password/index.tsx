@@ -5,6 +5,7 @@ import * as yup from "yup";
 import Heading from "@src/components/atoms/Heading";
 import FormControl from "@src/components/atoms/FormControl";
 import { FormWrapper } from "../login";
+import { createPasswordSchema } from "@src/utility/passwordValidation";
 
 interface ISignupProps {
   mutate: any;
@@ -13,7 +14,7 @@ interface ISignupProps {
 const SetPasswordTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
   const validationSchema = yup.object().shape({
     oldPassword: yup.string().required("Password is required"),
-    newPassword: yup.string().required("Password is required"),
+    newPassword: createPasswordSchema(),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("newPassword"), null], "Password doesn't match")
