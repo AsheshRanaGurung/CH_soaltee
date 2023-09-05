@@ -45,7 +45,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
     }));
   };
 
-  let isSubmitDisabled = !checked.terms || !checked.offers;
+  let isSubmitDisabled = !checked.terms;
   useEffect(() => {
     isSubmitDisabled = true;
   }, [isLoading]);

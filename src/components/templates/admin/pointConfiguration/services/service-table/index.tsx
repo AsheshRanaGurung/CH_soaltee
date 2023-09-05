@@ -27,19 +27,33 @@ interface IMemberTierTable {
 const Wrapper = styled.div`
   display: flex;
   justify-content: flex-start;
-  gap: 4%;
+  // gap: 4%;
+  flex-wrap: wrap;
   text-align: center;
   position: relative;
   div {
     position: relative;
+
     flex: 0 0 20%;
+    margin-bottom: 10px;
+
     &::after {
       content: "";
       position: absolute;
       border-right: 1px solid #ccc;
-      height: 100%;
+      height: 90%;
       top: 0;
       right: 0px;
+    }
+    &:first-child {
+      &::before {
+        content: "";
+        position: absolute;
+        border-right: 1px solid #ccc;
+        height: 90%;
+        top: 0;
+        left: 0;
+      }
     }
   }
   .title {
@@ -52,14 +66,6 @@ const Wrapper = styled.div`
     color: ${colors.secondary_black};
     font-weight: 500;
     margin-top: 5px;
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    border-right: 1px solid #ccc;
-    height: 100%;
-    top: 0;
-    left: 0;
   }
 `;
 
