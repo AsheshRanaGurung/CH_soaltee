@@ -12,7 +12,6 @@ const Signup = () => {
   const { mutate, isLoading } = useMutation(signUpApi, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
-      localStorage.setItem("userInfo", response?.data?.data?.email);
       localStorage.setItem("userRole", response?.data?.data?.role);
       navigate(NAVIGATION_ROUTES.SUCCESS);
     },

@@ -29,8 +29,10 @@ const Login = () => {
 
     onError: (err: AxiosError<{ message: string }>) => {
       if (err && err?.response?.data?.message === "Email Not Verified") {
-        toastFail("You need to change password first");
-        return navigate(NAVIGATION_ROUTES.SETPASSWORD);
+        toastSuccess(
+          "A link to change your password has been sent to your email."
+        );
+        // return navigate(NAVIGATION_ROUTES.SETPASSWORD);
       } else {
         toastFail(err?.response?.data?.message ?? "Something went wrong");
       }

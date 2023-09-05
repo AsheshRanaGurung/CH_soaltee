@@ -31,7 +31,7 @@ const VerificationMessage = () => {
       <Button
         display={"block"}
         margin={"40px auto"}
-        onClick={() => navigate(NAVIGATION_ROUTES.SETPASSWORD)}
+        onClick={() => navigate(NAVIGATION_ROUTES.LOGIN)}
       >
         Proceed
       </Button>
