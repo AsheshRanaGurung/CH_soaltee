@@ -42,7 +42,9 @@ const Item = ({
         }
         sx={{
           svg: {
-            background: `${active ? colors.primary : ""}`,
+            background: `${
+              active ? (isChild ? colors.primary : colors.primary) : ""
+            }`,
             padding: `${active ? "5px" : ""}`,
             borderRadius: `${active ? "45%" : ""}`,
             height: `${active ? "30px" : "15px"}`,

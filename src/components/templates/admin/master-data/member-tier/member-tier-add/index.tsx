@@ -8,11 +8,13 @@ interface IMemberProps {
   register: UseFormRegister<IMemberTierDetail>;
   setValue: UseFormSetValue<IMemberTierDetail>;
   errors: FieldErrors;
+  id?: number | string;
 }
 export const CreateMemberForm: React.FC<IMemberProps> = ({
   register,
   errors,
   setValue,
+  id,
 }: any) => {
   return (
     <>
@@ -37,7 +39,7 @@ export const CreateMemberForm: React.FC<IMemberProps> = ({
             error={errors?.requiredPoints?.message || ""}
             required
           />
-          <ImageUpload setValue={setValue} />
+          <ImageUpload setValue={setValue} required={!id} />
         </Flex>
         <Spacer />
       </Box>

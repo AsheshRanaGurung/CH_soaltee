@@ -2,23 +2,18 @@ import { useState } from "react";
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import { nationality } from "@src/constant/index";
-import { getAllProperty } from "@src/service/master-data/property";
-import { useQuery } from "react-query";
 
-export const CreateMemberManagementForm = ({ register, errors }: any) => {
-  const { data: property } = useQuery("property", getAllProperty, {
-    select: ({ data }) => data.data,
-  });
-  const propertyList = property?.map((item: any) => {
-    return {
-      label: item?.name,
-      value: item?.id,
-    };
-  });
+export const CreateMemberManagementForm = ({
+  register,
+  errors,
+  id,
+  propertyList,
+}: any) => {
   const [isSwitchOpen, setIsSwitchOpen] = useState(false);
   const toggleSwitch = () => {
     setIsSwitchOpen((initialValue) => !initialValue);
   };
+
   return (
     <>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -39,6 +34,7 @@ export const CreateMemberManagementForm = ({ register, errors }: any) => {
             placeholder={"Email"}
             label={"Email"}
             error={errors?.email?.message || ""}
+            isDisabled={id ? true : false}
             required
           />
           <FormControl
@@ -64,23 +60,23 @@ export const CreateMemberManagementForm = ({ register, errors }: any) => {
           <FormControl
             control="select"
             register={register}
-            name="propertyName"
+            name="propertyId"
             placeholder="Choose Property Name"
             label="Property Name"
             required
-            // isRequired
-            // error={errors.propertyName?.message || ""}
             options={propertyList || []}
           />
-          <FormControl
-            control="switch"
-            name="isActive"
-            variant="red"
-            value={isSwitchOpen}
-            toggleSwitch={toggleSwitch}
-            register={register}
-            label={"Is Blocked ?"}
-          />
+          {id && (
+            <FormControl
+              control="switch"
+              name="isBlocked"
+              variant="red"
+              value={isSwitchOpen}
+              toggleSwitch={toggleSwitch}
+              register={register}
+              label={"Is Blocked ?"}
+            />
+          )}
         </Flex>
         <Spacer />
       </Box>

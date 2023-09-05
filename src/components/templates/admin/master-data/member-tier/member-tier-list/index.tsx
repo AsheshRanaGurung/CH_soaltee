@@ -11,10 +11,17 @@ import {
 } from "@src/service/master-data/member-tier";
 import MemberTierTable from "../member-tier-table";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
+
 interface IMemberTier {
   tableData: IMemberTierDetail[];
   tableDataFetching: boolean;
 }
+
+const defaultValues = {
+  membershipName: "",
+  requiredPoints: "",
+  image: "",
+};
 
 const MemberList: React.FC<IMemberTier> = ({
   tableData,
@@ -46,7 +53,6 @@ const MemberList: React.FC<IMemberTier> = ({
       reset({
         membershipName: data?.membershipName,
         requiredPoints: data?.requiredPoints,
-        image: data?.imageUrl,
       });
     }
   }, [isUpdate, updateId]);
@@ -67,6 +73,7 @@ const MemberList: React.FC<IMemberTier> = ({
   const { mutateAsync: update, isLoading: isUpdating } = useUpdateMemberTier();
 
   const onCloseHandler = () => {
+    reset(defaultValues);
     setDeleteId("");
     setUpdateId("");
     setIsUpdate(false);
@@ -81,9 +88,15 @@ const MemberList: React.FC<IMemberTier> = ({
     };
     formData.append("data", JSON.stringify(dat));
     if (updateId) {
-      formData.append("image", data.image as Blob);
-      update({ id: updateId, data: formData });
-      onCloseHandler();
+      if (data.image) {
+        formData.append("image", data.image as Blob);
+        update({ id: updateId, data: formData });
+        onCloseHandler();
+      } else {
+        formData.append("image", "");
+        update({ id: updateId, data: formData });
+        onCloseHandler();
+      }
     } else {
       formData.append("image", data.image as Blob);
       mutate(formData);
@@ -98,8 +111,8 @@ const MemberList: React.FC<IMemberTier> = ({
         tableData={tableData}
         tableDataFetching={tableDataFetching}
         title="Filter By"
-        btnText="Add Property"
-        CurrentText="Property List"
+        btnText="Add Member Tier"
+        CurrentText="Member Tier List"
         onAction={() => {
           onCloseHandler();
           onMemberModalOpen();
@@ -131,6 +144,7 @@ const MemberList: React.FC<IMemberTier> = ({
           register={register}
           errors={errors}
           setValue={setValue}
+          id={updateId}
         />
       </ModalForm>
 

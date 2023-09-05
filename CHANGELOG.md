@@ -4,9 +4,12 @@
 ### Bug Fixes
 
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
+* colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
 * hotfix: route manage ([9c0394c](https://gitlab.com/paras205/boilerplate-react/commit/9c0394ce422983cccca2b7e439c6f699faf9c135))
+* member update issue ([3dd2304](https://gitlab.com/paras205/boilerplate-react/commit/3dd2304dba5eaf291a0aceb717b13c1054c9e1dd))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
+* service update ([d2af844](https://gitlab.com/paras205/boilerplate-react/commit/d2af844e467eadb7f27a536a048a5f6a0749f5ff))
 
 
 ### Features

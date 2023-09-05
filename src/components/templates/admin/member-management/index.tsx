@@ -9,13 +9,15 @@ import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
 import { CreateMemberManagementForm } from "../../form/member-management";
 import Switch from "@src/components/atoms/Switch";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router";
 import { createMember, updateMember } from "@src/service/member-management";
 import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
+import { IMember } from "@src/interface/member-management";
+import { getAllProperty } from "@src/service/master-data/property";
 const defaultValues = {
   fullName: "",
   email: "",
@@ -29,7 +31,6 @@ const MemberManagementList = ({
   data: tableData,
   isLoading: tableDataFetching,
 }: any) => {
-  //   const [memberID, setMemberId] = useState("");
   const navigate = useNavigate();
   const [updateId, setUpdateID] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
@@ -85,15 +86,15 @@ const MemberManagementList = ({
       },
       {
         Header: "Tier",
-        accessor: "contactPerson",
+        accessor: "membershipTierName",
         width: "10%",
       },
       {
-        Header: "Is Active?",
-        accessor: "isActive",
+        Header: "Is Blocked?",
+        accessor: "isBlocked",
         width: "10%",
-        Cell: ({ row }: CellProps<{ isActive: boolean }>) => {
-          const status = row?.original?.isActive;
+        Cell: ({ row }: CellProps<{ isBlocked: boolean }>) => {
+          const status = row?.original?.isBlocked;
           return status === true ? (
             <Switch value={true} variant="red" />
           ) : (
@@ -132,13 +133,22 @@ const MemberManagementList = ({
     email: yup.string().required("Email is required"),
     phoneNumber: createPhoneNumberSchema(),
     nationality: yup.string().required("Nationality is required"),
-    propertyName: yup.string().required("Property Name is required"),
+    propertyId: yup.string().required("Property Name is required"),
   });
-  const { handleSubmit, register, errors, reset } = useFormHook({
+  const { handleSubmit, register, errors, reset, watch } = useFormHook({
     validationSchema,
     defaultValues,
   });
   //handle form submit
+  const { data: property } = useQuery("property", getAllProperty, {
+    select: ({ data }) => data.data,
+  });
+  const propertyList = property?.map((item: any) => {
+    return {
+      label: item?.name,
+      value: item?.id,
+    };
+  });
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createMember, {
     onSuccess: (response) => {
@@ -169,38 +179,40 @@ const MemberManagementList = ({
         email: data.email,
         phoneNumber: data.phoneNumber,
         nationality: data.nationality,
+        propertyId: data?.property?.id,
         isActive: data.isActive,
       });
     }
-  }, [isUpdate, updateId]);
+  }, [isUpdate, updateId, tableData]);
   const onCloseHandler = () => {
     onMemberModalClose();
     reset(defaultValues);
     setUpdateID("");
     setIsUpdate(false);
   };
-  const onSubmitHandler = async (data: any) => {
+  const onSubmitHandler = async (data: IMember) => {
     //there is no api for update adjust later
     if (updateId) {
       update({
         id: updateId,
         data: {
+          id: updateId,
           fullName: data.fullName,
           email: data.email,
           phoneNumber: data.phoneNumber,
           nationality: data.nationality,
-          isActive: data.isActive,
-          referalCode: "234",
+          propertyId: data?.propertyId,
+          isBlocked: data.isBlocked,
         },
       });
     } else {
       mutate({
+        id: "",
         fullName: data.fullName,
         email: data.email,
         phoneNumber: data.phoneNumber,
         nationality: data.nationality,
-        isActive: data.isActive,
-        referalCode: "234",
+        propertyId: data.propertyId,
       });
     }
   };
@@ -240,7 +252,13 @@ const MemberManagementList = ({
         submitHandler={handleSubmit(onSubmitHandler)}
         showFooter={true}
       >
-        <CreateMemberManagementForm register={register} errors={errors} />
+        <CreateMemberManagementForm
+          id={updateId}
+          register={register}
+          errors={errors}
+          watch={watch}
+          propertyList={propertyList}
+        />
       </ModalForm>
     </>
   );
