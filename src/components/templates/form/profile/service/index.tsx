@@ -36,7 +36,7 @@ const validationSchema: any = yup.object().shape({
   ),
 });
 export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
-  const { register, handleSubmit, control, errors } = useFormHook({
+  const { register, handleSubmit, control, errors, watch } = useFormHook({
     validationSchema,
     defaultValues,
   });
@@ -44,6 +44,11 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
     name: "services",
     control,
   });
+  const selectedValue = watch("services");
+
+  const selectedServiceIds = selectedValue.map((item: any) =>
+    Number(item.service)
+  );
   const { id } = data.userId;
   const { mutate, isLoading } = useMutation(createByService, {
     onSuccess: (response) => {
@@ -104,6 +109,7 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
                     error={(errors?.services as any)?.service?.message || ""}
                     options={data?.serviceList || []}
                     required
+                    isSelected={selectedServiceIds}
                   />
                 </GridItem>
                 <GridItem>

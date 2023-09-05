@@ -11,17 +11,16 @@ interface ISignupProps {
   mutate: any;
   isLoading: boolean;
 }
+const validationSchema = yup.object().shape({
+  oldPassword: yup.string().required("Password is required"),
+  newPassword: createPasswordSchema(),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), null], "Password doesn't match")
+    .required("Password is required")
+    .typeError("Password is required"),
+});
 const SetPasswordTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
-  const validationSchema = yup.object().shape({
-    oldPassword: yup.string().required("Password is required"),
-    newPassword: createPasswordSchema(),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("newPassword"), null], "Password doesn't match")
-      .required("Password is required")
-      .typeError("Password is required"),
-  });
-
   const { isOpen: isVisiblePassword, onToggle: onToggleVisibilityPassword } =
     useDisclosure();
 
