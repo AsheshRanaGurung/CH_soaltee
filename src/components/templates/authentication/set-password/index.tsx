@@ -6,21 +6,29 @@ import Heading from "@src/components/atoms/Heading";
 import FormControl from "@src/components/atoms/FormControl";
 import { FormWrapper } from "../login";
 import { createPasswordSchema } from "@src/utility/passwordValidation";
+import { useParams } from "react-router";
 
 interface ISignupProps {
   mutate: any;
   isLoading: boolean;
 }
-const validationSchema = yup.object().shape({
-  oldPassword: yup.string().required("Password is required"),
-  newPassword: createPasswordSchema(),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("newPassword"), null], "Password doesn't match")
-    .required("Password is required")
-    .typeError("Password is required"),
-});
+
 const SetPasswordTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
+  //extract token from params
+  const { token = "" } = useParams<{
+    token: string;
+  }>();
+  const decodedEmail = atob(token);
+  const validationSchema = yup.object().shape({
+    oldPassword: yup.string().required("Password is required"),
+    newPassword: createPasswordSchema(),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("newPassword"), null], "Password doesn't match")
+      .required("Password is required")
+      .typeError("Password is required"),
+  });
+
   const { isOpen: isVisiblePassword, onToggle: onToggleVisibilityPassword } =
     useDisclosure();
 
@@ -39,8 +47,7 @@ const SetPasswordTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
   });
 
   const onSubmit = (data: any) => {
-    const email = localStorage.getItem("userInfo");
-    mutate({ ...data, email: email });
+    mutate({ ...data, email: decodedEmail });
   };
 
   return (

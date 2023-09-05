@@ -12,7 +12,7 @@ export const NAVIGATION_ROUTES = {
   PRODUCTS: "/products",
   PROPERTY: "/property",
   MEMBERTIER: "/member-tier",
-  SETPASSWORD: "/set-password",
+  SETPASSWORD: "/set-password/:token",
   SUCCESS: "/success",
   PROFILE_DETAIL: "/profile-detail",
   SERVICE: "/service",

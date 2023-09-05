@@ -9,7 +9,6 @@ export const CreateMemberManagementForm = ({ register, errors }: any) => {
   const { data: property } = useQuery("property", getAllProperty, {
     select: ({ data }) => data.data,
   });
-  console.log(property);
   const propertyList = property?.map((item: any) => {
     return {
       label: item?.name,
