@@ -9,6 +9,7 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { useMutation } from "react-query";
 import { createByService } from "@src/service/profile/byservice";
+import { colors } from "@src/theme/colors";
 type FormValues = {
   propertyname: string;
   services: {
@@ -122,7 +123,10 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
                   alignItems={"center"}
                   justifyContent={"center"}
                 >
-                  <DeleteIcon onClick={() => remove(i)} />
+                  <DeleteIcon
+                    color={colors.primary}
+                    onClick={() => remove(i)}
+                  />
                 </GridItem>
               </Grid>
             </Box>

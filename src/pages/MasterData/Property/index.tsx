@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 
 const PropertyPage = () => {
   const { data, isLoading } = useQuery("property", getAllProperty, {
-    select: ({ data }) => data.datalist,
+    select: ({ data }) => data.data,
   });
 
   return (

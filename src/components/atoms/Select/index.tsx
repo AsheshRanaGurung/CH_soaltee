@@ -9,7 +9,13 @@ import {
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
 import { colors } from "@src/theme/colors";
+import styled from "styled-components";
 
+const SelectWrapper = styled.div`
+  select {
+    // padding: 0;
+  }
+`;
 const Select = ({
   placeholder,
   label,
@@ -38,35 +44,36 @@ const Select = ({
           {required && <span style={{ color: colors.red }}>&nbsp;*</span>}
         </FormLabel>
       )}
-
-      <ChakraSelect
-        {...register(name, rules)}
-        {...rest}
-        id={name}
-        size={"sm"}
-        fontSize="14px !important"
-        textColor={selected ? "black" : "gray"}
-        fontWeight={selected ? "500" : "400"}
-        border="none"
-        borderBottom=" 1px solid rgba(0, 0, 0, 0.15)"
-        borderRadius="0"
-        marginBottom="10px"
-        borderColor={error ? colors.red : colors.primary_dark}
-        borderWidth={error ? "2px" : "1px"}
-        placeholder={placeholder}
-        _focusVisible={{
-          borderBottom: `1px solid ${colors.primary} `,
-          borderRadius: "0",
-        }}
-        //
-        onChange={handlehange}
-      >
-        {options.map(({ label, value }) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </ChakraSelect>
+      <SelectWrapper>
+        <ChakraSelect
+          {...register(name, rules)}
+          {...rest}
+          id={name}
+          size={"sm"}
+          fontSize="14px !important"
+          textColor={selected ? "black" : "gray"}
+          fontWeight={selected ? "500" : "400"}
+          border="none"
+          borderBottom=" 1px solid rgba(0, 0, 0, 0.15)"
+          borderRadius="0"
+          marginBottom="10px"
+          borderColor={error ? colors.red : colors.primary_dark}
+          borderWidth={error ? "2px" : "1px"}
+          placeholder={placeholder}
+          _focusVisible={{
+            borderBottom: `1px solid ${colors.primary} `,
+            borderRadius: "0",
+          }}
+          //
+          onChange={handlehange}
+        >
+          {options.map(({ label, value }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </ChakraSelect>
+      </SelectWrapper>
 
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && <FormErrorMessage>{error}</FormErrorMessage>}
