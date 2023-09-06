@@ -9,8 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
 import FormControl from "@src/components/atoms/FormControl";
-import { nationality } from "@src/constant/index";
 import { useFormHook } from "@src/hooks/useFormhook";
+import propertyList from "../../admin/master-data/property-list";
 
 export const BookForm = () => {
   const { register, errors } = useFormHook({});
@@ -49,7 +49,7 @@ export const BookForm = () => {
                       height="40px"
                       color="black"
                       error={errors.nationality?.message || ""}
-                      options={nationality}
+                      options={propertyList || []}
                     />
                   </GridItem>
                   <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
