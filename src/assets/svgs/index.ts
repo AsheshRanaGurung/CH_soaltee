@@ -8,4 +8,5 @@ export { ReactComponent as AwardIcon } from "./award.svg";
 export { ReactComponent as PhoneIcon } from "./phone.svg";
 export { ReactComponent as GlobalIcon } from "./global.svg";
 export { ReactComponent as LocationIcon } from "./location.svg";
-export { ReactComponent as MailIcon } from "./file.svg";
+export { ReactComponent as MailIcon } from "./mail.svg";
+export { ReactComponent as FileIcon } from "./file.svg";
