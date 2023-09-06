@@ -8,3 +8,12 @@ export interface IMember {
   propertyId?: number;
   isBlocked?: boolean;
 }
+
+export interface IMemberHistory {
+  id?: string | number;
+  rewardPoints?: number | string;
+  fullName?: string;
+  serviceName?: string;
+  transactionType?: string;
+  txnDate?: any;
+}

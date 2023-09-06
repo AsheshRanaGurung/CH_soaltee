@@ -10,9 +10,13 @@ import { useLocation } from "react-router";
 import { useDisclosure } from "@chakra-ui/react";
 import ModalForm from "@src/components/organisms/modal";
 import ProfileForm from "@src/components/templates/form/profile";
-import { fetchOneMember } from "@src/service/member-management";
+import {
+  fetchOneMember,
+  getAllMemberHistory,
+} from "@src/service/member-management";
 import { useQuery, useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
+import MemberHistory from "../member-history";
 
 const Wrapper = styled.div`
   position: relative;
@@ -117,6 +121,11 @@ const Card = styled.div`
     }
   }
 `;
+const HistoryCard = styled.div`
+  margin: 40px 175px;
+  background: ${colors.white};
+  padding: 25px 0px;
+`;
 const MemberProfile = () => {
   const location = useLocation();
   const { state } = location;
@@ -145,6 +154,16 @@ const MemberProfile = () => {
       setRewardPoints(data.totalRewardPoints?.toFixed(2));
     }
   }, [data]);
+
+  const { data: historyData } = useQuery(
+    "member_history",
+    getAllMemberHistory,
+    {
+      select: ({ data }) => {
+        return data.data;
+      },
+    }
+  );
   const queryClient = useQueryClient();
   const handleFormSubmit = async (data: any) => {
     await queryClient.refetchQueries("member");
@@ -220,6 +239,9 @@ const MemberProfile = () => {
           </div>
         </div>
       </Card>
+      <HistoryCard>
+        <MemberHistory data={historyData} />
+      </HistoryCard>
       <ModalForm
         isModalOpen={isProfileOpen}
         onCloseModal={onProfileModalClose}
