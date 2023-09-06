@@ -27,6 +27,9 @@ export const api = {
       update: "/property/update-property/:id",
     },
   },
+  dashboard: {
+    fetch: "/report/dashboard-report",
+  },
   member_management: {
     add: "/auth/save-users",
     fetch: "/auth/get-users",
