@@ -14,7 +14,7 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router";
-import { createMember, updateMember } from "@src/service/member-management";
+import { createMember } from "@src/service/member-management";
 import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 import { IMember } from "@src/interface/member-management";
 import { getAllProperty } from "@src/service/master-data/property";
@@ -161,16 +161,6 @@ const MemberManagementList = ({
     },
   });
 
-  const { mutate: update, isLoading: isUpdating } = useMutation(updateMember, {
-    onSuccess: (response) => {
-      toastSuccess(response?.data?.message || "Member Updated!!");
-      queryClient.refetchQueries("member_management");
-      onMemberModalClose();
-    },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toastFail(error?.response?.data?.message || "Something went wrong");
-    },
-  });
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData.find((x: any) => x.id === updateId);
@@ -193,17 +183,14 @@ const MemberManagementList = ({
   const onSubmitHandler = async (data: IMember) => {
     //there is no api for update adjust later
     if (updateId) {
-      update({
+      mutate({
         id: updateId,
-        data: {
-          id: updateId,
-          fullName: data.fullName,
-          email: data.email,
-          phoneNumber: data.phoneNumber,
-          nationality: data.nationality,
-          propertyId: data?.propertyId,
-          isBlocked: data.isBlocked,
-        },
+        fullName: data.fullName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        nationality: data.nationality,
+        propertyId: data?.propertyId,
+        isBlocked: data.isBlocked,
       });
     } else {
       mutate({
@@ -245,7 +232,7 @@ const MemberManagementList = ({
       <ModalForm
         isModalOpen={isMemberOpen}
         title={isUpdate ? "Update User" : "Add User"}
-        isLoading={isLoading || isUpdating}
+        isLoading={isLoading}
         onCloseModal={onMemberModalClose}
         resetButtonText={"Cancel"}
         submitButtonText={isUpdate ? "Update User" : "Create User"}

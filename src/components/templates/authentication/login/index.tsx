@@ -8,6 +8,7 @@ import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import * as yup from "yup";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface ISignInProps {
   mutate?: any;
@@ -37,6 +38,8 @@ const ForgotPassword = styled.div`
   }
 `;
 const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
+  const [_, setRememberEmail] = useState(localStorage.getItem("email") || "");
+
   const { isOpen: isVisible, onToggle: onToggleVisibility } = useDisclosure();
   const navigate = useNavigate();
   const validationSchema = yup.object().shape({
@@ -47,11 +50,27 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
     password: yup.string().required("Password is required"),
   });
 
-  const { handleSubmit, register, control, errors } = useFormHook({
-    validationSchema,
-  });
+  const { handleSubmit, register, control, errors, watch, setValue } =
+    useFormHook({
+      validationSchema,
+    });
   const onSubmit = (data: any) => {
     mutate(data);
+  };
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    if (storedEmail) {
+      setValue("email", storedEmail);
+      setValue("forgot_password", true);
+      setRememberEmail(storedEmail);
+    }
+  }, []);
+  const handleRememberChange = (e: any) => {
+    if (e.target.checked) {
+      localStorage.setItem("email", watch("email"));
+    } else {
+      localStorage.removeItem("email");
+    }
   };
   return (
     <>
@@ -86,6 +105,7 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
               name="forgot_password"
               colorScheme="red"
               w="auto"
+              onChange={handleRememberChange}
               label={<span>Remember Me</span>}
             />
             <Button

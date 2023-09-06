@@ -13,15 +13,6 @@ export const createMember = (data: IMember) => {
   });
 };
 
-//update property management
-export const updateMember = ({ id, data }: { id: string; data: IMember }) => {
-  return HttpClient.post(api.member_management.update.replace(":id", id), {
-    data: {
-      ...data,
-    },
-  });
-};
-
 export const fetchOneMember = ({ id }: { id: string }) => {
   return HttpClient.get(api.member_management.fetchById.replace(":id", id));
 };
