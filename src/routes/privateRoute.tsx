@@ -18,7 +18,8 @@ const PrivateRoute = ({ Component }: any) => {
     if (isAuthenticated) {
       role && role?.role?.length > 0 && !role.role.includes("USER")
         ? location.pathname === "/" && navigate(NAVIGATION_ROUTES.DASHBOARD)
-        : navigate(NAVIGATION_ROUTES.USER_DASHBOARD);
+        : location.pathname === "/" &&
+          navigate(NAVIGATION_ROUTES.USER_DASHBOARD);
     }
   }, [isAuthenticated]);
 
