@@ -16,3 +16,7 @@ export const createMember = (data: IMember) => {
 export const fetchOneMember = ({ id }: { id: string }) => {
   return HttpClient.get(api.member_management.fetchById.replace(":id", id));
 };
+
+export const getAllMemberHistory = () => {
+  return HttpClient.get(api.member_management.get_history);
+};

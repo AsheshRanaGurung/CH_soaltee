@@ -35,6 +35,7 @@ export const api = {
     fetch: "/auth/get-users",
     update: "/auth/update-user/:id",
     fetchById: "/users/get-all-user-details/:id",
+    get_history: "/report/transaction-history",
   },
   profile: {
     manual: {

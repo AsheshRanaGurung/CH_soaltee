@@ -36,4 +36,6 @@ export const colors = {
   light_white: "#F5F5F5",
   gray_900: "#212B36",
   gray_600: "#4A5568",
+  primary_green: "#188351",
+  light_gray_1: "#d2d2d2",
 };

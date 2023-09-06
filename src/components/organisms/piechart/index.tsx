@@ -105,7 +105,7 @@ const PieChartComponent = () => {
         <Label
           value="Total Users"
           position="center"
-          content={({ value }) => (
+          content={({ value }: any) => (
             <text x={120} y={200} fill="#333" textAnchor="middle">
               {value}
             </text>
@@ -115,7 +115,7 @@ const PieChartComponent = () => {
         <Label
           value="20,200"
           position="center"
-          content={({ value }) => (
+          content={({ value }: any) => (
             <text x={120} y={230} fill="#333" textAnchor="middle">
               {value}
             </text>
