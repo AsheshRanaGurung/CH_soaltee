@@ -9,6 +9,10 @@ export const theme = extendTheme({
       body: {
         fontFamily: "'Josefin Sans', sans-serif",
         fontWeight: 400,
+        scrollBehavior: "smooth",
+      },
+      html: {
+        scrollBehavior: "smooth !important",
       },
     },
   },

@@ -4,4 +4,8 @@ export { ReactComponent as RightArrowIcon } from "./rightArrowIcon.svg";
 export { ReactComponent as LoginIcon } from "./sikaaiLoginIcon.svg";
 export { ReactComponent as NotificationIcon } from "./notificationIcon.svg";
 export { ReactComponent as DeleteIcon } from "./notificationIcon.svg";
+export { ReactComponent as AwardIcon } from "./award.svg";
+export { ReactComponent as PhoneIcon } from "./phone.svg";
+export { ReactComponent as GlobalIcon } from "./global.svg";
+export { ReactComponent as MailIcon } from "./mail.svg";
 export { ReactComponent as LocationIcon } from "./location.svg";

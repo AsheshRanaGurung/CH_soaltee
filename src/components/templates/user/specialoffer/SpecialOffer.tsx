@@ -1,16 +1,16 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 
 interface IProps {
   title: string;
   desc: string;
-  ButtonText: string;
+  ButtonText?: string;
   img?: any;
 }
 export const SpecialOffer: React.FC<IProps> = ({
   title,
   desc,
-  ButtonText,
+  // ButtonText,
   img,
 }) => {
   return (
@@ -70,7 +70,7 @@ export const SpecialOffer: React.FC<IProps> = ({
             {title}
           </Heading>
           <Text marginBottom={"15px"}>{desc}</Text>
-          <Button fontSize={"14px"}>{ButtonText}</Button>
+          {/* <Button fontSize={"14px"}>{ButtonText}</Button> */}
         </Box>
       </Box>
     </>

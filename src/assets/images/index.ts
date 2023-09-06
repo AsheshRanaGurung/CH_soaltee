@@ -4,6 +4,7 @@ import EmailIcon from "./email.png";
 import ProfileBanner from "./profile_banner.png";
 import profileAvatar from "./profile_avatar.png";
 import AwardIcon from "./award.png";
+import ProfileImage from "./image.jpg";
 import logoCardIcon from "./logoWhite.png";
 import BackgoundImage from "./imagebg.png";
 import PeopleCard from "./pepole.png";
@@ -18,7 +19,8 @@ import Gift from "./Capa_1.png";
 import FooterLogo from "./foter.png";
 import FooterWall from "./footerWall.jpg";
 import ResturantWall from "./Resturant.jpg";
-import DinnerWall from "./dinner.jpg";
+import DinnerWall from "./jeff-trierweiler-d5YOnQDFAsw-unsplash.jpg";
+import FootersLogo from "./footerLogo.png";
 
 export const imageList = {
   HotelImage,
@@ -27,6 +29,7 @@ export const imageList = {
   ProfileBanner,
   profileAvatar,
   AwardIcon,
+  ProfileImage,
   logoCardIcon,
   BackgoundImage,
   PeopleCard,
@@ -42,4 +45,5 @@ export const imageList = {
   FooterWall,
   ResturantWall,
   DinnerWall,
+  FootersLogo,
 };

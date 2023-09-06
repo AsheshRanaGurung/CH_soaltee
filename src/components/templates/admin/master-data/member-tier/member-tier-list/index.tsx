@@ -11,7 +11,6 @@ import {
 } from "@src/service/master-data/member-tier";
 import MemberTierTable from "../member-tier-table";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
-
 interface IMemberTier {
   tableData: IMemberTierDetail[];
   tableDataFetching: boolean;

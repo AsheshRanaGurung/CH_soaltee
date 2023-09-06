@@ -8,19 +8,58 @@ import { SpecialOffer } from "../specialoffer/SpecialOffer";
 import { Redeem } from "../rewardPoints";
 import { Footer } from "../footer";
 import { BookForm } from "../book-form";
+import { Latestoffer } from "../footer/Latestoffer";
+import { useEffect, useState } from "react";
+import { colors } from "@src/theme/colors";
+import styled from "styled-components";
+
+const HeaderWrapper = styled.div`
+  div.fixed {
+    background: #c4afaa;
+    transition: "all 0.3s ease";
+    height: 50px;
+  }
+`;
 
 export const MemberShip = () => {
+  const [scrolled, setScrolled] = useState(false);
+  function handleScroll() {
+    if (window.scrollY > 150) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
+      <HeaderWrapper>
+        <Box
+          position={"fixed"}
+          top={0}
+          left={0}
+          right={0}
+          zIndex={9}
+          background={scrolled ? "#c4afaa" : "transparent"}
+        >
+          <Header />
+        </Box>
+      </HeaderWrapper>
       <Box
-        background={`#FFF3F3 url(${imageList.BackgoundImage}) center center/cover no-repeat`}
+        background={`${colors.secondary} url(${imageList.BackgoundImage}) center center/cover no-repeat`}
+        paddingTop={16}
       >
         <Container maxW={"1400px"}>
-          <Header />
-
           <MemberCard />
         </Container>
-        <Box bg={"#FFF3F3"}>
+        <Box bg={colors.secondary} id="earn_point">
           <Container maxW={"1400px"}>
             <EarnPoint />
           </Container>
@@ -28,7 +67,7 @@ export const MemberShip = () => {
       </Box>
       <Box p={["40px 0"]}>
         <Container maxW={"1400px"}>
-          <Heading color={"#212B36"} fontSize={"44px"} m={["30px 0"]}>
+          <Heading color={colors.gray_900} fontSize={"44px"} m={["30px 0"]}>
             Special Offers
           </Heading>
           <Grid gap={6} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
@@ -56,8 +95,10 @@ export const MemberShip = () => {
         </Container>
       </Box>
       <BookForm />
-      <Redeem />
-
+      <Box id="redeem_point">
+        <Redeem />
+      </Box>
+      <Latestoffer />
       <Footer />
     </>
   );

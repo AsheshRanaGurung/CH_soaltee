@@ -24,12 +24,12 @@ const Profile = () => {
         <Avatar size={"md"} src={imageList.profileAvatar} />
       </MenuButton>
       <MenuList>
-        <MenuItem>Profile</MenuItem>
+        <MenuItem onClick={() => navigate(NAVIGATION_ROUTES.USER_PROFILE)}>
+          Profile
+        </MenuItem>
         <MenuItem
           onClick={() => {
-            localStorage.removeItem("token"),
-              localStorage.removeItem("userInfo"),
-              navigate(NAVIGATION_ROUTES.LOGIN);
+            localStorage.removeItem("token"), navigate(NAVIGATION_ROUTES.LOGIN);
           }}
         >
           Logout

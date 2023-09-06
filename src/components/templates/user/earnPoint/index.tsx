@@ -1,13 +1,14 @@
 import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
 import { EarnCard } from "./EarnCard";
+import { colors } from "@src/theme/colors";
 
 export const EarnPoint = () => {
   return (
     <>
       <Box padding={["60px 0"]}>
         <Heading
-          color={"#212B36"}
+          color={colors.gray_900}
           textAlign={"center"}
           fontSize={"44px"}
           p={["20px 0"]}

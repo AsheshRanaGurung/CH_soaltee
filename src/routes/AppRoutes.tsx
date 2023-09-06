@@ -14,6 +14,7 @@ import ServicePage from "@src/pages/PointConfig/Service";
 import MemberManagementPage from "@src/pages/MemberManagement";
 import ProfileDetail from "@src/pages/MemberManagement/ProfileDetail";
 import ForgotPasswordPage from "@src/pages/Auth/forgot-password";
+import ProfilePage from "@src/components/templates/Profile";
 
 const routes = [
   {
@@ -73,6 +74,10 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.FORGOT_PASSWORD,
     element: <RestrictedRoute Component={ForgotPasswordPage} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.USER_PROFILE,
+    element: <PrivateRoute Component={ProfilePage} />,
   },
 ];
 

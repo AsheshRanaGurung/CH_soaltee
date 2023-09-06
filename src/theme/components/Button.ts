@@ -25,6 +25,9 @@ const Button = {
       color: colors.primary,
       border: `1px solid ${colors.primary}`,
     },
+    link: {
+      color: colors.primary,
+    },
   },
   sizes: {
     md: {

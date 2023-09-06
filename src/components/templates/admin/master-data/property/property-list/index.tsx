@@ -11,6 +11,7 @@ import {
 } from "@src/service/master-data/property";
 import PropertyTable from "../property-table";
 import { IProperty } from "@src/interface/master-data/property";
+import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 
 interface IPropertyProps {
   tableData: IProperty[];
@@ -47,11 +48,9 @@ const PropertyList: React.FC<IPropertyProps> = ({
   const validationSchema = yup.object().shape({
     name: yup.string().required("Property Name is required"),
     code: yup.string().required("Property Code is required"),
-    phoneNumber: yup.string().required("Phone Number is required"),
+    phoneNumber: createPhoneNumberSchema(),
     contactPerson: yup.string().required("Contact Person Name is required"),
-    contactPersonPhoneNo: yup
-      .string()
-      .required("Contact Person Phone Number is required"),
+    contactPersonPhoneNo: createPhoneNumberSchema(),
   });
   const { handleSubmit, register, errors, reset } = useFormHook({
     validationSchema,
