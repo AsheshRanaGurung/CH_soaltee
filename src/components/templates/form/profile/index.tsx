@@ -21,7 +21,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   handleFormSubmit,
 }) => {
   const { data: property } = useQuery("property", getAllProperty, {
-    select: ({ data }) => data.data,
+    select: ({ data }) => data.data.content,
   });
   const { data: service } = useQuery("service", getAllService, {
     select: ({ data }) => data.datalist,
