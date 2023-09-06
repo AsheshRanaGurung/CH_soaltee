@@ -18,11 +18,6 @@ interface IServiceProps {
   tableData: IService[];
   tableDataFetching: boolean;
 }
-const defaultValues = {
-  serviceName: "",
-  serviceCode: "",
-  membershipServiceResponseDtos: [],
-};
 
 const ServiceList: React.FC<IServiceProps> = ({
   tableData,
@@ -47,6 +42,11 @@ const ServiceList: React.FC<IServiceProps> = ({
     serviceName: yup.string().required("serviceName is required"),
     serviceCode: yup.string().required("serviceCode is required"),
   });
+  const defaultValues = {
+    serviceName: "",
+    serviceCode: "",
+    // membershipServiceResponseDtos: [],
+  };
   const [formDataArray, setFormDataArray] = useState<IService[]>([]);
   const { handleSubmit, register, errors, reset, watch, setValue } =
     useFormHook({
@@ -56,15 +56,14 @@ const ServiceList: React.FC<IServiceProps> = ({
   const { data } = useQuery("member_tier", getAllMemberTier, {
     select: ({ data }) => data.datalist,
   });
-
+  const defaultVal =
+    data?.map((item: any) => ({
+      id: item.id,
+      membershipName: item.membershipName,
+      rewardPercentage: "0",
+    })) || [];
   useEffect(() => {
     if (!isUpdate) {
-      const defaultVal =
-        data?.map((item: any) => ({
-          id: item.id,
-          membershipName: item.membershipName,
-          rewardPercentage: "0",
-        })) || [];
       if (defaultVal.length > 0) {
         setValue("membershipServiceResponseDtos", defaultVal);
       }
@@ -86,6 +85,11 @@ const ServiceList: React.FC<IServiceProps> = ({
   const { mutateAsync: update, isLoading: isUpdating } = useUpdateService();
 
   const onCloseHandler = () => {
+    reset({
+      serviceName: "",
+      serviceCode: "",
+      membershipServiceResponseDtos: defaultVal,
+    });
     setDeleteId("");
     setUpdateId("");
     setIsUpdate(false);

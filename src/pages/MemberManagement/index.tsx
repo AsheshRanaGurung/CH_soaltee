@@ -10,7 +10,7 @@ const MemberManagementPage = () => {
   });
   return (
     <>
-      <BreadCrumb name="Master Data" />
+      <BreadCrumb name="Member Management" />
       <Content>
         <MemberManagementList data={data} isLoading={isLoading} />
       </Content>
