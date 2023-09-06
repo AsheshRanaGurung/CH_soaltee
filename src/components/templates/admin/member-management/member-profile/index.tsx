@@ -21,6 +21,25 @@ const Wrapper = styled.div`
     top: -75px;
     left: 51px;
   }
+  .profile-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .profile-container {
+    width: 243px;
+    height: 243px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 68px;
+    letter-spacing: 4px;
+    font-weight: 800;
+    color: ${colors.white};
+    // border: 1px solid ${colors.light_gray_border};
+    background-color: ${colors.primary};
+  }
   @media screen and (max-width: 720px) {
     .profile-img {
       width: 100px;
@@ -74,6 +93,7 @@ const Card = styled.div`
     justify-content: center;
     gap: 10px;
   }
+
   @media screen and (max-width: 720px) {
     padding: 30px 0px;
     margin: -60px 0px 0px 0px;
@@ -132,7 +152,17 @@ const MemberProfile = () => {
   };
   return (
     <Wrapper>
-      <img className="profile-img" src={imageList.profileAvatar} />
+      {/* <img className="profile-img" src={imageList.profileAvatar} /> */}
+      <div className="profile-img">
+        <div className="profile-wrapper">
+          <span className="profile-container">
+            {state.fullName
+              .split(" ")
+              .map((fullName: string) => fullName.charAt(0).toUpperCase())
+              .join("")}
+          </span>
+        </div>
+      </div>
       <Card>
         <div className="profile-card">
           <div>
