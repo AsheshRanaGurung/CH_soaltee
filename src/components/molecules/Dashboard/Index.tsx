@@ -53,8 +53,8 @@ export const DashboardAdmin = ({
                   tabIndex === 0
                     ? data?.totalUserToday ?? 0
                     : tabIndex === 1
-                    ? data?.totalUserToday ?? 0
-                    : data?.totalUserToday ?? 0
+                    ? data?.totalUserMonthly ?? 0
+                    : data?.totalUserYearly ?? 0
                 }
               />
               <Tabs
