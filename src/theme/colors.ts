@@ -28,4 +28,8 @@ export const colors = {
   foundation: "#F7FAFC",
   dark_gray: "#454F5B",
   black_1: "#696969",
+  card_bg: "#FFFFFFAD",
+  light_white: "#F5F5F5",
+  gray_900: "#212B36",
+  gray_600: "#4A5568",
 };

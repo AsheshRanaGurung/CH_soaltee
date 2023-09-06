@@ -16,22 +16,16 @@ import { imageList } from "@src/assets/images";
 import { LocationIcon } from "@src/assets/svgs";
 import { SocialCustom } from "@src/components/atoms/Icons/SocialCustom";
 import { FaFacebookF, FaInstagram, FaRegCopyright } from "react-icons/fa";
-import { Latestoffer } from "./Latestoffer";
 
 const pages = ["Home", "Earn Points", "Redeem Points"];
 export const Footer = () => {
   return (
     <Box bg={"#2E2E2D"} color={"white"}>
-      <Latestoffer />
       <Container maxW={"1400px"}>
         <Grid gap={8} templateColumns={"repeat(1,2fr 2fr 2fr)"} p={["30px 0"]}>
           <GridItem>
-            <Image src={imageList.FooterLogo} />
-            <Text w={"350px"}>
-              Over 30,000 people work for us in 5 different locations. We
-              provide special services worldwide with exclusive services and
-              specialist
-            </Text>
+            <Image src={imageList.FootersLogo} />
+
             <Flex justifyContent={"space-between"} w={"22%"} mt={"10px"}>
               <SocialCustom
                 icon={
@@ -69,7 +63,14 @@ export const Footer = () => {
               </Heading>
               {pages.map((item: string, index: number) => {
                 return (
-                  <ListItem color={"white"} key={index}>
+                  <ListItem
+                    color={"white"}
+                    key={index}
+                    cursor={"pointer"}
+                    _hover={{
+                      opacity: "0.5",
+                    }}
+                  >
                     <ListIcon as={ArrowForwardIcon} />
                     {item}
                   </ListItem>

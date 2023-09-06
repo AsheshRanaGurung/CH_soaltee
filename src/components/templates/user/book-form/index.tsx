@@ -37,6 +37,21 @@ export const BookForm = () => {
                   We are more than just a room
                 </Heading>
                 <form>
+                  <GridItem>
+                    <FormControl
+                      control="select"
+                      register={register}
+                      name="nationality"
+                      placeholder="Choose your nationality"
+                      label="Property Name *"
+                      required
+                      background="white"
+                      height="40px"
+                      color="black"
+                      error={errors.nationality?.message || ""}
+                      options={nationality}
+                    />
+                  </GridItem>
                   <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
                     <GridItem>
                       <FormControl
@@ -69,36 +84,6 @@ export const BookForm = () => {
                         height="40px"
                         register={register}
                         error={errors.fullName?.message || ""}
-                      />
-                    </GridItem>
-                    <GridItem>
-                      <FormControl
-                        control="select"
-                        register={register}
-                        name="nationality"
-                        placeholder="Choose your nationality"
-                        label="Adult"
-                        required
-                        background="white"
-                        height="40px"
-                        color="black"
-                        error={errors.nationality?.message || ""}
-                        options={nationality}
-                      />
-                    </GridItem>
-                    <GridItem>
-                      <FormControl
-                        control="select"
-                        register={register}
-                        name="nationality"
-                        placeholder="Choose your nationality"
-                        label="Children"
-                        required
-                        background="white"
-                        height="40px"
-                        color="black"
-                        error={errors.nationality?.message || ""}
-                        options={nationality}
                       />
                     </GridItem>
                   </Grid>

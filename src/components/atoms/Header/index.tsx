@@ -3,7 +3,6 @@ import {
   Flex,
   HStack,
   IconButton,
-  Button,
   useDisclosure,
   Stack,
   Image,
@@ -11,41 +10,32 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { imageList } from "@src/assets/images";
-import { FaGlobeAsia } from "react-icons/fa";
-import { useState } from "react";
+// import { useState } from "react";
 import Profile from "@src/components/molecules/profile";
-
+import { useNavigate } from "react-router-dom";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
+import { Link } from "react-scroll";
 interface Props {
-  children: React.ReactNode;
+  id: string;
+  name: string;
 }
-
-const Links = ["Home", "Earn Point", "Redeem Point"];
-
+const Links = [
+  { id: "earn_point", name: "Earn Point" },
+  { id: "redeem_point", name: "Redeem Point" },
+];
 const NavLink = (props: Props) => {
-  const { children } = props;
-
+  const { id, name } = props;
   return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      color={"white"}
-      _hover={{
-        textDecoration: "none",
-      }}
-      href={"#"}
-    >
-      {children}
+    <Box px={2} py={1} color={"white"} cursor="pointer">
+      <Link to={id} smooth={true} duration={500} spy={true} offset={-60}>
+        {name}
+      </Link>
     </Box>
   );
 };
-
 export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [lan, setLan] = useState<boolean>(true);
-  const toggleLanguage = () => {
-    setLan((prev) => !prev);
-  };
+  const navigate = useNavigate();
   return (
     <>
       <Container maxW={"1400px"}>
@@ -64,6 +54,8 @@ export default function Header() {
                 objectFit={"fill"}
                 src={imageList.Logo}
                 maxH={"8vh"}
+                cursor={"pointer"}
+                onClick={() => navigate(NAVIGATION_ROUTES.USER_DASHBOARD)}
               />
             </Box>
             <HStack spacing={8} alignItems={"center"}>
@@ -73,12 +65,12 @@ export default function Header() {
                 display={{ base: "none", md: "flex" }}
               >
                 {Links.map((link) => (
-                  <NavLink key={link}>{link}</NavLink>
+                  <NavLink key={link.id} id={link.id} name={link.name} />
                 ))}
               </HStack>
             </HStack>
             <Flex alignItems={"center"}>
-              <Stack direction={"row"} spacing={7}>
+              {/* <Stack direction={"row"} spacing={7}>
                 <Button
                   bg={"transparent"}
                   color={"Black"}
@@ -87,16 +79,15 @@ export default function Header() {
                   {lan ? "English" : "Nepali"}{" "}
                   <FaGlobeAsia style={{ marginLeft: "8px" }} />
                 </Button>
-              </Stack>
+              </Stack> */}
               <Profile />
             </Flex>
           </Flex>
-
           {isOpen ? (
             <Box pb={4} display={{ md: "none" }}>
               <Stack as={"nav"} spacing={4}>
                 {Links.map((link) => (
-                  <NavLink key={link}>{link}</NavLink>
+                  <NavLink key={link.id} id={link.id} name={link.name} />
                 ))}
               </Stack>
             </Box>

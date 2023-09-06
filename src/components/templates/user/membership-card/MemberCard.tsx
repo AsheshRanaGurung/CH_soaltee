@@ -15,11 +15,19 @@ import {
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { useQuery } from "react-query";
 import { getUserDetail } from "@src/service/user";
+import { colors } from "@src/theme/colors";
 export const MemberCard = () => {
   const { data } = useQuery("user_detail", getUserDetail, {
     select: ({ data }) => data.data,
   });
-  const { tierName, fullName, totalRewardPoints, customerId } = data ?? "";
+  const {
+    tierName,
+    fullName,
+    totalRewardPoints,
+    customerId,
+    nextMembershipTier,
+    pointsToNextTier,
+  } = data ?? "";
   return (
     <Grid
       gap={8}
@@ -28,7 +36,7 @@ export const MemberCard = () => {
       paddingTop={"80px"}
     >
       <GridItem position={"relative"}>
-        <Card bg={"#FFFFFFAD"}>
+        <Card bg={colors.card_bg}>
           <CardBody>
             <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 4fr)"}>
               <GridItem>
@@ -49,9 +57,9 @@ export const MemberCard = () => {
                   }}
                 >
                   <Box position={"absolute"} zIndex={"1"}>
-                    <CardHeader color={"#F5F5F5"}></CardHeader>
+                    <CardHeader color={colors.light_white}></CardHeader>
                     <CardBody>
-                      <Box color={"#F5F5F5"}>
+                      <Box color={colors.light_white}>
                         <Text fontSize={"14px"} fontStyle={"italic"}>
                           Member Name
                         </Text>
@@ -59,7 +67,7 @@ export const MemberCard = () => {
                           {fullName?.toUpperCase()}
                         </Heading>
                       </Box>
-                      <Box color={"#F5F5F5"} marginTop={"25px"}>
+                      <Box color={colors.light_white} marginTop={"25px"}>
                         <Text fontSize={"14px"} fontStyle={"italic"}>
                           Member Number{" "}
                         </Text>
@@ -72,7 +80,7 @@ export const MemberCard = () => {
               <GridItem>
                 <Box marginTop={"10px"}>
                   <Heading
-                    color={"#212B36"}
+                    color={colors.gray_900}
                     fontSize={"28px"}
                     fontStyle={"italic"}
                     fontWeight={"400"}
@@ -80,14 +88,18 @@ export const MemberCard = () => {
                   >
                     {tierName?.toUpperCase()}
                   </Heading>
-                  <Progress value={80} colorScheme="green" size="sm" />
+                  <Progress
+                    value={pointsToNextTier}
+                    colorScheme="green"
+                    size="sm"
+                  />
                   <Text
                     fontSize={"14px"}
-                    color={"#4A5568"}
+                    color={colors.gray_600}
                     marginTop={"8px"}
                     marginLeft={"5px"}
                   >
-                    Earn 550 points to reach Gold
+                    Earn {pointsToNextTier} points to reach {nextMembershipTier}
                   </Text>
 
                   <Button padding={"30px"} marginTop={"40px"}>
@@ -106,7 +118,11 @@ export const MemberCard = () => {
                     </Text>{" "}
                     {totalRewardPoints}
                   </Button>
-                  <Link color={"#A1233D"} display={"block"} marginTop={"20px"}>
+                  <Link
+                    color={colors.primary}
+                    display={"block"}
+                    marginTop={"20px"}
+                  >
                     Click here to redeem
                   </Link>
                 </Box>
@@ -124,11 +140,12 @@ export const MemberCard = () => {
             borderRadius={"6px"}
             right={"-15px"}
             top={"50%"}
+            cursor={"pointer"}
           />
         </Box>
       </GridItem>
       <GridItem>
-        <Card bg="#FFFFFFAD" borderRadius={"14px"} h={"315px"}>
+        <Card bg={colors.card_bg} borderRadius={"14px"} h={"315px"}>
           <CardBody p={"48px"}>
             <Heading fontWeight={"600"} fontSize={"24px"} marginBottom={"10px"}>
               Membership card Rules*

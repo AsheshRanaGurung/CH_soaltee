@@ -27,7 +27,7 @@ export const Latestoffer = () => {
             </Heading>
           </GridItem>
           <GridItem>
-            <Heading fontSize={"14px"} color={"white"}>
+            <Heading fontSize={"18px"} color={"white"} fontWeight={"300"}>
               Hear about our latest offers by signing up to our mailing list.
             </Heading>
             <Flex>
@@ -39,10 +39,11 @@ export const Latestoffer = () => {
                 placeholder={"Your email address"}
                 error={errors.phoneNumber?.message || ""}
                 required
+                color="white"
                 borderColor="#FFFFFFB2"
                 marginTop="8px"
-                background="#FFFFFFB2"
                 height="40px"
+                paddingLeft="5px"
               />
               <Button
                 marginTop="8px"
@@ -50,8 +51,9 @@ export const Latestoffer = () => {
                 background={"transparent"}
                 border={"2px solid white"}
                 borderRadius={"none"}
+                fontWeight={"300"}
               >
-                Sign up
+                Subscribe{" "}
               </Button>
             </Flex>
           </GridItem>
