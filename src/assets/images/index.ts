@@ -21,6 +21,7 @@ import FooterWall from "./footerWall.jpg";
 import ResturantWall from "./Resturant.jpg";
 import DinnerWall from "./jeff-trierweiler-d5YOnQDFAsw-unsplash.jpg";
 import FootersLogo from "./footerLogo.png";
+import DashProfile from "./dashProfile.png";
 
 export const imageList = {
   HotelImage,
@@ -46,4 +47,5 @@ export const imageList = {
   ResturantWall,
   DinnerWall,
   FootersLogo,
+  DashProfile,
 };
