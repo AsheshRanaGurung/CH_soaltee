@@ -109,6 +109,11 @@ const Sidebar = ({
           visible: true,
         },
         {
+          name: "Bonus",
+          to: NAVIGATION_ROUTES.BONUS,
+          visible: true,
+        },
+        {
           name: "Other",
           to: NAVIGATION_ROUTES.LOGIN,
           visible: true,

@@ -13,3 +13,11 @@ export interface IService {
   membershipServiceRequestDto?: IMembershipServiceRequest[];
   membershipServiceResponseDtos?: IMembershipServiceRequest[];
 }
+
+export interface IBonus {
+  id?: number | string;
+  bonusName?: string;
+  validFrom?: string;
+  validTo?: string;
+  bonusValue?: number;
+}

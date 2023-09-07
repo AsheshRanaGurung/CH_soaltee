@@ -12,6 +12,12 @@ export const api = {
       delete: "/service-category/delete-service-category/:id",
       update: "/service-category/update-service-category/:id",
     },
+    bonus: {
+      add: "/bonus/save-bonus",
+      fetch: "/bonus/get-all-bonus",
+      delete: "/bonus/delete-bonus/:id",
+      update: "/bonus/update-bonus/:id",
+    },
   },
   master_data: {
     member_tier: {

@@ -86,7 +86,6 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
       voucherDescription: data?.voucherDescription,
     };
     formData.append("data", JSON.stringify(dat));
-    console.log("dattta", data);
     if (state?.id) {
       if (data.image) {
         formData.append("image", data.image as Blob);
