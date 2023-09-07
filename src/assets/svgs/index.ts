@@ -10,3 +10,4 @@ export { ReactComponent as GlobalIcon } from "./global.svg";
 export { ReactComponent as LocationIcon } from "./location.svg";
 export { ReactComponent as MailIcon } from "./mail.svg";
 export { ReactComponent as FileIcon } from "./file.svg";
+export { ReactComponent as ExportIcon } from "./save-add.svg";

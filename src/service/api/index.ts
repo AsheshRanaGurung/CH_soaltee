@@ -19,6 +19,9 @@ export const api = {
       update: "/bonus/update-bonus/:id",
     },
   },
+  report: {
+    fetch: "/report/overall-report",
+  },
   master_data: {
     member_tier: {
       add: "/membership/create-tier",

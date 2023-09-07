@@ -30,15 +30,16 @@ import {
 
 import { colors } from "@src/theme/colors";
 import {
+  AddIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   TriangleDownIcon,
   TriangleUpIcon,
 } from "@chakra-ui/icons";
-import { AiOutlinePlus } from "react-icons/ai/index";
 // import { DrawerComponent } from "../drawer";
 import { Search } from "@src/components/molecules/search";
 import { TableHeading } from "@src/components/atoms/TableHeading";
+import { ExportIcon } from "@src/assets/svgs";
 export function getPager(
   totalRows: number,
   _: number,
@@ -125,7 +126,8 @@ interface IDataTable {
   onAction?: () => void;
   // if we need to disable the button according to permission
   onDisableButton?: boolean;
-
+  exports?: string;
+  onDownload?: () => void;
   //search
   setSearchValue?: (searchValue: string) => void;
 
@@ -145,6 +147,7 @@ const DataTable = React.memo(
     columns,
     data,
     loading,
+    optionGroup,
     hoverView,
     height,
     isClientPagination,
@@ -153,6 +156,8 @@ const DataTable = React.memo(
     btnText,
     CurrentText,
     onAction,
+    onDownload,
+    exports,
     rowBottomBorder,
     onDisableButton,
     // title,
@@ -194,7 +199,54 @@ const DataTable = React.memo(
             <Flex position="relative">
               <Search setSearchValue={setSearchValue} />
             </Flex>
-            {btnText && (
+            <Flex gap={2}>
+              {exports && (
+                <Button
+                  backgroundColor={colors.primary}
+                  color={colors.white}
+                  size={"sm"}
+                  leftIcon={<ExportIcon />}
+                  onClick={onDownload}
+                  outline="none"
+                  border={"none"}
+                  disabled={onDisableButton}
+                  sx={{
+                    "&::before": {
+                      border: "none",
+                    },
+                    "&::after": {
+                      border: "none",
+                    },
+                  }}
+                >
+                  {exports}
+                </Button>
+              )}
+              {optionGroup && <Box bgSize={"md"}>{optionGroup}</Box>}
+
+              {btnText && (
+                <Button
+                  variant={"primary"}
+                  size={"md"}
+                  leftIcon={<AddIcon />}
+                  onClick={onAction}
+                  outline="none"
+                  border={"none"}
+                  disabled={onDisableButton}
+                  sx={{
+                    "&::before": {
+                      border: "none",
+                    },
+                    "&::after": {
+                      border: "none",
+                    },
+                  }}
+                >
+                  {btnText}
+                </Button>
+              )}
+            </Flex>
+            {/* {btnText && (
               <Button
                 variant={"primary"}
                 size={"sm"}
@@ -222,7 +274,7 @@ const DataTable = React.memo(
               >
                 {btnText}
               </Button>
-            )}
+            )} */}
           </Flex>
         </Flex>
 

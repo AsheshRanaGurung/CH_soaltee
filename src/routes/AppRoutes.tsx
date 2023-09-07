@@ -16,6 +16,7 @@ import ProfileDetail from "@src/pages/MemberManagement/ProfileDetail";
 import BonusPage from "@src/pages/PointConfig/Bonus";
 import ForgotPasswordPage from "@src/pages/Auth/forgot-password";
 import ProfilePage from "@src/components/templates/Profile";
+import ReportPage from "@src/pages/Report";
 import VoucherPage from "@src/pages/Voucher";
 import VoucherAdd from "@src/pages/Voucher/add";
 
@@ -77,6 +78,10 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.USER_PROFILE,
     element: <PrivateRoute Component={ProfilePage} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.REPORT,
+    element: <PrivateRoute Component={ReportPage} />,
   },
   {
     path: NAVIGATION_ROUTES.VOUCHER,
