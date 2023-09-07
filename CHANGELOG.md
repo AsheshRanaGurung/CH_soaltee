@@ -7,6 +7,8 @@
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
+* hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
+* hotfix: change border ([c4d5812](https://gitlab.com/paras205/boilerplate-react/commit/c4d5812510889d03c1f90b6910cc2ca2f45950e9))
 * hotfix: remove property list from option ([6d48686](https://gitlab.com/paras205/boilerplate-react/commit/6d486863e16f9bbfa1265840514bfdeec0553399))
 * hotfix: route manage ([9c0394c](https://gitlab.com/paras205/boilerplate-react/commit/9c0394ce422983cccca2b7e439c6f699faf9c135))
 * hotfix: routes ([cdedd07](https://gitlab.com/paras205/boilerplate-react/commit/cdedd07ffe11ad9d5c45c41eedb6d4ac672f82cb))

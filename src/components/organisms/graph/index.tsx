@@ -121,7 +121,7 @@ export const Graphcard = () => {
                 borderRadius={"20px"}
                 fontSize="14px"
               >
-                Today
+                Weekly
               </Tab>
               <Tab
                 color={"#718096"}
@@ -133,17 +133,6 @@ export const Graphcard = () => {
                 fontSize="14px"
               >
                 Monthly
-              </Tab>
-              <Tab
-                color={"#718096"}
-                _selected={{
-                  color: "white",
-                  bg: colors.primary,
-                }}
-                borderRadius={"20px"}
-                fontSize="14px"
-              >
-                Yearly
               </Tab>
             </TabList>
           </Tabs>

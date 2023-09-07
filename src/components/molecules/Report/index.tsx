@@ -47,53 +47,43 @@ const ReportTable: React.FC<IMemberTierTable> = ({
         Header: "S.N",
         accessor: (_: IProperty, index: number) =>
           (pageParams.page - 1) * pageParams.limit + (index + 1),
-        width: "5%",
       },
 
       {
         Header: "Name",
         accessor: "fullName",
-        width: "15%",
       },
       {
         Header: "Points",
         accessor: "rewardPoints",
-        width: "20%",
       },
       {
         Header: "Rewarded Points",
         accessor: "redeemPoints",
-        width: "20%",
       },
       {
         Header: "Redeemed Points",
         accessor: "code",
-        width: "20%",
       },
       {
         Header: "Tier",
         accessor: "membershipName",
-        width: "20%",
       },
       {
         Header: "Created From",
         accessor: "propertyName",
-        width: "20%",
       },
       {
         Header: "Created Date",
         accessor: "createdDate",
-        width: "20%",
       },
       {
         Header: "Email",
         accessor: "email",
-        width: "20%",
       },
       {
         Header: "Phone Number",
         accessor: "phoneNumber",
-        width: "20%",
       },
     ],
     [pageParams]

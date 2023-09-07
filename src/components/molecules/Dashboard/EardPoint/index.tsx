@@ -13,7 +13,7 @@ import { imageList } from "@src/assets/images";
 export const EarnPoint = ({ rewardData }: any) => {
   return (
     <Card borderRadius={"14px"}>
-      <CardHeader>Total Earned Points</CardHeader>
+      <CardHeader>Top Users</CardHeader>
       <CardBody>
         {rewardData?.map((item: any, index: number) => {
           const isLastItem = index === rewardData.length - 1;

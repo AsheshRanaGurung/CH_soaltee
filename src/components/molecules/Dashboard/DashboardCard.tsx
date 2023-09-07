@@ -20,7 +20,7 @@ export const DashboardCard: React.FC<ICard> = ({ distributed, claimed }) => {
           display={"flex"}
           justifyContent={"space-between"}
         >
-          Disbursed Points: &nbsp; <Text color={"#000000"}>{distributed}</Text>
+          Earning Points: &nbsp; <Text color={"#000000"}>{distributed}</Text>
         </Heading>
       </GridItem>
       <GridItem display={"flex"} justifyContent={"space-between"}>
@@ -30,7 +30,7 @@ export const DashboardCard: React.FC<ICard> = ({ distributed, claimed }) => {
           display={"flex"}
           justifyContent={"space-between"}
         >
-          Claimed Points: &nbsp; <Text color={"#000000"}>{claimed}</Text>
+          Reedem Points: &nbsp; <Text color={"#000000"}>{claimed}</Text>
         </Heading>
       </GridItem>
     </Flex>
