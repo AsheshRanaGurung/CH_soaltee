@@ -28,7 +28,6 @@ export const BookForm = () => {
   const { data: property } = useQuery("property", getAllProperty, {
     select: ({ data }) => data.data.content,
   });
-  console.log("lalllaaa", property);
   const propertyList = property?.map((item: any) => {
     return {
       label: item?.name,
