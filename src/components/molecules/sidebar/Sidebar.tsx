@@ -63,7 +63,7 @@ const Sidebar = ({
     },
     {
       name: "Report",
-      to: NAVIGATION_ROUTES.PROPERTY,
+      to: NAVIGATION_ROUTES.REPORT,
       icon: (
         <Icon>
           <FaChartSimple />
@@ -81,11 +81,11 @@ const Sidebar = ({
       ),
       visible: true,
       child: [
-        {
-          name: "Property Setup",
-          to: NAVIGATION_ROUTES.PROPERTY,
-          visible: true,
-        },
+        // {
+        //   name: "Property Setup",
+        //   to: NAVIGATION_ROUTES.PROPERTY,
+        //   visible: true,
+        // },
         {
           name: "Membership Tier",
           to: NAVIGATION_ROUTES.MEMBERTIER,
