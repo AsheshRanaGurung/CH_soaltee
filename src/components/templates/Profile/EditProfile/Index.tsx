@@ -47,13 +47,13 @@ export const EditProfile = ({
       nationality: data?.nationality,
     };
 
-    data.image && formData.append("image", data.image as Blob);
+    data?.image && formData.append("image", data?.image as Blob);
     formData.append("data", JSON.stringify(datas));
     const result = await update({ id: userId, data: formData });
     handleFormSubmit(result?.data?.data);
     localStorage.setItem(
       "imageName",
-      data.image ? result?.data?.data?.imageUrl : imageList.DummyUser
+      data?.image ? result?.data?.data?.imageUrl : imageList.DummyUser
     );
     onClose();
   };

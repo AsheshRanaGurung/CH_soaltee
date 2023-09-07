@@ -12,7 +12,7 @@ const ReportPage = () => {
 
   return (
     <>
-      <BreadCrumb name="Master Data" />
+      <BreadCrumb name="Report" />
       <Content>
         <ReportList tableData={data?.data} tableDataFetching={isLoading} />
       </Content>

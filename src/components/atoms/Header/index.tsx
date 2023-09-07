@@ -60,11 +60,7 @@ export default function Header({ navigation }: any) {
             </Box>
             {navigation && (
               <HStack spacing={8} alignItems={"center"}>
-                <HStack
-                  as={"nav"}
-                  spacing={4}
-                  display={{ base: "none", md: "flex" }}
-                >
+                <HStack as={"nav"} spacing={4} display={{ md: "flex" }}>
                   {Links.map((link) => (
                     <NavLink key={link.id} id={link.id} name={link.name} />
                   ))}

@@ -73,7 +73,7 @@ const ProfilePage = () => {
             background={"#979797"}
             fontWeight={"400"}
           >
-            {data?.tierName.toUpperCase()}
+            {data?.tierName && data?.tierName.toUpperCase()}
           </Heading>
         </Box>
       </Box>

@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* add page params in property list and voucher folder ([7ccb314](https://gitlab.com/paras205/boilerplate-react/commit/7ccb3143474e3d5de8db3f1afd2c602b5762bb5e))
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
@@ -23,8 +24,9 @@
 * adjusted column width, added edit and add modal in member tier ([827e90e](https://gitlab.com/paras205/boilerplate-react/commit/827e90ebb34d3c5ee73046ad70f05feac8f87be0))
 * admin loagin integartion ([6a58586](https://gitlab.com/paras205/boilerplate-react/commit/6a5858668898a187d75d9633e45aef0ec1867ac1))
 * api integration for add member tier ([591e472](https://gitlab.com/paras205/boilerplate-react/commit/591e4724e8b1fbd33f620dc73ed81df0beed9334))
+* bonus config design and api implement ([7b8bd35](https://gitlab.com/paras205/boilerplate-react/commit/7b8bd3565073c74e44d0ffb791c5d8c38ff0131c))
 * changes on page ([dfb579f](https://gitlab.com/paras205/boilerplate-react/commit/dfb579fe11b8d4d35f8e548ba5798cf50cf145a7))
-* changes on report page ([cc41947](https://gitlab.com/paras205/boilerplate-react/commit/cc419470132c74c4ffad2aa537371469bf387ca7))
+* changes on report page ([31ba041](https://gitlab.com/paras205/boilerplate-react/commit/31ba04144a8d8aad72e5434163168fd7d0973586))
 * created profile  design changes ([dd38dc0](https://gitlab.com/paras205/boilerplate-react/commit/dd38dc05e611f2eb185ea980105e9d7db10c7fd4))
 * custom input ([d323c8f](https://gitlab.com/paras205/boilerplate-react/commit/d323c8f84f00f51287e6c564fa41478402ce5ae9))
 * dashboard rewardPoint ([deff013](https://gitlab.com/paras205/boilerplate-react/commit/deff013adbac58d59d98ac6a8241634e040100a7))
@@ -37,7 +39,6 @@
 * logot session clear from font side ([29ac586](https://gitlab.com/paras205/boilerplate-react/commit/29ac5861e27e9b8d2e15e114cc47f0b540ea00ee))
 * password validation ([a14954c](https://gitlab.com/paras205/boilerplate-react/commit/a14954c5935baa2dcd783af303ed3b8ea450aab0))
 * refetched point for manual and added phone validation ([1d51211](https://gitlab.com/paras205/boilerplate-react/commit/1d51211fd510cf093aab1d4739037ff4e30ab572))
-* report design ([b5bdabb](https://gitlab.com/paras205/boilerplate-react/commit/b5bdabbb8cad771dc7847de8e647caf97ba9db4b))
 * resolved modal issue, integrated api for update property ([56fc7b3](https://gitlab.com/paras205/boilerplate-react/commit/56fc7b3dce0062608340685fa86dcee7ab0d45da))
 
 
