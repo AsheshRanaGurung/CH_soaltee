@@ -6,12 +6,18 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { imageList } from "@src/assets/images";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router-dom";
+import { getUserDetail } from "@src/service/user";
+import { useQuery } from "react-query";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { data } = useQuery("user_detail", getUserDetail, {
+    select: ({ data }) => data.data,
+  });
+  //need to fetch this from api, only a quickfix
+  const imageUrl = localStorage.getItem("imageName") ?? "";
   return (
     <Menu>
       <MenuButton
@@ -21,15 +27,22 @@ const Profile = () => {
         cursor={"pointer"}
         minW={0}
       >
-        <Avatar size={"md"} src={imageList.profileAvatar} />
+        <Avatar size={"md"} src={imageUrl} />
       </MenuButton>
       <MenuList>
-        <MenuItem onClick={() => navigate(NAVIGATION_ROUTES.USER_PROFILE)}>
+        <MenuItem
+          onClick={() =>
+            navigate(NAVIGATION_ROUTES.USER_PROFILE, {
+              state: data,
+            })
+          }
+        >
           Profile
         </MenuItem>
         <MenuItem
           onClick={() => {
             localStorage.removeItem("token"), navigate(NAVIGATION_ROUTES.LOGIN);
+            localStorage.removeItem("imageName");
           }}
         >
           Logout

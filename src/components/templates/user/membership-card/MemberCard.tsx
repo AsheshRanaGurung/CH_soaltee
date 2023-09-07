@@ -15,7 +15,10 @@ import {
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { useQuery } from "react-query";
 import { getUserDetail } from "@src/service/user";
+import { getImage } from "@src/service/image";
+import { useState, useEffect } from "react";
 import { colors } from "@src/theme/colors";
+
 export const MemberCard = () => {
   const { data } = useQuery("user_detail", getUserDetail, {
     select: ({ data }) => data.data,
@@ -27,7 +30,29 @@ export const MemberCard = () => {
     customerId,
     nextMembershipTier,
     pointsToNextTier,
+    tierImage,
   } = data ?? "";
+  const { data: imageData } = useQuery("image", () => getImage(tierImage), {
+    enabled: !!tierImage,
+  });
+  const [imageSrc, setImageSrc] = useState<string | null>(tierImage);
+
+  useEffect(() => {
+    const blobData = new Blob([imageData?.data], { type: "image/jpeg" });
+
+    const imageUrl = URL.createObjectURL(blobData);
+
+    // Set the URL as the image source
+    setImageSrc(imageUrl);
+
+    // Clean up the URL when the component unmounts
+    return () => {
+      URL.revokeObjectURL(imageUrl);
+      setImageSrc("");
+    };
+  }, [imageData]);
+  const progressWidth =
+    (totalRewardPoints / (totalRewardPoints + pointsToNextTier)) * 100;
   return (
     <Grid
       gap={8}
@@ -45,15 +70,16 @@ export const MemberCard = () => {
                   height={"255px"}
                   borderRadius={"16px"}
                   position={"relative"}
-                  background={
-                    " linear-gradient(45deg, rgba(105,105,105,1) 45%, rgba(173,173,173,1) 51%, rgba(198,198,198,1) 56%, rgba(0,0,0,1) 98%)"
-                  }
+                  border="none"
+                  boxShadow="none"
+                  background="transparent"
                   _before={{
                     content: `''`,
-                    position: "absoulte",
-                    height: "inherit",
+                    height: "100%",
                     width: "100%",
-                    bg: `url(${imageList.logoCardIcon}) no-repeat right`,
+                    bg: `url(${
+                      imageSrc || imageList.DummyTier
+                    }) no-repeat right`,
                   }}
                 >
                   <Box position={"absolute"} zIndex={"1"}>
@@ -89,7 +115,7 @@ export const MemberCard = () => {
                     {tierName?.toUpperCase()}
                   </Heading>
                   <Progress
-                    value={pointsToNextTier}
+                    value={progressWidth}
                     colorScheme="green"
                     size="sm"
                   />
