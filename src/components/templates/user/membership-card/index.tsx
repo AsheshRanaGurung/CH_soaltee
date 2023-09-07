@@ -49,7 +49,7 @@ export const MemberShip = () => {
           zIndex={9}
           background={scrolled ? "#c4afaa" : "transparent"}
         >
-          <Header nav={true} />
+          <Header navigation={true} />
         </Box>
       </HeaderWrapper>
       <Box
