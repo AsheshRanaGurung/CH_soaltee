@@ -21,8 +21,8 @@ export const DashboardAdmin = ({
   data,
   rewardData,
 }: {
-  data: any;
-  rewardData: any;
+  data?: any;
+  rewardData?: any;
   isLoading?: boolean;
 }) => {
   const [tabIndex, setTabIndex] = useState(0);

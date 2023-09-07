@@ -22,7 +22,7 @@ export const BreadCrumb = ({ name }: IBreadCrumb) => {
   return (
     <Wrapper>
       <span color={colors.primary_dark}>{name}</span>
-      <Profile />
+      <Profile type="admin" />
     </Wrapper>
   );
 };

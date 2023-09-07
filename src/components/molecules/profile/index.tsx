@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserDetail } from "@src/service/user";
 import { useQuery } from "react-query";
 
-const Profile = () => {
+const Profile = ({ type }: any) => {
   const navigate = useNavigate();
   const { data } = useQuery("user_detail", getUserDetail, {
     select: ({ data }) => data.data,
@@ -30,15 +30,17 @@ const Profile = () => {
         <Avatar size={"md"} src={imageUrl} />
       </MenuButton>
       <MenuList>
-        <MenuItem
-          onClick={() =>
-            navigate(NAVIGATION_ROUTES.USER_PROFILE, {
-              state: data,
-            })
-          }
-        >
-          Profile
-        </MenuItem>
+        {type !== "admin" && (
+          <MenuItem
+            onClick={() =>
+              navigate(NAVIGATION_ROUTES.USER_PROFILE, {
+                state: data,
+              })
+            }
+          >
+            Profile
+          </MenuItem>
+        )}
         <MenuItem
           onClick={() => {
             localStorage.removeItem("token"), navigate(NAVIGATION_ROUTES.LOGIN);

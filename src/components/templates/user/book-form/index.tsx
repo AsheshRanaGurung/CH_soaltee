@@ -10,9 +10,32 @@ import {
 import { imageList } from "@src/assets/images";
 import FormControl from "@src/components/atoms/FormControl";
 import { useFormHook } from "@src/hooks/useFormhook";
+import { getAllProperty } from "@src/service/master-data/property";
+import { useQuery } from "react-query";
 
 export const BookForm = () => {
-  const { register, errors } = useFormHook({});
+  const { register, errors, watch } = useFormHook({});
+
+  const handleButtonClick = () => {
+    const url = `https://bookingengine.aegis.com.np/aegis-7001?arrival_date=${
+      watch("checkinDate") ? watch("checkinDate") : "2022-09-08"
+    }&departure_date=${
+      watch("checkoutDate") ? watch("checkoutDate") : "2022-09-09"
+    }`;
+    window.open(url, "_blank");
+  };
+
+  const { data: property } = useQuery("property", getAllProperty, {
+    select: ({ data }) => data.data.content,
+  });
+  console.log("lalllaaa", property);
+  const propertyList = property?.map((item: any) => {
+    return {
+      label: item?.name,
+      value: item?.id,
+    };
+  });
+
   return (
     <>
       <Box bg={"#fff3f3"} p={["60px 0"]}>
@@ -40,25 +63,25 @@ export const BookForm = () => {
                     <FormControl
                       control="select"
                       register={register}
-                      name="nationality"
-                      placeholder="Choose your nationality"
+                      name="propertyId"
+                      placeholder="Choose Property"
                       label="Property Name *"
                       required
                       background="white"
                       height="40px"
                       color="black"
-                      error={errors.nationality?.message || ""}
-                      options={[]}
+                      error={errors.propertyId?.message || ""}
+                      options={propertyList || []}
                     />
                   </GridItem>
                   <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
                     <GridItem>
                       <FormControl
                         control="input"
-                        name="fullName"
+                        name="checkinDate"
+                        defaultValue={"2023-09-08"}
                         type="date"
                         required
-                        placeholder="Enter your full name"
                         label="Check In"
                         background="white"
                         color="black"
@@ -66,23 +89,23 @@ export const BookForm = () => {
                         height="40px"
                         lineHeight="2"
                         register={register}
-                        error={errors.fullName?.message || ""}
+                        error={errors.checkInDate?.message || ""}
                       />
                     </GridItem>
                     <GridItem>
                       <FormControl
                         control="input"
-                        name="fullName"
+                        name="checkoutDate"
                         type="date"
+                        defaultValue={"2023-09-09"}
                         required
-                        placeholder="Enter your full name"
                         label="Check Out"
                         background="white"
                         color="black"
                         padding="10px"
                         height="40px"
                         register={register}
-                        error={errors.fullName?.message || ""}
+                        error={errors.checkOutDate?.message || ""}
                       />
                     </GridItem>
                   </Grid>
@@ -92,6 +115,7 @@ export const BookForm = () => {
                     p={"24px"}
                     fontWeight={"300"}
                     marginTop={"20px"}
+                    onClick={handleButtonClick}
                   >
                     Check Availability
                   </Button>

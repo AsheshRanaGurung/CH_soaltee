@@ -3,12 +3,13 @@
 
 ### Bug Fixes
 
+* add page params in property list ([b9be0e0](https://gitlab.com/paras205/boilerplate-react/commit/b9be0e0e3a2c95384720b30b69fead989e878a9a))
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
-* hotfix: remove property list from option ([6d48686](https://gitlab.com/paras205/boilerplate-react/commit/6d486863e16f9bbfa1265840514bfdeec0553399))
 * hotfix: route manage ([9c0394c](https://gitlab.com/paras205/boilerplate-react/commit/9c0394ce422983cccca2b7e439c6f699faf9c135))
 * hotfix: routes ([cdedd07](https://gitlab.com/paras205/boilerplate-react/commit/cdedd07ffe11ad9d5c45c41eedb6d4ac672f82cb))
+* merge ([6445ac1](https://gitlab.com/paras205/boilerplate-react/commit/6445ac124668b2168000f58c6cc81bd9c253ee67))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
 

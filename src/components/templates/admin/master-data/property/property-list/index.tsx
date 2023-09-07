@@ -16,6 +16,10 @@ import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 interface IPropertyProps {
   tableData: IProperty[];
   tableDataFetching: boolean;
+  _pageSizeChange: any;
+  _pageChange: any;
+  paginatedData: any;
+  pageParams: any;
 }
 
 const defaultValues = {
@@ -29,6 +33,10 @@ const defaultValues = {
 const PropertyList: React.FC<IPropertyProps> = ({
   tableData,
   tableDataFetching,
+  _pageSizeChange,
+  _pageChange,
+  paginatedData,
+  pageParams,
 }) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
@@ -111,6 +119,10 @@ const PropertyList: React.FC<IPropertyProps> = ({
       <PropertyTable
         tableData={tableData}
         tableDataFetching={tableDataFetching}
+        paginatedData={paginatedData}
+        _pageChange={_pageChange}
+        _pageSizeChange={_pageSizeChange}
+        pageParams={pageParams}
         title="Filter By"
         btnText="Add Property"
         CurrentText="Property List"

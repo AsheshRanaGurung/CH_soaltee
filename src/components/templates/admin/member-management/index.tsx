@@ -143,6 +143,7 @@ const MemberManagementList = ({
   const { data: property } = useQuery("property", getAllProperty, {
     select: ({ data }) => data.data.content,
   });
+
   const propertyList = property?.map((item: any) => {
     return {
       label: item?.name,
