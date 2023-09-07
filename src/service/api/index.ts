@@ -22,6 +22,7 @@ export const api = {
     },
     property_list: {
       add: "/property/save-property",
+      // fetch: "/property/fetch-all?pageIndex={page}&pageSize={limit}",
       fetch: "/property/fetch-all",
       delete: "/property/delete-property/:id",
       update: "/property/update-property/:id",
@@ -50,6 +51,13 @@ export const api = {
     fetch: "users/get-all-details",
     update: "users/update-profile/:id",
   },
+  voucher: {
+    add: "/voucher/create-voucher",
+    fetch: "/voucher/get-all-voucher",
+    delete: "/voucher/delete-voucher-promo/:id",
+    update: "/voucher/update-voucher-promo/:id",
+  },
+
   fetchImage: "/membership/get-tier-image/:id",
 };
 export interface IResponse<T = any> {

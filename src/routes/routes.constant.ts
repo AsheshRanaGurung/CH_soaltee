@@ -18,4 +18,5 @@ export const NAVIGATION_ROUTES = {
   SERVICE: "/service",
   USER_PROFILE: "/profile-edit",
   FORGOT_PASSWORD: "/forgot-password",
+  VOUCHER_ADD: "/voucher/add",
 };

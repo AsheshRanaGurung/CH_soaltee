@@ -15,7 +15,8 @@ import MemberManagementPage from "@src/pages/MemberManagement";
 import ProfileDetail from "@src/pages/MemberManagement/ProfileDetail";
 import ForgotPasswordPage from "@src/pages/Auth/forgot-password";
 import ProfilePage from "@src/components/templates/Profile";
-
+import VoucherPage from "@src/pages/Voucher";
+import VoucherAdd from "@src/pages/Voucher/add";
 const routes = [
   {
     path: NAVIGATION_ROUTES.DASHBOARD,
@@ -25,19 +26,11 @@ const routes = [
     path: NAVIGATION_ROUTES.USER_DASHBOARD,
     element: <PrivateRoute Component={UserDashboard} />,
   },
-  {
-    path: NAVIGATION_ROUTES.VOUCHER,
-    Element: <Login />,
-  },
 
   {
     path: NAVIGATION_ROUTES.SERVICE,
     element: <PrivateRoute Component={ServicePage} />,
   },
-  // { path: NAVIGATION_ROUTES.REPORT, Element: <Dashboard /> },
-  // { path: NAVIGATION_ROUTES.MASTER, Element: <Signup /> },
-  // { path: NAVIGATION_ROUTES.CONFIGURATION, Element: <Signup /> },
-  // { path: NAVIGATION_ROUTES.SETTINGS, Element: <Dashboard /> },
   {
     path: NAVIGATION_ROUTES.LOGIN,
     element: <RestrictedRoute Component={Login} />,
@@ -78,6 +71,14 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.USER_PROFILE,
     element: <PrivateRoute Component={ProfilePage} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.VOUCHER,
+    element: <PrivateRoute Component={VoucherPage} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.VOUCHER_ADD,
+    element: <PrivateRoute Component={VoucherAdd} />,
   },
 ];
 

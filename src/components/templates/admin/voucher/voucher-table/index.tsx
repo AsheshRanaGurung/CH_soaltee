@@ -1,12 +1,15 @@
 import { Stack } from "@chakra-ui/react";
 import DataTable, { Pagination } from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
-import { IProperty } from "@src/interface/master-data/property";
-import { useMemo } from "react";
+import { getPaginatedData } from "@src/components/organisms/table/pagination";
+import { IVoucher } from "@src/interface/voucher";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CellProps } from "react-table";
 
-interface IMemberTierTable {
-  tableData?: IProperty[];
+interface IVoucherTable {
+  tableData?: IVoucher[];
   tableDataFetching?: boolean;
   onAction?: () => void;
   title?: string;
@@ -15,62 +18,74 @@ interface IMemberTierTable {
   onMemberModalOpen?: () => void;
   onEditData?: ((id: string) => void) | undefined;
   onDeleteData?: ((id: string) => void) | undefined;
-  _pageSizeChange: any;
-  _pageChange: any;
-  paginatedData: any;
-  pageParams: any;
 }
 
-const PropertyTable: React.FC<IMemberTierTable> = ({
+const VoucherTable: React.FC<IVoucherTable> = ({
   tableData,
   tableDataFetching,
   onAction,
   title,
   btnText,
   CurrentText,
-  onEditData,
   onDeleteData,
-  _pageSizeChange,
-  _pageChange,
-  paginatedData,
-  pageParams,
 }) => {
+  const navigate = useNavigate();
+  const [pageParams, setPageParams] = useState({
+    page: 1,
+    limit: 10,
+  });
+  const paginatedData = getPaginatedData({
+    tableData,
+    pageParams,
+  });
+  const _pageChange = (page: number) => {
+    setPageParams({ ...pageParams, page });
+  };
+  const _pageSizeChange = (limit: number) =>
+    setPageParams({ ...pageParams, limit, page: 1 });
+
   const columns = useMemo(
     () => [
       {
         Header: "S.N",
-        accessor: (_: IProperty, index: number) =>
+        accessor: (_: IVoucher, index: number) =>
           (pageParams.page - 1) * pageParams.limit + (index + 1),
         width: "10%",
       },
 
       {
-        Header: "Property Name",
-        accessor: "name",
+        Header: "Voucher Name",
+        accessor: "voucherName",
         width: "20%",
       },
       {
-        Header: "Property Code",
-        accessor: "code",
+        Header: "Service",
+        accessor: "service",
         width: "20%",
       },
       {
-        Header: "Phone Number",
-        accessor: "phoneNumber",
+        Header: "Discount Percentage",
+        accessor: "discountPercentage",
         width: "20%",
       },
       {
-        Header: "Contact person",
-        accessor: "contactPerson",
+        Header: "Maximum Amount",
+        accessor: "maximumAmounts",
         width: "20%",
       },
+      {
+        Header: "Maximum limit",
+        accessor: "maximumLimits",
+        width: "20%",
+      },
+
       {
         Header: "Action",
-        width: "10%",
-
-        Cell: ({ row }: CellProps<{ id: string }>) => {
+        Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
           const onEdit = () => {
-            onEditData && onEditData(row.original?.id);
+            navigate(NAVIGATION_ROUTES.VOUCHER_ADD, {
+              state: row.original,
+            });
           };
           const onDelete = () => {
             onDeleteData && onDeleteData(row.original?.id);
@@ -81,10 +96,12 @@ const PropertyTable: React.FC<IMemberTierTable> = ({
             </Stack>
           );
         },
+        width: 120,
       },
     ],
     [pageParams]
   );
+
   return (
     <>
       <DataTable
@@ -108,4 +125,5 @@ const PropertyTable: React.FC<IMemberTierTable> = ({
     </>
   );
 };
-export default PropertyTable;
+
+export default VoucherTable;

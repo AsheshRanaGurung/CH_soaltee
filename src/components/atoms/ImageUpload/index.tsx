@@ -6,6 +6,7 @@ interface IProps {
   required?: boolean;
   imageSrc?: string;
   isUser?: boolean;
+  name?: string;
 }
 
 const ImageUpload: React.FC<IProps> = ({
@@ -13,6 +14,7 @@ const ImageUpload: React.FC<IProps> = ({
   required,
   imageSrc,
   isUser,
+  name = "image",
 }) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
 
@@ -20,7 +22,7 @@ const ImageUpload: React.FC<IProps> = ({
     const selectedImage = event?.target?.files[0];
     if (selectedImage) {
       setSelectedImage(URL.createObjectURL(selectedImage));
-      setValue("image", event.target.files[0]);
+      setValue(name, event.target.files[0]);
     }
   };
 
