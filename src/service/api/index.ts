@@ -48,7 +48,9 @@ export const api = {
   },
   user: {
     fetch: "users/get-all-details",
+    update: "users/update-profile/:id",
   },
+  fetchImage: "/membership/get-tier-image/:id",
 };
 export interface IResponse<T = any> {
   data: T;

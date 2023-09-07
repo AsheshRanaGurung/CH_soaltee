@@ -5,6 +5,10 @@ import { nationality } from "@src/constant/index";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 import * as yup from "yup";
+import { useEffect } from "react";
+import ImageUpload from "@src/components/atoms/ImageUpload";
+import { useUpdateUserDetail } from "@src/service/user";
+import { imageList } from "@src/assets/images";
 
 const defaultValues = {
   fullName: "",
@@ -21,17 +25,46 @@ const validationSchema = yup.object().shape({
 export const EditProfile = ({
   isOpen,
   onClose,
+  data,
+  handleFormSubmit,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  data: any;
+  handleFormSubmit: (data: any) => void;
 }) => {
-  const { handleSubmit, register, errors, reset } = useFormHook({
+  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
     validationSchema,
     defaultValues,
   });
-  const onSubmitHandler = () => {
-    reset(defaultValues);
+  const { userId } = data;
+  const { mutateAsync: update, isLoading: isUpdating } = useUpdateUserDetail();
+  const onSubmitHandler = async (data: any) => {
+    const formData = new FormData();
+    const datas = {
+      fullName: data?.fullName,
+      phoneNumber: data?.phoneNumber,
+      nationality: data?.nationality,
+    };
+
+    data.image && formData.append("image", data.image as Blob);
+    formData.append("data", JSON.stringify(datas));
+    const result = await update({ id: userId, data: formData });
+    handleFormSubmit(result?.data?.data);
+    localStorage.setItem(
+      "imageName",
+      data.image ? result?.data?.data?.imageUrl : imageList.DummyUser
+    );
+    onClose();
   };
+  useEffect(() => {
+    reset({
+      fullName: data?.fullName,
+      email: data?.email,
+      phoneNumber: data?.phoneNumber,
+      nationality: data?.nationality,
+    });
+  }, [data]);
   return (
     <ModalForm
       isModalOpen={isOpen}
@@ -41,21 +74,28 @@ export const EditProfile = ({
       submitButtonText={"Done"}
       submitHandler={handleSubmit(onSubmitHandler)}
       title="Edit Profile"
+      isLoading={isUpdating}
     >
-      <ProfileEdit register={register} errors={errors} />
+      <ProfileEdit
+        register={register}
+        errors={errors}
+        setValue={setValue}
+        isLoading={isUpdating}
+      />
     </ModalForm>
   );
 };
 
-export const ProfileEdit = ({ register, errors }: any) => {
+export const ProfileEdit = ({ register, errors, setValue }: any) => {
+  const imageUrl = localStorage.getItem("imageName");
   return (
     <Box mx={{ base: "none", md: "auto" }}>
       <Flex direction="column" gap={4.5}>
-        {/* <ImageUpload
+        <ImageUpload
+          imageSrc={imageUrl ?? ""}
           setValue={setValue}
-          imgSrc={imageList.profileAvatar}
-          required={!id}
-        /> */}
+          isUser={true}
+        />
 
         <FormControl
           control="input"
@@ -74,7 +114,7 @@ export const ProfileEdit = ({ register, errors }: any) => {
           placeholder={"Email"}
           label={"Email"}
           error={errors?.email?.message || ""}
-          required
+          disabled
         />
 
         <FormControl

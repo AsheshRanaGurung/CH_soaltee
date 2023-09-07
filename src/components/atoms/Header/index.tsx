@@ -33,7 +33,7 @@ const NavLink = (props: Props) => {
     </Box>
   );
 };
-export default function Header() {
+export default function Header({ navigation }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   return (
@@ -58,17 +58,20 @@ export default function Header() {
                 onClick={() => navigate(NAVIGATION_ROUTES.USER_DASHBOARD)}
               />
             </Box>
-            <HStack spacing={8} alignItems={"center"}>
-              <HStack
-                as={"nav"}
-                spacing={4}
-                display={{ base: "none", md: "flex" }}
-              >
-                {Links.map((link) => (
-                  <NavLink key={link.id} id={link.id} name={link.name} />
-                ))}
+            {navigation && (
+              <HStack spacing={8} alignItems={"center"}>
+                <HStack
+                  as={"nav"}
+                  spacing={4}
+                  display={{ base: "none", md: "flex" }}
+                >
+                  {Links.map((link) => (
+                    <NavLink key={link.id} id={link.id} name={link.name} />
+                  ))}
+                </HStack>
               </HStack>
-            </HStack>
+            )}
+
             <Flex alignItems={"center"}>
               {/* <Stack direction={"row"} spacing={7}>
                 <Button

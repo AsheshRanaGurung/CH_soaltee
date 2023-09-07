@@ -7,7 +7,7 @@ import { AiFillMail, AiOutlinePlus } from "react-icons/ai";
 import { FaGlobeAsia, FaPhoneAlt, FaRegCalendarAlt } from "react-icons/fa";
 import { Button } from "@chakra-ui/button";
 import { useLocation } from "react-router";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, Box, Heading } from "@chakra-ui/react";
 import ModalForm from "@src/components/organisms/modal";
 import ProfileForm from "@src/components/templates/form/profile";
 import {
@@ -17,8 +17,9 @@ import {
 import { useQuery, useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import MemberHistory from "../member-history";
+import { ProfileImage } from "@src/components/atoms/ProfileImage";
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   position: relative;
   .profile-img {
     position: absolute;
@@ -170,90 +171,110 @@ const MemberProfile = () => {
     setRewardPoints((prevData) => prevData + data);
   };
   return (
-    <Wrapper>
-      {/* <img className="profile-img" src={imageList.profileAvatar} /> */}
-      <div className="profile-img">
-        <div className="profile-wrapper">
-          <span className="profile-container">
-            {state.fullName
-              .split(" ")
-              .map((fullName: string) => fullName.charAt(0).toUpperCase())
-              .join("")}
-          </span>
-        </div>
-      </div>
-      <Card>
-        <div className="profile-card">
-          <div>
-            <Text fontSize={"3xl"}>{state.fullName}</Text>
-            <Text>{data?.tierName} Tier Member</Text>
-          </div>
-          <div>
-            <Button
-              type="submit"
-              className="button"
-              w="100%"
-              borderRadius="5px"
-              leftIcon={<AiOutlinePlus />}
-              onClick={onProfileModalOpen}
-            >
-              Add Points
-            </Button>
-          </div>
-        </div>
-        <div className="detail-card">
-          <div className="basic-info">
-            <div className="basic-info-item">
-              <Icons icon={<AiFillMail />} />
-              <Text color={colors.secondary_dark}>Email : {state.email}</Text>
-            </div>
-            <div className="basic-info-item">
-              <Icons icon={<FaGlobeAsia />} />
-              <Text color={colors.secondary_dark}>
-                Nationality : {state.nationality}
-              </Text>
-            </div>
-            <div className="basic-info-item">
-              <Icons icon={<FaPhoneAlt />} />
-              <Text color={colors.secondary_dark}>
-                Phone number : {state.phoneNumber}
-              </Text>
-            </div>
-            <div className="basic-info-item">
-              <Icons icon={<FaRegCalendarAlt />} />
-              <Text color={colors.secondary_dark}>
-                Last active : {"8-31-2023"}
-              </Text>
-            </div>
-          </div>
-          <div className="reward-card">
-            <div>
-              <div className="reward-card-title">
-                <img src={imageList.AwardIcon} />
-                <Text color={colors.secondary_dark}>Reward Points</Text>
-              </div>
-              <Text textAlign={"center"} fontSize={"2xl"}>
-                {rewardPoints ?? ""}
-              </Text>
-            </div>
-          </div>
-        </div>
-      </Card>
-      <HistoryCard>
-        <MemberHistory data={historyData} />
-      </HistoryCard>
-      <ModalForm
-        isModalOpen={isProfileOpen}
-        onCloseModal={onProfileModalClose}
-        showFooter={false}
+    <>
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        background={`url(${imageList.ProfileBackground}) center center/cover no-repeat`}
+        h={"130px"}
+        position={"relative"}
       >
-        <ProfileForm
+        <Heading
+          color={"white"}
+          fontSize={"20px"}
+          textAlign={"center"}
+          minWidth="145px"
+          h={"45px"}
+          p={["10px 0"]}
+          borderRadius={"65px"}
+          background={"#979797"}
+          fontWeight={"400"}
+        >
+          {data?.tierName.toUpperCase()}
+        </Heading>
+      </Box>
+      <Wrapper>
+        <ProfileImage name={state?.fullName} />
+        <Card>
+          <div className="profile-card">
+            <div>
+              <Text fontSize={"3xl"}>{state.fullName}</Text>
+              <Text>{data?.tierName} Tier</Text>
+            </div>
+            <div>
+              <Button
+                type="submit"
+                className="button"
+                w="100%"
+                borderRadius="5px"
+                leftIcon={<AiOutlinePlus />}
+                onClick={onProfileModalOpen}
+              >
+                Add Points
+              </Button>
+            </div>
+          </div>
+          <div className="detail-card">
+            <div className="basic-info">
+              <div className="basic-info-item">
+                <Icons icon={<AiFillMail />} />
+                <Text color={colors.secondary_dark}>Email : {state.email}</Text>
+              </div>
+              <div className="basic-info-item">
+                <Icons icon={<FaGlobeAsia />} />
+                <Text color={colors.secondary_dark}>
+                  Nationality : {state.nationality}
+                </Text>
+              </div>
+              <div className="basic-info-item">
+                <Icons icon={<FaPhoneAlt />} />
+                <Text color={colors.secondary_dark}>
+                  Phone number : {state.phoneNumber}
+                </Text>
+              </div>
+              <div className="basic-info-item">
+                <Icons icon={<FaRegCalendarAlt />} />
+                <Text color={colors.secondary_dark}>
+                  Last active : {"8-31-2023"}
+                </Text>
+              </div>
+            </div>
+            <div className="reward-card">
+              <div>
+                <div className="reward-card-title">
+                  <img src={imageList.AwardIcon} />
+                  <Text color={colors.secondary_dark}>Reward Points</Text>
+                </div>
+                <Text textAlign={"center"} fontSize={"2xl"}>
+                  {rewardPoints ?? ""}
+                </Text>
+              </div>
+            </div>
+          </div>
+        </Card>
+        <HistoryCard>
+          <MemberHistory data={historyData} />
+        </HistoryCard>
+        <ModalForm
+          isModalOpen={isProfileOpen}
+          onCloseModal={onProfileModalClose}
+          showFooter={false}
+        >
+          {/* <ProfileForm
           userId={state}
           handleFormSubmit={() => handleFormSubmit(data)}
           onCloseModal={onProfileModalClose}
-        />
-      </ModalForm>
-    </Wrapper>
+          showFooter={false}
+        > */}
+          <ProfileForm
+            userId={state}
+            handleFormSubmit={() => handleFormSubmit(data)}
+            onCloseModal={onProfileModalClose}
+          />
+        </ModalForm>
+      </Wrapper>
+    </>
   );
 };
 export default MemberProfile;

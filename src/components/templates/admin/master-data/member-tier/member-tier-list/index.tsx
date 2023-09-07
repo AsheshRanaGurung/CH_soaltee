@@ -79,7 +79,7 @@ const MemberList: React.FC<IMemberTier> = ({
     onMemberModalClose();
   };
 
-  const onSubmitHandler = (data: IMemberTierDetail) => {
+  const onSubmitHandler = async (data: IMemberTierDetail) => {
     const formData = new FormData();
     const dat = {
       membershipName: data.membershipName,
@@ -89,17 +89,17 @@ const MemberList: React.FC<IMemberTier> = ({
     if (updateId) {
       if (data.image) {
         formData.append("image", data.image as Blob);
-        update({ id: updateId, data: formData });
-        onCloseHandler();
+        const result = await update({ id: updateId, data: formData });
+        result.status === 200 && onCloseHandler();
       } else {
         formData.append("image", "");
-        update({ id: updateId, data: formData });
-        onCloseHandler();
+        const result = await update({ id: updateId, data: formData });
+        result.status === 200 && onCloseHandler();
       }
     } else {
       formData.append("image", data.image as Blob);
-      mutate(formData);
-      onCloseHandler();
+      const result = await mutate(formData);
+      result.status === 200 && onCloseHandler();
     }
     reset();
   };
