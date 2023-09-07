@@ -10,7 +10,6 @@ import {
 import { imageList } from "@src/assets/images";
 import FormControl from "@src/components/atoms/FormControl";
 import { useFormHook } from "@src/hooks/useFormhook";
-import propertyList from "../../admin/master-data/property-list";
 
 export const BookForm = () => {
   const { register, errors } = useFormHook({});
@@ -49,7 +48,7 @@ export const BookForm = () => {
                       height="40px"
                       color="black"
                       error={errors.nationality?.message || ""}
-                      options={propertyList || []}
+                      options={[]}
                     />
                   </GridItem>
                   <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
