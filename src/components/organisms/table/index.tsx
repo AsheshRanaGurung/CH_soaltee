@@ -1,4 +1,11 @@
-import React, { Fragment, ReactElement, ReactNode, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
+
 import {
   useExpanded,
   useTable,
@@ -26,6 +33,7 @@ import {
   Tr,
   Progress,
   TableRowProps,
+  Select,
 } from "@chakra-ui/react";
 
 import { colors } from "@src/theme/colors";
@@ -40,6 +48,8 @@ import {
 import { Search } from "@src/components/molecules/search";
 import { TableHeading } from "@src/components/atoms/TableHeading";
 import { ExportIcon } from "@src/assets/svgs";
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
+
 export function getPager(
   totalRows: number,
   _: number,
@@ -445,11 +455,22 @@ export const Pagination = ({
   queryPageSize,
   queryPageIndex,
   pageChange,
+  pageSizeChange,
   totalCount,
 }: PaginationProps) => {
   const totalPages = Math.ceil(totalCount / queryPageSize);
+  const [pageSizeChanges, setpageSizeChange] = useState<number>(0);
   // const startIndex = (queryPageIndex - 1) * queryPageSize;
   // const endIndex = Math.min(startIndex + queryPageSize, totalCount);
+
+  // hooks
+  useEffect(() => {
+    if (!pageSizeChange) return;
+    if (pageSizeChanges) {
+      pageSizeChange(pageSizeChanges);
+    }
+  }, [pageSizeChanges]);
+
   const renderPageButtons = () => {
     const pageButtons = [];
     let ellipsisStart = false;
@@ -516,16 +537,19 @@ export const Pagination = ({
 
     return pageButtons;
   };
-  // const options: Option[] = [
-  //   { value: 10, label: "10" },
-  //   { value: 20, label: "20" },
-  //   { value: 30, label: "30" },
-  //   { value: totalCount, label: "All" },
-  // ];
-  // const shouldShowAllOptions = totalCount > 30;
-  // const filteredOptions: Option[] = shouldShowAllOptions
+
+  const options: any[] = [
+    { value: 2, label: "2" },
+    { value: 4, label: "4" },
+    { value: 6, label: "6" },
+    { value: totalCount, label: "All" },
+  ];
+  // const shouldShowAllOptions = totalCount > 10;
+
+  // const filteredOptions: any[] = shouldShowAllOptions
   //   ? options.slice(0, -1)
   //   : options.filter((item) => item.value && item.value <= totalCount);
+
   return enabled ? (
     <Box px={{ base: "4", md: "6" }} p="5" bg={colors.white} pt={8}>
       <HStack
@@ -533,45 +557,42 @@ export const Pagination = ({
         flexDirection={{ base: "column", md: "row" }}
         gap={4}
       >
-        {/* {totalCount >= 10 && (
+        <Box>
           <Select
-            value={filteredOptions.find((item) => item.value === queryPageSize)}
+            // value={filteredOptions.find((item) => item.value === queryPageSize)}
             // width="81px"
             // borderRadius="6px"
             // size="sm"
-            isSearchable={false}
-            onChange={(selectedOption) => {
-              if (selectedOption?.value && pageSizeChange) {
-                pageSizeChange(selectedOption?.value);
-              }
-            }}
-            options={filteredOptions}
-            placeholder="Select"
-          />
-        )} */}
-        <HStack spacing={10}>
-          {/* <Text fontSize="sm">
+            // isSearchable={false}
+            size={"sm"}
+            borderRadius={"6px"}
+            onChange={(selectedOption) =>
+              setpageSizeChange(Number(selectedOption?.target?.value))
+            }
+            placeholder="Show Case"
+          >
+            {options.map((item: any, ind: number) => (
+              <option key={ind} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </Select>
+        </Box>
+        {/* <HStack spacing={10}>
+          <Text fontSize="sm">
             Showing {startIndex + 1} to {endIndex} of {totalCount}
-          </Text> */}
-        </HStack>
+          </Text>
+        </HStack> */}
         <HStack>
-          {/* <AiOutlineDoubleLeft
+          <AiOutlineDoubleLeft
             aria-label="Previous"
-            size="sm"
             color={colors.black}
-            height="25px"
-            width="25px"
-            variant="unstyled"
-            fontSize="14px"
             fontWeight="medium"
-            isDisabled={queryPageIndex < 2}
             onClick={() => {
-              pageChange &&
-                queryPageIndex > 1 &&
-                pageChange(queryPageIndex - 1);
+              pageChange && queryPageIndex > 1 && pageChange(1);
             }}
-            icon={<ChevronLeftIcon />}
-          /> */}
+            cursor={"pointer"}
+          />
           <IconButton
             aria-label="Previous"
             size="sm"
@@ -615,6 +636,15 @@ export const Pagination = ({
             }}
             isDisabled={queryPageIndex >= totalPages}
             icon={<ChevronRightIcon />}
+          />
+          <AiOutlineDoubleRight
+            aria-label="Next"
+            color={colors.black}
+            fontWeight="medium"
+            cursor={"pointer"}
+            onClick={() => {
+              pageChange && pageChange((totalCount + 1) / pageSizeChanges);
+            }}
           />
         </HStack>
       </HStack>
