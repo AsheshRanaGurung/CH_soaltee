@@ -25,6 +25,10 @@ const Button = {
       color: colors.primary,
       border: `1px solid ${colors.primary}`,
     },
+    // outlinedNoBorder: {
+    //   ...outlined,
+    //   borderRadius: 0
+    // },
     link: {
       color: colors.primary,
     },

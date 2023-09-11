@@ -12,14 +12,16 @@ import {
 import PropertyTable from "../property-table";
 import { IProperty } from "@src/interface/master-data/property";
 import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
+import { IParams } from "@src/interface/params";
+import { Pagination } from "@src/components/organisms/table";
 
 interface IPropertyProps {
   tableData: IProperty[];
   tableDataFetching: boolean;
-  _pageSizeChange: any;
-  _pageChange: any;
-  paginatedData: any;
-  pageParams: any;
+  _pageSizeChange: (limit: number) => void;
+  _pageChange: (page: number) => void;
+  paginatedData: IProperty[];
+  pageParams: IParams;
 }
 
 const defaultValues = {
@@ -29,6 +31,14 @@ const defaultValues = {
   contactPerson: "",
   contactPersonPhoneNo: "",
 };
+
+const validationSchema = yup.object().shape({
+  name: yup.string().required("Property Name is required"),
+  code: yup.string().required("Property Code is required"),
+  phoneNumber: createPhoneNumberSchema(),
+  contactPerson: yup.string().required("Contact Person Name is required"),
+  contactPersonPhoneNo: createPhoneNumberSchema(),
+});
 
 const PropertyList: React.FC<IPropertyProps> = ({
   tableData,
@@ -53,13 +63,6 @@ const PropertyList: React.FC<IPropertyProps> = ({
     onClose: onDeletePropertyClose,
   } = useDisclosure();
 
-  const validationSchema = yup.object().shape({
-    name: yup.string().required("Property Name is required"),
-    code: yup.string().required("Property Code is required"),
-    phoneNumber: createPhoneNumberSchema(),
-    contactPerson: yup.string().required("Contact Person Name is required"),
-    contactPersonPhoneNo: createPhoneNumberSchema(),
-  });
   const { handleSubmit, register, errors, reset } = useFormHook({
     validationSchema,
     defaultValues,
@@ -68,7 +71,6 @@ const PropertyList: React.FC<IPropertyProps> = ({
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData.find((x: IProperty) => x.id === updateId);
-
       reset({
         name: data?.name,
         code: data?.code,
@@ -117,11 +119,8 @@ const PropertyList: React.FC<IPropertyProps> = ({
   return (
     <>
       <PropertyTable
-        tableData={tableData}
         tableDataFetching={tableDataFetching}
         paginatedData={paginatedData}
-        _pageChange={_pageChange}
-        _pageSizeChange={_pageSizeChange}
         pageParams={pageParams}
         title="Filter By"
         btnText="Add Property"
@@ -130,7 +129,6 @@ const PropertyList: React.FC<IPropertyProps> = ({
           onCloseHandler();
           onPropertyModalOpen();
         }}
-        onMemberModalOpen={onPropertyModalOpen}
         onEditData={(id: string) => {
           setUpdateId(id);
           setIsUpdate(true);
@@ -166,6 +164,14 @@ const PropertyList: React.FC<IPropertyProps> = ({
       >
         Are you sure you want to delete the Property detail?
       </ModalForm>
+      <Pagination
+        enabled={true}
+        queryPageIndex={pageParams.page}
+        queryPageSize={pageParams.limit}
+        totalCount={tableData?.length || 0}
+        pageChange={_pageChange}
+        pageSizeChange={_pageSizeChange}
+      />
     </>
   );
 };

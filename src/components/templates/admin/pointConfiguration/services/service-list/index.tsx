@@ -32,6 +32,7 @@ const ServiceList: React.FC<IServiceProps> = ({
     onOpen: onServiceModalOpen,
     onClose: onServiceModalClose,
   } = useDisclosure();
+
   const {
     isOpen: isDeleteServiceOpen,
     onOpen: onDeleteServiceOpen,
@@ -64,7 +65,7 @@ const ServiceList: React.FC<IServiceProps> = ({
     })) || [];
   useEffect(() => {
     if (!isUpdate) {
-      if (defaultVal.length > 0) {
+      if (defaultVal?.length > 0) {
         setValue("membershipServiceResponseDtos", defaultVal);
       }
     }

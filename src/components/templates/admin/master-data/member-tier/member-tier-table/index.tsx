@@ -1,25 +1,24 @@
 import { Stack } from "@chakra-ui/react";
-import DataTable, { Pagination } from "@src/components/organisms/table";
+import DataTable from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
-import { getPaginatedData } from "@src/components/organisms/table/pagination";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
-import { useMemo, useState } from "react";
+import { IParams } from "@src/interface/params";
+import { useMemo } from "react";
 import { CellProps } from "react-table";
 
 interface IMemberTierTable {
-  tableData?: IMemberTierDetail[];
   tableDataFetching?: boolean;
   onAction?: () => void;
   title?: string;
   btnText?: string;
   CurrentText?: string;
-  onMemberModalOpen?: () => void;
   onEditData?: ((id: string) => void) | undefined;
   onDeleteData?: ((id: string) => void) | undefined;
+  paginatedData: IMemberTierDetail[];
+  pageParams: IParams;
 }
 
 const MemberTierTable: React.FC<IMemberTierTable> = ({
-  tableData,
   tableDataFetching,
   onAction,
   title,
@@ -27,21 +26,9 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
   CurrentText,
   onEditData,
   onDeleteData,
+  paginatedData,
+  pageParams,
 }) => {
-  const [pageParams, setPageParams] = useState({
-    page: 1,
-    limit: 10,
-  });
-  const paginatedData = getPaginatedData({
-    tableData,
-    pageParams,
-  });
-  const _pageChange = (page: number) => {
-    setPageParams({ ...pageParams, page });
-  };
-  const _pageSizeChange = (limit: number) =>
-    setPageParams({ ...pageParams, limit, page: 1 });
-
   const columns = useMemo(
     () => [
       {
@@ -102,15 +89,6 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
         onAction={onAction}
         title={title}
       ></DataTable>
-
-      <Pagination
-        enabled={true}
-        queryPageIndex={pageParams.page}
-        queryPageSize={pageParams.limit}
-        totalCount={tableData?.length || 0}
-        pageChange={_pageChange}
-        pageSizeChange={_pageSizeChange}
-      />
     </>
   );
 };

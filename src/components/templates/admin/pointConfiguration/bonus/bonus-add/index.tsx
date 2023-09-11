@@ -17,20 +17,6 @@ export const AddBonus = ({
   onCloseModal,
   ServiceAll,
 }: any) => {
-  // const [startDate, setStartDate] = React.useState(null);
-  // const [endDate, setEndDate] = React.useState(null);
-
-  // const { data } = useQuery("service", getAllService, {
-  //   select: ({ data }) => data.datalist,
-  // });
-  // const changeStartDate = (date: any) => {
-  //   setStartDate(date);
-  //   setValue("validFrom", moment(date).format("YYYY-MM-DD"));
-  // };
-  // const changeEndDate = (date: any) => {
-  //   setEndDate(date);
-  //   setValue("validTo", moment(date).format("YYYY-MM-DD"));
-  // };
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(createBonus, {
@@ -47,12 +33,7 @@ export const AddBonus = ({
   const onSubmit = (data: any) => {
     mutate(data);
   };
-  // const ServiceAll = data?.map((el: any) => {
-  //   return {
-  //     value: el.id,
-  //     label: el.serviceName,
-  //   };
-  // });
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl
@@ -136,7 +117,7 @@ export const AddBonus = ({
           w="100%"
           isLoading={isLoading}
         >
-          Add Points
+          Add Bonus
         </Button>
       </Flex>
     </form>
