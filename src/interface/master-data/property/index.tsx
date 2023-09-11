@@ -17,5 +17,7 @@ export interface IMemberTierDetail {
   membershipName?: string;
   imageUrl?: string;
   image?: string | undefined | Blob;
-  requiredPoints?: number | string;
+  pointsFrom?: number | string;
+  pointsTo?: number | string;
+  colorCode?: string;
 }
