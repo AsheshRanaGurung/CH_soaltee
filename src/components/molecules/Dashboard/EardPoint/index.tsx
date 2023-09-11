@@ -9,14 +9,52 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
+import FormControl from "@src/components/atoms/FormControl";
+import { nationality } from "@src/constant/index";
+import { colors } from "@src/theme/colors";
+import { useForm } from "react-hook-form";
+const tier = [
+  {
+    fullName: "Santosh Rumba",
+    rewardPoints: 1720.0,
+    tier: "Gold",
+  },
+  {
+    fullName: "Soaltee Loyalty",
+    rewardPoints: 2304.0,
+    tier: "Silver",
+  },
+];
+const colorCode: { [key: string]: string } = {
+  Gold: "#ECC16F",
+  Silver: "gray",
+  platinum: "platinum",
+  Elite: "#A13B3B",
+  Member: "#CE8135",
+};
+export const EarnPoint = () => {
+  const { register } = useForm();
 
-export const EarnPoint = ({ rewardData }: any) => {
   return (
     <Card borderRadius={"14px"}>
-      <CardHeader>Top Users</CardHeader>
+      <CardHeader fontSize={"18px"} fontWeight={"800"}>
+        <Flex justifyContent={"space-between"} w="100%">
+          <Heading width={"100%"}> Top Users</Heading>
+          <Box w="150px">
+            <FormControl
+              control="CustomSelect"
+              options={nationality}
+              size="sm"
+              register={register}
+              name="Platinum Tier"
+              placeholder={"platinum Tier"}
+            />
+          </Box>
+        </Flex>
+      </CardHeader>
       <CardBody>
-        {rewardData?.map((item: any, index: number) => {
-          const isLastItem = index === rewardData.length - 1;
+        {tier?.map((item: any, index: number) => {
+          const isLastItem = index == tier?.length - 1;
 
           return (
             <Flex
@@ -33,15 +71,30 @@ export const EarnPoint = ({ rewardData }: any) => {
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Image
-                  src={imageList.DashProfile}
-                  w={"40px"}
-                  height={"40px"}
-                  borderRadius={"50%"}
-                />
-                <Heading fontSize={"16px"} marginLeft={"25px"}>
-                  {item?.fullName}
-                </Heading>
+                <Box>
+                  <Image
+                    src={imageList.DashProfile}
+                    w={"40px"}
+                    height={"40px"}
+                    borderRadius={"50%"}
+                  />
+                </Box>
+                <Box>
+                  <Heading fontSize={"16px"} marginLeft={"25px"}>
+                    {item?.fullName}
+                    <Text
+                      fontSize={"13px"}
+                      color={colors.black_1}
+                      fontWeight={"400"}
+                      marginTop={"10px"}
+                    >
+                      Tier -&nbsp;
+                      <span style={{ color: colorCode[item?.tier] }}>
+                        {item.tier}
+                      </span>
+                    </Text>
+                  </Heading>
+                </Box>
               </Box>
               <Text fontSize={"14px"}>{item?.rewardPoints} pt</Text>
             </Flex>

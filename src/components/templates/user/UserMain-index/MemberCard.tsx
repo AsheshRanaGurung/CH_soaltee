@@ -56,7 +56,11 @@ export const MemberCard = () => {
   return (
     <Grid
       gap={8}
-      templateColumns={"repeat(1,4fr 2fr)"}
+      templateColumns={{
+        xl: "repeat(1,3fr 2fr )",
+        md: "repeat(2,4fr,1fr)",
+        sm: "repeat(1,2fr)",
+      }}
       paddingBottom={"80px"}
       paddingTop={"80px"}
     >

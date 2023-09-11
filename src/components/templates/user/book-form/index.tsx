@@ -39,7 +39,13 @@ export const BookForm = () => {
     <>
       <Box bg={"#fff3f3"} p={["60px 0"]}>
         <Container maxW={"1400px"}>
-          <Grid templateColumns={"repeat(1,2fr 2fr)"}>
+          <Grid
+            templateColumns={{
+              xl: "repeat(1,2fr 1fr )",
+              md: "repeat(2,2fr,1fr)",
+              sm: "repeat(1,1fr)",
+            }}
+          >
             <GridItem>
               <Box>
                 <Image src={imageList.ResturantWall} h={"700px"} w={"100%"} />

@@ -70,7 +70,15 @@ export const MemberShip = () => {
           <Heading color={colors.gray_900} fontSize={"44px"} m={["30px 0"]}>
             Special Offers
           </Heading>
-          <Grid gap={6} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
+          <Grid
+            gap={6}
+            mt={4}
+            templateColumns={{
+              xl: "repeat(1, 4fr 4fr )",
+              md: "repeat(1,2fr)",
+              sm: "repeat(1,2fr)",
+            }}
+          >
             <GridItem>
               <SpecialOffer
                 title={"Let's Get Lost on Our Adventures"}

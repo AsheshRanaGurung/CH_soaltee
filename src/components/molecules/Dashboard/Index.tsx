@@ -19,7 +19,6 @@ import { GraphUser } from "@src/components/organisms/graph/graphUser";
 
 export const DashboardAdmin = ({
   data,
-  rewardData,
 }: {
   data?: any;
   rewardData?: any;
@@ -112,7 +111,7 @@ export const DashboardAdmin = ({
               }
             />
           </Card>
-          <EarnPoint rewardData={rewardData} />
+          <EarnPoint />
         </GridItem>
         <GridItem>
           <GraphUser data={data} />
