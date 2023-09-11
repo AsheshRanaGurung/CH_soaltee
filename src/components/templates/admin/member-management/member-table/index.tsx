@@ -1,12 +1,15 @@
 import { Stack } from "@chakra-ui/react";
+import Switch from "@src/components/atoms/Switch";
 import DataTable from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
-import { IProperty } from "@src/interface/master-data/property";
+import { IMember } from "@src/interface/member-management";
 import { IParams } from "@src/interface/params";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { CellProps } from "react-table";
 
-interface IMemberTierTable {
+interface IMemberTable {
   tableDataFetching?: boolean;
   onAction?: () => void;
   title?: string;
@@ -14,39 +17,39 @@ interface IMemberTierTable {
   CurrentText?: string;
   onEditData?: ((id: string) => void) | undefined;
   onDeleteData?: ((id: string) => void) | undefined;
-  paginatedData: IProperty[];
+  paginatedData: IMember[];
   pageParams: IParams;
 }
 
-const PropertyTable: React.FC<IMemberTierTable> = ({
+const MemberTable: React.FC<IMemberTable> = ({
   tableDataFetching,
   onAction,
   title,
   btnText,
   CurrentText,
   onEditData,
-  onDeleteData,
   paginatedData,
   pageParams,
 }) => {
+  const navigate = useNavigate();
   const columns = useMemo(
     () => [
       {
         Header: "S.N",
-        accessor: (_: IProperty, index: number) =>
+        accessor: (_: any, index: number) =>
           (pageParams.page - 1) * pageParams.limit + (index + 1),
         width: "10%",
       },
 
       {
-        Header: "Property Name",
-        accessor: "name",
+        Header: "Full Name",
+        accessor: "fullName",
         width: "20%",
       },
       {
-        Header: "Property Code",
-        accessor: "code",
-        width: "20%",
+        Header: "Email",
+        accessor: "email",
+        width: "10%",
       },
       {
         Header: "Phone Number",
@@ -54,9 +57,27 @@ const PropertyTable: React.FC<IMemberTierTable> = ({
         width: "20%",
       },
       {
-        Header: "Contact person",
-        accessor: "contactPerson",
-        width: "20%",
+        Header: "Nationality",
+        accessor: "nationality",
+        width: "10%",
+      },
+      {
+        Header: "Tier",
+        accessor: "membershipTierName",
+        width: "10%",
+      },
+      {
+        Header: "Is Blocked?",
+        accessor: "isBlocked",
+        width: "10%",
+        Cell: ({ row }: CellProps<{ isBlocked: boolean }>) => {
+          const status = row?.original?.isBlocked;
+          return status === true ? (
+            <Switch value={true} variant="red" />
+          ) : (
+            <Switch disabled />
+          );
+        },
       },
       {
         Header: "Action",
@@ -66,12 +87,15 @@ const PropertyTable: React.FC<IMemberTierTable> = ({
           const onEdit = () => {
             onEditData && onEditData(row.original?.id);
           };
-          const onDelete = () => {
-            onDeleteData && onDeleteData(row.original?.id);
+          const onView = () => {
+            navigate(NAVIGATION_ROUTES.PROFILE_DETAIL, {
+              state: row.original,
+            });
           };
+
           return (
             <Stack alignItems={"flex-start"}>
-              <TableActions onEdit={onEdit} onDelete={onDelete} />
+              <TableActions onEdit={onEdit} onView={onView} />
             </Stack>
           );
         },
@@ -93,4 +117,4 @@ const PropertyTable: React.FC<IMemberTierTable> = ({
     </>
   );
 };
-export default PropertyTable;
+export default MemberTable;

@@ -9,7 +9,7 @@ import { Button } from "@chakra-ui/button";
 import { useLocation } from "react-router";
 import { useDisclosure, Box, Heading } from "@chakra-ui/react";
 import ModalForm from "@src/components/organisms/modal";
-import ProfileForm from "@src/components/templates/form/profile";
+import ProfileForm from "@src/components/templates/admin/member-management/member-profile/add-point";
 import {
   fetchOneMember,
   getAllMemberHistory,
@@ -261,12 +261,6 @@ const MemberProfile = () => {
           onCloseModal={onProfileModalClose}
           showFooter={false}
         >
-          {/* <ProfileForm
-          userId={state}
-          handleFormSubmit={() => handleFormSubmit(data)}
-          onCloseModal={onProfileModalClose}
-          showFooter={false}
-        > */}
           <ProfileForm
             userId={state}
             handleFormSubmit={() => handleFormSubmit(data)}

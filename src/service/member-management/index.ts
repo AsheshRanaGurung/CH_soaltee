@@ -12,7 +12,18 @@ export const createMember = (data: IMember) => {
     data: data,
   });
 };
-
+// export const useCreateMember = () => {
+//   const queryClient = useQueryClient();
+//   return useMutation(createMember, {
+//     onSuccess: (response) => {
+//       queryClient.invalidateQueries("member_management");
+//       toastSuccess(response?.data?.message);
+//     },
+//     onError: (error: AxiosError<{ message: string }>) => {
+//       toastFail(error.response?.data?.message || "Cound not create member");
+//     },
+//   });
+// };
 export const fetchOneMember = ({ id }: { id: string }) => {
   return HttpClient.get(api.member_management.fetchById.replace(":id", id));
 };

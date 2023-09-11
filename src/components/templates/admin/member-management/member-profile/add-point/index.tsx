@@ -6,9 +6,8 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import ManualForm from "@src/components/templates/form/profile/manual";
-import { ServiceForm } from "@src/components/templates/form/profile/service";
-
+import ManualForm from "../manual";
+import { ServiceForm } from "@src/components/templates/admin/member-management/member-profile/service";
 import { colors } from "@src/theme/colors";
 import { getAllProperty } from "@src/service/master-data/property";
 import { useQuery } from "react-query";

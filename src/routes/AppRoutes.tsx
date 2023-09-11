@@ -15,7 +15,7 @@ import MemberManagementPage from "@src/pages/MemberManagement";
 import ProfileDetail from "@src/pages/MemberManagement/ProfileDetail";
 import BonusPage from "@src/pages/PointConfig/Bonus";
 import ForgotPasswordPage from "@src/pages/Auth/forgot-password";
-import ProfilePage from "@src/components/templates/Profile";
+import ProfilePage from "@src/components/templates/user/Profile";
 import ReportPage from "@src/pages/Report";
 import VoucherPage from "@src/pages/Voucher";
 import VoucherAdd from "@src/pages/Voucher/add";

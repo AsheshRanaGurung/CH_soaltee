@@ -20,4 +20,6 @@ export interface IBonus {
   validFrom?: string;
   validTo?: string;
   bonusValue?: number;
+  serviceName?: string;
+  serviceId?: string | number;
 }

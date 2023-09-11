@@ -11,9 +11,15 @@ import {
 } from "@src/service/master-data/member-tier";
 import MemberTierTable from "../member-tier-table";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
+import { IParams } from "@src/interface/params";
+import { Pagination } from "@src/components/organisms/table";
 interface IMemberTier {
   tableData: IMemberTierDetail[];
   tableDataFetching: boolean;
+  _pageSizeChange: (limit: number) => void;
+  _pageChange: (page: number) => void;
+  paginatedData: IMemberTierDetail[];
+  pageParams: IParams;
 }
 
 const defaultValues = {
@@ -22,9 +28,18 @@ const defaultValues = {
   image: "",
 };
 
+const validationSchema = yup.object().shape({
+  membershipName: yup.string().required("Membership Name is required"),
+  requiredPoints: yup.string().required("Point is required"),
+});
+
 const MemberList: React.FC<IMemberTier> = ({
   tableData,
   tableDataFetching,
+  _pageSizeChange,
+  _pageChange,
+  paginatedData,
+  pageParams,
 }) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
@@ -40,11 +55,6 @@ const MemberList: React.FC<IMemberTier> = ({
     onOpen: onDeleteMemberOpen,
     onClose: onDeleteMemberClose,
   } = useDisclosure();
-
-  const validationSchema = yup.object().shape({
-    membershipName: yup.string().required("Membership Name is required"),
-    requiredPoints: yup.string().required("Point is required"),
-  });
 
   useEffect(() => {
     if (isUpdate && updateId) {
@@ -107,7 +117,8 @@ const MemberList: React.FC<IMemberTier> = ({
   return (
     <>
       <MemberTierTable
-        tableData={tableData}
+        paginatedData={paginatedData}
+        pageParams={pageParams}
         tableDataFetching={tableDataFetching}
         title="Filter By"
         btnText="Add Member Tier"
@@ -116,7 +127,6 @@ const MemberList: React.FC<IMemberTier> = ({
           onCloseHandler();
           onMemberModalOpen();
         }}
-        onMemberModalOpen={onMemberModalOpen}
         onEditData={(id: string) => {
           setUpdateId(id);
           setIsUpdate(true);
@@ -130,7 +140,6 @@ const MemberList: React.FC<IMemberTier> = ({
 
       <ModalForm
         isModalOpen={isMemberOpen}
-        // disabled={isUpdate}
         isLoading={isLoading || isUpdating}
         onCloseModal={onMemberModalClose}
         resetButtonText={"Cancel"}
@@ -159,6 +168,14 @@ const MemberList: React.FC<IMemberTier> = ({
       >
         Are you sure you want to delete the Member Tier ?
       </ModalForm>
+      <Pagination
+        enabled={true}
+        queryPageIndex={pageParams.page}
+        queryPageSize={pageParams.limit}
+        totalCount={tableData?.length || 0}
+        pageChange={_pageChange}
+        pageSizeChange={_pageSizeChange}
+      />
     </>
   );
 };

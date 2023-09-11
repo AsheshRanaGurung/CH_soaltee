@@ -16,7 +16,7 @@ import { imageList } from "@src/assets/images";
 import { AwardIcon, LocationIcon, MailIcon, PhoneIcon } from "@src/assets/svgs";
 import Header from "@src/components/atoms/Header";
 import { EditProfile } from "./EditProfile/Index";
-import { Footer } from "../user/footer";
+import { Footer } from "../footer";
 import { getUserDetail } from "@src/service/user";
 import { useQuery, useQueryClient } from "react-query";
 import { useState, useEffect } from "react";

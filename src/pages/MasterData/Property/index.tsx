@@ -38,7 +38,7 @@ const PropertyPage = () => {
           paginatedData={paginatedData}
           _pageChange={_pageChange}
           _pageSizeChange={_pageSizeChange}
-          tableData={[]}
+          tableData={data}
           tableDataFetching={isLoading}
           pageParams={pageParams}
         />

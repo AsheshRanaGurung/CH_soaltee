@@ -56,11 +56,7 @@ const ReportList: React.FC<IPropertyProps> = ({
       const data = tableData.find((x: IProperty) => x.id === updateId);
 
       reset({
-        name: data?.name,
-        code: data?.code,
-        phoneNumber: data?.phoneNumber,
-        contactPerson: data?.contactPerson,
-        contactPersonPhoneNo: data?.contactPersonPhoneNo,
+        ...data,
       });
     }
   }, [isUpdate, updateId]);

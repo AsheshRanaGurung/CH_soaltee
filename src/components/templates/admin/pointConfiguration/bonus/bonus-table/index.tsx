@@ -1,12 +1,12 @@
 import { Stack } from "@chakra-ui/react";
 import DataTable from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
-import { IProperty } from "@src/interface/master-data/property";
 import { IParams } from "@src/interface/params";
+import { IBonus } from "@src/interface/pointConfig";
 import { useMemo } from "react";
 import { CellProps } from "react-table";
 
-interface IMemberTierTable {
+interface IBonusProps {
   tableDataFetching?: boolean;
   onAction?: () => void;
   title?: string;
@@ -14,11 +14,11 @@ interface IMemberTierTable {
   CurrentText?: string;
   onEditData?: ((id: string) => void) | undefined;
   onDeleteData?: ((id: string) => void) | undefined;
-  paginatedData: IProperty[];
+  paginatedData: IBonus[];
   pageParams: IParams;
 }
 
-const PropertyTable: React.FC<IMemberTierTable> = ({
+const BonusTable: React.FC<IBonusProps> = ({
   tableDataFetching,
   onAction,
   title,
@@ -33,29 +33,34 @@ const PropertyTable: React.FC<IMemberTierTable> = ({
     () => [
       {
         Header: "S.N",
-        accessor: (_: IProperty, index: number) =>
+        accessor: (_: any, index: number) =>
           (pageParams.page - 1) * pageParams.limit + (index + 1),
         width: "10%",
       },
 
       {
-        Header: "Property Name",
-        accessor: "name",
+        Header: "Bonus Name",
+        accessor: "bonusName",
         width: "20%",
       },
       {
-        Header: "Property Code",
-        accessor: "code",
+        Header: "Valid from",
+        accessor: "validFrom",
         width: "20%",
       },
       {
-        Header: "Phone Number",
-        accessor: "phoneNumber",
+        Header: "Valid to",
+        accessor: "validTo",
         width: "20%",
       },
       {
-        Header: "Contact person",
-        accessor: "contactPerson",
+        Header: "Bonus Value",
+        accessor: "bonusValue",
+        width: "20%",
+      },
+      {
+        Header: "Service Name",
+        accessor: "serviceName",
         width: "20%",
       },
       {
@@ -93,4 +98,4 @@ const PropertyTable: React.FC<IMemberTierTable> = ({
     </>
   );
 };
-export default PropertyTable;
+export default BonusTable;
