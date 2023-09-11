@@ -24,13 +24,26 @@ interface IMemberTier {
 
 const defaultValues = {
   membershipName: "",
-  requiredPoints: "",
+  pointsFrom: "",
+  pointsTo: "",
   image: "",
 };
 
 const validationSchema = yup.object().shape({
   membershipName: yup.string().required("Membership Name is required"),
-  requiredPoints: yup.string().required("Point is required"),
+  pointsFrom: yup.number().required("Point is required"),
+  pointsTo: yup
+    .number()
+    .required("Point is required")
+    .test(
+      "is-greater",
+      "Point To must be greater than Point From",
+      function (value: any) {
+        const { pointsFrom } = this.parent;
+        return value && value > pointsFrom;
+      }
+    ),
+  // colorCode: yup.string().required("Color is required"),
 });
 
 const MemberList: React.FC<IMemberTier> = ({
@@ -61,7 +74,8 @@ const MemberList: React.FC<IMemberTier> = ({
       const data = tableData.find((x: IMemberTierDetail) => x.id === updateId);
       reset({
         membershipName: data?.membershipName,
-        requiredPoints: data?.requiredPoints,
+        pointsFrom: data?.pointsFrom,
+        pointsTo: data?.pointsTo,
       });
     }
   }, [isUpdate, updateId]);
@@ -93,7 +107,9 @@ const MemberList: React.FC<IMemberTier> = ({
     const formData = new FormData();
     const dat = {
       membershipName: data.membershipName,
-      requiredPoints: data.requiredPoints,
+      pointsFrom: data.pointsFrom,
+      pointsTo: data.pointsTo,
+      colorCode: data.colorCode,
     };
     formData.append("data", JSON.stringify(dat));
     if (updateId) {

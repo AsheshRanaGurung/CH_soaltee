@@ -44,9 +44,14 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
         width: "20%",
       },
       {
+        Header: "Points From Tier",
+        accessor: "pointsFrom",
+        width: "20%",
+      },
+      {
         Header: "Points To Tier",
-        accessor: "requiredPoints",
-        width: "40%",
+        accessor: "pointsTo",
+        width: "20%",
       },
       {
         Header: "Image",
