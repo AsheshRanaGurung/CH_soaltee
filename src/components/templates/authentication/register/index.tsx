@@ -93,7 +93,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             error={errors.nationality?.message || ""}
             options={nationality}
           />
-          <VStack alignItems="flex-start" mb={12} fontWeight="600">
+          <VStack alignItems="flex-start" mt={4} mb={12} fontWeight="600">
             <Checkbox
               name="terms"
               onChange={handleChange}

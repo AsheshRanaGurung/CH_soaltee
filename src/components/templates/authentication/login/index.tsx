@@ -18,20 +18,21 @@ export const FormWrapper = styled.div`
   margin-top: 5%;
   width: 400px;
 `;
-const AccountDetail = styled.div`
+const AccountDetailStyle = styled.div`
   font-weight: 600;
   text-align: center;
+  margin-top: 10px;
   .signup {
     color: ${colors.primary};
     margin-left: 10px;
     cursor: pointer;
   }
 `;
-const ForgotPassword = styled.div`
+const ForgotPasswordStyle = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5em;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   font-weight: 600;
   span {
     // color: ${colors.primary};
@@ -100,7 +101,7 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
             error={errors?.password?.message ?? ""}
             required
           />
-          <ForgotPassword>
+          <ForgotPasswordStyle>
             <Checkbox
               control={control}
               name="forgot_password"
@@ -111,14 +112,15 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
             />
             <Button
               bg={"transparent"}
-              w="100%"
               textAlign="right"
               color={colors.primary}
+              padding={"0px 20px"}
+              height={"auto"}
               onClick={() => navigate(NAVIGATION_ROUTES.FORGOT_PASSWORD)}
             >
               Forgot Password?
             </Button>
-          </ForgotPassword>
+          </ForgotPasswordStyle>
           <Button
             type="submit"
             className="button"
@@ -129,12 +131,12 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
           >
             Submit
           </Button>
-          <AccountDetail>
+          <AccountDetailStyle>
             <span>{`Don't have an account?`}</span>
             <Link as={RouterLink} to={NAVIGATION_ROUTES.SIGNUP}>
               <span className="signup">Signup</span>
             </Link>
-          </AccountDetail>
+          </AccountDetailStyle>
         </FormWrapper>
       </form>
     </>

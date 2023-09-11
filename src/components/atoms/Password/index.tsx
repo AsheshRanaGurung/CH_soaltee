@@ -18,6 +18,7 @@ const PasswordViewIcon = ({ onToggle, isVisible }: ISetPasswordViewIcon) => {
       sx={{
         bgColor: "transparent",
         color: colors.primary,
+        marginBottom: "10px",
         "&:focus": { outline: "none" },
         "&:hover": {
           bgColor: "transparent",

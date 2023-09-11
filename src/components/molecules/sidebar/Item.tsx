@@ -29,15 +29,15 @@ const Item = ({
         p={2}
         mb={3}
         borderRadius={9}
-        bgColor={active ? (isChild ? colors.secondary : colors.secondary) : ""}
+        bgColor={active ? (isChild ? colors.primary : colors.primary) : ""}
         transition="all ease-in-out"
         height={"50px"}
         fontWeight={active ? (isChild ? "600" : "600") : "400"}
         color={
           active
             ? isChild
-              ? colors.primary
-              : colors.primary
+              ? colors.white
+              : colors.white
             : colors.secondary_black
         }
         sx={{

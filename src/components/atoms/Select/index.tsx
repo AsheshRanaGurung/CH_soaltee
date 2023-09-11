@@ -12,8 +12,18 @@ import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 
 const SelectWrapper = styled.div`
-  select {
-    // padding: 0;
+  .css-1nu4b02 > option,
+  .css-1nu4b02 > optgroup {
+    color: white;
+  }
+  .chakra-select__wrapper {
+    color: ${colors.primary_placeholder};
+  }
+  .select-component {
+    padding: 5px !important;
+    option {
+      padding: 45px !important;
+    }
   }
 `;
 const Select = ({
@@ -29,13 +39,14 @@ const Select = ({
   required,
   enabled,
   isSelected,
+  marginBottom,
   ...rest
 }: ISelect) => {
   const [selected, setSelected] = useState(false);
   const handlehange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelected(!!event.target.value);
   };
-
+  console.log("lppp");
   return (
     <FormControl isInvalid={!!error} isRequired={isRequired}>
       {label && (
@@ -51,24 +62,35 @@ const Select = ({
           id={name}
           size={"sm"}
           fontSize="14px !important"
-          textColor={selected ? "black" : "gray"}
           fontWeight={selected ? "500" : "400"}
           border="none"
           borderBottom=" 1px solid rgba(0, 0, 0, 0.15)"
           borderRadius="0"
-          marginBottom="10px"
+          marginBottom={marginBottom ? marginBottom : "10px"}
           borderColor={error ? colors.red : colors.primary_dark}
           borderWidth={error ? "2px" : "1px"}
-          placeholder={placeholder}
           _focusVisible={{
-            borderBottom: `1px solid ${colors.primary} `,
             borderRadius: "0",
           }}
-          //
+          textColor={selected ? "black" : colors.primary_placeholder}
           onChange={handlehange}
+          color={colors.primary_placeholder}
+          className="select-component"
         >
+          <option
+            style={{ color: colors.primary_placeholder }}
+            disabled={selected ? true : false}
+          >
+            {placeholder}
+          </option>
           {options.map(({ label, value }) => (
             <option
+              style={{
+                color: "black",
+                marginLeft: "35px",
+                padding: "50px",
+                height: "30px",
+              }}
               key={value}
               value={value}
               disabled={isSelected?.includes(value)}
@@ -80,7 +102,7 @@ const Select = ({
       </SelectWrapper>
 
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      {error && <FormErrorMessage>{error}</FormErrorMessage>}
+      {error && <FormErrorMessage fontSize={"12px"}>{error}</FormErrorMessage>}
     </FormControl>
   );
 };

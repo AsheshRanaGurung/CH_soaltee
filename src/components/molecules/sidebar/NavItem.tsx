@@ -36,7 +36,7 @@ const Wrapper = styled(Box)`
       content: "";
       position: absolute;
       height: 13px;
-      left: 2px;
+      left: 0.5px;
       top: 13px;
       width: 14px;
       border: Solid 1px #e9e9e9;
@@ -80,8 +80,8 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
               mx={4}
               mb={3}
               borderRadius={8}
-              bgColor={activeParent ? colors.secondary : ""}
-              color={activeParent ? colors.primary : colors.text_black}
+              bgColor={activeParent ? colors.primary : ""}
+              color={activeParent ? colors.white : colors.text_black}
               transition="all ease-in-out"
               cursor="pointer"
               sx={{

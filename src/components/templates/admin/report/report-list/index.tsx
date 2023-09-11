@@ -10,21 +10,11 @@ import { useMemo, useState } from "react";
 interface IMemberTierTable {
   tableData?: IProperty[];
   tableDataFetching?: boolean;
-  onAction?: () => void;
-  title?: string;
-  btnText?: string;
-  CurrentText?: string;
-  onMemberModalOpen?: () => void;
-  onEditData?: ((id: string) => void) | undefined;
-  onDeleteData?: ((id: string) => void) | undefined;
 }
 
-const ReportTable: React.FC<IMemberTierTable> = ({
+const ReportList: React.FC<IMemberTierTable> = ({
   tableData,
   tableDataFetching,
-  onAction,
-  title,
-  CurrentText,
 }) => {
   const { register } = useFormHook({});
   const [pageParams, setPageParams] = useState({
@@ -94,41 +84,45 @@ const ReportTable: React.FC<IMemberTierTable> = ({
         data={paginatedData || []}
         loading={tableDataFetching}
         columns={columns}
-        CurrentText={CurrentText}
-        onAction={onAction}
-        exports={"export"}
-        title={title}
+        CurrentText={"Report Data"}
+        btnText={"export"}
         optionGroup={
-          <Flex justifyContent={"space-between"}>
+          <Flex justifyContent={"space-between"} alignItems={"center"} gap={2}>
             <FormControl
               control="CustomSelect"
+              height="42px"
               options={nationality ?? []}
               size="sm"
               register={register}
               name="Platinum Tier"
               placeholder={"platinum Tier"}
+              marginBottom={"0px"}
             />
             <FormControl
               control="CustomSelect"
               options={nationality ?? []}
               size="sm"
+              height="42px"
               register={register}
               name="Soalteekathmandu"
               placeholder={"Soaltee kathmandu"}
+              marginBottom={"0px"}
             />
           </Flex>
         }
       ></DataTable>
 
-      <Pagination
-        enabled={true}
-        queryPageIndex={pageParams.page}
-        queryPageSize={pageParams.limit}
-        totalCount={tableData?.length || 0}
-        pageChange={_pageChange}
-        pageSizeChange={_pageSizeChange}
-      />
+      {tableData && tableData?.length > 0 && (
+        <Pagination
+          enabled={true}
+          queryPageIndex={pageParams.page}
+          queryPageSize={pageParams.limit}
+          totalCount={tableData?.length || 0}
+          pageChange={_pageChange}
+          pageSizeChange={_pageSizeChange}
+        />
+      )}
     </>
   );
 };
-export default ReportTable;
+export default ReportList;

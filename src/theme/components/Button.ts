@@ -14,7 +14,7 @@ const Button = {
       },
       _disabled: {
         _hover: {
-          background: `${colors.primary_dark}!important`,
+          background: `${colors.light_red}!important`,
         },
         svg: {
           path: {
