@@ -22,7 +22,7 @@ export const SpecialOffer: React.FC<IProps> = ({
         borderRadius={"8px"}
         _before={{
           content: `""`,
-          background: "linear-gradient(35deg, #000 100%)",
+          background: "linear-gradient(90deg, #000 100%)",
           position: "absolute",
           top: 0,
           left: 0,

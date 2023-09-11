@@ -14,7 +14,16 @@ export const Redeem = () => {
           >
             How to Redeem Points
           </Heading>
-          <Grid gap={6} mt={4} templateColumns={"repeat(4,2fr)"} p={["20px 0"]}>
+          <Grid
+            gap={6}
+            mt={4}
+            templateColumns={{
+              xl: "repeat(4, 2fr )",
+              md: "repeat(2,1fr)",
+              sm: "repeat(1,2fr)",
+            }}
+            p={["20px 0"]}
+          >
             <GridItem>
               <RedeemPoint
                 title={"Hotel Nights and More"}

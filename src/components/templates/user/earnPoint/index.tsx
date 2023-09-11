@@ -15,7 +15,15 @@ export const EarnPoint = () => {
         >
           How to Earn Point
         </Heading>
-        <Grid gap={4} templateColumns={"repeat(1,2fr 2fr 2fr 2fr)"} mt={8}>
+        <Grid
+          gap={4}
+          templateColumns={{
+            xl: "repeat(1,2fr 2fr 2fr 2fr)",
+            md: "repeat(1,2fr 2fr)",
+            sm: "repeat(1,2fr)",
+          }}
+          mt={8}
+        >
           <GridItem>
             <EarnCard
               img={imageList.PeopleCard}

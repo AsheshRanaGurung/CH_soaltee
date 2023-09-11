@@ -40,6 +40,8 @@ export const api = {
   dashboard: {
     fetch: "/report/dashboard-report",
     fetchreward: "/report/top-reward-users",
+    add: "",
+    update: "",
   },
   member_management: {
     add: "/auth/save-users",

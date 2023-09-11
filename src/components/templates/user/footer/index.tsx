@@ -7,6 +7,7 @@ import {
   GridItem,
   Heading,
   Image,
+  Link,
   List,
   ListIcon,
   ListItem,
@@ -22,7 +23,15 @@ export const Footer = () => {
   return (
     <Box bg={"#2E2E2D"} color={"white"}>
       <Container maxW={"1400px"}>
-        <Grid gap={8} templateColumns={"repeat(1,2fr 2fr 2fr)"} p={["30px 0"]}>
+        <Grid
+          gap={8}
+          templateColumns={{
+            xl: "repeat(3, 2fr )",
+            md: "repeat(2,1fr)",
+            sm: "repeat(1,2fr)",
+          }}
+          p={["30px 0"]}
+        >
           <GridItem>
             <Image src={imageList.FootersLogo} />
 
@@ -92,11 +101,11 @@ export const Footer = () => {
               </Text>
               <ListItem color={"white"}>
                 <ListIcon as={PhoneIcon} color={"#A1233D"} />
-                9805654678
+                <Link href="tel:9805654678">9805654678</Link>
               </ListItem>
               <ListItem color={"white"}>
                 <ListIcon as={EmailIcon} color={"#A1233D"} />
-                info@srcltee.com{" "}
+                <Link href="mailto:info@srcltee.com">info@srcltee.com</Link>
               </ListItem>
               <ListItem color={"white"}>
                 <ListIcon as={LocationIcon} color={"#A1233D"} />

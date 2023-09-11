@@ -13,10 +13,7 @@
 * hotfix: remove property list from option ([6d48686](https://gitlab.com/paras205/boilerplate-react/commit/6d486863e16f9bbfa1265840514bfdeec0553399))
 * hotfix: route manage ([9c0394c](https://gitlab.com/paras205/boilerplate-react/commit/9c0394ce422983cccca2b7e439c6f699faf9c135))
 * hotfix: routes ([cdedd07](https://gitlab.com/paras205/boilerplate-react/commit/cdedd07ffe11ad9d5c45c41eedb6d4ac672f82cb))
-* member list refactor ([1e7dd64](https://gitlab.com/paras205/boilerplate-react/commit/1e7dd64784936c13a75a349cab980b14b8cd9b0b))
-* member management refactor ([4e609e9](https://gitlab.com/paras205/boilerplate-react/commit/4e609e9349cfc293c56e2f2ee270620adc641b75))
 * minor issues ([e5b8a8c](https://gitlab.com/paras205/boilerplate-react/commit/e5b8a8c4de098ec32fa8f684b19ccb061dded3b1))
-* property refactor ([388eadc](https://gitlab.com/paras205/boilerplate-react/commit/388eadc2eb8ed380e0a5d5522ddacfdfd56f5545))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
 

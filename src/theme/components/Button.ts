@@ -9,6 +9,9 @@ const Button = {
     primary: {
       bg: colors.primary,
       color: colors.white,
+      _hover: {
+        opacity: "0.8",
+      },
       _disabled: {
         _hover: {
           background: `${colors.primary_dark}!important`,
@@ -20,6 +23,7 @@ const Button = {
         },
       },
     },
+
     outlined: {
       bg: colors.white,
       color: colors.primary,
