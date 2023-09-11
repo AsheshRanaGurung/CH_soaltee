@@ -39,4 +39,7 @@ export const colors = {
   gray_600: "#4A5568",
   primary_green: "#188351",
   light_gray_1: "#d2d2d2",
+  secondary_black_1: "#111111ba",
+  primary_placeholder: "#a4a1a3",
+  light_red: "#dd9caa",
 };

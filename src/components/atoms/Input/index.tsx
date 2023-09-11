@@ -89,7 +89,7 @@ const Input = ({
             border: "none",
             borderBottom: " 1px solid rgba(0, 0, 0, 0.15)",
             borderRadius: "0",
-            marginBottom: "10px",
+            marginBottom: "20px",
             paddingX: 0,
           }}
           _focusVisible={{
@@ -112,7 +112,7 @@ const Input = ({
 
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && (
-        <FormErrorMessage mt={0} mb={2}>
+        <FormErrorMessage mt={"-10px"} mb={2} fontSize={"12px"}>
           {error}
         </FormErrorMessage>
       )}

@@ -58,6 +58,7 @@ const globalStyles = (
           box-sizing: border-box;
         }
       }
+
       h1,
       h2,
       h3,

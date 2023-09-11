@@ -8,10 +8,10 @@ export const Search = ({ setSearchValue }: any) => {
       <Input
         type="text"
         placeholder="Search"
-        height="44px"
+        height="42px"
         fontSize="16px"
         fontFamily="'Urbanist', sans-serif"
-        pl={12}
+        pl={10}
         _focusVisible={{
           border: `1px solid ${colors.primary} `,
         }}
@@ -28,7 +28,7 @@ export const Search = ({ setSearchValue }: any) => {
         zIndex={10}
         position="absolute"
         top={1}
-        borderRadius={6}
+        borderRadius={8}
         sx={{
           "&:hover": {
             bgColor: "transparent",

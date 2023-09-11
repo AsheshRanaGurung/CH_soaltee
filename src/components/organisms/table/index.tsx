@@ -47,7 +47,6 @@ import {
 // import { DrawerComponent } from "../drawer";
 import { Search } from "@src/components/molecules/search";
 import { TableHeading } from "@src/components/atoms/TableHeading";
-import { ExportIcon } from "@src/assets/svgs";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 
 export function getPager(
@@ -100,13 +99,9 @@ const styleTableWithButtom = {
 };
 interface IDataTable {
   columns: any;
-  // columns: Column<Record<any, any>>[];
   data: Record<string, any>[];
-  // Element to show on expanded
   expandedView?: ReactNode;
-  // Should expand all rows
   isAllExpanded?: boolean;
-  // Element to show on hover
   hoverView?: ReactElement;
   height?: string;
   width?: string;
@@ -125,32 +120,19 @@ interface IDataTable {
   };
   disableOverflow?: boolean;
   containerStyles?: CSSObject;
-  //if table header needs a background color
   headerBackgroundColor?: string;
-  //if we need a table with borderbuttom & no rightside border
   rowBottomBorder?: boolean;
-  // if we need to add button to the table
   btnText?: string;
   optionGroup?: ReactElement;
   CurrentText?: string;
   onAction?: () => void;
-  // if we need to disable the button according to permission
   onDisableButton?: boolean;
   exports?: string;
   onDownload?: () => void;
-  //search
   setSearchValue?: (searchValue: string) => void;
-
-  //for drawer
   title?: string;
   children?: React.ReactNode;
 }
-
-/**
- * General datatable component
- * @param props IDataTable
- * @returns JSX Table Element
- */
 
 const DataTable = React.memo(
   ({
@@ -166,12 +148,8 @@ const DataTable = React.memo(
     btnText,
     CurrentText,
     onAction,
-    onDownload,
-    exports,
     rowBottomBorder,
     onDisableButton,
-    // title,
-    // children,
     setSearchValue,
   }: IDataTable) => {
     const tableInstance = useTable(
@@ -209,35 +187,12 @@ const DataTable = React.memo(
             <Flex position="relative">
               <Search setSearchValue={setSearchValue} />
             </Flex>
-            <Flex gap={2}>
-              {exports && (
-                <Button
-                  backgroundColor={colors.primary}
-                  color={colors.white}
-                  size={"sm"}
-                  leftIcon={<ExportIcon />}
-                  onClick={onDownload}
-                  outline="none"
-                  border={"none"}
-                  disabled={onDisableButton}
-                  sx={{
-                    "&::before": {
-                      border: "none",
-                    },
-                    "&::after": {
-                      border: "none",
-                    },
-                  }}
-                >
-                  {exports}
-                </Button>
-              )}
-              {optionGroup && <Box bgSize={"md"}>{optionGroup}</Box>}
-
+            <Flex gap={2} alignItems="center">
               {btnText && (
                 <Button
                   variant={"primary"}
                   size={"md"}
+                  height={"42px"}
                   leftIcon={<AddIcon />}
                   onClick={onAction}
                   outline="none"
@@ -255,36 +210,8 @@ const DataTable = React.memo(
                   {btnText}
                 </Button>
               )}
+              {optionGroup && <Box bgSize={"md"}>{optionGroup}</Box>}
             </Flex>
-            {/* {btnText && (
-              <Button
-                variant={"primary"}
-                size={"sm"}
-                leftIcon={<AiOutlinePlus />}
-                onClick={onAction}
-                outline="none"
-                border={"none"}
-                height={{ base: 12, md: 13 }}
-                disabled={onDisableButton}
-                sx={{
-                  "&::before": {
-                    border: "none",
-                  },
-                  "&::after": {
-                    border: "none",
-                  },
-                  "&:hover": {
-                    "svg path": {
-                      fill: colors.light_gray,
-                    },
-                  },
-                }}
-                padding={{ base: 2, md: 5 }}
-                margin={{ base: 2, md: 2 }}
-              >
-                {btnText}
-              </Button>
-            )} */}
           </Flex>
         </Flex>
 
@@ -296,7 +223,6 @@ const DataTable = React.memo(
           overflowX="auto"
           mt={3}
           width={{ base: "100vw", md: "100%" }}
-          // width="100vw"
         >
           {loading && (
             <Box w={"100%"}>
@@ -399,8 +325,6 @@ const DataTable = React.memo(
                               position="relative"
                               whiteSpace="nowrap"
                             >
-                              {/* {cell.render("Cell")} */}
-                              {/* Render image in the cell */}
                               {cell.render("Cell")}
                             </Td>
                           );
@@ -445,11 +369,6 @@ interface PaginationProps {
   totalCount: number;
 }
 
-// interface Option {
-//   value: number | null;
-//   label: string;
-//   disabled?: boolean;
-// }
 export const Pagination = ({
   enabled,
   queryPageSize,
@@ -460,10 +379,7 @@ export const Pagination = ({
 }: PaginationProps) => {
   const totalPages = Math.ceil(totalCount / queryPageSize);
   const [pageSizeChanges, setpageSizeChange] = useState<number>(0);
-  // const startIndex = (queryPageIndex - 1) * queryPageSize;
-  // const endIndex = Math.min(startIndex + queryPageSize, totalCount);
 
-  // hooks
   useEffect(() => {
     if (!pageSizeChange) return;
     if (pageSizeChanges) {
@@ -501,10 +417,6 @@ export const Pagination = ({
               lineHeight: "40px",
               mr: 0,
               color: queryPageIndex === i ? colors.primary : "#000",
-              // "&:hover": {
-              //   bgColor: colors.gray,
-              //   color: colors.white,
-              // },
             }}
             padding={0}
             minWidth={"unset"}
@@ -544,11 +456,6 @@ export const Pagination = ({
     { value: 6, label: "6" },
     { value: totalCount, label: "All" },
   ];
-  // const shouldShowAllOptions = totalCount > 10;
-
-  // const filteredOptions: any[] = shouldShowAllOptions
-  //   ? options.slice(0, -1)
-  //   : options.filter((item) => item.value && item.value <= totalCount);
 
   return enabled ? (
     <Box px={{ base: "4", md: "6" }} p="5" bg={colors.white} pt={8}>
@@ -559,11 +466,6 @@ export const Pagination = ({
       >
         <Box>
           <Select
-            // value={filteredOptions.find((item) => item.value === queryPageSize)}
-            // width="81px"
-            // borderRadius="6px"
-            // size="sm"
-            // isSearchable={false}
             size={"sm"}
             borderRadius={"6px"}
             onChange={(selectedOption) =>
@@ -578,11 +480,7 @@ export const Pagination = ({
             ))}
           </Select>
         </Box>
-        {/* <HStack spacing={10}>
-          <Text fontSize="sm">
-            Showing {startIndex + 1} to {endIndex} of {totalCount}
-          </Text>
-        </HStack> */}
+
         <HStack>
           <AiOutlineDoubleLeft
             aria-label="Previous"

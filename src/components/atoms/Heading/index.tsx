@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   }
   .text {
     font-size: 18px;
-    color: ${colors.secondary_black};
+    color: ${colors.secondary_black_1};
   }
 `;
 const Heading: React.FC<IHeadingProps> = ({ text, title }) => {

@@ -15,6 +15,12 @@ const SelectWrapper = styled.div`
   select {
     // padding: 0;
   }
+  .select-component {
+    padding: 5px !important;
+    option {
+      padding: 45px !important;
+    }
+  }
 `;
 const CustomSelect = ({
   placeholder,
@@ -29,6 +35,7 @@ const CustomSelect = ({
   required,
   enabled,
   isSelected,
+  marginBottom,
   ...rest
 }: ISelect) => {
   const [selected, setSelected] = useState(false);
@@ -53,19 +60,31 @@ const CustomSelect = ({
           fontSize="14px !important"
           textColor={selected ? "black" : "gray"}
           fontWeight={selected ? "500" : "400"}
-          marginBottom="10px"
-          placeholder={placeholder}
+          marginBottom={marginBottom ? marginBottom : "10px"}
           _focusVisible={{
-            borderBottom: `1px solid #AB1D3F `,
+            borderBottom: `1px solid ${colors.primary}`,
           }}
-          border="1px solid #AB1D3F"
-          color="#AB1D3F"
+          border={`1px solid ${colors.primary}`}
+          color={colors.primary}
           borderRadius="10px"
           padding="8px, 4px, 8px, 4px"
           onChange={handlehange}
+          className="select-component"
         >
+          <option
+            style={{ color: colors.primary_placeholder }}
+            disabled={selected ? true : false}
+          >
+            {placeholder}
+          </option>
           {options.map(({ label, value }) => (
             <option
+              style={{
+                color: "black",
+                marginLeft: "35px",
+                padding: "50px",
+                height: "30px",
+              }}
               key={value}
               value={value}
               disabled={isSelected?.includes(value)}
