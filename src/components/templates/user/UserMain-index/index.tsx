@@ -21,7 +21,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-export const MemberShip = () => {
+export const Userpage = () => {
   const [scrolled, setScrolled] = useState(false);
   function handleScroll() {
     if (window.scrollY > 150) {
