@@ -19,7 +19,6 @@ const Dashboard = () => {
   const { data: rewardData } = useQuery("top_reward_users", getTopRewardUsers, {
     select: ({ data }) => data,
   });
-  console.log("totalReward", totalReward);
   return (
     <>
       <BreadCrumb name="Dashboard" />

@@ -46,7 +46,6 @@ const Select = ({
   const handlehange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelected(!!event.target.value);
   };
-  console.log("lppp");
   return (
     <FormControl isInvalid={!!error} isRequired={isRequired}>
       {label && (

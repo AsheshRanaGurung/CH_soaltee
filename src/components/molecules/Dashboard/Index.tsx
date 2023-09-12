@@ -31,7 +31,6 @@ export const DashboardAdmin = ({
   setTimeDuration: Dispatch<SetStateAction<string>>;
   setDateDuration: Dispatch<SetStateAction<string>>;
 }) => {
-  console.log(totalReward, "totalRewarda");
   const handleClick = (name: "day" | "month" | "year") => {
     setTimeDuration(name);
   };

@@ -186,7 +186,6 @@ export const Graphcard = ({ setTimeDuration, data }: any) => {
   const handleClick = (name: "week" | "month") => {
     setTimeDuration(name);
   };
-  console.log(data, "totalRewardd");
   return (
     <Card>
       <Flex justifyContent={"space-between"} alignItems={"center"}>
