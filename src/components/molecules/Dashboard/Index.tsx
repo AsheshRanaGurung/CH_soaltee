@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FileIcon } from "@src/assets/svgs";
 import { ChartIcon } from "@src/components/atoms/ChartIcon";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { DashboardCard } from "./DashboardCard";
 import { colors } from "@src/theme/colors";
 import { EarnPoint } from "./EardPoint";
@@ -19,12 +19,22 @@ import { GraphUser } from "@src/components/organisms/graph/graphUser";
 
 export const DashboardAdmin = ({
   data,
+  rewardData,
+  totalReward,
+  setTimeDuration,
+  setDateDuration,
 }: {
   data?: any;
+  totalReward: any;
   rewardData?: any;
   isLoading?: boolean;
+  setTimeDuration: Dispatch<SetStateAction<string>>;
+  setDateDuration: Dispatch<SetStateAction<string>>;
 }) => {
-  const [tabIndex, setTabIndex] = useState(0);
+  console.log(totalReward, "totalRewarda");
+  const handleClick = (name: "day" | "month" | "year") => {
+    setTimeDuration(name);
+  };
   return (
     <>
       <SimpleGrid
@@ -47,21 +57,14 @@ export const DashboardAdmin = ({
               <ChartIcon
                 bg={"#FEF3E0"}
                 icon={<FileIcon />}
-                title={"Accounts"}
-                value={
-                  tabIndex === 0
-                    ? data?.totalUserToday ?? 0
-                    : tabIndex === 1
-                    ? data?.totalUserMonthly ?? 0
-                    : data?.totalUserYearly ?? 0
-                }
+                title={"Members Enrolled"}
+                value={data?.totalOnboardUser}
               />
               <Tabs
                 variant="soft-rounded"
                 textAlign={"center"}
                 lineHeight={1}
                 paddingRight={"15px"}
-                onChange={(index) => setTabIndex(index)}
               >
                 <TabList borderRadius="15px" background={"gray.100"}>
                   <Tab
@@ -72,6 +75,7 @@ export const DashboardAdmin = ({
                     }}
                     borderRadius={"20px"}
                     fontSize="14px"
+                    onClick={() => handleClick("day")}
                   >
                     Today
                   </Tab>
@@ -83,6 +87,7 @@ export const DashboardAdmin = ({
                     }}
                     borderRadius={"20px"}
                     fontSize="14px"
+                    onClick={() => handleClick("month")}
                   >
                     Monthly
                   </Tab>
@@ -94,6 +99,7 @@ export const DashboardAdmin = ({
                     }}
                     borderRadius={"20px"}
                     fontSize="14px"
+                    onClick={() => handleClick("year")}
                   >
                     Yearly
                   </Tab>
@@ -101,21 +107,18 @@ export const DashboardAdmin = ({
               </Tabs>
             </Box>
             <DashboardCard
-              distributed={0}
-              claimed={
-                tabIndex === 0
-                  ? data?.totalRewardPointsToday ?? 0
-                  : tabIndex === 1
-                  ? data?.totalRewardPointsMonth ?? 0
-                  : data?.totalRewardPointsYear ?? 0
-              }
+              distributed={data?.totalReedemPoints}
+              claimed={data?.totalReedemPoints}
             />
           </Card>
           <EarnPoint />
         </GridItem>
         <GridItem>
-          <GraphUser data={data} />
-          <Graphcard />
+          <GraphUser data={rewardData} />
+          <Graphcard
+            setTimeDuration={setDateDuration}
+            data={totalReward ?? []}
+          />
         </GridItem>
         <GridItem>
           <PieChartCard />

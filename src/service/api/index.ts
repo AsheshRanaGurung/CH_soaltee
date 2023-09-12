@@ -38,8 +38,9 @@ export const api = {
     },
   },
   dashboard: {
-    fetch: "/report/dashboard-report",
-    fetchreward: "/report/top-reward-users",
+    fetch: "/dashboard/total-user-reward-report?type=",
+    fetchreward: "/dashboard/total-active-block-user",
+    fetchTotal: "/dashboard/total-members-mw?type=",
     add: "",
     update: "",
   },

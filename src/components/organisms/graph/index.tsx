@@ -9,7 +9,41 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Box, Flex, Tab, TabList, Tabs } from "@chakra-ui/react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+function handleGraphData(
+  totalReward: any,
+  newData: {
+    name: string;
+    uv: number;
+  }[],
+  setNewData: Dispatch<
+    SetStateAction<
+      {
+        name: string;
+        uv: number;
+      }[]
+    >
+  >
+) {
+  const newDataMap = new Map(newData.map((item) => [item.name, item]));
+  totalReward.forEach((item: { dayOrMonth: string; totalMembers: any }) => {
+    const name = item.dayOrMonth.trim().slice(0, 3);
+    const existingDataItem = newDataMap.get(name);
+
+    if (existingDataItem) {
+      const updatedDataItem = {
+        name: existingDataItem.name,
+        uv: item.totalMembers,
+      };
+      setNewData((prevData) =>
+        prevData.map((prevItem) =>
+          prevItem.name === name ? updatedDataItem : prevItem
+        )
+      );
+    }
+  });
+}
 
 const Card = styled.div`
   background: ${colors.white};
@@ -33,42 +67,13 @@ const Card = styled.div`
     font-weight: 600;
   }
 `;
-const graphdata = [
-  {
-    name: "Sunday",
-    uv: 4000,
-  },
-  {
-    name: "Monday",
-    uv: 3000,
-  },
-  {
-    name: "Tuesday",
-    uv: 2000,
-  },
-  {
-    name: "Wednesday",
-    uv: 2780,
-  },
-  {
-    name: "Thursday",
-    uv: 1890,
-  },
-  {
-    name: "Friday",
-    uv: 2390,
-  },
-  {
-    name: "Saturday",
-    uv: 3490,
-  },
-];
-const GraphComponent = () => {
+
+const GraphComponent = ({ data }: any) => {
   return (
     <Box marginTop={"30px"}>
       <ResponsiveContainer height={300} width="100%">
         <AreaChart
-          data={graphdata}
+          data={data || []}
           margin={{
             top: 10,
             right: 30,
@@ -91,9 +96,97 @@ const GraphComponent = () => {
     </Box>
   );
 };
-export const Graphcard = () => {
-  const [_, setTabIndex] = useState(0);
 
+export const Graphcard = ({ setTimeDuration, data }: any) => {
+  const [newMonth, setNewMonth] = useState<{ name: string; uv: number }[]>([
+    {
+      name: "Jan",
+      uv: 0,
+    },
+    {
+      name: "Feb",
+      uv: 0,
+    },
+    {
+      name: "Mar",
+      uv: 0,
+    },
+    {
+      name: "Apr",
+      uv: 0,
+    },
+    {
+      name: "May",
+      uv: 0,
+    },
+    {
+      name: "Jun",
+      uv: 0,
+    },
+    {
+      name: "Jul",
+      uv: 0,
+    },
+    {
+      name: "Aug",
+      uv: 0,
+    },
+    {
+      name: "Sep",
+      uv: 0,
+    },
+    {
+      name: "Oct",
+      uv: 0,
+    },
+    {
+      name: "Nov",
+      uv: 0,
+    },
+    {
+      name: "Dec",
+      uv: 0,
+    },
+  ]);
+  const [newData, setNewData] = useState<{ name: string; uv: number }[]>([
+    {
+      name: "Sun",
+      uv: 0,
+    },
+    {
+      name: "Mon",
+      uv: 0,
+    },
+    {
+      name: "Tue",
+      uv: 0,
+    },
+    {
+      name: "Wed",
+      uv: 0,
+    },
+    {
+      name: "Thu",
+      uv: 0,
+    },
+    {
+      name: "Fri",
+      uv: 0,
+    },
+    {
+      name: "Sat",
+      uv: 0,
+    },
+  ]);
+  useEffect(() => {
+    handleGraphData(data, newData, setNewData);
+    handleGraphData(data, newMonth, setNewMonth);
+  }, [data]);
+  const [tabIndex, setTabIndex] = useState(0);
+  const handleClick = (name: "week" | "month") => {
+    setTimeDuration(name);
+  };
+  console.log(data, "totalRewardd");
   return (
     <Card>
       <Flex justifyContent={"space-between"} alignItems={"center"}>
@@ -109,7 +202,6 @@ export const Graphcard = () => {
             textAlign={"center"}
             lineHeight={1}
             paddingRight={"15px"}
-            onChange={(index) => setTabIndex(index)}
           >
             <TabList borderRadius="15px" background={"gray.100"}>
               <Tab
@@ -120,6 +212,10 @@ export const Graphcard = () => {
                 }}
                 borderRadius={"20px"}
                 fontSize="14px"
+                onClick={() => {
+                  handleClick("week");
+                  setTabIndex(0);
+                }}
               >
                 Weekly
               </Tab>
@@ -131,6 +227,10 @@ export const Graphcard = () => {
                 }}
                 borderRadius={"20px"}
                 fontSize="14px"
+                onClick={() => {
+                  handleClick("month");
+                  setTabIndex(1);
+                }}
               >
                 Monthly
               </Tab>
@@ -138,7 +238,7 @@ export const Graphcard = () => {
           </Tabs>
         </Box>
       </Flex>
-      <GraphComponent />
+      <GraphComponent data={tabIndex === 0 ? newData : newMonth} />
     </Card>
   );
 };
