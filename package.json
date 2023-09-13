@@ -43,6 +43,7 @@
     "draft-js": "^0.11.7",
     "esbuild-plugins-node-modules-polyfill": "^1.6.0",
     "framer-motion": "^10.16.2",
+    "html-react-parser": "^4.2.2",
     "i": "^0.3.7",
     "i18next": "^21.9.1",
     "js-cookie": "^3.0.5",

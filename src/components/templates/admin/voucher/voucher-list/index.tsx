@@ -7,6 +7,7 @@ import { useDeleteVoucher } from "@src/service/voucher";
 import VoucherTable from "../voucher-table";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router-dom";
+import { VoucherPage } from "../voucher-page";
 interface IVoucherList {
   tableData: IVoucher[];
   tableDataFetching: boolean;
@@ -28,13 +29,14 @@ const VoucherList: React.FC<IVoucherList> = ({
 }) => {
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState("");
+  const [viewId, setViewId] = useState("");
 
   const {
     isOpen: isDeleteMemberOpen,
     onOpen: onDeleteMemberOpen,
     onClose: onDeleteMemberClose,
   } = useDisclosure();
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { reset } = useFormHook({});
 
   const { mutateAsync: deleteVoucher, isLoading: isDeleting } =
@@ -50,7 +52,6 @@ const VoucherList: React.FC<IVoucherList> = ({
     reset(defaultValues);
     setDeleteId("");
   };
-
   return (
     <>
       <VoucherTable
@@ -68,6 +69,10 @@ const VoucherList: React.FC<IVoucherList> = ({
           setDeleteId(id);
           onDeleteMemberOpen();
         }}
+        onViewData={(id: string) => {
+          setViewId(id);
+          onOpen();
+        }}
       />
 
       <ModalForm
@@ -82,6 +87,7 @@ const VoucherList: React.FC<IVoucherList> = ({
       >
         Are you sure you want to delete the Voucher ?
       </ModalForm>
+      <VoucherPage isOpen={isOpen} onClose={onClose} viewId={viewId} />
     </>
   );
 };

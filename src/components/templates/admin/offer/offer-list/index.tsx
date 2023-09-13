@@ -13,6 +13,7 @@ import {
 } from "@src/service/offer";
 import { CreateOfferForm } from "../offer-add";
 import OfferTable from "../offer-table";
+import { OfferPage } from "../offer-Page";
 
 interface IOfferProps {
   tableData: IOffers[];
@@ -48,6 +49,8 @@ const OfferList: React.FC<IOfferProps> = ({
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
+  const [viewId, setViewId] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
     isOpen: isOfferOpen,
@@ -138,6 +141,10 @@ const OfferList: React.FC<IOfferProps> = ({
           setDeleteId(id);
           onDeleteOfferOpen();
         }}
+        onViewData={(id: string) => {
+          setViewId(id);
+          onOpen();
+        }}
       />
       <ModalForm
         isModalOpen={isOfferOpen}
@@ -177,6 +184,7 @@ const OfferList: React.FC<IOfferProps> = ({
         pageChange={_pageChange}
         pageSizeChange={_pageSizeChange}
       />
+      <OfferPage isOpen={isOpen} onClose={onClose} viewId={viewId} />
     </>
   );
 };

@@ -42,4 +42,6 @@ export const colors = {
   secondary_black_1: "#111111ba",
   primary_placeholder: "#a4a1a3",
   light_red: "#dd9caa",
+  voucher_heading: "#595C60",
+  model_bottom: "#d2cfcfc2",
 };

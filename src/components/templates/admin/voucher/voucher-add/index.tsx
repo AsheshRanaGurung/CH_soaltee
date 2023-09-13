@@ -55,7 +55,6 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
   const { data: service } = useQuery("service", getAllService, {
     select: ({ data }) => data.datalist,
   });
-
   const serviceList = service?.map((item: any) => {
     return {
       label: item?.serviceName,

@@ -17,6 +17,8 @@ interface IVoucherTable {
   CurrentText?: string;
   onMemberModalOpen?: () => void;
   onEditData?: ((id: string) => void) | undefined;
+  onViewData?: ((id: string) => void) | undefined;
+
   onDeleteData?: ((id: string) => void) | undefined;
 }
 
@@ -24,6 +26,7 @@ const VoucherTable: React.FC<IVoucherTable> = ({
   tableData,
   tableDataFetching,
   onAction,
+  onViewData,
   title,
   btnText,
   CurrentText,
@@ -90,9 +93,16 @@ const VoucherTable: React.FC<IVoucherTable> = ({
           const onDelete = () => {
             onDeleteData && onDeleteData(row.original?.id);
           };
+          const onView = () => {
+            onViewData && onViewData(row.original?.id);
+          };
           return (
             <Stack alignItems={"flex-start"}>
-              <TableActions onEdit={onEdit} onDelete={onDelete} />
+              <TableActions
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onView={onView}
+              />
             </Stack>
           );
         },
