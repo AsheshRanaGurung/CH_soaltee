@@ -3,7 +3,7 @@ import { api } from "@src/service/api";
 import { HttpClient } from "@src/service/config/api";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
-import { useQueryClient, useMutation } from "react-query";
+import { useQueryClient, useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 export const getAllVoucher = () => {
@@ -65,3 +65,18 @@ export const useDeleteVoucher = () => {
     },
   });
 };
+const getVoucherID = (id: string) => () => {
+  return HttpClient.get(`${api.voucher.fetchID}/${id}`);
+};
+
+const useGetVoucherID = (id: string) => {
+  return useQuery([`${api.voucher.fetchID}/${id}`], getVoucherID(id), {
+    enabled: !!id,
+    select: (data: { data: { data: any } }) => data?.data?.data || {},
+    onError: (error: AxiosError) => {
+      console.error(error);
+    },
+  });
+};
+
+export { useGetVoucherID };

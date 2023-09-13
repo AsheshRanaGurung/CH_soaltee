@@ -3,7 +3,7 @@ import { api } from "@src/service/api";
 import { HttpClient } from "@src/service/config/api";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
-import { useQueryClient, useMutation } from "react-query";
+import { useQueryClient, useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 export const getAllOffer = () => {
@@ -64,3 +64,19 @@ export const useDeleteOffer = () => {
     },
   });
 };
+
+const getAllOfferId = (id: string) => () => {
+  return HttpClient.get(`${api.offer.fetchID}/${id}`);
+};
+
+const useGetAllOfferId = (id: string) => {
+  return useQuery([`${api.offer.fetchID}/${id}`], getAllOfferId(id), {
+    enabled: !!id,
+    select: (data: { data: { data: any } }) => data?.data?.data || {},
+    onError: (error: AxiosError) => {
+      console.error(error);
+    },
+  });
+};
+
+export { useGetAllOfferId };

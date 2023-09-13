@@ -12,6 +12,7 @@ interface IOfferTable {
   title?: string;
   btnText?: string;
   CurrentText?: string;
+  onViewData?: ((id: string) => void) | undefined;
   onEditData?: ((id: string) => void) | undefined;
   onDeleteData?: ((id: string) => void) | undefined;
   paginatedData: IOffers[];
@@ -24,6 +25,7 @@ const OfferTable: React.FC<IOfferTable> = ({
   title,
   btnText,
   CurrentText,
+  onViewData,
   onEditData,
   onDeleteData,
   paginatedData,
@@ -72,9 +74,16 @@ const OfferTable: React.FC<IOfferTable> = ({
           const onDelete = () => {
             onDeleteData && onDeleteData(row.original?.offerId);
           };
+          const onView = () => {
+            onViewData && onViewData(row.original?.offerId);
+          };
           return (
             <Stack alignItems={"flex-start"}>
-              <TableActions onEdit={onEdit} onDelete={onDelete} />
+              <TableActions
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onView={onView}
+              />
             </Stack>
           );
         },

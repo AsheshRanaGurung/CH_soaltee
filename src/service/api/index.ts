@@ -70,12 +70,14 @@ export const api = {
     fetch: "/voucher/get-all-voucher",
     delete: "/voucher/delete-voucher-promo/:id",
     update: "/voucher/update-voucher-promo/:id",
+    fetchID: "/voucher/get-voucher-promo",
   },
   offer: {
     fetch: "/offers/get-all-offers",
     add: "/offers/save-offer",
     update: "/offers/update-offer/:id",
     delete: "/offers/delete-offer/:id",
+    fetchID: "/offers/get-offer",
   },
   fetchImage: "/membership/get-tier-image/:id",
 };
