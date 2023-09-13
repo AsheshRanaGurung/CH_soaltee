@@ -1,4 +1,4 @@
-## 0.0.14 (2023-09-12)
+## 0.0.14 (2023-09-13)
 
 
 ### Bug Fixes
@@ -7,6 +7,8 @@
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
+* fetch history user wise ([478fc3c](https://gitlab.com/paras205/boilerplate-react/commit/478fc3c2cc14e4bca0420c0be3d09ac075eeb10c))
+* fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
 * hotfix: change border ([c4d5812](https://gitlab.com/paras205/boilerplate-react/commit/c4d5812510889d03c1f90b6910cc2ca2f45950e9))
@@ -16,6 +18,7 @@
 * minor issues ([e5b8a8c](https://gitlab.com/paras205/boilerplate-react/commit/e5b8a8c4de098ec32fa8f684b19ccb061dded3b1))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
+* remove console ([b88c476](https://gitlab.com/paras205/boilerplate-react/commit/b88c476a0c58d18c628bf21657472ce251ab81b8))
 
 
 ### Features
@@ -29,11 +32,11 @@
 * admin loagin integartion ([6a58586](https://gitlab.com/paras205/boilerplate-react/commit/6a5858668898a187d75d9633e45aef0ec1867ac1))
 * api integration for add member tier ([591e472](https://gitlab.com/paras205/boilerplate-react/commit/591e4724e8b1fbd33f620dc73ed81df0beed9334))
 * bonus config design and api implement ([7b8bd35](https://gitlab.com/paras205/boilerplate-react/commit/7b8bd3565073c74e44d0ffb791c5d8c38ff0131c))
-* changes on dashboard and chart ([3f3ec88](https://gitlab.com/paras205/boilerplate-react/commit/3f3ec889edcf76a14c7cf0c9a40c3570e9686469))
-* changes on dashboard and chart ([432bdb5](https://gitlab.com/paras205/boilerplate-react/commit/432bdb5d52669bb2bc2aedb1b047789a4e599b86))
+* changes on dashboard and chart ([8cfd96d](https://gitlab.com/paras205/boilerplate-react/commit/8cfd96df9181f07fc3215ddd2144a0744b9e5b62))
 * changes on page ([dfb579f](https://gitlab.com/paras205/boilerplate-react/commit/dfb579fe11b8d4d35f8e548ba5798cf50cf145a7))
 * changes on report page ([31ba041](https://gitlab.com/paras205/boilerplate-react/commit/31ba04144a8d8aad72e5434163168fd7d0973586))
 * created profile  design changes ([dd38dc0](https://gitlab.com/paras205/boilerplate-react/commit/dd38dc05e611f2eb185ea980105e9d7db10c7fd4))
+* crud offer ([ee8114d](https://gitlab.com/paras205/boilerplate-react/commit/ee8114dc41edda539a402bd873e11f9a59d94123))
 * custom input ([d323c8f](https://gitlab.com/paras205/boilerplate-react/commit/d323c8f84f00f51287e6c564fa41478402ce5ae9))
 * dashboard rewardPoint ([deff013](https://gitlab.com/paras205/boilerplate-react/commit/deff013adbac58d59d98ac6a8241634e040100a7))
 * disabled select if already selected earlier ([17ec76c](https://gitlab.com/paras205/boilerplate-react/commit/17ec76ce3e20f68927377bf1318cee4017490877))

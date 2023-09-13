@@ -66,7 +66,6 @@ const OfferTable: React.FC<IOfferTable> = ({
         width: "10%",
 
         Cell: ({ row }: CellProps<{ offerId: string }>) => {
-          console.log("errr", row.original);
           const onEdit = () => {
             onEditData && onEditData(row.original?.offerId);
           };

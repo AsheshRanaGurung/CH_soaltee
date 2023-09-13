@@ -6,28 +6,23 @@ export const getAllMembers = () => {
   return HttpClient.get(api.member_management.fetch);
 };
 
-//create member management
 export const createMember = (data: IMember) => {
   return HttpClient.post(`${api.member_management.add}`, {
     data: data,
   });
 };
-// export const useCreateMember = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation(createMember, {
-//     onSuccess: (response) => {
-//       queryClient.invalidateQueries("member_management");
-//       toastSuccess(response?.data?.message);
-//     },
-//     onError: (error: AxiosError<{ message: string }>) => {
-//       toastFail(error.response?.data?.message || "Cound not create member");
-//     },
-//   });
-// };
+
 export const fetchOneMember = ({ id }: { id: string }) => {
   return HttpClient.get(api.member_management.fetchById.replace(":id", id));
 };
 
-export const getAllMemberHistory = () => {
-  return HttpClient.get(api.member_management.get_history);
+export const getAllMemberHistory = ({ id }: { id: string }) => {
+  const pageIndex = 1;
+  const pageSize = 10;
+  return HttpClient.get(
+    api.member_management.get_history.replace(
+      `pageIndex={page}&pageSize={limit}&userId={id}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}&userId=${id}`
+    )
+  );
 };

@@ -18,18 +18,19 @@ const Wrapper = styled.div`
 const WrapperContent = styled.div`
   display: flex;
   gap: 25px;
-  margin-bottom: 50px;
   align-items: center;
   position: relative;
+  height: 100px;
 
   .line-stroke {
+    position: relative;
     &::before {
       content: "";
       border: solid 1px #d2d2d2;
       position: absolute;
-      height: 82px;
-      top: 30px;
-      left: 163px;
+      height: 84px;
+      top: 15px;
+      left: 7px;
     }
   }
 `;
@@ -51,7 +52,7 @@ const MemberHistory: React.FC<IMemberHistoryProps> = ({ data }) => {
   };
   return (
     <Wrapper>
-      <Text fontSize={"2xl"} mb={10}>
+      <Text fontSize={"2xl"} mb={5}>
         Profile History
       </Text>
       {data &&

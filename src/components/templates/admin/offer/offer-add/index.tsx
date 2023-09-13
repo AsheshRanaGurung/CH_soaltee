@@ -48,7 +48,6 @@ export const CreateOfferForm: React.FC<IOfferProps> = ({
         data={watch("description")}
         onChange={(_, editor) => {
           const data = editor.getData();
-          console.log("data", data);
           setValue("description", data);
         }}
       />

@@ -464,14 +464,20 @@ export const Pagination = ({
         flexDirection={{ base: "column", md: "row" }}
         gap={4}
       >
-        <Box>
+        <Box display={"flex"} gap={5} alignItems={"center"}>
+          <Text>Show</Text>
           <Select
             size={"sm"}
             borderRadius={"6px"}
             onChange={(selectedOption) =>
               setpageSizeChange(Number(selectedOption?.target?.value))
             }
-            placeholder="Show Case"
+            sx={{
+              svg: {
+                width: "25px",
+              },
+            }}
+            // placeholder="Show Case"
           >
             {options.map((item: any, ind: number) => (
               <option key={ind} value={item.value}>

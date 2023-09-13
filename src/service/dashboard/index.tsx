@@ -1,10 +1,7 @@
-// import { useMutation, useQueryClient } from "react-query";
 import { AxiosError } from "axios";
 import { api } from "../api";
 import { HttpClient } from "../config/api";
 import { useQuery } from "react-query";
-// import { toastFail, toastSuccess } from "../service-toast";
-// import { AxiosError } from "axios";
 
 const getTopReward = (duration: string) => () => {
   return HttpClient.get(`${api.dashboard.fetch}${duration}`);
@@ -43,26 +40,5 @@ const useGetTotalReward = (duration: string) => {
     }
   );
 };
-
-// export const CreateTierPoint = (data) => {
-//   return HttpClient.post(`${api.dashboard.add}`, data);
-// };
-
-// export const userCreateTierpoint = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation(CreateTierPoint, {
-//     onSuccess: (response) => {
-//       queryClient.invalidateQueries("tier_point");
-//       toastSuccess(response?.data?.message);
-//     },
-//     onError: (error: AxiosError<{ message: string }>) => {
-//       toastFail(error?.response?.data?.message) || "Something is Wrong";
-//     },
-//   });
-// };
-
-// export const updateTierPoint = (data, id) => {
-//   return HttpClient.post(api.dashboard.update);
-// };
 
 export { useGetTopReward, useGetTotalReward };
