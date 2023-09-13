@@ -155,10 +155,9 @@ const MemberProfile = () => {
       setRewardPoints(data.totalRewardPoints?.toFixed(2));
     }
   }, [data]);
-
   const { data: historyData } = useQuery(
     "member_history",
-    getAllMemberHistory,
+    () => getAllMemberHistory({ id: state.id }),
     {
       select: ({ data }) => {
         return data.data;
@@ -186,7 +185,7 @@ const MemberProfile = () => {
           textAlign={"center"}
           minWidth="145px"
           h={"45px"}
-          p={["10px 0"]}
+          p={["10px 20px"]}
           borderRadius={"65px"}
           background={"#979797"}
           fontWeight={"400"}

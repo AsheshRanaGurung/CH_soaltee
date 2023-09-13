@@ -8,7 +8,7 @@ const Select = {
       padding: "8px", // Adjust the padding as needed
     },
     icon: {
-      width: "2rem",
+      width: "25px",
       fontSize: "3rem",
     },
   },
