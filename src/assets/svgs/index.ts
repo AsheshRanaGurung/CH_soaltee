@@ -11,3 +11,7 @@ export { ReactComponent as LocationIcon } from "./location.svg";
 export { ReactComponent as MailIcon } from "./mail.svg";
 export { ReactComponent as FileIcon } from "./file.svg";
 export { ReactComponent as ExportIcon } from "./save-add.svg";
+export { ReactComponent as ColorPickerPlusIcon } from "./colorPickerPlus.svg";
+export { ReactComponent as ColorPickerMinusIcon } from "./colorPickerMinus.svg";
+export { ReactComponent as NoDataAvailableIcon } from "./noData.svg";
+export { ReactComponent as ColorInList } from "./colorInList.svg";

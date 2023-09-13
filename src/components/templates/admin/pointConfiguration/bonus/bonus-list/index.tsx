@@ -111,7 +111,7 @@ const BonusList: React.FC<IBonusProps> = ({
       });
     } else {
       // mutate(data);
-      console.log("data", data);
+      // console.log("data", data);
     }
   };
 
