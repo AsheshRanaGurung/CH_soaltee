@@ -63,7 +63,7 @@ const VoucherTable: React.FC<IVoucherTable> = ({
       },
       {
         Header: "Service",
-        accessor: "service",
+        accessor: "serviceName",
         width: "20%",
       },
       {

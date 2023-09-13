@@ -10,7 +10,7 @@ const ServicePage = () => {
   });
   return (
     <>
-      <BreadCrumb name="Point Configuration" />
+      <BreadCrumb name="Point Configuration" subname="Service" />
       <Content>
         <ServiceList tableData={data} tableDataFetching={isLoading} />
       </Content>

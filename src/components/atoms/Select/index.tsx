@@ -66,7 +66,7 @@ const Select = ({
           borderBottom=" 1px solid rgba(0, 0, 0, 0.15)"
           borderRadius="0"
           marginBottom={marginBottom ? marginBottom : "10px"}
-          borderColor={error ? colors.red : colors.primary_dark}
+          borderColor={error ? colors.red : colors.light_gray_1}
           borderWidth={error ? "2px" : "1px"}
           _focusVisible={{
             borderRadius: "0",

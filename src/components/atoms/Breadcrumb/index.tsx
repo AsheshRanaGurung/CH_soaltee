@@ -9,19 +9,32 @@ const Wrapper = styled.div`
   margin: 25px;
   justify-content: space-between;
   margin-top: 10px;
-  span {
-    line-height: 17px;
-    color: ${colors.text_black};
+
+  .subname {
+    line-height: 24px;
+    color: ${colors.primary};
+    font-size: 16px;
+  }
+  .name-subname {
+    color: ${colors.secondary_dark};
+  }
+  .name {
+    color: ${colors.primary};
   }
 `;
 interface IBreadCrumb {
   name?: string;
+  subname?: string;
 }
 
-export const BreadCrumb = ({ name }: IBreadCrumb) => {
+export const BreadCrumb = ({ name, subname }: IBreadCrumb) => {
   return (
     <Wrapper>
-      <span color={colors.primary_dark}>{name}</span>
+      <div className={`${subname ? "name-subname" : "name"}`}>
+        {name}
+        {subname && <span> / </span>}
+        {subname && <span className="subname">{subname}</span>}
+      </div>
       <Profile type="admin" />
     </Wrapper>
   );

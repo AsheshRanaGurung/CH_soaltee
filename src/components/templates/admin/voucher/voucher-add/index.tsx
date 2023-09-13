@@ -1,4 +1,4 @@
-import { Box, Button, Spacer } from "@chakra-ui/react";
+import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import ImageUpload from "@src/components/atoms/ImageUpload";
 import { useFormHook } from "@src/hooks/useFormhook";
@@ -32,6 +32,10 @@ const FormWrap = styled.div`
   }
   .ck.ck-editor__main > .ck-editor__editable {
     min-height: 300px;
+    padding-left: 22px;
+  }
+  span {
+    color: ${colors.red};
   }
 `;
 export const CreateVoucherForm: React.FC<IVoucherProps> = ({
@@ -61,12 +65,16 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
       value: item?.id,
     };
   });
-
+  console.log(state);
   useEffect(() => {
     if (state?.id) {
+      const filteredServices = serviceList?.filter((item: any) => {
+        return item?.label === state?.serviceName;
+      });
+      const resetService = filteredServices[0];
       reset({
         voucherName: state?.voucherName,
-        serviceId: state?.serviceId,
+        serviceId: resetService,
         discountPercentage: state?.discountPercentage,
         maximumAmounts: state?.maximumAmounts,
         maximumLimits: state?.maximumLimits,
@@ -102,10 +110,18 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
-      <Box mx={{ base: "none", md: "auto" }}>
-        <Text fontSize={"2xl"} color={colors.primary} mb={8}>
-          Add Voucher and Promocode
+      <Box
+        mx={{ base: "none", md: "auto" }}
+        backgroundColor={colors.white}
+        px={8}
+        py={6}
+      >
+        <Text fontSize="2xl" color={colors.primary} mb={8}>
+          {state === null
+            ? "Add Voucher and Promocode"
+            : "Update Voucher and Promocode"}
         </Text>
+
         <Wrapper>
           <FormControl
             control="input"
@@ -154,8 +170,9 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
           />
         </Wrapper>
         <FormWrap>
-          <Text fontSize={"sm"} mb={2}>
+          <Text fontSize={"sm"} mb={2} fontWeight={500}>
             Voucher Description
+            <span>&nbsp;*</span>
           </Text>
           <CKEditor
             editor={ClassicEditor}
@@ -170,8 +187,9 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
 
         {/* <TextEditor /> */}
         <FormWrap>
-          <Text fontSize={"sm"} mb={2}>
+          <Text fontSize={"sm"} mb={2} fontWeight={500}>
             Voucher Image
+            <span>&nbsp;*</span>
           </Text>
           <ImageUpload
             name={"image"}
@@ -179,17 +197,32 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             required={!state?.id}
           />
         </FormWrap>
-        <Button
-          type="submit"
-          className="button"
-          isLoading={isLoading}
-          mt={8}
-          width={"250px"}
-          borderRadius={"none"}
-          disabled={isLoading || isUpdating}
-        >
-          {!state?.id ? "Add" : "Update"}
-        </Button>
+        <Flex gap={4} mt={3}>
+          <Button
+            type="submit"
+            className="button"
+            isLoading={isLoading}
+            mt={8}
+            width={"138px"}
+            borderRadius={"none"}
+            disabled={isLoading || isUpdating}
+            px={6}
+            py={5}
+          >
+            {!state?.id ? "Add" : "Update"}
+          </Button>
+          <Button
+            variant="outlined"
+            borderRadius={0}
+            mt={8}
+            px={6}
+            py={5}
+            width={"138px"}
+            onClick={() => reset()}
+          >
+            {!state?.id ? "Clear" : "Reset"}
+          </Button>
+        </Flex>
         <Spacer />
       </Box>
     </form>
