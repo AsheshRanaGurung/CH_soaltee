@@ -1,10 +1,12 @@
 import { Stack } from "@chakra-ui/react";
+import { ColorInList } from "@src/assets/svgs";
 import DataTable from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
 import { IParams } from "@src/interface/params";
 import { useMemo } from "react";
 import { CellProps } from "react-table";
+import styled from "styled-components";
 
 interface IMemberTierTable {
   tableDataFetching?: boolean;
@@ -17,7 +19,13 @@ interface IMemberTierTable {
   paginatedData: IMemberTierDetail[];
   pageParams: IParams;
 }
-
+const ColorTierStyled = styled.div`
+  svg {
+    path {
+      fill: ${(props) => props.color || "transparent"};
+    }
+  }
+`;
 const MemberTierTable: React.FC<IMemberTierTable> = ({
   tableDataFetching,
   onAction,
@@ -44,19 +52,28 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
         width: "20%",
       },
       {
+        Header: "Tier Color",
+        width: "15%",
+        Cell: ({ row }: { row: any }) => (
+          <ColorTierStyled color={row.original.colorCode}>
+            <ColorInList />
+          </ColorTierStyled>
+        ),
+      },
+      {
         Header: "Points From Tier",
         accessor: "pointsFrom",
-        width: "20%",
+        width: "15%",
       },
       {
         Header: "Points To Tier",
         accessor: "pointsTo",
-        width: "20%",
+        width: "15%",
       },
       {
         Header: "Image",
         accessor: "imageUrl",
-        width: "20%",
+        width: "15%",
         Cell: ({ value }: { value: string }) => {
           return <img src={value} alt="Image" width="100" />;
         },
@@ -82,7 +99,6 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
     ],
     [pageParams]
   );
-
   return (
     <>
       <DataTable

@@ -48,6 +48,7 @@ import {
 import { Search } from "@src/components/molecules/search";
 import { TableHeading } from "@src/components/atoms/TableHeading";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
+import NoDataAvailable from "../nodata";
 
 export function getPager(
   totalRows: number,
@@ -229,6 +230,7 @@ const DataTable = React.memo(
               <Progress size="xs" isIndeterminate />
             </Box>
           )}
+
           <Table
             {...getTableProps()}
             size="sm"
@@ -295,62 +297,73 @@ const DataTable = React.memo(
               )}
             </Thead>
             <Tbody {...getTableBodyProps()}>
-              {(isClientPagination ? page : rows).map(
-                (row: Row<Record<string, any>>) => {
-                  prepareRow(row);
-                  return (
-                    <Fragment key={row.id}>
-                      <Tr
-                        {...row.getRowProps()}
-                        onMouseEnter={() => {
-                          hoverView && setHoveredRow(row.id);
-                        }}
-                        onMouseLeave={() => hoverView && setHoveredRow(null)}
-                        bgColor={
-                          hoverView && hoveredRow === row.id
-                            ? "gray.100"
-                            : "white"
-                        }
-                        position={
-                          hoverView && hoveredRow === row.id
-                            ? "relative"
-                            : "static"
-                        }
-                      >
-                        {row.cells.map((cell) => {
-                          return (
-                            <Td
-                              {...cell.getCellProps()}
-                              key={cell.getCellProps().key}
-                              position="relative"
-                              whiteSpace="nowrap"
+              {data?.length === 0 ? (
+                <Tr>
+                  <Td
+                    colSpan={headerGroups[0].headers.length}
+                    textAlign="center"
+                  >
+                    <NoDataAvailable content="No Data Available" />
+                  </Td>
+                </Tr>
+              ) : (
+                (isClientPagination ? page : rows).map(
+                  (row: Row<Record<string, any>>) => {
+                    prepareRow(row);
+                    return (
+                      <Fragment key={row.id}>
+                        <Tr
+                          {...row.getRowProps()}
+                          onMouseEnter={() => {
+                            hoverView && setHoveredRow(row.id);
+                          }}
+                          onMouseLeave={() => hoverView && setHoveredRow(null)}
+                          bgColor={
+                            hoverView && hoveredRow === row.id
+                              ? "gray.100"
+                              : "white"
+                          }
+                          position={
+                            hoverView && hoveredRow === row.id
+                              ? "relative"
+                              : "static"
+                          }
+                        >
+                          {row.cells.map((cell) => {
+                            return (
+                              <Td
+                                {...cell.getCellProps()}
+                                key={cell.getCellProps().key}
+                                position="relative"
+                                whiteSpace="nowrap"
+                              >
+                                {cell.render("Cell")}
+                              </Td>
+                            );
+                          })}
+                          {/* Show this view on hover */}
+                          {hoverView && hoveredRow === row.id ? (
+                            <Flex
+                              height="80%"
+                              position="absolute"
+                              right="5rem"
+                              top="50%"
+                              transform="translateY(-50%)"
+                              bgColor="gray.100"
                             >
-                              {cell.render("Cell")}
-                            </Td>
-                          );
-                        })}
-                        {/* Show this view on hover */}
-                        {hoverView && hoveredRow === row.id ? (
-                          <Flex
-                            height="80%"
-                            position="absolute"
-                            right="5rem"
-                            top="50%"
-                            transform="translateY(-50%)"
-                            bgColor="gray.100"
-                          >
-                            {React.cloneElement(hoverView, {
-                              rowData: { row },
-                              onMouseEnter: () => {
-                                setHoveredRow(row.id);
-                              },
-                            })}
-                          </Flex>
-                        ) : null}
-                      </Tr>
-                    </Fragment>
-                  );
-                }
+                              {React.cloneElement(hoverView, {
+                                rowData: { row },
+                                onMouseEnter: () => {
+                                  setHoveredRow(row.id);
+                                },
+                              })}
+                            </Flex>
+                          ) : null}
+                        </Tr>
+                      </Fragment>
+                    );
+                  }
+                )
               )}
             </Tbody>
           </Table>
