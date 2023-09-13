@@ -15,6 +15,8 @@ interface IMemberTierTable {
   btnText?: string;
   CurrentText?: string;
   onEditData?: ((id: string) => void) | undefined;
+  onViewData?: ((id: string) => void) | undefined;
+
   onDeleteData?: ((id: string) => void) | undefined;
   paginatedData: IMemberTierDetail[];
   pageParams: IParams;
@@ -34,6 +36,7 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
   CurrentText,
   onEditData,
   onDeleteData,
+  onViewData,
   paginatedData,
   pageParams,
 }) => {
@@ -88,9 +91,16 @@ const MemberTierTable: React.FC<IMemberTierTable> = ({
           const onDelete = () => {
             onDeleteData && onDeleteData(row.original?.id);
           };
+          const onView = () => {
+            onViewData && onViewData(row.original?.id);
+          };
           return (
             <Stack alignItems={"flex-start"}>
-              <TableActions onEdit={onEdit} onDelete={onDelete} />
+              <TableActions
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onView={onView}
+              />
             </Stack>
           );
         },

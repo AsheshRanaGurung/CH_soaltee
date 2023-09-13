@@ -1,0 +1,57 @@
+import {
+  Box,
+  Flex,
+  Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+} from "@chakra-ui/react";
+import { useGetMemberTierid } from "@src/service/master-data/member-tier";
+import { colors } from "@src/theme/colors";
+
+interface IMemberTier {
+  onClose: () => void;
+  isViewOpen: boolean;
+  viewId: string;
+}
+export const MemberPreview = ({ isViewOpen, onClose, viewId }: IMemberTier) => {
+  const { data } = useGetMemberTierid(viewId);
+  console.log("data", data?.imageUrl);
+  return (
+    <>
+      <Modal isOpen={isViewOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader fontSize={"16px"} fontWeight={"500"}>
+            Membership Tier
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody p={"15px"}>
+            <Box
+              background={`url(${data?.imageUrl}) center center/cover no-repeat`}
+              p={"15px"}
+              color={colors.white}
+            >
+              <Heading fontSize={"16px"}>Tier Name</Heading>
+              <Text fontSize={"21px"}>{data?.membershipName}</Text>
+              <Flex marginTop={"20px"} justifyContent={"space-between"}>
+                <Box>
+                  <Heading fontSize={"16px"}>Points to From</Heading>
+                  <Text fontSize={"21px"}>{data?.pointsFrom}</Text>
+                </Box>
+                <Box>
+                  <Heading fontSize={"16px"}>Points to Tier</Heading>
+                  <Text fontSize={"21px"}>{data?.pointsTo}</Text>
+                </Box>
+              </Flex>
+            </Box>{" "}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
