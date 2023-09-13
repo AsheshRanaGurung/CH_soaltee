@@ -2,12 +2,29 @@ import { api } from "@src/service/api";
 import { HttpClient } from "@src/service/config/api";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
-import { useQueryClient, useMutation } from "react-query";
+import { useQueryClient, useMutation, useQuery } from "react-query";
 
 export const getAllMemberTier = () => {
   return HttpClient.get(api.master_data.member_tier.fetch);
 };
 
+const getMemberTierid = (id: string) => () => {
+  return HttpClient.get(`${api.master_data.member_tier.fetchBYid}/${id}`);
+};
+
+const useGetMemberTierid = (id: string) => {
+  return useQuery(
+    [`${api.master_data.member_tier.fetchBYid}/${id}`],
+    getMemberTierid(id),
+    {
+      enabled: !!id,
+      select: (data: { data: { data: any } }) => data?.data?.data || {},
+      onError: (error: AxiosError) => {
+        console.error(error);
+      },
+    }
+  );
+};
 export const createMemberTier = (data: any) => {
   return HttpClient.post(`${api.master_data.member_tier.add}`, data);
 };
@@ -63,4 +80,4 @@ const useDeleteMemberTier = () => {
   });
 };
 
-export { useDeleteMemberTier };
+export { useDeleteMemberTier, useGetMemberTierid };

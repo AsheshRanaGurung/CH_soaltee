@@ -13,6 +13,7 @@ import MemberTierTable from "../member-tier-table";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
 import { IParams } from "@src/interface/params";
 import { Pagination } from "@src/components/organisms/table";
+import { MemberPreview } from "../member-privew";
 interface IMemberTier {
   tableData: IMemberTierDetail[];
   tableDataFetching: boolean;
@@ -55,13 +56,18 @@ const MemberList: React.FC<IMemberTier> = ({
 }) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
+  const [viewId, setViewId] = useState("");
   const [deleteId, setDeleteId] = useState("");
   const {
     isOpen: isMemberOpen,
     onOpen: onMemberModalOpen,
     onClose: onMemberModalClose,
   } = useDisclosure();
-
+  const {
+    isOpen: isViewOpen,
+    onOpen: onViewOpen,
+    onClose: onViewClose,
+  } = useDisclosure();
   const {
     isOpen: isDeleteMemberOpen,
     onOpen: onDeleteMemberOpen,
@@ -147,10 +153,19 @@ const MemberList: React.FC<IMemberTier> = ({
           setIsUpdate(true);
           onMemberModalOpen();
         }}
+        onViewData={(id: string) => {
+          setViewId(id);
+          onViewOpen();
+        }}
         onDeleteData={(id: string) => {
           setDeleteId(id);
           onDeleteMemberOpen();
         }}
+      />
+      <MemberPreview
+        isViewOpen={isViewOpen}
+        onClose={onViewClose}
+        viewId={viewId}
       />
 
       <ModalForm

@@ -26,6 +26,7 @@ export const api = {
     member_tier: {
       add: "/membership/create-tier",
       fetch: "/membership/get-all-tier",
+      fetchBYid: "/membership/get-tier-by-id",
       delete: "/membership/delete-tier/:id",
       update: "/membership/update-tier/:id",
     },
