@@ -43,7 +43,6 @@ const validationSchema = yup.object().shape({
         return value && value > pointsFrom;
       }
     ),
-  // colorCode: yup.string().required("Color is required"),
 });
 
 const MemberList: React.FC<IMemberTier> = ({

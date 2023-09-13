@@ -58,7 +58,7 @@ const Input = ({
       {label && (
         <FormLabel
           htmlFor={name}
-          fontWeight={600}
+          fontWeight={500}
           fontSize={"14px"}
           m={0}
           color={label_color}
@@ -69,7 +69,7 @@ const Input = ({
       )}
 
       {labelDisabled && (
-        <FormLabel htmlFor={name} fontWeight={600} fontSize={"14px"} m={0}>
+        <FormLabel htmlFor={name} fontWeight={500} fontSize={"14px"} m={0}>
           {labelDisabled}
         </FormLabel>
       )}
