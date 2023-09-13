@@ -62,6 +62,16 @@ const Sidebar = ({
       visible: true,
     },
     {
+      name: "Offers",
+      to: NAVIGATION_ROUTES.OFFER,
+      icon: (
+        <Icon>
+          <FaTags />
+        </Icon>
+      ),
+      visible: true,
+    },
+    {
       name: "Report",
       to: NAVIGATION_ROUTES.REPORT,
       icon: (

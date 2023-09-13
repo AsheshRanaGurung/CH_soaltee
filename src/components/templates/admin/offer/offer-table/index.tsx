@@ -1,12 +1,12 @@
 import { Stack } from "@chakra-ui/react";
 import DataTable from "@src/components/organisms/table";
 import TableActions from "@src/components/organisms/table/TableActions";
-import { IProperty } from "@src/interface/master-data/property";
+import { IOffers } from "@src/interface/offers";
 import { IParams } from "@src/interface/params";
 import { useMemo } from "react";
 import { CellProps } from "react-table";
 
-interface IPropertyTable {
+interface IOfferTable {
   tableDataFetching?: boolean;
   onAction?: () => void;
   title?: string;
@@ -14,11 +14,11 @@ interface IPropertyTable {
   CurrentText?: string;
   onEditData?: ((id: string) => void) | undefined;
   onDeleteData?: ((id: string) => void) | undefined;
-  paginatedData: IProperty[];
+  paginatedData: IOffers[];
   pageParams: IParams;
 }
 
-const PropertyTable: React.FC<IPropertyTable> = ({
+const OfferTable: React.FC<IOfferTable> = ({
   tableDataFetching,
   onAction,
   title,
@@ -33,41 +33,45 @@ const PropertyTable: React.FC<IPropertyTable> = ({
     () => [
       {
         Header: "S.N",
-        accessor: (_: IProperty, index: number) =>
+        accessor: (_: IOffers, index: number) =>
           (pageParams.page - 1) * pageParams.limit + (index + 1),
         width: "10%",
       },
 
       {
-        Header: "Property Name",
-        accessor: "name",
+        Header: "Title",
+        accessor: "offerName",
         width: "20%",
       },
       {
-        Header: "Property Code",
-        accessor: "code",
+        Header: "Sub-Title",
+        accessor: "subTitle",
         width: "20%",
       },
+      // {
+      //   Header: "Description",
+      //   accessor: "description",
+      //   width: "20%",
+      // },
       {
-        Header: "Phone Number",
-        accessor: "phoneNumber",
+        Header: "Image",
+        accessor: "offerImage",
         width: "20%",
-      },
-      {
-        Header: "Contact person",
-        accessor: "contactPerson",
-        width: "20%",
+        Cell: ({ value }: { value: string }) => {
+          return <img src={value} alt="Image" width="100" />;
+        },
       },
       {
         Header: "Action",
         width: "10%",
 
-        Cell: ({ row }: CellProps<{ id: string }>) => {
+        Cell: ({ row }: CellProps<{ offerId: string }>) => {
+          console.log("errr", row.original);
           const onEdit = () => {
-            onEditData && onEditData(row.original?.id);
+            onEditData && onEditData(row.original?.offerId);
           };
           const onDelete = () => {
-            onDeleteData && onDeleteData(row.original?.id);
+            onDeleteData && onDeleteData(row.original?.offerId);
           };
           return (
             <Stack alignItems={"flex-start"}>
@@ -93,4 +97,4 @@ const PropertyTable: React.FC<IPropertyTable> = ({
     </>
   );
 };
-export default PropertyTable;
+export default OfferTable;

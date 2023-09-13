@@ -69,7 +69,12 @@ export const api = {
     delete: "/voucher/delete-voucher-promo/:id",
     update: "/voucher/update-voucher-promo/:id",
   },
-
+  offer: {
+    fetch: "/offers/get-all-offers",
+    add: "/offers/save-offer",
+    update: "/offers/update-offer/:id",
+    delete: "/offers/delete-offer/:id",
+  },
   fetchImage: "/membership/get-tier-image/:id",
 };
 export interface IResponse<T = any> {

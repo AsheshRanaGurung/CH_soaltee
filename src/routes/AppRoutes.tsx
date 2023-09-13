@@ -19,6 +19,7 @@ import ProfilePage from "@src/components/templates/user/Profile";
 import ReportPage from "@src/pages/Report";
 import VoucherPage from "@src/pages/Voucher";
 import VoucherAdd from "@src/pages/Voucher/add";
+import OfferPage from "@src/pages/Offers";
 
 const routes = [
   {
@@ -90,6 +91,10 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.VOUCHER_ADD,
     element: <PrivateRoute Component={VoucherAdd} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.OFFER,
+    element: <PrivateRoute Component={OfferPage} />,
   },
 ];
 

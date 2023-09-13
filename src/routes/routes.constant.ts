@@ -20,4 +20,5 @@ export const NAVIGATION_ROUTES = {
   USER_PROFILE: "/profile-edit",
   FORGOT_PASSWORD: "/forgot-password",
   VOUCHER_ADD: "/voucher/add",
+  OFFER: "/offers",
 };

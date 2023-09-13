@@ -8,7 +8,7 @@ import {
   DrawerCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IDrawer } from "@src/interface/product/product";
+import { IDrawer } from "@src/interface/product";
 export const DrawerComponent = ({ title, children }: IDrawer) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
