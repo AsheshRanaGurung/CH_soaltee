@@ -8,6 +8,8 @@
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
+* fixed voucher design ([975f6e7](https://gitlab.com/paras205/boilerplate-react/commit/975f6e7baec717c78f4cf9931ca8a602aa4850de))
+* fixed voucher design ([85e54d4](https://gitlab.com/paras205/boilerplate-react/commit/85e54d4aa5a900871d3c2c10099d95aa6b533ff5))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
 * hotfix: change border ([c4d5812](https://gitlab.com/paras205/boilerplate-react/commit/c4d5812510889d03c1f90b6910cc2ca2f45950e9))

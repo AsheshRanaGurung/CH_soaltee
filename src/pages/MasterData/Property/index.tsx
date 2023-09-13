@@ -32,7 +32,7 @@ const PropertyPage = () => {
 
   return (
     <>
-      <BreadCrumb name="Master Data" />
+      <BreadCrumb name="Master Data" subname="Property List" />
       <Content>
         <PropertyList
           paginatedData={paginatedData}

@@ -8,6 +8,7 @@ import {
   ModalFooter,
   Button,
 } from "@chakra-ui/react";
+import { colors } from "@src/theme/colors";
 import { FC } from "react";
 
 interface IModal {
@@ -59,9 +60,13 @@ const ModalForm: FC<IModal> = ({
               submitHandler?.();
             }}
           >
-            <ModalHeader>{title}</ModalHeader>
+            <ModalHeader borderBottom={`1px solid ${colors.light_gray_1}`}>
+              {title}
+            </ModalHeader>
             <ModalCloseButton />
-            <ModalBody>{children}</ModalBody>
+            <ModalBody px={8} py={5}>
+              {children}
+            </ModalBody>
 
             <ModalFooter>
               {view ? (

@@ -28,7 +28,7 @@ const BonusPage = () => {
 
   return (
     <>
-      <BreadCrumb name="Point Configuration" />
+      <BreadCrumb name="Point Configuration" subname="Bonus" />
       <Content>
         <BonusList
           paginatedData={paginatedData}

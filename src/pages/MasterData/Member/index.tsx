@@ -27,7 +27,7 @@ const MemberPage = () => {
 
   return (
     <>
-      <BreadCrumb name="Master Data" />
+      <BreadCrumb name="Master Data" subname="Membership Tier" />
       <Content>
         <MemberList
           paginatedData={paginatedData}

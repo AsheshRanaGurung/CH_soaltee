@@ -28,7 +28,7 @@ const OfferPage = () => {
 
   return (
     <>
-      <BreadCrumb name="Master Data" />
+      <BreadCrumb name="Offers" />
       <Content>
         <OfferList
           paginatedData={paginatedData}
