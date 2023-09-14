@@ -1,21 +1,17 @@
-// import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-// import { MdOutlineDateRange } from "react-icons/md";
 import FormControl from "@src/components/atoms/FormControl";
 import { Button, Flex } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "react-query";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { createBonus } from "@src/service/point-config/bonus";
-// import moment from "moment";
-// import { getAllService } from "@src/service/point-config/service";
+import { useServiceList } from "@src/constant/useServiceList";
 export const AddBonus = ({
   register,
   errors,
-  // setValue,
+  setValue,
   handleSubmit,
   onCloseModal,
-  ServiceAll,
 }: any) => {
   const queryClient = useQueryClient();
 
@@ -29,7 +25,7 @@ export const AddBonus = ({
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
-
+  const serviceList = useServiceList();
   const onSubmit = (data: any) => {
     mutate(data);
   };
@@ -46,17 +42,16 @@ export const AddBonus = ({
         required
       />
       <FormControl
-        control="select"
+        control="reactSelect"
         register={register}
         name="serviceId"
-        placeholder="Choose your Bonus For"
-        label="Bonus For"
+        placeholder="Choose Property Name"
+        onChange={(e: any) => setValue("serviceId", e.value)}
+        label="Service"
+        labelKey={"serviceName"}
+        valueKey={"id"}
         required
-        background="white"
-        height="40px"
-        color="black"
-        options={ServiceAll || []}
-        error={errors.nationality?.message || ""}
+        options={serviceList || []}
       />
 
       <FormControl

@@ -3,126 +3,85 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Select as ChakraSelect,
-  SelectProps,
-} from "@chakra-ui/react";
-import { RegisterOptions, UseFormRegister } from "react-hook-form";
-import { ChangeEvent, useState } from "react";
+} from "@chakra-ui/form-control";
 import { colors } from "@src/theme/colors";
+import Select from "react-select";
 import styled from "styled-components";
 
-const SelectWrapper = styled.div`
-  .css-1nu4b02 > option,
-  .css-1nu4b02 > optgroup {
-    color: white;
+const SelectWrapper = styled(Select)`
+  .css-13cymwt-control {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0px;
+    border-color: none;
+    box-shadow: none;
+    background: transparent;
   }
-  .chakra-select__wrapper {
-    color: ${colors.primary_placeholder};
+  .css-1jqq78o-placeholder {
+    color: ${colors.secondary_placeholder};
+    font-size: 14px;
   }
-  .select-component {
-    padding: 5px !important;
-    option {
-      padding: 45px !important;
+  .css-t3ipsp-control {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0px;
+    border-color: none;
+    box-shadow: none;
+    background: transparent;
+    &:hover {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     }
   }
+
+  .css-art2ul-ValueContainer2 {
+    padding: 0px;
+  }
+  .css-1u9des2-indicatorSeparator {
+    display: none;
+  }
 `;
-const Select = ({
-  placeholder,
-  label,
+const ReactSelect = ({
+  register,
+  selectedOption,
+  onChange,
   options,
   rules,
-  register,
-  helperText,
+  valueKey,
+  labelKey,
   name,
   error,
   isRequired,
+  label,
   required,
-  enabled,
-  isSelected,
-  marginBottom,
+  helperText,
+  value,
   ...rest
-}: ISelect) => {
-  const [selected, setSelected] = useState(false);
-  const handlehange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelected(!!event.target.value);
-  };
+}: any) => {
+  const formattedOptions = options.map((option: any) => ({
+    label: option[labelKey],
+    value: option[valueKey],
+  }));
+
   return (
-    <FormControl isInvalid={!!error} isRequired={isRequired}>
+    <FormControl isInvalid={!!error} isRequired={isRequired} mb={3}>
       {label && (
-        <FormLabel htmlFor={name} fontWeight={600} fontSize={"14px"} m={0}>
+        <FormLabel htmlFor={name} fontWeight={500} fontSize={"14px"} m={0}>
           {label}
           {required && <span style={{ color: colors.red }}>&nbsp;*</span>}
         </FormLabel>
       )}
-      <SelectWrapper>
-        <ChakraSelect
-          {...register(name, rules)}
-          id={name}
-          size={"sm"}
-          fontSize="14px !important"
-          fontWeight={selected ? "500" : "400"}
-          border="none"
-          borderBottom=" 1px solid rgba(0, 0, 0, 0.15)"
-          borderRadius="0"
-          marginBottom={marginBottom ? marginBottom : "10px"}
-          borderColor={error ? colors.red : colors.light_gray_1}
-          borderWidth={error ? "2px" : "1px"}
-          _focusVisible={{
-            borderRadius: "0",
-          }}
-          textColor={selected ? "black" : colors.primary_placeholder}
-          onChange={handlehange}
-          color={colors.primary_placeholder}
-          className="select-component"
-          {...rest}
-        >
-          <option
-            style={{ color: colors.primary_placeholder }}
-            disabled={selected ? true : false}
-          >
-            {placeholder}
-          </option>
-          {options.map(({ label, value }) => (
-            <option
-              style={{
-                color: "black",
-                marginLeft: "35px",
-                padding: "50px",
-                height: "30px",
-              }}
-              key={value}
-              value={value}
-              disabled={isSelected?.includes(value)}
-            >
-              {label}
-            </option>
-          ))}
-        </ChakraSelect>
-      </SelectWrapper>
-
+      <SelectWrapper
+        {...register(name, rules)}
+        {...rest}
+        id={name}
+        name={name}
+        options={formattedOptions}
+        onChange={onChange}
+        value={value}
+      />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && <FormErrorMessage fontSize={"12px"}>{error}</FormErrorMessage>}
     </FormControl>
   );
 };
-
-export interface ISelect extends SelectProps {
-  placeholder?: string;
-  options: ISelectOption[];
-  label?: string;
-  name: string;
-  register: UseFormRegister<any>;
-  error?: any;
-  rules?: RegisterOptions;
-  helperText?: string;
-  isRequired?: boolean;
-  required?: boolean;
-  enabled?: boolean;
-  isSelected?: any;
-}
-export default Select;
-
-export interface ISelectOption {
-  label: string;
-  value: string;
-}
+export default ReactSelect;

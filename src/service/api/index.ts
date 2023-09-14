@@ -81,6 +81,7 @@ export const api = {
     fetchID: "/offers/get-offer",
   },
   fetchImage: "/membership/get-tier-image/:id",
+  nationality: "/nationality/fetch-all",
 };
 export interface IResponse<T = any> {
   data: T;

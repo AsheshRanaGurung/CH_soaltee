@@ -7,3 +7,7 @@ export const getImage = async (id: any) => {
   });
   return response;
 };
+
+export const getAllNationality = () => {
+  return HttpClient.get(api.nationality);
+};

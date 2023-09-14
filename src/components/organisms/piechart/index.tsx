@@ -8,19 +8,20 @@ import { useGetTotalTier } from "@src/service/dashboard";
 import { SelectCustom } from "@src/components/atoms/Select/SelectCustom";
 import { FieldErrorsImpl, useForm } from "react-hook-form";
 import { useState } from "react";
+import NoDataAvailable from "../nodata";
 
 const Card = styled.div`
   background: ${colors.white};
   padding: 15.52px 26.139px;
   border-radius: 14.061px;
-  .piechart-header: {
+  .piechart-header {
     display: flex;
     flex-direction: column;
     gap: 8.985px;
   }
   .piechart-top {
     display: flex;
-    justify-content: space-between;  
+    justify-content: space-between;
   }
   .piechart-dropdowns {
     display: flex;
@@ -35,9 +36,9 @@ const Card = styled.div`
     border-bottom: 1px solid ${colors.light_gray_border};
     margin-bottom: 10.62px;
     padding-bottom: 8.62px;
-    display:flex;
-    align-items-center;
-    justify-content:space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .title {
     display: flex;
@@ -59,84 +60,89 @@ const Card = styled.div`
     display: flex;
     align-items: center;
   }
-  .piechart-title{
+  .piechart-title {
     color: var(--primitives-primary-black, #111);
     font-size: 18px;
     font-weight: 600;
   }
-  .piechart-subtitle{
-    color: var(--gray-dark-2, #5F6165);
+  .piechart-subtitle {
+    color: var(--gray-dark-2, #5f6165);
     font-size: 16px;
     font-weight: 600;
   }
-  .piechart-dropdown{
+  .piechart-dropdown {
     padding: 8px 4px;
     justify-content: center;
     align-items: center;
     gap: 2px;
     border-radius: 24px;
-    border: 1px solid ${colors.primary}
+    border: 1px solid ${colors.primary};
   }
 `;
-
 const PieChartComponent = ({ data }: any) => {
   const totalUserSum = data?.reduce(
     (acc: any, current: { totalUser: any }) => acc + (current?.totalUser || 0),
     0
   );
-
+  console.log("ddda", data);
   return (
     <Box justifyContent={"center"} display="flex">
-      <PieChart width={414} height={270}>
-        {" "}
-        <Pie
-          data={data?.map((item: { tierName: string; totalUser: number }) => ({
-            name: item?.tierName,
-            value: item?.totalUser || 0,
-          }))}
-          cx={190}
-          cy={115}
-          innerRadius={70}
-          outerRadius={110}
-          fill="#8884d8"
-          paddingAngle={2}
-          dataKey="value"
-        >
-          {data?.map((item: any, index: number) => (
-            <Cell key={`cell-${index}`} fill={item?.tierColor} />
-          ))}
-          <Label
-            value="Total Users"
-            position="center"
-            content={({ value }) => (
-              <text
-                x={190}
-                y={90}
-                fill="#8B8B8B"
-                textAnchor="middle"
-                fontSize={"14px"}
-              >
-                {value}
-              </text>
+      {data.length > 0 ? (
+        <PieChart width={414} height={270}>
+          {" "}
+          <Pie
+            data={data?.map(
+              (item: { tierName: string; totalUser: number }) => ({
+                name: item?.tierName,
+                value: item?.totalUser || 0,
+              })
             )}
-          />
-          <Label
-            value={totalUserSum}
-            position="center"
-            content={({ value }) => (
-              <text
-                x={190}
-                y={140}
-                fill="#374252"
-                textAnchor="middle"
-                fontSize={"32px"}
-              >
-                {value}
-              </text>
-            )}
-          />
-        </Pie>
-      </PieChart>
+            cx={190}
+            cy={115}
+            innerRadius={70}
+            outerRadius={110}
+            fill="#8884d8"
+            paddingAngle={2}
+            dataKey="value"
+          >
+            {data?.map((item: any, index: number) => (
+              <Cell key={`cell-${index}`} fill={item?.tierColor} />
+            ))}
+            <Label
+              value="Total Users"
+              position="center"
+              content={({ value }) => (
+                <text
+                  x={190}
+                  y={90}
+                  fill="#8B8B8B"
+                  textAnchor="middle"
+                  fontSize={"14px"}
+                >
+                  {value}
+                </text>
+              )}
+            />
+            <Label
+              value={totalUserSum}
+              position="center"
+              content={({ value }) => (
+                <text
+                  x={190}
+                  y={140}
+                  fill="#374252"
+                  textAnchor="middle"
+                  fontSize={"32px"}
+                >
+                  {value}
+                </text>
+              )}
+            />
+          </Pie>
+        </PieChart>
+      ) : (
+        <NoDataAvailable content="No Data Available" />
+      )}
     </Box>
   );
 };
@@ -167,6 +173,8 @@ export const PieChartCard = () => {
                   name="property"
                   errors={errors as Partial<FieldErrorsImpl<any>>}
                   placeholder="All"
+                  labelKey="name"
+                  valueKey="id"
                   control={control}
                   isLoading={isLoading}
                   isError={isError}
@@ -178,6 +186,8 @@ export const PieChartCard = () => {
                   errors={errors as Partial<FieldErrorsImpl<any>>}
                   placeholder="Today"
                   control={control}
+                  labelKey="label"
+                  valueKey="value"
                   isLoading={isLoading}
                   isError={isError}
                   selectOptions={date || []}
@@ -191,7 +201,7 @@ export const PieChartCard = () => {
           <div className="piechart-subtitle">Total Users Onboard</div>
         </div>
         <div className="piechart-container">
-          <PieChartComponent data={data} />
+          <PieChartComponent data={data || []} />
         </div>
       </div>
       <Flex flexDirection={"column"} w={"100%"}>

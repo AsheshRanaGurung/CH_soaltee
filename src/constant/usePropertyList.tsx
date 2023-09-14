@@ -1,4 +1,3 @@
-import { IProperty } from "@src/interface/master-data/property";
 import { getAllProperty } from "@src/service/master-data/property";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -10,12 +9,7 @@ export const usePropertyList = () => {
   });
 
   useEffect(() => {
-    const propertyList =
-      propertyData?.map((item: IProperty) => ({
-        label: item?.name,
-        value: item?.id,
-      })) || [];
-    setData(propertyList);
+    setData(propertyData);
   }, [propertyData]);
 
   return data;

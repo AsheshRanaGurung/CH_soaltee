@@ -9,8 +9,9 @@ import * as yup from "yup";
 import Heading from "@src/components/atoms/Heading";
 import { FormWrapper } from "../login";
 import FormControl from "@src/components/atoms/FormControl";
-import { nationality } from "@src/constant/index";
 import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
+import { usePropertyList } from "@src/constant/usePropertyList";
+import { useNationalityList } from "@src/constant/useNationalityList";
 
 interface ISignupProps {
   mutate: any;
@@ -28,13 +29,14 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
       .required("Email is required")
       .email("Invalid email format"),
     phoneNumber: createPhoneNumberSchema(),
-    nationality: yup.string().required("Nationality is required"),
+    nationalityId: yup.string().required("Nationality is required"),
+    dateOfBirth: yup.string().required("DOB is required"),
   });
-  const { handleSubmit, register, errors, control } = useFormHook({
+  const { handleSubmit, register, errors, control, setValue } = useFormHook({
     validationSchema,
   });
   const onSubmit = (data: any) => {
-    mutate({ ...data, referalCode: "abc" });
+    mutate({ ...data, roleId: 0 });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +47,8 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
     }));
   };
 
+  const nationalityList = useNationalityList();
+  const propertyList = usePropertyList();
   let isSubmitDisabled = !checked.terms;
   useEffect(() => {
     isSubmitDisabled = true;
@@ -75,6 +79,20 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
           />
           <FormControl
             control="input"
+            name="dateOfBirth"
+            defaultValue={"2023-09-07"}
+            type="date"
+            required
+            label="Date of birth"
+            color="black"
+            padding="10px"
+            height="40px"
+            lineHeight="2"
+            register={register}
+            error={errors.dateOfBirth?.message || ""}
+          />
+          <FormControl
+            control="input"
             type="number"
             name="phoneNumber"
             required
@@ -83,15 +101,39 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             register={register}
             error={errors.phoneNumber?.message || ""}
           />
+
           <FormControl
-            control="select"
+            control="reactSelect"
             register={register}
-            name="nationality"
+            name="propertyId"
+            placeholder="Choose Property (optional)"
+            onChange={(e: any) => setValue("propertyId", e.value)}
+            label="Property Name"
+            labelKey={"name"}
+            valueKey={"id"}
+            required
+            options={propertyList || []}
+          />
+          <FormControl
+            control="reactSelect"
+            register={register}
+            name="nationalityId"
             placeholder="Choose your nationality"
             label="Nationality"
+            onChange={(e: any) => setValue("nationalityId", e.value)}
             required
-            error={errors.nationality?.message || ""}
-            options={nationality}
+            error={errors.nationalityId?.message || ""}
+            options={nationalityList || []}
+            labelKey="countryName"
+            valueKey="id"
+          />
+          <FormControl
+            control="input"
+            name="referalCode"
+            placeholder="Enter Referal Code (optional)"
+            label="Referal Code"
+            register={register}
+            error={errors.referalCode?.message || ""}
           />
           <VStack alignItems="flex-start" mt={4} mb={12} fontWeight="600">
             <Checkbox

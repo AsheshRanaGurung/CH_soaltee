@@ -29,6 +29,8 @@ export const SelectCustom = <T extends FieldValues = FieldValues>(
     isFieldRequired,
     onAdditionalOnChange,
     isError,
+    valueKey,
+    labelKey,
   } = props;
   const {
     field,
@@ -67,16 +69,13 @@ export const SelectCustom = <T extends FieldValues = FieldValues>(
       >
         {selectOptions &&
           selectOptions.length !== 0 &&
-          selectOptions?.map((item) => (
-            <option
-              style={{ textTransform: "capitalize" }}
-              key={item?.value}
-              value={item?.value || ""}
-            >
-              {item?.label}
+          selectOptions.map((option: any) => (
+            <option key={option[valueKey]} value={option[valueKey]}>
+              {option[labelKey]}
             </option>
           ))}
       </Select>
+
       {label && (
         <FormLabel>
           {label}
@@ -89,10 +88,6 @@ export const SelectCustom = <T extends FieldValues = FieldValues>(
     </FormControl>
   );
 };
-export interface selectOptionProps {
-  label: string;
-  value: string;
-}
 
 export interface ISelectInput<T extends FieldValues = FieldValues>
   extends SelectProps {
@@ -103,7 +98,9 @@ export interface ISelectInput<T extends FieldValues = FieldValues>
   placeholder: string;
   isLoading?: boolean;
   isError?: boolean;
-  selectOptions?: selectOptionProps[];
+  selectOptions?: any;
   isFieldRequired?: boolean;
+  valueKey: string;
+  labelKey: string;
   onAdditionalOnChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

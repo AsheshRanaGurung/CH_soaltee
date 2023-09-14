@@ -79,6 +79,7 @@ const Input = ({
           id={name}
           type={type}
           height={"30px"}
+          padding={0}
           border={`1px solid ${colors.primary_dark}`}
           _placeholder={{
             fontSize: "sm",
@@ -90,7 +91,7 @@ const Input = ({
             borderBottom: " 1px solid rgba(0, 0, 0, 0.15)",
             borderRadius: "0",
             marginBottom: "20px",
-            paddingX: 0,
+            padding: 0,
           }}
           _focusVisible={{
             borderBottom: `1px solid ${colors.primary_dark} `,

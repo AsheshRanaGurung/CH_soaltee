@@ -28,15 +28,17 @@ const defaultValues = {
   fullName: "",
   email: "",
   phoneNumber: "",
-  nationality: "",
+  nationalityId: "",
+  dateOfBirth: "",
   isActive: false,
 };
 const validationSchema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
   email: yup.string().required("Email is required"),
   phoneNumber: createPhoneNumberSchema(),
-  nationality: yup.string().required("Nationality is required"),
+  nationalityId: yup.string().required("Nationality is required"),
   propertyId: yup.string().required("Property Name is required"),
+  dateOfBirth: yup.string().required("DOB is required"),
 });
 
 const MemberManagementList: React.FC<IMemberProps> = ({
@@ -57,7 +59,7 @@ const MemberManagementList: React.FC<IMemberProps> = ({
     onClose: onMemberModalClose,
   } = useDisclosure();
 
-  const { handleSubmit, register, errors, reset } = useFormHook({
+  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
     validationSchema,
     defaultValues,
   });
@@ -66,12 +68,7 @@ const MemberManagementList: React.FC<IMemberProps> = ({
     if (isUpdate && updateId) {
       const data = tableData.find((x: IMember) => x.id === updateId);
       reset({
-        fullName: data?.fullName,
-        email: data?.email,
-        phoneNumber: data?.phoneNumber,
-        nationality: data?.nationality,
-        propertyId: data?.property?.id,
-        isActive: data?.isActive,
+        ...data,
       });
     }
   }, [isUpdate, updateId, tableData]);
@@ -101,18 +98,20 @@ const MemberManagementList: React.FC<IMemberProps> = ({
         fullName: data.fullName,
         email: data.email,
         phoneNumber: data.phoneNumber,
-        nationality: data.nationality,
+        nationalityId: data.nationalityId,
         propertyId: data?.propertyId,
         isBlocked: data.isBlocked,
       });
     } else {
       mutate({
-        id: "",
+        id: "0",
         fullName: data.fullName,
         email: data.email,
+        dateOfBirth: data.dateOfBirth,
         phoneNumber: data.phoneNumber,
-        nationality: data.nationality,
+        nationalityId: data.nationalityId,
         propertyId: data.propertyId,
+        roleId: "2",
       });
     }
   };
@@ -159,6 +158,7 @@ const MemberManagementList: React.FC<IMemberProps> = ({
           register={register}
           errors={errors}
           propertyList={propertyList}
+          setValue={setValue}
         />
       </ModalForm>
     </>
