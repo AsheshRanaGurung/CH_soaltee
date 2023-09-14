@@ -20,20 +20,25 @@ import ReportPage from "@src/pages/Report";
 import VoucherPage from "@src/pages/Voucher";
 import VoucherAdd from "@src/pages/Voucher/add";
 import OfferPage from "@src/pages/Offers";
+import PageNotFound from "@src/pages/NotFound";
 
 const routes = [
   {
     path: NAVIGATION_ROUTES.DASHBOARD,
-    element: <PrivateRoute Component={Dashboard} />,
+    element: (
+      <PrivateRoute Component={Dashboard} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.USER_DASHBOARD,
-    element: <PrivateRoute Component={UserDashboard} />,
+    element: <PrivateRoute Component={UserDashboard} allowedRoles={["USER"]} />,
   },
 
   {
     path: NAVIGATION_ROUTES.SERVICE,
-    element: <PrivateRoute Component={ServicePage} />,
+    element: (
+      <PrivateRoute Component={ServicePage} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.LOGIN,
@@ -45,7 +50,9 @@ const routes = [
   },
   {
     path: NAVIGATION_ROUTES.MEMBERTIER,
-    element: <PrivateRoute Component={MemberPage} />,
+    element: (
+      <PrivateRoute Component={MemberPage} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.SETPASSWORD,
@@ -54,23 +61,35 @@ const routes = [
 
   {
     path: NAVIGATION_ROUTES.PROPERTY,
-    element: <PrivateRoute Component={PropertyPage} />,
+    element: (
+      <PrivateRoute Component={PropertyPage} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.SUCCESS,
     element: <RestrictedRoute Component={Verification} />,
   },
+
   {
     path: NAVIGATION_ROUTES.MEMBER_MANAGEMENT,
-    element: <PrivateRoute Component={MemberManagementPage} />,
+    element: (
+      <PrivateRoute
+        Component={MemberManagementPage}
+        allowedRoles={["SUPERADMIN"]}
+      />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.PROFILE_DETAIL,
-    element: <PrivateRoute Component={ProfileDetail} />,
+    element: (
+      <PrivateRoute Component={ProfileDetail} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.BONUS,
-    element: <PrivateRoute Component={BonusPage} />,
+    element: (
+      <PrivateRoute Component={BonusPage} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.FORGOT_PASSWORD,
@@ -78,23 +97,35 @@ const routes = [
   },
   {
     path: NAVIGATION_ROUTES.USER_PROFILE,
-    element: <PrivateRoute Component={ProfilePage} />,
+    element: <PrivateRoute Component={ProfilePage} allowedRoles={["USER"]} />,
   },
   {
     path: NAVIGATION_ROUTES.REPORT,
-    element: <PrivateRoute Component={ReportPage} />,
+    element: (
+      <PrivateRoute Component={ReportPage} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.VOUCHER,
-    element: <PrivateRoute Component={VoucherPage} />,
+    element: (
+      <PrivateRoute Component={VoucherPage} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.VOUCHER_ADD,
-    element: <PrivateRoute Component={VoucherAdd} />,
+    element: (
+      <PrivateRoute Component={VoucherAdd} allowedRoles={["SUPERADMIN"]} />
+    ),
   },
   {
     path: NAVIGATION_ROUTES.OFFER,
-    element: <PrivateRoute Component={OfferPage} />,
+    element: (
+      <PrivateRoute Component={OfferPage} allowedRoles={["SUPERADMIN"]} />
+    ),
+  },
+  {
+    path: NAVIGATION_ROUTES.NOT_FOUND,
+    element: <RestrictedRoute Component={PageNotFound} />,
   },
 ];
 

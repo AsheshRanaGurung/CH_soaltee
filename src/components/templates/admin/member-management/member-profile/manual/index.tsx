@@ -18,7 +18,7 @@ const validationSchema = yup.object().shape({
 });
 
 const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
-  const { register, handleSubmit, errors } = useFormHook({
+  const { register, handleSubmit, errors, setValue } = useFormHook({
     validationSchema,
     defaultValues,
   });
@@ -34,7 +34,6 @@ const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
-
   const onSubmit = (data: any) => {
     mutate({
       userId: id,
@@ -43,17 +42,22 @@ const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
       transactionType: "MANUALLY",
     });
   };
-
   return (
     <Box>
       <Grid rowGap={3}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <GridItem>
             <FormControl
-              control="select"
+              control="reactSelect"
               register={register}
               name="propertyname"
               label="Property Name"
+              placeholder="Select property"
+              labelKey={"name"}
+              onChange={(e: any) => {
+                setValue(`propertyname`, e.value);
+              }}
+              valueKey="id"
               required
               error={errors.propertyname?.message || ""}
               options={data?.propertyList || []}
@@ -64,6 +68,7 @@ const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
               control="input"
               register={register}
               name="rewardPoints"
+              placeholder="Enter points"
               label="Reward Points"
               required
               error={errors.rewardPoints?.message || ""}

@@ -9,34 +9,17 @@ import {
 import ManualForm from "../manual";
 import { ServiceForm } from "@src/components/templates/admin/member-management/member-profile/service";
 import { colors } from "@src/theme/colors";
-import { getAllProperty } from "@src/service/master-data/property";
-import { useQuery } from "react-query";
-import { getAllService } from "@src/service/point-config/service";
 import { ProfileFormProps } from "@src/interface/profile-points";
+import { usePropertyList } from "@src/constant/usePropertyList";
+import { useServiceList } from "@src/constant/useServiceList";
 
 const ProfileForm: React.FC<ProfileFormProps> = ({
   userId,
   onCloseModal,
   handleFormSubmit,
 }) => {
-  const { data: property } = useQuery("property", getAllProperty, {
-    select: ({ data }) => data.data.content,
-  });
-  const { data: service } = useQuery("service", getAllService, {
-    select: ({ data }) => data.datalist,
-  });
-  const propertyList = property?.map((item: any) => {
-    return {
-      label: item?.name,
-      value: item?.id,
-    };
-  });
-  const serviceList = service?.map((item: any) => {
-    return {
-      label: item?.serviceName,
-      value: item?.id,
-    };
-  });
+  const propertyList = usePropertyList();
+  const serviceList = useServiceList();
   return (
     <>
       <Tabs variant="unstyled">

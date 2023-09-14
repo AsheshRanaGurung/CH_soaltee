@@ -1,3 +1,3 @@
 export interface DecodedToken {
-  role: string;
+  role: any;
 }

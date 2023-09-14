@@ -5,14 +5,11 @@ import { useEffect, useState } from "react";
 import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
 
-import { updateBonus, useDeleteBonus } from "@src/service/point-config/bonus";
+import { useDeleteBonus } from "@src/service/point-config/bonus";
 import { AddBonus } from "../bonus-add";
-import { useMutation, useQueryClient } from "react-query";
 import { IBonus } from "@src/interface/pointConfig";
 import { IParams } from "@src/interface/params";
 import { useServiceList } from "@src/constant/useServiceList";
-import { toastFail, toastSuccess } from "@src/service/service-toast";
-import { AxiosError } from "axios";
 import BonusTable from "../bonus-table";
 interface IBonusProps {
   tableData: IBonus[];
@@ -87,34 +84,6 @@ const BonusList: React.FC<IBonusProps> = ({
     onBonusModalClose();
   };
 
-  const queryClient = useQueryClient();
-
-  const { mutate: update, isLoading: isUpdating } = useMutation(updateBonus, {
-    onSuccess: (response) => {
-      toastSuccess(response?.data?.message || "Bonus Updated!!");
-      queryClient.invalidateQueries("bonus");
-      onBonusModalClose();
-    },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toastFail(error?.response?.data?.message || "Something went wrong");
-    },
-  });
-
-  const onSubmitHandler = (data: any) => {
-    if (updateId) {
-      update({
-        id: updateId,
-        data: {
-          ...data,
-          id: updateId,
-        },
-      });
-    } else {
-      // mutate(data);
-      // console.log("data", data);
-    }
-  };
-
   const { mutateAsync: deleteBonus, isLoading: isDeleting } = useDeleteBonus();
 
   const onDelete = async (id: string) => {
@@ -150,11 +119,9 @@ const BonusList: React.FC<IBonusProps> = ({
 
       <ModalForm
         isModalOpen={isBonusOpen}
-        isLoading={isUpdating}
         onCloseModal={onBonusModalClose}
         resetButtonText={"Cancel"}
         submitButtonText={isUpdate ? "Update Bonus" : "Add Bonus"}
-        submitHandler={handleSubmit(onSubmitHandler)}
         showFooter={false}
         title={isUpdate ? "Update Bonus" : "Add Bonus"}
       >
@@ -166,6 +133,7 @@ const BonusList: React.FC<IBonusProps> = ({
           handleSubmit={handleSubmit}
           onCloseModal={onBonusModalClose}
           ServiceAll={serviceList}
+          updateId={updateId}
         />
       </ModalForm>
 
