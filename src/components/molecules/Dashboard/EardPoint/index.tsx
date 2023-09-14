@@ -37,7 +37,6 @@ export const EarnPoint = () => {
     proverty: prov,
     tier: tiers,
   });
-  console.log("prov", userData);
   return (
     <Card borderRadius={"14px"}>
       <CardHeader fontSize={"18px"} fontWeight={"800"}>
@@ -74,7 +73,7 @@ export const EarnPoint = () => {
         </Flex>
       </CardHeader>
       <CardBody>
-        {userData.length > 0 ? (
+        {userData && userData.length > 0 ? (
           userData?.map((item: any, index: number) => {
             const isLastItem = index == userData?.length - 1;
 

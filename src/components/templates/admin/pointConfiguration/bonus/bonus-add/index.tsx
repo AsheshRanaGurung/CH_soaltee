@@ -45,9 +45,9 @@ export const AddBonus = ({
         control="reactSelect"
         register={register}
         name="serviceId"
-        placeholder="Choose Property Name"
+        placeholder="Choose Service"
         onChange={(e: any) => setValue("serviceId", e.value)}
-        label="Service"
+        label="Bonus for"
         labelKey={"serviceName"}
         valueKey={"id"}
         required
