@@ -10,13 +10,14 @@ import {
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
 import { SelectCustom } from "@src/components/atoms/Select/SelectCustom";
+import NoDataAvailable from "@src/components/organisms/nodata";
+import { useMemberTierList } from "@src/constant/useMemberTierList";
 import { usePropertyList } from "@src/constant/usePropertyList";
 import { useGetTopTier } from "@src/service/dashboard";
-import { getAllMemberTier } from "@src/service/master-data/member-tier";
 import { colors } from "@src/theme/colors";
 import { useState } from "react";
 import { FieldErrorsImpl, useForm } from "react-hook-form";
-import { useQuery } from "react-query";
+
 export const EarnPoint = () => {
   const {
     control,
@@ -26,13 +27,7 @@ export const EarnPoint = () => {
   const [tiers, setTiers] = useState("-1");
 
   const propertyList = usePropertyList();
-  const { data: tierData } = useQuery("member_tier", getAllMemberTier, {
-    select: ({ data }) => data.datalist,
-  });
-  const tierOprtion = tierData?.map((item: any) => ({
-    label: item?.membershipName,
-    value: item?.id,
-  }));
+  const tierOprtion = useMemberTierList();
 
   const {
     data: userData,
@@ -42,7 +37,7 @@ export const EarnPoint = () => {
     proverty: prov,
     tier: tiers,
   });
-  console.log("prov", prov);
+  console.log("prov", userData);
   return (
     <Card borderRadius={"14px"}>
       <CardHeader fontSize={"18px"} fontWeight={"800"}>
@@ -57,71 +52,79 @@ export const EarnPoint = () => {
               placeholder="All"
               control={control}
               isLoading={isLoading}
+              labelKey="name"
+              valueKey="id"
               isError={isError}
-              selectOptions={propertyList || []}
+              selectOptions={propertyList}
               onAdditionalOnChange={(e) => setProv(e.target.value || "-1")}
             />
             <SelectCustom
               name="tier"
               errors={errors as Partial<FieldErrorsImpl<any>>}
               placeholder="tier"
+              labelKey="membershipName"
+              valueKey="id"
               control={control}
               isLoading={isLoading}
               isError={isError}
-              selectOptions={tierOprtion || []}
+              selectOptions={tierOprtion}
               onAdditionalOnChange={(e) => setTiers(e.target.value || "-1")}
             />
           </Flex>
         </Flex>
       </CardHeader>
       <CardBody>
-        {userData?.map((item: any, index: number) => {
-          const isLastItem = index == userData?.length - 1;
+        {userData.length > 0 ? (
+          userData?.map((item: any, index: number) => {
+            const isLastItem = index == userData?.length - 1;
 
-          return (
-            <Flex
-              justifyContent={"space-between"}
-              key={index}
-              borderBottom={isLastItem ? "none" : "1px solid #EDF2F7"}
-              alignItems={"center"}
-              paddingBottom={"30px"}
-              marginTop={index === 0 ? "15px" : "0"}
-              marginBottom={index === 0 ? "0" : "15px"}
-            >
-              <Box
-                display={"flex"}
-                justifyContent={"center"}
+            return (
+              <Flex
+                justifyContent={"space-between"}
+                key={index}
+                borderBottom={isLastItem ? "none" : "1px solid #EDF2F7"}
                 alignItems={"center"}
+                paddingBottom={"30px"}
+                marginTop={index === 0 ? "15px" : "0"}
+                marginBottom={index === 0 ? "0" : "15px"}
               >
-                <Box>
-                  <Image
-                    src={imageList.DashProfile}
-                    w={"40px"}
-                    height={"40px"}
-                    borderRadius={"50%"}
-                  />
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Box>
+                    <Image
+                      src={imageList.DashProfile}
+                      w={"40px"}
+                      height={"40px"}
+                      borderRadius={"50%"}
+                    />
+                  </Box>
+                  <Box>
+                    <Heading fontSize={"16px"} marginLeft={"25px"}>
+                      {item?.fullName}
+                      <Text
+                        fontSize={"13px"}
+                        color={colors.black_1}
+                        fontWeight={"400"}
+                        marginTop={"10px"}
+                      >
+                        Tier -&nbsp;
+                        <span style={{ color: item?.colorCode }}>
+                          {item.tier}
+                        </span>
+                      </Text>
+                    </Heading>
+                  </Box>
                 </Box>
-                <Box>
-                  <Heading fontSize={"16px"} marginLeft={"25px"}>
-                    {item?.fullName}
-                    <Text
-                      fontSize={"13px"}
-                      color={colors.black_1}
-                      fontWeight={"400"}
-                      marginTop={"10px"}
-                    >
-                      Tier -&nbsp;
-                      <span style={{ color: item?.colorCode }}>
-                        {item.tier}
-                      </span>
-                    </Text>
-                  </Heading>
-                </Box>
-              </Box>
-              <Text fontSize={"14px"}>{item?.rewardPoints} pt</Text>
-            </Flex>
-          );
-        })}
+                <Text fontSize={"14px"}>{item?.rewardPoints} pt</Text>
+              </Flex>
+            );
+          })
+        ) : (
+          <NoDataAvailable content="No Data Available" />
+        )}
       </CardBody>
     </Card>
   );

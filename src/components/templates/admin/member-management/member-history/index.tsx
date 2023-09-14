@@ -7,6 +7,7 @@ import { colors } from "@src/theme/colors";
 import useDateFormatter from "@src/hooks/useDateCustom";
 import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import NoDataAvailable from "@src/components/organisms/nodata";
 interface IMemberHistoryProps {
   data?: IMemberHistory[];
 }
@@ -53,9 +54,9 @@ const MemberHistory: React.FC<IMemberHistoryProps> = ({ data }) => {
   return (
     <Wrapper>
       <Text fontSize={"2xl"} mb={5}>
-        Profile History
+        Transaction History
       </Text>
-      {data &&
+      {data && data.length > 0 ? (
         showMoreData?.map((itmm, index) => {
           return (
             <WrapperContent key={itmm.id}>
@@ -78,8 +79,13 @@ const MemberHistory: React.FC<IMemberHistoryProps> = ({ data }) => {
               </div>
             </WrapperContent>
           );
-        })}
-      <Button onClick={fetchMore}>Show more</Button>
+        })
+      ) : (
+        <NoDataAvailable content="No history available" />
+      )}
+      {data && data?.length > 0 && (
+        <Button onClick={fetchMore}>Show more</Button>
+      )}
     </Wrapper>
   );
 };

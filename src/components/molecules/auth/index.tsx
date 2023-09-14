@@ -30,11 +30,13 @@ const FormContent = styled.div`
   }
 `;
 const Footer = styled.div`
-  position: absolute;
-  bottom: 30px;
-  left: 62%;
   display: flex;
-  color: ${colors.dark_gray};
+  color: #454f5b;
+  gap: 35px;
+  font-size: 14px;
+  margin-top: 20px;
+  bottom: 30px;
+
   gap: 35px;
   font-size: 14px;
   @media screen and (max-width: 720px) {

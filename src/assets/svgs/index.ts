@@ -15,3 +15,4 @@ export { ReactComponent as ColorPickerPlusIcon } from "./colorPickerPlus.svg";
 export { ReactComponent as ColorPickerMinusIcon } from "./colorPickerMinus.svg";
 export { ReactComponent as NoDataAvailableIcon } from "./noData.svg";
 export { ReactComponent as ColorInList } from "./colorInList.svg";
+export { ReactComponent as MembershipIcon } from "./membership.svg";

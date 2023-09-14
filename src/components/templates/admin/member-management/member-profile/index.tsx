@@ -18,6 +18,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import MemberHistory from "../member-history";
 import { ProfileImage } from "@src/components/atoms/ProfileImage";
+import { MembershipIcon } from "@src/assets/svgs";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -91,6 +92,7 @@ const Card = styled.div`
     display: flex;
     align-items: center;
     padding: 7px;
+    height: 125px;
   }
   .reward-card-title {
     display: flex;
@@ -199,7 +201,7 @@ const MemberProfile = () => {
           <div className="profile-card">
             <div>
               <Text fontSize={"3xl"}>{state.fullName}</Text>
-              <Text>{data?.tierName} Tier</Text>
+              <Text>{data?.tierName}</Text>
             </div>
             <div>
               <Button
@@ -238,6 +240,12 @@ const MemberProfile = () => {
                   Last active : {"8-31-2023"}
                 </Text>
               </div>
+              <div className="basic-info-item">
+                <Icons icon={<MembershipIcon />} />
+                <Text color={colors.secondary_dark}>
+                  Membership number : {state.customerId}
+                </Text>
+              </div>
             </div>
             <div className="reward-card">
               <div>
@@ -246,7 +254,7 @@ const MemberProfile = () => {
                   <Text color={colors.secondary_dark}>Reward Points</Text>
                 </div>
                 <Text textAlign={"center"} fontSize={"2xl"}>
-                  {rewardPoints ?? ""}
+                  {rewardPoints ?? "0"}
                 </Text>
               </div>
             </div>

@@ -7,12 +7,12 @@ import styled from "styled-components";
 import * as yup from "yup";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { getAllService } from "@src/service/point-config/service";
-import { useQuery } from "react-query";
+
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Text } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
+import { useServiceList } from "@src/constant/useServiceList";
 
 interface IVoucherProps {
   mutate?: any;
@@ -56,30 +56,10 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
     validationSchema,
   });
 
-  const { data: service } = useQuery("service", getAllService, {
-    select: ({ data }) => data.datalist,
-  });
-  const serviceList = service?.map((item: any) => {
-    return {
-      label: item?.serviceName,
-      value: item?.id,
-    };
-  });
-  console.log(state);
+  const serviceList = useServiceList();
   useEffect(() => {
     if (state?.id) {
-      const filteredServices = serviceList?.filter((item: any) => {
-        return item?.label === state?.serviceName;
-      });
-      const resetService = filteredServices[0];
-      reset({
-        voucherName: state?.voucherName,
-        serviceId: resetService,
-        discountPercentage: state?.discountPercentage,
-        maximumAmounts: state?.maximumAmounts,
-        maximumLimits: state?.maximumLimits,
-        voucherDescription: state?.voucherDescription,
-      });
+      reset({ ...state });
     }
   }, [state]);
   const onSubmitHandler = (data: IVoucher) => {
@@ -107,7 +87,6 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
     }
     reset();
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box
@@ -133,12 +112,17 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             required
           />
           <FormControl
-            control="select"
+            control="reactSelect"
             register={register}
             name="serviceId"
             placeholder="Choose Service"
             label="Service Name"
             required
+            labelKey="serviceName"
+            onChange={(e: any) => setValue("serviceId", e.value)}
+            // value={"2"}
+            valueKey="id"
+            error={errors?.serviceId?.message || ""}
             options={serviceList || []}
           />
           <FormControl
