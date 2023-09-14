@@ -7,8 +7,9 @@ export const nationality: ISelectOption[] = [
 ];
 
 export const date: ISelectOption[] = [
-  { value: "Weekly", label: "Weekly" },
-  { value: "Monthly", label: "Monthly" },
+  { value: "day", label: "day" },
+  { value: "week", label: "week" },
+  { value: "month", label: "month" },
 ];
 
 export const property: ISelectOption[] = [

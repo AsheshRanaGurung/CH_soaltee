@@ -54,7 +54,6 @@ const CustomSelect = ({
       <SelectWrapper>
         <ChakraSelect
           {...register(name, rules)}
-          {...rest}
           id={name}
           size={"sm"}
           fontSize="14px !important"
@@ -70,8 +69,10 @@ const CustomSelect = ({
           padding="8px, 4px, 8px, 4px"
           onChange={handlehange}
           className="select-component"
+          {...rest}
         >
           <option
+            value={""}
             style={{ color: colors.primary_placeholder }}
             disabled={selected ? true : false}
           >
@@ -86,7 +87,7 @@ const CustomSelect = ({
                 height: "30px",
               }}
               key={value}
-              value={value}
+              value={value || ""}
               disabled={isSelected?.includes(value)}
             >
               {label}

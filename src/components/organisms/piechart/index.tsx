@@ -1,10 +1,13 @@
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import { PieChart, Pie, Cell, Label } from "recharts";
-import { Box, Flex } from "@chakra-ui/react";
-import FormControl from "@src/components/atoms/FormControl";
-import { date, property } from "@src/constant/index";
-import { useFormHook } from "@src/hooks/useFormhook";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import { date } from "@src/constant/index";
+import { usePropertyList } from "@src/constant/usePropertyList";
+import { useGetTotalTier } from "@src/service/dashboard";
+import { SelectCustom } from "@src/components/atoms/Select/SelectCustom";
+import { FieldErrorsImpl, useForm } from "react-hook-form";
+import { useState } from "react";
 
 const Card = styled.div`
   background: ${colors.white};
@@ -75,26 +78,22 @@ const Card = styled.div`
     border: 1px solid ${colors.primary}
   }
 `;
-const data = [
-  { label: "PLT", name: "Platinum", value: 12 },
-  { label: "GLD", name: "Gold", value: 32 },
-  { label: "SIL", name: "Silver", value: 92 },
-  { label: "MEM", name: "Member", value: 190 },
-];
-const COLORS = [
-  `${colors.chart_green}`,
-  `${colors.chart_yellow}`,
-  `${colors.chart_blue}`,
-  `${colors.chart_black}`,
-];
 
-const PieChartComponent = () => {
+const PieChartComponent = ({ data }: any) => {
+  const totalUserSum = data?.reduce(
+    (acc: any, current: { totalUser: any }) => acc + (current?.totalUser || 0),
+    0
+  );
+
   return (
     <Box justifyContent={"center"} display="flex">
       <PieChart width={414} height={270}>
         {" "}
         <Pie
-          data={data}
+          data={data?.map((item: { tierName: string; totalUser: number }) => ({
+            name: item?.tierName,
+            value: item?.totalUser || 0,
+          }))}
           cx={190}
           cy={115}
           innerRadius={70}
@@ -103,8 +102,8 @@ const PieChartComponent = () => {
           paddingAngle={2}
           dataKey="value"
         >
-          {data.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          {data?.map((item: any, index: number) => (
+            <Cell key={`cell-${index}`} fill={item?.tierColor} />
           ))}
           <Label
             value="Total Users"
@@ -121,9 +120,8 @@ const PieChartComponent = () => {
               </text>
             )}
           />
-
           <Label
-            value="20,200"
+            value={totalUserSum}
             position="center"
             content={({ value }) => (
               <text
@@ -144,78 +142,68 @@ const PieChartComponent = () => {
 };
 
 export const PieChartCard = () => {
-  const { register, errors } = useFormHook({});
-
+  const [prov, setProv] = useState("-1");
+  const [tiers, setTiers] = useState("month");
+  const {
+    control,
+    formState: { errors },
+  } = useForm();
+  const propertyList = usePropertyList();
+  const { data, isLoading, isError } = useGetTotalTier({
+    proverty: prov,
+    tier: tiers,
+  });
   return (
     <Card>
       <div className="piechart-wrapper">
         <div className="piechart-header">
           <div className="piechart-top">
-            <div className="piechart-title">Member Count</div>
-            <Flex>
-              <Box marginRight={"5px"}>
-                <FormControl
-                  control="select"
-                  register={register}
-                  name="Property"
-                  placeholder="Property"
-                  required
-                  error={errors.nationality?.message || ""}
-                  options={property}
-                  style={{
-                    border: "1px solid #AB1D3F",
-                    color: "#AB1D3F",
-                    borderRadius: "24px",
-                    padding: "8px, 4px, 8px, 4px",
-                  }}
+            <Flex justifyContent={"space-between"} w="100%">
+              <Heading width={"100%"} fontSize={"17px"}>
+                Member Count{" "}
+              </Heading>
+              <Flex direction={"row"} gap={2}>
+                <SelectCustom
+                  name="property"
+                  errors={errors as Partial<FieldErrorsImpl<any>>}
+                  placeholder="All"
+                  control={control}
+                  isLoading={isLoading}
+                  isError={isError}
+                  selectOptions={propertyList || []}
+                  onAdditionalOnChange={(e) => setProv(e.target.value || "-1")}
                 />
-              </Box>
-              <Box>
-                <FormControl
-                  control="select"
-                  register={register}
-                  name="nationality"
+                <SelectCustom
+                  name="date"
+                  errors={errors as Partial<FieldErrorsImpl<any>>}
                   placeholder="Today"
-                  required
-                  error={errors.nationality?.message || ""}
-                  options={date}
-                  style={{
-                    border: "1px solid #AB1D3F",
-                    color: "#AB1D3F",
-                    borderRadius: "24px",
-                    padding: "8px, 4px, 8px, 4px",
-                  }}
+                  control={control}
+                  isLoading={isLoading}
+                  isError={isError}
+                  selectOptions={date || []}
+                  onAdditionalOnChange={(e) =>
+                    setTiers(e.target.value || "month")
+                  }
                 />
-              </Box>
+              </Flex>
             </Flex>
-            {/* <div className="piechart-dropdowns">
-              <div className="piechart-dropdown">
-                <span>Property 1</span>
-              </div>
-              <div className="piechart-dropdown">
-                <span>Today</span>
-              </div>
-            </div> */}
           </div>
           <div className="piechart-subtitle">Total Users Onboard</div>
         </div>
         <div className="piechart-container">
-          <PieChartComponent />
+          <PieChartComponent data={data} />
         </div>
       </div>
       <Flex flexDirection={"column"} w={"100%"}>
-        {data.map((col, index) => (
+        {data?.map((item: any, index: number) => (
           <div className="data-row" key={index}>
             <div className="title">
-              <div
-                className="label"
-                style={{ backgroundColor: COLORS[index % COLORS.length] }}
-              >
-                {col.label}
-              </div>
-              <div className="name">{col.name}</div>
+              <Box className="label" background={item?.tierColor}>
+                {/* {item.tierColor} */}
+              </Box>
+              <div className="name">{item.tierName}</div>
             </div>
-            <div className="value">{col.value}</div>
+            <div className="value">{item.totalUser}</div>
           </div>
         ))}
       </Flex>

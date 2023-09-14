@@ -40,9 +40,10 @@ export const api = {
   },
   dashboard: {
     fetch: "/dashboard/total-user-reward-report?type=",
-    fetchreward: "/dashboard/total-active-block-user",
+    fetchreward: "/dashboard/top-reward-users?propertyId={provertyID}&tier=",
     fetchTotal: "/dashboard/total-members-mw?type=",
-    add: "",
+    fetchTier: "/dashboard/get-total-user-tier?propertyId={provertyID}&type=",
+    fetchBlock: "/dashboard/total-active-block-user",
     update: "",
   },
   member_management: {
