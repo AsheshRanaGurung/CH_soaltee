@@ -85,9 +85,10 @@ const MemberList: React.FC<IMemberTier> = ({
     }
   }, [isUpdate, updateId]);
 
-  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
-    validationSchema,
-  });
+  const { handleSubmit, register, errors, reset, setValue, control } =
+    useFormHook({
+      validationSchema,
+    });
 
   const { mutateAsync: mutate, isLoading } = useCreateMemberTier();
   const { mutateAsync: deleteMemberTier, isLoading: isDeleting } =
@@ -181,6 +182,7 @@ const MemberList: React.FC<IMemberTier> = ({
         <CreateMemberForm
           register={register}
           errors={errors}
+          control={control}
           setValue={setValue}
           id={updateId}
         />
