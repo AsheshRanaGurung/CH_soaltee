@@ -98,9 +98,11 @@ const MemberManagementList: React.FC<IMemberProps> = ({
         fullName: data.fullName,
         email: data.email,
         phoneNumber: data.phoneNumber,
+        dateOfBirth: data.dateOfBirth,
         nationalityId: data.nationalityId,
         propertyId: data?.propertyId,
         isBlocked: data.isBlocked,
+        roleId: "2",
       });
     } else {
       mutate({
@@ -159,6 +161,7 @@ const MemberManagementList: React.FC<IMemberProps> = ({
           errors={errors}
           propertyList={propertyList}
           setValue={setValue}
+          id={updateId}
         />
       </ModalForm>
     </>

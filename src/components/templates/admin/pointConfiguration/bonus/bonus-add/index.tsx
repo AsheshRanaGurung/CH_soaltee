@@ -4,7 +4,7 @@ import { Button, Flex } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "react-query";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
-import { createBonus } from "@src/service/point-config/bonus";
+import { createBonus, updateBonus } from "@src/service/point-config/bonus";
 import { useServiceList } from "@src/constant/useServiceList";
 export const AddBonus = ({
   register,
@@ -12,6 +12,7 @@ export const AddBonus = ({
   setValue,
   handleSubmit,
   onCloseModal,
+  updateId,
 }: any) => {
   const queryClient = useQueryClient();
 
@@ -25,9 +26,29 @@ export const AddBonus = ({
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
+  const { mutate: update, isLoading: isUpdating } = useMutation(updateBonus, {
+    onSuccess: (response) => {
+      toastSuccess(response?.data?.message || "Bonus Updated!!");
+      queryClient.invalidateQueries("bonus");
+      onCloseModal();
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toastFail(error?.response?.data?.message || "Something went wrong");
+    },
+  });
   const serviceList = useServiceList();
   const onSubmit = (data: any) => {
-    mutate(data);
+    if (updateId) {
+      update({
+        id: updateId,
+        data: {
+          ...data,
+          id: updateId,
+        },
+      });
+    } else {
+      mutate(data);
+    }
   };
 
   return (
@@ -110,9 +131,9 @@ export const AddBonus = ({
           variant="primary"
           borderRadius={0}
           w="100%"
-          isLoading={isLoading}
+          isLoading={isLoading || isUpdating}
         >
-          Add Bonus
+          {updateId ? "Update Bonus" : "Add Bonus"}
         </Button>
       </Flex>
     </form>

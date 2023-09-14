@@ -55,6 +55,7 @@ const ReactSelect = ({
   required,
   helperText,
   value,
+  isSelected,
   ...rest
 }: any) => {
   const formattedOptions = options.map((option: any) => ({
@@ -75,7 +76,10 @@ const ReactSelect = ({
         {...rest}
         id={name}
         name={name}
-        options={formattedOptions}
+        options={formattedOptions.map((option: any) => ({
+          ...option,
+          isDisabled: isSelected?.includes(option.value),
+        }))}
         onChange={onChange}
         value={value}
       />
@@ -84,4 +88,5 @@ const ReactSelect = ({
     </FormControl>
   );
 };
+
 export default ReactSelect;

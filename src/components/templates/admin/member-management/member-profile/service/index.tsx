@@ -36,10 +36,11 @@ const validationSchema: any = yup.object().shape({
   ),
 });
 export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
-  const { register, handleSubmit, control, errors, watch } = useFormHook({
-    validationSchema,
-    defaultValues,
-  });
+  const { register, handleSubmit, control, errors, watch, setValue } =
+    useFormHook({
+      validationSchema,
+      defaultValues,
+    });
   const { fields, append, remove } = useFieldArray({
     name: "services",
     control,
@@ -84,7 +85,12 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
           register={register}
           name="propertyname"
           label="Property Name"
-          placeholder="Select Property Name"
+          labelKey="name"
+          valueKey="id"
+          onChange={(e: any) => {
+            setValue(`propertyname`, e.value);
+          }}
+          placeholder="Select Property"
           error={errors?.propertyname?.message || ""}
           options={data?.propertyList || []}
           required
@@ -105,7 +111,12 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
                     register={register}
                     name={`services.${i}.service`}
                     label="Service"
-                    placeholder="Select Service Name"
+                    labelKey="serviceName"
+                    valueKey="id"
+                    placeholder="Select Service"
+                    onChange={(e: any) => {
+                      setValue(`services.${i}.service`, e.value);
+                    }}
                     error={(errors?.services as any)?.service?.message || ""}
                     options={data?.serviceList || []}
                     required

@@ -84,7 +84,6 @@ const PieChartComponent = ({ data }: any) => {
     (acc: any, current: { totalUser: any }) => acc + (current?.totalUser || 0),
     0
   );
-  console.log("ddda", data);
   return (
     <Box justifyContent={"center"} display="flex">
       {data.length > 0 ? (

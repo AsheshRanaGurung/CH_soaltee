@@ -21,4 +21,5 @@ export const NAVIGATION_ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   VOUCHER_ADD: "/voucher/add",
   OFFER: "/offers",
+  NOT_FOUND: "/not-found",
 };
