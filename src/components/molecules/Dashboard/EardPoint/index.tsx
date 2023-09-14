@@ -9,52 +9,74 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
-import FormControl from "@src/components/atoms/FormControl";
-import { nationality } from "@src/constant/index";
+import { SelectCustom } from "@src/components/atoms/Select/SelectCustom";
+import { usePropertyList } from "@src/constant/usePropertyList";
+import { useGetTopTier } from "@src/service/dashboard";
+import { getAllMemberTier } from "@src/service/master-data/member-tier";
 import { colors } from "@src/theme/colors";
-import { useForm } from "react-hook-form";
-const tier = [
-  {
-    fullName: "Santosh Rumba",
-    rewardPoints: 1720.0,
-    tier: "Gold",
-  },
-  {
-    fullName: "Soaltee Loyalty",
-    rewardPoints: 2304.0,
-    tier: "Silver",
-  },
-];
-const colorCode: { [key: string]: string } = {
-  Gold: "#ECC16F",
-  Silver: "gray",
-  platinum: "platinum",
-  Elite: "#A13B3B",
-  Member: "#CE8135",
-};
+import { useState } from "react";
+import { FieldErrorsImpl, useForm } from "react-hook-form";
+import { useQuery } from "react-query";
 export const EarnPoint = () => {
-  const { register } = useForm();
+  const {
+    control,
+    formState: { errors },
+  } = useForm();
+  const [prov, setProv] = useState("-1");
+  const [tiers, setTiers] = useState("-1");
 
+  const propertyList = usePropertyList();
+  const { data: tierData } = useQuery("member_tier", getAllMemberTier, {
+    select: ({ data }) => data.datalist,
+  });
+  const tierOprtion = tierData?.map((item: any) => ({
+    label: item?.membershipName,
+    value: item?.id,
+  }));
+
+  const {
+    data: userData,
+    isLoading,
+    isError,
+  } = useGetTopTier({
+    proverty: prov,
+    tier: tiers,
+  });
+  console.log("prov", prov);
   return (
     <Card borderRadius={"14px"}>
       <CardHeader fontSize={"18px"} fontWeight={"800"}>
         <Flex justifyContent={"space-between"} w="100%">
-          <Heading width={"100%"}> Top Users</Heading>
-          <Box w="150px">
-            <FormControl
-              control="CustomSelect"
-              options={nationality}
-              size="sm"
-              register={register}
-              name="Platinum Tier"
-              placeholder={"platinum Tier"}
+          <Heading width={"100%"} fontSize={"17px"}>
+            Top Members
+          </Heading>
+          <Flex direction={"row"} gap={2}>
+            <SelectCustom
+              name="property"
+              errors={errors as Partial<FieldErrorsImpl<any>>}
+              placeholder="All"
+              control={control}
+              isLoading={isLoading}
+              isError={isError}
+              selectOptions={propertyList || []}
+              onAdditionalOnChange={(e) => setProv(e.target.value || "-1")}
             />
-          </Box>
+            <SelectCustom
+              name="tier"
+              errors={errors as Partial<FieldErrorsImpl<any>>}
+              placeholder="tier"
+              control={control}
+              isLoading={isLoading}
+              isError={isError}
+              selectOptions={tierOprtion || []}
+              onAdditionalOnChange={(e) => setTiers(e.target.value || "-1")}
+            />
+          </Flex>
         </Flex>
       </CardHeader>
       <CardBody>
-        {tier?.map((item: any, index: number) => {
-          const isLastItem = index == tier?.length - 1;
+        {userData?.map((item: any, index: number) => {
+          const isLastItem = index == userData?.length - 1;
 
           return (
             <Flex
@@ -89,7 +111,7 @@ export const EarnPoint = () => {
                       marginTop={"10px"}
                     >
                       Tier -&nbsp;
-                      <span style={{ color: colorCode[item?.tier] }}>
+                      <span style={{ color: item?.colorCode }}>
                         {item.tier}
                       </span>
                     </Text>

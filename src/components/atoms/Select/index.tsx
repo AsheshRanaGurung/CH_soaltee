@@ -57,7 +57,6 @@ const Select = ({
       <SelectWrapper>
         <ChakraSelect
           {...register(name, rules)}
-          {...rest}
           id={name}
           size={"sm"}
           fontSize="14px !important"
@@ -75,6 +74,7 @@ const Select = ({
           onChange={handlehange}
           color={colors.primary_placeholder}
           className="select-component"
+          {...rest}
         >
           <option
             style={{ color: colors.primary_placeholder }}

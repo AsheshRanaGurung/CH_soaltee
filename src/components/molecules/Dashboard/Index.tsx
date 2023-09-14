@@ -106,8 +106,8 @@ export const DashboardAdmin = ({
               </Tabs>
             </Box>
             <DashboardCard
-              distributed={data?.totalReedemPoints}
-              claimed={data?.totalReedemPoints}
+              distributed={data?.totalRewardPoints.toLocaleString("en-US")}
+              claimed={data?.totalReedemPoints.toLocaleString("en-US")}
             />
           </Card>
           <EarnPoint />
