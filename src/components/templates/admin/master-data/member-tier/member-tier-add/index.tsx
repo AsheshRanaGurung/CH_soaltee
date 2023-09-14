@@ -12,7 +12,9 @@ import { ChromePicker } from "react-color";
 import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
+import { ColorPickerMinusIcon, ColorPickerPlusIcon } from "@src/assets/svgs";
 import Editor from "@src/components/atoms/Editor";
+
 interface IMemberProps {
   register: UseFormRegister<IMemberTierDetail>;
   setValue: UseFormSetValue<IMemberTierDetail>;
@@ -37,7 +39,7 @@ export const CreateMemberForm: React.FC<IMemberProps> = ({
 }: any) => {
   const [color, setColor] = useState(`${colors.primary}`);
 
-  // const [isColorPicked, setIsColorPicked] = useState(false);
+  const [isColorPicked, setIsColorPicked] = useState(false);
 
   const handleColorChange = (newColor: any) => {
     setColor(newColor.hex);
@@ -86,10 +88,29 @@ export const CreateMemberForm: React.FC<IMemberProps> = ({
             </Text>
             <Editor name="description" control={control} />
           </Box>
-          <div>Select a Color</div>
-          <ColorStyled>
-            <ChromePicker color={color} onChange={handleColorChange} />
-          </ColorStyled>
+          <Flex
+            gap={1}
+            onClick={() => {
+              setIsColorPicked(!isColorPicked);
+            }}
+            cursor="pointer"
+            mt={5}
+          >
+            {!isColorPicked ? (
+              <ColorPickerPlusIcon />
+            ) : (
+              <ColorPickerMinusIcon />
+            )}
+            Pick a Color
+          </Flex>
+          {isColorPicked && (
+            <ColorStyled>
+              <ChromePicker color={color} onChange={handleColorChange} />
+            </ColorStyled>
+          )}
+          <Text fontSize={"sm"} mt={5} mb={2} fontWeight={"500"}>
+            Image
+          </Text>
           <ImageUpload setValue={setValue} required={!id} />
         </Flex>
         <Spacer />
