@@ -2,17 +2,23 @@ import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import ImageUpload from "@src/components/atoms/ImageUpload";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
-import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { ChromePicker } from "react-color";
 import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
-import { ColorPickerMinusIcon, ColorPickerPlusIcon } from "@src/assets/svgs";
+import Editor from "@src/components/atoms/Editor";
 interface IMemberProps {
   register: UseFormRegister<IMemberTierDetail>;
   setValue: UseFormSetValue<IMemberTierDetail>;
   errors: FieldErrors;
   id?: number | string;
+  control: Control<any, any>;
 }
 const ColorStyled = styled.div`
   border: 1px solid rgba(233, 233, 233, 1);
@@ -21,15 +27,17 @@ const ColorStyled = styled.div`
     box-shadow: none !important;
   }
 `;
+
 export const CreateMemberForm: React.FC<IMemberProps> = ({
   register,
   errors,
   setValue,
+  control,
   id,
 }: any) => {
   const [color, setColor] = useState(`${colors.primary}`);
 
-  const [isColorPicked, setIsColorPicked] = useState(false);
+  // const [isColorPicked, setIsColorPicked] = useState(false);
 
   const handleColorChange = (newColor: any) => {
     setColor(newColor.hex);
@@ -72,27 +80,16 @@ export const CreateMemberForm: React.FC<IMemberProps> = ({
             error={errors?.pointsTo?.message || ""}
             required
           />
-          <Flex
-            gap={1}
-            onClick={() => {
-              setIsColorPicked(!isColorPicked);
-            }}
-          >
-            {!isColorPicked ? (
-              <ColorPickerPlusIcon />
-            ) : (
-              <ColorPickerMinusIcon />
-            )}
-            Pick a Color
-          </Flex>
-          {isColorPicked && (
-            <ColorStyled>
-              <ChromePicker color={color} onChange={handleColorChange} />
-            </ColorStyled>
-          )}
-          <Text fontSize={"sm"} mt={5} mb={2} fontWeight={"500"}>
-            Image
-          </Text>
+          <Box>
+            <Text fontSize={"sm"} mb={2} fontWeight={"600"}>
+              Description
+            </Text>
+            <Editor name="description" control={control} />
+          </Box>
+          <div>Select a Color</div>
+          <ColorStyled>
+            <ChromePicker color={color} onChange={handleColorChange} />
+          </ColorStyled>
           <ImageUpload setValue={setValue} required={!id} />
         </Flex>
         <Spacer />
