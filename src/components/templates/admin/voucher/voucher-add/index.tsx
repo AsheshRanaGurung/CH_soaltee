@@ -28,7 +28,9 @@ const Wrapper = styled.div`
 const FormWrap = styled.div`
   margin-top: 15px;
   label {
-    margin-bottom: 5px;
+    .chakra-form-control {
+      margin-bottom: 5px;
+    }
   }
   .ck.ck-editor__main > .ck-editor__editable {
     min-height: 300px;
@@ -179,6 +181,7 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             name={"image"}
             setValue={setValue}
             required={!state?.id}
+            imageUploadStyle="row"
           />
         </FormWrap>
         <Flex gap={4} mt={3}>
