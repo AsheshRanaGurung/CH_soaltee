@@ -4,7 +4,7 @@ import Item from "./Item";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { colors } from "@src/theme/colors";
-import { RightArrowIcon } from "@src/assets/svgs";
+import { FaMinus, FaPlus } from "react-icons/fa";
 interface INavItem {
   visible: boolean;
   name: string;
@@ -21,47 +21,15 @@ interface INavItemChild {
   icon?: React.ReactNode;
 }
 const Wrapper = styled(Box)`
-  position: relative;
-  &::before {
-    content: "";
-    border-left: solid 1px #e9e9e9;
-    position: absolute;
-    height: 100%;
-    left: 41px;
-    top: -13px;
-  }
-  li {
-    position: relative;
-    &::before {
-      content: "";
-      position: absolute;
-      height: 13px;
-      left: 0.5px;
-      top: 13px;
-      width: 14px;
-      border: Solid 1px #e9e9e9;
-      border-top: none;
-      border-right: none;
-      border-radius: 0 0 0 9px;
-    }
-  }
+  text-decoration: none;
+  transition: transform 0.5s ease;
 `;
 const ItemsWrapper = styled(Item)`
-  position: relative;
-  &li::before {
-    content: "";
-    border-left: solid 1px #e9e9e9;
-    position: absolute;
-    height: 100%;
-    left: 41px;
-    top: -13px;
-  }
+  text-decoration: none;
 `;
 const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
   const location = useLocation();
-
   const activeParent = child?.some((item) => item.to === location.pathname);
-
   const [active, setActive] = useState(false);
   const [showDropdown, setShowDropdown] = useState(activeParent);
 
@@ -81,26 +49,36 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
               mb={3}
               borderRadius={8}
               bgColor={activeParent ? colors.primary : ""}
-              color={activeParent ? colors.white : colors.text_black}
+              color={activeParent ? colors.white : colors.text_secondary}
               transition="all ease-in-out"
               cursor="pointer"
               sx={{
+                svg: {
+                  background: `${activeParent ? colors.white : ""}`,
+                  padding: `${activeParent ? "5px" : ""}`,
+                  borderRadius: `${activeParent ? "45%" : ""}`,
+                  height: `${activeParent ? "30px" : "15px"}`,
+                  width: `${activeParent ? "30px" : "15px"}`,
+                },
                 "svg path": {
                   transition: "all ease-in-out",
-                  fill: `${activeParent ? colors.white : colors.primary}`,
+                  fill: `${activeParent ? colors.primary : colors.primary}`,
                 },
                 "&:hover": {
                   transition: "all ease-in-out",
-                  bgColor: colors.secondary,
-                  color: colors.primary,
+                  textDecoration: "none",
+                  bgColor: `${
+                    activeParent ? colors.primary : colors.secondary
+                  }`,
+                  color: `${activeParent ? colors.white : colors.primary}`,
                   "svg path": {
                     transition: "all ease-in-out",
-                    fill: colors.primary,
+                    // fill: colors.primary,
                   },
                 },
               }}
               fontSize="15px"
-              fontWeight="600"
+              fontWeight={activeParent ? 500 : 400}
               onClick={() => setShowDropdown(!showDropdown)}
             >
               <Flex
@@ -110,7 +88,8 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
                   "& *": {
                     "&:hover": {
                       transition: "all ease-in-out",
-                      color: colors.primary,
+                      color: `${activeParent ? colors.white : colors.primary}`,
+                      textDecoration: "none",
                     },
                   },
                 }}
@@ -124,14 +103,24 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
               </Flex>
               {!isCollapse && (
                 <Icon
-                  as={RightArrowIcon}
+                  as={showDropdown ? FaMinus : FaPlus}
                   fontSize="xs"
                   sx={{
-                    transform: showDropdown ? "rotate(90deg)" : "",
                     transition: "0.1s",
+                    height: `${activeParent ? "25px" : "12px"} !important`,
+                    bgColor: `${activeParent ? colors.primary : ""} !important`,
+                    fill: `${
+                      activeParent ? colors.white : colors.text_secondary
+                    } !important`,
                     "&:hover": {
                       cursor: "pointer",
                       transition: "0.1s",
+                      textDecoration: "none",
+                    },
+                    path: {
+                      fill: `${
+                        activeParent ? colors.white : colors.text_secondary
+                      } !important`,
                     },
                   }}
                 />
