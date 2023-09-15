@@ -17,3 +17,4 @@ export { ReactComponent as NoDataAvailableIcon } from "./noData.svg";
 export { ReactComponent as ColorInList } from "./colorInList.svg";
 export { ReactComponent as CrossIcon } from "./cross.svg";
 export { ReactComponent as MembershipIcon } from "./membership.svg";
+export { ReactComponent as DatePickerIcon } from "./datePick.svg";

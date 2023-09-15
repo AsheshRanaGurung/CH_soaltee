@@ -1,4 +1,4 @@
-## 0.0.14 (2023-09-14)
+## 0.0.14 (2023-09-15)
 
 
 ### Bug Fixes
@@ -7,8 +7,10 @@
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
-* fetch history user wise ([478fc3c](https://gitlab.com/paras205/boilerplate-react/commit/478fc3c2cc14e4bca0420c0be3d09ac075eeb10c))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
+* fixed date picker ([580de77](https://gitlab.com/paras205/boilerplate-react/commit/580de77a6efffdd43d8019180d8c06fccc542a0a))
+* fixed react date picker in user ([3f9e88f](https://gitlab.com/paras205/boilerplate-react/commit/3f9e88f8deeba0e9cd2c25bc73c26126a6d38f35))
+* fixed select property in user book form ([19650f3](https://gitlab.com/paras205/boilerplate-react/commit/19650f34ae5e4467efaedf02aeb362838bf47199))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
 * hotfix: change border ([c4d5812](https://gitlab.com/paras205/boilerplate-react/commit/c4d5812510889d03c1f90b6910cc2ca2f45950e9))
@@ -20,6 +22,8 @@
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
 * remove console ([b88c476](https://gitlab.com/paras205/boilerplate-react/commit/b88c476a0c58d18c628bf21657472ce251ab81b8))
+* removed unnecessary hooks ([11857a9](https://gitlab.com/paras205/boilerplate-react/commit/11857a956baafad73e839a01ca8036ce91860162))
+* used properlist hook ([8a43809](https://gitlab.com/paras205/boilerplate-react/commit/8a438094140eb1e5ae6d08f176c76d4bff99c2f1))
 
 
 ### Features

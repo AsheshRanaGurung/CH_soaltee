@@ -13,14 +13,16 @@ import { colors } from "@src/theme/colors";
 import { Controller, useForm } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { DatePickerIcon } from "@src/assets/svgs";
 
 const DateInput = styled.div`
+  z-index: 1;
+  position: relative;
   .react-datepicker-wrapper {
     width: 100%;
   }
   .picker {
-    position: relative; /* Ensure the position is set to relative or absolute for z-index to work */
-    z-index: 1000;
+    padding: 8px;
   }
   input {
     width: 100%;
@@ -31,6 +33,9 @@ const DateInput = styled.div`
   }
   .react-datepicker__day--selected {
     background: ${colors.primary};
+  }
+  .react-datepicker-wrapper {
+    color: ${colors.primary_dark};
   }
 `;
 
@@ -44,6 +49,8 @@ interface IDate {
   endIcons?: React.ReactNode;
   labelDisabled?: string;
   changeDate: (date: any) => any;
+  defaultValue?: any;
+  minDate?: any;
 }
 
 const DateComponent = ({
@@ -54,6 +61,8 @@ const DateComponent = ({
   error,
   endIcons,
   changeDate,
+  defaultValue,
+  minDate,
   ...rest
 }: IDate) => {
   const { control } = useForm();
@@ -88,21 +97,41 @@ const DateComponent = ({
           <Controller
             name={name}
             control={control}
-            render={({ field: { onChange, value } }) => (
-              <DatePicker
-                {...rest}
-                selected={value}
-                className="picker"
-                onChange={(value) => {
-                  onChange(value);
-                  changeDate(value);
-                }}
-                dateFormat="yyyy-MM-dd"
-              />
-            )}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <DatePicker
+                  // {...rest}
+                  value={value}
+                  selected={value ? value : defaultValue}
+                  className="picker"
+                  onChange={(value) => {
+                    onChange(value);
+                    changeDate(value);
+                  }}
+                  placeholderText="YYYY-DD-MM"
+                  dateFormat="yyyy-MM-dd"
+                  minDate={minDate}
+                  onChangeRaw={(e) => {
+                    e.preventDefault();
+                  }}
+                  // excludeDates={checkInDate ? [checkInDate] : []}
+
+                  // onChangeRaw={(e) => {
+                  //   if (e.target.value) {
+                  //     const rawDate = e.target.value;
+                  //     const newDate = rawDate?.split("-");
+                  //     changeDate(newDate[0] && new Date(newDate[0]));
+                  //   }
+                  // }}
+                />
+              );
+            }}
           />
+
           {endIcons && (
-            <InputRightElement top="-10px">{endIcons}</InputRightElement>
+            <InputRightElement top="0px" zIndex="99999">
+              <DatePickerIcon />
+            </InputRightElement>
           )}
         </InputGroup>
       </DateInput>

@@ -57,10 +57,11 @@ const BonusList: React.FC<IBonusProps> = ({
     onClose: onDeleteBonusClose,
   } = useDisclosure();
 
-  const { handleSubmit, reset, register, errors, setValue } = useFormHook({
-    validationSchema,
-    defaultValues,
-  });
+  const { handleSubmit, reset, register, errors, setValue, watch } =
+    useFormHook({
+      validationSchema,
+      defaultValues,
+    });
 
   useEffect(() => {
     if (isUpdate && updateId) {
@@ -134,6 +135,7 @@ const BonusList: React.FC<IBonusProps> = ({
           onCloseModal={onBonusModalClose}
           ServiceAll={serviceList}
           updateId={updateId}
+          watch={watch}
         />
       </ModalForm>
 
