@@ -154,7 +154,7 @@ const MemberProfile = () => {
   const [rewardPoints, setRewardPoints] = useState(0);
   useEffect(() => {
     if (data) {
-      setRewardPoints(data.totalRewardPoints?.toFixed(2));
+      setRewardPoints(data?.totalRewardPoints?.toFixed(2));
     }
   }, [data]);
   const { data: historyData } = useQuery(

@@ -43,6 +43,7 @@ export const colors = {
   primary_placeholder: "#a4a1a3",
   secondary_placeholder: "#e4d9d9",
   light_red: "#dd9caa",
+  text_secondary: "#6D7887",
   voucher_heading: "#595C60",
   model_bottom: "#d2cfcfc2",
 };

@@ -21,7 +21,12 @@ const Item = ({
   const { t } = useTranslation();
   if (location.pathname === to) active = true;
   return (
-    <Link as={RouterLink} to={to || "#"} color={colors.white}>
+    <Link
+      as={RouterLink}
+      to={to || "#"}
+      color={colors.white}
+      _hover={{ textDecoration: "none" }}
+    >
       <ListItem
         display={"flex"}
         mr={4}
@@ -32,36 +37,51 @@ const Item = ({
         bgColor={active ? (isChild ? colors.primary : colors.primary) : ""}
         transition="all ease-in-out"
         height={"50px"}
-        fontWeight={active ? (isChild ? "600" : "600") : "400"}
+        fontWeight={active ? (isChild ? "500" : "500") : "400"}
         color={
           active
             ? isChild
               ? colors.white
               : colors.white
-            : colors.secondary_black
+            : colors.text_secondary
         }
         sx={{
           svg: {
             background: `${
-              active ? (isChild ? colors.primary : colors.primary) : ""
+              active ? (isChild ? colors.white : colors.white) : ""
             }`,
-            padding: `${active ? "5px" : ""}`,
-            borderRadius: `${active ? "45%" : ""}`,
-            height: `${active ? "30px" : "15px"}`,
-            width: `${active ? "30px" : "15px"}`,
+            padding: `${active ? (isChild ? "5px" : "5px") : ""}`,
+            borderRadius: `${active ? (isChild ? "45%" : "45%") : ""}`,
+            height: `${active ? (isChild ? "30px" : "30px") : "15px"}`,
+            width: `${active ? (isChild ? "30px" : "30px") : "15"}`,
           },
           "svg path": {
             transition: "all ease-in-out",
-            fill: `${active ? colors.white : colors.primary}`,
+            fill: `${
+              active
+                ? isChild
+                  ? colors.primary
+                  : colors.primary
+                : colors.primary
+            }`,
           },
           "&:hover": {
             transition: "all ease-in-out",
-            textDecoration: "none",
-            color: isChild ? colors.primary : colors.primary,
-            bgColor: isChild ? colors.secondary : colors.secondary,
+            color: active ? (isChild ? colors.white : colors.white) : "",
+            bgColor: active
+              ? isChild
+                ? colors.primary
+                : colors.primary
+              : colors.secondary,
             "svg path": {
               transition: "all ease-in-out",
-              fill: `${active ? colors.white : colors.primary}`,
+              fill: `${
+                active
+                  ? isChild
+                    ? colors.primary
+                    : colors.primary
+                  : colors.primary
+              }`,
             },
           },
         }}
