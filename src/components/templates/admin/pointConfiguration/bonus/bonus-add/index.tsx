@@ -6,6 +6,9 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { createBonus, updateBonus } from "@src/service/point-config/bonus";
 import { useServiceList } from "@src/constant/useServiceList";
+import DateComponent from "@src/components/atoms/DateInput";
+import { useState } from "react";
+import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
 export const AddBonus = ({
   register,
   errors,
@@ -13,6 +16,7 @@ export const AddBonus = ({
   handleSubmit,
   onCloseModal,
   updateId,
+  watch,
 }: any) => {
   const queryClient = useQueryClient();
 
@@ -20,6 +24,7 @@ export const AddBonus = ({
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
       queryClient.refetchQueries("bonus");
+      queryClient.invalidateQueries("bonus");
       onCloseModal();
     },
     onError: (error: AxiosError<{ message: string }>) => {
@@ -36,7 +41,15 @@ export const AddBonus = ({
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
+  const [validFrom, setValidFrom] = useState();
   const serviceList = useServiceList();
+  const changeValidFromDate = (date: any) => {
+    setValidFrom(date);
+    setValue("validFrom", formatDateToYYYYMMDD(date));
+  };
+  const changeValidToDate = (date: any) => {
+    setValue("validTo", formatDateToYYYYMMDD(date));
+  };
   const onSubmit = (data: any) => {
     if (updateId) {
       update({
@@ -50,7 +63,6 @@ export const AddBonus = ({
       mutate(data);
     }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl
@@ -74,36 +86,22 @@ export const AddBonus = ({
         required
         options={serviceList || []}
       />
-
-      <FormControl
-        control="input"
+      <DateComponent
         name="validFrom"
-        defaultValue={"2023-09-07"}
-        type="date"
-        required
         label="Valid From"
-        background="white"
-        color="black"
-        padding="10px"
-        height="40px"
-        lineHeight="2"
-        register={register}
+        endIcons="true"
         error={errors.validFrom?.message || ""}
+        changeDate={changeValidFromDate}
+        defaultValue={updateId && new Date(watch("validFrom"))}
       />
-      <FormControl
-        control="input"
+      <DateComponent
         name="validTo"
-        defaultValue={"2023-09-07"}
-        type="date"
-        required
         label="Valid To"
-        background="white"
-        color="black"
-        padding="10px"
-        height="40px"
-        lineHeight="2"
-        register={register}
-        error={errors.validTo?.message || ""}
+        endIcons="true"
+        error={errors.validFrom?.message || ""}
+        changeDate={changeValidToDate}
+        minDate={validFrom}
+        defaultValue={updateId && new Date(watch("validTo"))}
       />
       <FormControl
         control="input"

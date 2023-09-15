@@ -8,14 +8,14 @@ import { colors } from "@src/theme/colors";
 import Select from "react-select";
 import styled from "styled-components";
 
-const SelectWrapper = styled(Select)`
+const SelectWrapper = styled(Select)<any>`
   .css-13cymwt-control {
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0px;
     border-color: none;
     box-shadow: none;
-    background: transparent;
+    background: ${(props) => (props.bg_color ? props.bg_color : "transparent")};
   }
   .css-1jqq78o-placeholder {
     color: ${colors.secondary_placeholder};
@@ -27,17 +27,23 @@ const SelectWrapper = styled(Select)`
     border-radius: 0px;
     border-color: none;
     box-shadow: none;
-    background: transparent;
+    background: ${(props) => (props.bg_color ? props.bg_color : "transparent")};
     &:hover {
       border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     }
   }
-
+  .css-1nmdiq5-menu {
+    z-index: 2 !important;
+    color: ${colors.primary_dark};
+  }
   .css-art2ul-ValueContainer2 {
     padding: 0px;
   }
   .css-1u9des2-indicatorSeparator {
     display: none;
+  }
+  .css-1dimb5e-singleValue {
+    color: ${colors.primary_dark};
   }
 `;
 const ReactSelect = ({

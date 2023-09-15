@@ -8,10 +8,11 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
+import DateComponent from "@src/components/atoms/DateInput";
 import FormControl from "@src/components/atoms/FormControl";
+import { usePropertyList } from "@src/constant/usePropertyList";
 import { useFormHook } from "@src/hooks/useFormhook";
-import { getAllProperty } from "@src/service/master-data/property";
-import { useQuery } from "react-query";
+import { useState } from "react";
 
 export const BookForm = () => {
   const { register, errors, watch } = useFormHook({});
@@ -24,16 +25,27 @@ export const BookForm = () => {
     }`;
     window.open(url, "_blank");
   };
+  const currentDate = new Date();
+  const initialCheckInDate = new Date(
+    currentDate.setDate(currentDate.getDate() + 1)
+  );
+  const initialCheckOutDate = new Date(initialCheckInDate);
+  initialCheckOutDate.setDate(initialCheckOutDate.getDate() + 1);
 
-  const { data: property } = useQuery("property", getAllProperty, {
-    select: ({ data }) => data.data.content,
-  });
-  const propertyList = property?.map((item: any) => {
-    return {
-      label: item?.name,
-      value: item?.id,
-    };
-  });
+  const [checkInDate, setCheckInDate] = useState(initialCheckInDate);
+  const [checkOutDate, setCheckOutDate] = useState(initialCheckOutDate);
+
+  const propertyList = usePropertyList();
+  const changeCheckInDate = (date: any) => {
+    setCheckInDate(date);
+    const newDate = date && new Date(date);
+    const newCheckoutDate =
+      newDate && new Date(newDate.getTime() + 24 * 60 * 60 * 1000);
+    setCheckOutDate(newCheckoutDate);
+  };
+  const changeCheckOutDate = (date: any) => {
+    setCheckOutDate(date);
+  };
 
   return (
     <>
@@ -41,7 +53,7 @@ export const BookForm = () => {
         <Container maxW={"1400px"}>
           <Grid
             templateColumns={{
-              xl: "repeat(1,2fr 1fr )",
+              xl: "repeat(1,1fr 1fr )",
               md: "repeat(2,2fr,1fr)",
               sm: "repeat(1,1fr)",
             }}
@@ -66,13 +78,15 @@ export const BookForm = () => {
                 <form>
                   <GridItem>
                     <FormControl
-                      control="select"
+                      control="reactSelect"
                       register={register}
                       name="propertyId"
                       placeholder="Choose Property"
                       label="Property Name *"
                       required
-                      background="white"
+                      labelKey="name"
+                      valueKey="id"
+                      bg_color="white"
                       height="40px"
                       color="black"
                       error={errors.propertyId?.message || ""}
@@ -81,36 +95,25 @@ export const BookForm = () => {
                   </GridItem>
                   <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
                     <GridItem>
-                      <FormControl
-                        control="input"
+                      <DateComponent
                         name="checkinDate"
-                        defaultValue={"2023-09-08"}
-                        type="date"
-                        required
                         label="Check In"
-                        background="white"
-                        color="black"
-                        padding="10px"
-                        height="40px"
-                        lineHeight="2"
-                        register={register}
+                        changeDate={changeCheckInDate}
                         error={errors.checkInDate?.message || ""}
+                        endIcons="true"
+                        defaultValue={checkInDate}
+                        minDate={initialCheckInDate}
                       />
                     </GridItem>
                     <GridItem>
-                      <FormControl
-                        control="input"
-                        name="checkoutDate"
-                        type="date"
-                        defaultValue={"2023-09-09"}
-                        required
-                        label="Check Out"
-                        background="white"
-                        color="black"
-                        padding="10px"
-                        height="40px"
-                        register={register}
-                        error={errors.checkOutDate?.message || ""}
+                      <DateComponent
+                        name="checkOutDate"
+                        label="Check In"
+                        changeDate={changeCheckOutDate}
+                        error={errors.checkInDate?.message || ""}
+                        endIcons="true"
+                        defaultValue={checkOutDate}
+                        minDate={initialCheckOutDate}
                       />
                     </GridItem>
                   </Grid>
