@@ -20,6 +20,7 @@ import ReportPage from "@src/pages/Report";
 import VoucherPage from "@src/pages/Voucher";
 import VoucherAdd from "@src/pages/Voucher/add";
 import OfferPage from "@src/pages/Offers";
+import StaffManagementPage from "@src/pages/StaffManagement";
 import PageNotFound from "@src/pages/NotFound";
 
 const routes = [
@@ -126,6 +127,15 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.NOT_FOUND,
     element: <RestrictedRoute Component={PageNotFound} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.STAFF_MANAGEMENT,
+    element: (
+      <PrivateRoute
+        Component={StaffManagementPage}
+        allowedRoles={["SUPERADMIN"]}
+      />
+    ),
   },
 ];
 

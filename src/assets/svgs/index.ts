@@ -18,3 +18,4 @@ export { ReactComponent as ColorInList } from "./colorInList.svg";
 export { ReactComponent as CrossIcon } from "./cross.svg";
 export { ReactComponent as MembershipIcon } from "./membership.svg";
 export { ReactComponent as DatePickerIcon } from "./datePick.svg";
+export { ReactComponent as Logo } from "./heritageLogo.svg";

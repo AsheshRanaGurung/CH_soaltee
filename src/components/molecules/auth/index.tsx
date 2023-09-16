@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ImageSlider from "../image-slider";
 import { imageList } from "@src/assets/images";
 import useWindowSize from "@src/hooks/useWindowResize";
+import { Logo } from "@src/assets/svgs";
 interface IProps {
   children: React.ReactNode;
 }
@@ -67,7 +68,14 @@ const Authentication: React.FC<IProps> = ({ children }) => {
     <Wrapper>
       {width > 720 && <ImageSlider images={images} />}
       <FormContent>
-        <img src={imageList.Logo} className="img" />
+        <Logo
+          style={{
+            position: "absolute",
+            top: "15px",
+            right: "20px",
+            width: "150px",
+          }}
+        />
         {children}
         <Footer>
           <p>Privacy policy</p>

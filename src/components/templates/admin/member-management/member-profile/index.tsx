@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import MemberHistory from "../member-history";
 import { ProfileImage } from "@src/components/atoms/ProfileImage";
 import { MembershipIcon } from "@src/assets/svgs";
+import NoDataAvailable from "@src/components/organisms/nodata";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -171,14 +172,17 @@ const MemberProfile = () => {
     await queryClient.refetchQueries("member");
     setRewardPoints((prevData) => prevData + data);
   };
+  if (state == null) {
+    return <NoDataAvailable content="Unable to get user details " />;
+  }
   return (
     <>
       <Box
         display={"flex"}
         justifyContent={"center"}
         alignItems={"center"}
-        background={`url(${imageList.ProfileBackground}) center center/cover no-repeat`}
-        h={"130px"}
+        background={`url(http://172.30.1.9:8050/membership/get-tier-image/${data?.tierImage}) center center/cover no-repeat`}
+        h={"220px"}
         position={"relative"}
       >
         <Heading
@@ -189,7 +193,7 @@ const MemberProfile = () => {
           h={"45px"}
           p={["10px 20px"]}
           borderRadius={"65px"}
-          background={"#979797"}
+          background={`${data?.tierColorCode}`}
           fontWeight={"400"}
         >
           {data?.tierName.toUpperCase()}
@@ -200,7 +204,7 @@ const MemberProfile = () => {
         <Card>
           <div className="profile-card">
             <div>
-              <Text fontSize={"3xl"}>{state.fullName}</Text>
+              <Text fontSize={"3xl"}>{state?.fullName}</Text>
               <Text>{data?.tierName}</Text>
             </div>
             <div>
@@ -220,18 +224,20 @@ const MemberProfile = () => {
             <div className="basic-info">
               <div className="basic-info-item">
                 <Icons icon={<AiFillMail />} />
-                <Text color={colors.secondary_dark}>Email : {state.email}</Text>
+                <Text color={colors.secondary_dark}>
+                  Email : {state?.email}
+                </Text>
               </div>
               <div className="basic-info-item">
                 <Icons icon={<FaGlobeAsia />} />
                 <Text color={colors.secondary_dark}>
-                  Nationality : {state.nationality}
+                  Nationality : {state?.nationality}
                 </Text>
               </div>
               <div className="basic-info-item">
                 <Icons icon={<FaPhoneAlt />} />
                 <Text color={colors.secondary_dark}>
-                  Phone number : {state.phoneNumber}
+                  Phone number : {state?.phoneNumber}
                 </Text>
               </div>
               <div className="basic-info-item">
@@ -243,7 +249,7 @@ const MemberProfile = () => {
               <div className="basic-info-item">
                 <Icons icon={<MembershipIcon />} />
                 <Text color={colors.secondary_dark}>
-                  Membership number : {state.customerId}
+                  Membership number : {state?.customerId}
                 </Text>
               </div>
             </div>
