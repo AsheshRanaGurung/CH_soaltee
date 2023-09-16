@@ -6880,6 +6880,13 @@ object.values@^1.1.5:
     define-properties "^1.1.3"
     es-abstract "^1.19.1"
 
+objecttoformdataconverter@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/objecttoformdataconverter/-/objecttoformdataconverter-1.0.4.tgz#4b6f61784640018d38b7e13fe223853ca9aea9c1"
+  integrity sha512-3WnLJ/lcM9Y9gdLkc+Qlgu3Pbpq6ukb3ZAKU+atzxM573kuyc26AZDop4IABA9wHW9WiZup7x6CW15wwgvvc3w==
+  dependencies:
+    typescript "^5.0.4"
+
 oblivious-set@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/oblivious-set/-/oblivious-set-1.0.0.tgz#c8316f2c2fb6ff7b11b6158db3234c49f733c566"
@@ -8351,6 +8358,11 @@ typescript@>=4.4, typescript@^4.6.4:
   version "4.8.2"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.8.2.tgz"
   integrity sha512-C0I1UsrrDHo2fYI5oaCGbSejwX4ch+9Y5jTQELvovfmFkK3HHSZJB8MSJcWLmCUBzQBchCrZ9rMRV6GuNrvGtw==
+
+typescript@^5.0.4:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
+  integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
 
 ua-parser-js@^0.7.18:
   version "0.7.35"

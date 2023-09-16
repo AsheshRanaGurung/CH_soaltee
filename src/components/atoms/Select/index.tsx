@@ -43,9 +43,17 @@ const SelectWrapper = styled(Select)<any>`
     display: none;
   }
   .css-1dimb5e-singleValue {
-    color: ${colors.primary_dark};
+    color: ${colors.black};
   }
 `;
+export const colourStyles = {
+  option: (styles: any) => {
+    return {
+      ...styles,
+      color: "red !important",
+    };
+  },
+};
 const ReactSelect = ({
   register,
   selectedOption,
@@ -81,7 +89,6 @@ const ReactSelect = ({
         {...register(name, rules)}
         {...rest}
         id={name}
-        name={name}
         options={formattedOptions.map((option: any) => ({
           ...option,
           isDisabled: isSelected?.includes(option.value),

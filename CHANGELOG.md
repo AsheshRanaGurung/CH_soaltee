@@ -8,9 +8,6 @@
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
-* fixed date picker ([580de77](https://gitlab.com/paras205/boilerplate-react/commit/580de77a6efffdd43d8019180d8c06fccc542a0a))
-* fixed react date picker in user ([3f9e88f](https://gitlab.com/paras205/boilerplate-react/commit/3f9e88f8deeba0e9cd2c25bc73c26126a6d38f35))
-* fixed select property in user book form ([19650f3](https://gitlab.com/paras205/boilerplate-react/commit/19650f34ae5e4467efaedf02aeb362838bf47199))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
 * hotfix: change border ([c4d5812](https://gitlab.com/paras205/boilerplate-react/commit/c4d5812510889d03c1f90b6910cc2ca2f45950e9))
@@ -22,8 +19,6 @@
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
 * remove console ([b88c476](https://gitlab.com/paras205/boilerplate-react/commit/b88c476a0c58d18c628bf21657472ce251ab81b8))
-* removed unnecessary hooks ([11857a9](https://gitlab.com/paras205/boilerplate-react/commit/11857a956baafad73e839a01ca8036ce91860162))
-* used properlist hook ([8a43809](https://gitlab.com/paras205/boilerplate-react/commit/8a438094140eb1e5ae6d08f176c76d4bff99c2f1))
 
 
 ### Features
@@ -53,6 +48,8 @@
 * logot session clear from font side ([29ac586](https://gitlab.com/paras205/boilerplate-react/commit/29ac5861e27e9b8d2e15e114cc47f0b540ea00ee))
 * new MemberTier ([09b7d5b](https://gitlab.com/paras205/boilerplate-react/commit/09b7d5b206b69c4971f215b514ee7c5535749c88))
 * password validation ([a14954c](https://gitlab.com/paras205/boilerplate-react/commit/a14954c5935baa2dcd783af303ed3b8ea450aab0))
+* profile changes ([ecddf20](https://gitlab.com/paras205/boilerplate-react/commit/ecddf2070f7bbdf6ff1726c422e2191f5bb4ae2b))
+* profile changes ([0ecd7ff](https://gitlab.com/paras205/boilerplate-react/commit/0ecd7ff1b4b7d74d95f40f13af7bc09eb39684e1))
 * refetched point for manual and added phone validation ([1d51211](https://gitlab.com/paras205/boilerplate-react/commit/1d51211fd510cf093aab1d4739037ff4e30ab572))
 * resolved modal issue, integrated api for update property ([56fc7b3](https://gitlab.com/paras205/boilerplate-react/commit/56fc7b3dce0062608340685fa86dcee7ab0d45da))
 * table changes ([efc1491](https://gitlab.com/paras205/boilerplate-react/commit/efc1491a997cc0f44fd7720a21fed789d69c01df))

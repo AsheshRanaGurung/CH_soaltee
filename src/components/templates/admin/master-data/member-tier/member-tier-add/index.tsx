@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import { ColorPickerMinusIcon, ColorPickerPlusIcon } from "@src/assets/svgs";
-import Editor from "@src/components/atoms/Editor";
 
 interface IMemberProps {
   register: UseFormRegister<IMemberTierDetail>;
@@ -34,7 +33,6 @@ export const CreateMemberForm: React.FC<IMemberProps> = ({
   register,
   errors,
   setValue,
-  control,
   id,
 }: any) => {
   const [color, setColor] = useState(`${colors.primary}`);
@@ -82,12 +80,15 @@ export const CreateMemberForm: React.FC<IMemberProps> = ({
             error={errors?.pointsTo?.message || ""}
             required
           />
-          <Box>
-            <Text fontSize={"sm"} mb={2} fontWeight={"600"}>
-              Description
-            </Text>
-            <Editor name="description" control={control} />
-          </Box>
+          <FormControl
+            onChange={(data: string) => setValue("description", data)}
+            control="editor"
+            name="description"
+            label={"Description"}
+            required
+            placeholder={"description"}
+            error={errors?.description?.message ?? ""}
+          />
           <Flex
             gap={1}
             onClick={() => {
