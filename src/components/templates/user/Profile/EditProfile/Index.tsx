@@ -1,36 +1,36 @@
 import { Box, Flex } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import ModalForm from "@src/components/organisms/modal";
-import { nationality } from "@src/constant/index";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 import * as yup from "yup";
 import { useEffect } from "react";
 import ImageUpload from "@src/components/atoms/ImageUpload";
 import { useUpdateUserDetail } from "@src/service/user";
-import { imageList } from "@src/assets/images";
+import { objectToFormData } from "objecttoformdataconverter";
+import { useNationalityList } from "@src/constant/useNationalityList";
 
 const defaultValues = {
   fullName: "",
   email: "",
   phoneNumber: "",
-  nationality: "",
+  nationalityId: "",
 };
 const validationSchema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
   email: yup.string().required("Email is required"),
   phoneNumber: createPhoneNumberSchema(),
-  nationality: yup.string().required("Nationality is required"),
+  nationalityId: yup.string().required("Nationality is required"),
 });
 export const EditProfile = ({
   isOpen,
   onClose,
   data,
-  handleFormSubmit,
 }: {
   isOpen: boolean;
   onClose: () => void;
   data: any;
+  dataProfile: any;
   handleFormSubmit: (data: any) => void;
 }) => {
   const { handleSubmit, register, errors, reset, setValue } = useFormHook({
@@ -40,21 +40,16 @@ export const EditProfile = ({
   const { userId } = data;
   const { mutateAsync: update, isLoading: isUpdating } = useUpdateUserDetail();
   const onSubmitHandler = async (data: any) => {
-    const formData = new FormData();
-    const datas = {
-      fullName: data?.fullName,
-      phoneNumber: data?.phoneNumber,
-      nationality: data?.nationality,
-    };
+    const convertedData = objectToFormData({
+      data: JSON.stringify({
+        fullName: data?.fullName,
+        phoneNumber: +data?.phoneNumber,
+        nationalityId: data?.nationalityId,
+      }),
+      image: data?.image,
+    });
 
-    data?.image && formData.append("image", data?.image as Blob);
-    formData.append("data", JSON.stringify(datas));
-    const result = await update({ id: userId, data: formData });
-    handleFormSubmit(result?.data?.data);
-    localStorage.setItem(
-      "imageName",
-      data?.image ? result?.data?.data?.imageUrl : imageList.DummyUser
-    );
+    await update({ id: userId, data: convertedData });
     onClose();
   };
   useEffect(() => {
@@ -62,9 +57,10 @@ export const EditProfile = ({
       fullName: data?.fullName,
       email: data?.email,
       phoneNumber: data?.phoneNumber,
-      nationality: data?.nationality,
+      nationalityId: data?.nationalityId,
     });
   }, [data]);
+
   return (
     <ModalForm
       isModalOpen={isOpen}
@@ -79,6 +75,7 @@ export const EditProfile = ({
       <ProfileEdit
         register={register}
         errors={errors}
+        dataProfile={data}
         setValue={setValue}
         isLoading={isUpdating}
       />
@@ -86,15 +83,16 @@ export const EditProfile = ({
   );
 };
 
-export const ProfileEdit = ({ register, errors, setValue }: any) => {
-  const imageUrl = localStorage.getItem("imageName");
+export const ProfileEdit = ({ register, errors, setValue, data }: any) => {
+  const nationalityList = useNationalityList();
   return (
     <Box mx={{ base: "none", md: "auto" }}>
       <Flex direction="column" gap={4.5}>
         <ImageUpload
-          imageSrc={imageUrl ?? ""}
+          imageSrc={data?.userImageUrl ?? ""}
           setValue={setValue}
           isUser={true}
+          name={"image"}
         />
 
         <FormControl
@@ -128,14 +126,17 @@ export const ProfileEdit = ({ register, errors, setValue }: any) => {
           required
         />
         <FormControl
-          control="select"
+          control="reactSelect"
           register={register}
-          name="nationality"
+          name="nationalityId"
           placeholder="Choose your nationality"
           label="Nationality"
+          onChange={(e: any) => setValue("nationalityId", e.value)}
           required
-          error={errors.nationality?.message || ""}
-          options={nationality}
+          error={errors.nationalityId?.message || ""}
+          options={nationalityList || []}
+          labelKey="countryName"
+          valueKey="id"
         />
       </Flex>
     </Box>

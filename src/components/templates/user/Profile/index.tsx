@@ -21,6 +21,7 @@ import { getUserDetail } from "@src/service/user";
 import { useQuery, useQueryClient } from "react-query";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { baseURL } from "@src/service/config/api";
 const ProfilePage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
@@ -44,14 +45,12 @@ const ProfilePage = () => {
     await queryClient.refetchQueries("user_detail");
     setUpdatedData(data);
   };
-  //need to fetch this from api, only a quickfix
-  const imageUrl = localStorage.getItem("imageName") ?? "";
-
+  const imageUrl = data?.userImageUrl ?? "";
+  const imgProfile = `${baseURL}users/get-profile-image/${data?.userImageUrl.trim()}`;
   return (
     <>
       <Box
         background={`url(${imageList.ProfileImage}) center center/cover no-repeat`}
-        // p={["0px 0"]}
         h={"300px"}
         position={"relative"}
       >
@@ -88,7 +87,7 @@ const ProfilePage = () => {
       >
         {imageUrl ? (
           <Image
-            src={imageUrl}
+            src={imgProfile}
             style={{ borderRadius: "50%", height: "100%", width: "100%" }}
           />
         ) : (
@@ -103,7 +102,11 @@ const ProfilePage = () => {
           <Box mt={"20px"} ml={"18%"} mb={"80px"}>
             <Flex justifyContent={"space-between"}>
               <Box>
-                <Text fontSize={"3xl"} marginBottom={"10px"}>
+                <Text
+                  fontSize={"3xl"}
+                  marginBottom={"10px"}
+                  textTransform={"capitalize"}
+                >
                   {data?.fullName}
                 </Text>
                 <Box
@@ -122,7 +125,9 @@ const ProfilePage = () => {
                   <Text fontSize={"16px"} color={"#696969"}>
                     Reward Points
                   </Text>
-                  <Heading fontSize={"18px"}>{data?.totalRewardPoints}</Heading>
+                  <Heading fontSize={"18px"} fontWeight={"500"}>
+                    {data?.totalRewardPoints || "0"}
+                  </Heading>
                 </Box>
                 <List spacing={4}>
                   <ListItem color={"#696969"} display={"flex"}>
@@ -167,6 +172,7 @@ const ProfilePage = () => {
         handleFormSubmit={() => {
           handleFormSubmit(data);
         }}
+        dataProfile={data}
       />
       <Footer />
     </>

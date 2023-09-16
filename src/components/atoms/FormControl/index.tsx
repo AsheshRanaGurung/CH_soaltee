@@ -1,4 +1,5 @@
 import DateComponent from "../DateInput";
+import Editor from "../Editor";
 import Input from "../Input";
 import Password from "../Password";
 import Select from "../Select";
@@ -21,8 +22,8 @@ function FormControl(props: any) {
       return <Switch {...rest} />;
     case "date":
       return <DateComponent {...rest} />;
-    // case "checkbox":
-    //   return <Checkbox {...rest} />;
+    case "editor":
+      return <Editor {...rest} />;
     default:
       return null;
   }

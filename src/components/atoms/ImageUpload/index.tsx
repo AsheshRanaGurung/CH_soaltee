@@ -11,6 +11,7 @@ interface IProps {
   isUser?: boolean;
   name?: string;
   imageUploadStyle?: string;
+  setShow?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ImageWithPreview = styled.div<any>`
@@ -76,6 +77,7 @@ const ImageUpload: React.FC<IProps> = ({
   ...rest
 }) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
+
   const [imageName, setImageName] = useState("");
   const handleImageChange = (event: any) => {
     const selectedImage = event?.target?.files[0];

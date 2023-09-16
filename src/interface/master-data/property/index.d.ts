@@ -20,4 +20,5 @@ export interface IMemberTierDetail {
   pointsFrom?: number | string;
   pointsTo?: number | string;
   colorCode?: string;
+  description?: string;
 }

@@ -1,78 +1,76 @@
-import { FormControl, FormErrorMessage } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  FormErrorMessage,
+} from "@chakra-ui/react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import { Control, Controller } from "react-hook-form";
 
-interface IEditor {
+export interface IEditor {
+  data?: string;
+  height?: string;
+  label?: string;
+  helperText?: string;
+  error?: string;
   onChange?: (data: string) => void;
   onBlur?: (data: string | undefined) => void;
   onInit?: (editor: ClassicEditor) => void;
-  name: string;
-  control: Control<any>;
-  isRequired?: boolean;
+  required?: boolean;
 }
 
-const editorCss = `
-  ol,ul {
-    padding:unset;
-  }
-`;
-
-const Editor = ({ onInit, onBlur, name, control, isRequired }: IEditor) => {
+const Editor = ({
+  data,
+  height,
+  onInit,
+  onChange,
+  onBlur,
+  label,
+  helperText,
+  required,
+  error,
+}: IEditor) => {
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { onChange, value }, fieldState: { error } }) => {
-        return (
-          <>
-            <FormControl
-              isRequired={!!isRequired}
-              isInvalid={!!error}
-              id={name}
-            >
-              <CKEditor
-                editor={ClassicEditor}
-                data={value}
-                config={{
-                  removePlugins: ["EasyImage", "ImageUpload", "MediaEmbed"],
-                  editorConfig: {
-                    extraAllowedContent: "ul li",
-                    contentsCss: [editorCss],
-                  },
-                }}
-                onReady={(editor) => {
-                  editor?.editing.view.change((writer) => {
-                    writer.setStyle(
-                      "height",
-                      "200px",
-                      editor.editing.view.document.getRoot()
-                    );
-                  });
-                  editor?.editing.view.change((writer) => {
-                    writer.setStyle(
-                      "padding-left",
-                      "24px",
-                      editor.editing.view.document.getRoot()
-                    );
-                  });
-                  onInit && onInit(editor);
-                }}
-                onChange={(_, editor) => {
-                  const data = editor.getData();
-                  onChange && onChange(data);
-                }}
-                onBlur={() => {
-                  onBlur && onBlur(value);
-                }}
-              />
-              <FormErrorMessage>{error ? error?.message : ""}</FormErrorMessage>
-            </FormControl>
-          </>
-        );
-      }}
-    />
+    <FormControl isInvalid={!!error}>
+      {label && (
+        <FormLabel fontWeight={500} fontSize={"14px"}>
+          {label}{" "}
+          {required && (
+            <sup style={{ color: "red", fontWeight: "bold" }}>*</sup>
+          )}
+        </FormLabel>
+      )}
+      <CKEditor
+        editor={ClassicEditor}
+        data={data}
+        config={{
+          removePlugins: ["EasyImage", "ImageUpload", "MediaEmbed"],
+        }}
+        onReady={(editor) => {
+          // You can store the "editor" and use when it is needed.
+          // console.log("Editor is ready to use!", editor);
+          editor?.editing.view.change((writer) => {
+            writer.setStyle(
+              "height",
+              `${height ?? 200}px`,
+              editor.editing.view.document.getRoot()
+            );
+          });
+          onInit && onInit(editor);
+        }}
+        onChange={(_event, editor) => {
+          const data = editor.getData();
+          onChange && onChange(data);
+        }}
+        onBlur={(_event, editor) => {
+          const data = editor.getData();
+          onChange && onChange(data);
+          onBlur && onBlur(data);
+        }}
+      />
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+      {error && <FormErrorMessage>{error}</FormErrorMessage>}
+    </FormControl>
   );
 };
-
 export default Editor;

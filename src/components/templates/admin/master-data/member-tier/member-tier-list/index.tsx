@@ -116,6 +116,7 @@ const MemberList: React.FC<IMemberTier> = ({
       pointsFrom: data.pointsFrom,
       pointsTo: data.pointsTo,
       colorCode: data.colorCode,
+      description: data?.description,
     };
     formData.append("data", JSON.stringify(dat));
     if (updateId) {

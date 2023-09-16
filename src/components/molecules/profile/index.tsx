@@ -10,6 +10,7 @@ import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router-dom";
 import { getUserDetail } from "@src/service/user";
 import { useQuery } from "react-query";
+import { baseURL } from "@src/service/config/api";
 
 const Profile = ({ type }: any) => {
   const navigate = useNavigate();
@@ -17,7 +18,9 @@ const Profile = ({ type }: any) => {
     select: ({ data }) => data.data,
   });
   //need to fetch this from api, only a quickfix
-  const imageUrl = localStorage.getItem("imageName") ?? "";
+  // const imageUrl = data?.userImageUrl ?? "";
+  const imageUrl = `${baseURL}users/get-profile-image/${data?.userImageUrl.trim()}`;
+
   return (
     <Menu>
       <MenuButton
