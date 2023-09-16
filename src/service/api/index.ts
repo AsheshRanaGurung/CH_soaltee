@@ -46,6 +46,9 @@ export const api = {
     fetchBlock: "/dashboard/total-active-block-user",
     update: "",
   },
+  staff_management: {
+    fetch: "/users/get-staff-details",
+  },
   member_management: {
     add: "/auth/save-users",
     fetch: "/auth/get-users",

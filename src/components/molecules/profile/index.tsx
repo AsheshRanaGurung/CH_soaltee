@@ -19,7 +19,7 @@ const Profile = ({ type }: any) => {
   });
   //need to fetch this from api, only a quickfix
   // const imageUrl = data?.userImageUrl ?? "";
-  const imageUrl = `${baseURL}users/get-profile-image/${data?.userImageUrl.trim()}`;
+  const imageUrl = `${baseURL}users/get-profile-image/${data?.userImageUrl?.trim()}`;
 
   return (
     <Menu>

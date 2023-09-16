@@ -15,7 +15,7 @@ import { FaHome } from "react-icons/fa";
 import styled from "styled-components";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { colors } from "@src/theme/colors";
-import { imageList } from "@src/assets/images";
+import { Logo } from "@src/assets/svgs";
 const Icon = styled.div``;
 interface ISidebar {
   isCollapse: boolean;
@@ -44,6 +44,16 @@ const Sidebar = ({
     {
       name: "Member Management",
       to: NAVIGATION_ROUTES.MEMBER_MANAGEMENT,
+      icon: (
+        <Icon>
+          <FaUsers />
+        </Icon>
+      ),
+      visible: true,
+    },
+    {
+      name: "Staff Management",
+      to: NAVIGATION_ROUTES.STAFF_MANAGEMENT,
       icon: (
         <Icon>
           <FaUsers />
@@ -161,9 +171,13 @@ const Sidebar = ({
       onMouseLeave={onExitSidebar}
       bgColor={colors.white}
     >
-      <img
-        style={{ width: "110px", display: "block", margin: "auto" }}
-        src={imageList.Logo}
+      <Logo
+        style={{
+          height: "60px",
+          display: "block",
+          margin: "auto",
+          marginTop: "25px",
+        }}
       />
       <List>
         <ListItem mx={3} my={6}>

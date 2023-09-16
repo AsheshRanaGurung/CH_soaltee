@@ -1,4 +1,4 @@
-## 0.0.14 (2023-09-15)
+## 0.0.14 (2023-09-16)
 
 
 ### Bug Fixes
@@ -7,6 +7,7 @@
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
+* craete staff page ([b2a5ba6](https://gitlab.com/paras205/boilerplate-react/commit/b2a5ba68ed56d37d6b9b1036196cc086d0b55700))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
@@ -14,7 +15,6 @@
 * hotfix: remove property list from option ([6d48686](https://gitlab.com/paras205/boilerplate-react/commit/6d486863e16f9bbfa1265840514bfdeec0553399))
 * hotfix: route manage ([9c0394c](https://gitlab.com/paras205/boilerplate-react/commit/9c0394ce422983cccca2b7e439c6f699faf9c135))
 * hotfix: routes ([cdedd07](https://gitlab.com/paras205/boilerplate-react/commit/cdedd07ffe11ad9d5c45c41eedb6d4ac672f82cb))
-* hotfix: userdata added ([f393c2c](https://gitlab.com/paras205/boilerplate-react/commit/f393c2cf04136aab694edc3b31aee7460eba330e))
 * minor issues ([e5b8a8c](https://gitlab.com/paras205/boilerplate-react/commit/e5b8a8c4de098ec32fa8f684b19ccb061dded3b1))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
@@ -46,15 +46,11 @@
 * login component ([967e159](https://gitlab.com/paras205/boilerplate-react/commit/967e159a4fe973d5e6302f108f2bd08525fcc615))
 * login component ([9da8c3e](https://gitlab.com/paras205/boilerplate-react/commit/9da8c3ed3142a97a439caf5080ed56106b689458))
 * logot session clear from font side ([29ac586](https://gitlab.com/paras205/boilerplate-react/commit/29ac5861e27e9b8d2e15e114cc47f0b540ea00ee))
-* new MemberTier ([09b7d5b](https://gitlab.com/paras205/boilerplate-react/commit/09b7d5b206b69c4971f215b514ee7c5535749c88))
 * password validation ([a14954c](https://gitlab.com/paras205/boilerplate-react/commit/a14954c5935baa2dcd783af303ed3b8ea450aab0))
-* profile changes ([ecddf20](https://gitlab.com/paras205/boilerplate-react/commit/ecddf2070f7bbdf6ff1726c422e2191f5bb4ae2b))
-* profile changes ([0ecd7ff](https://gitlab.com/paras205/boilerplate-react/commit/0ecd7ff1b4b7d74d95f40f13af7bc09eb39684e1))
 * refetched point for manual and added phone validation ([1d51211](https://gitlab.com/paras205/boilerplate-react/commit/1d51211fd510cf093aab1d4739037ff4e30ab572))
 * resolved modal issue, integrated api for update property ([56fc7b3](https://gitlab.com/paras205/boilerplate-react/commit/56fc7b3dce0062608340685fa86dcee7ab0d45da))
 * table changes ([efc1491](https://gitlab.com/paras205/boilerplate-react/commit/efc1491a997cc0f44fd7720a21fed789d69c01df))
 * table changes ([b545c66](https://gitlab.com/paras205/boilerplate-react/commit/b545c668a87aa21a950ccbfd387d5cc97bd70ad4))
-* voucher changes ([2b3f9ca](https://gitlab.com/paras205/boilerplate-react/commit/2b3f9ca9b0d7b2fd3b5bb01c7b4795f93b7ea297))
 
 
 
