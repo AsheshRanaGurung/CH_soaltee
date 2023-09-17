@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
+import parse from "html-react-parser";
 
 interface IProps {
   title: string;
@@ -17,18 +18,16 @@ export const SpecialOffer: React.FC<IProps> = ({
     <>
       <Box
         position={"relative"}
-        p={"0"}
         background={`url(${img}) center center/cover no-repeat`}
-        borderRadius={"8px"}
+        borderRadius="8px"
+        height={"300px"}
         _before={{
           content: `""`,
-          background: "linear-gradient(90deg, #000 100%)",
           position: "absolute",
-          top: 0,
-          left: 0,
-          opacity: "0.4",
-          bottom: 0,
-          right: 0,
+          top: "0",
+          bottom: "0",
+          left: "0",
+          background: "linear-gradient(45deg, #000000 0%, #ffffff 100%)",
         }}
       >
         <Box
@@ -69,7 +68,7 @@ export const SpecialOffer: React.FC<IProps> = ({
           <Heading fontSize={"18px"} marginBottom={"20px"}>
             {title}
           </Heading>
-          <Text marginBottom={"15px"}>{desc}</Text>
+          <Text marginBottom={"15px"}> {parse(desc)}</Text>
           {/* <Button fontSize={"14px"}>{ButtonText}</Button> */}
         </Box>
       </Box>

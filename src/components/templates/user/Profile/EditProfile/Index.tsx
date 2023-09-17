@@ -37,7 +37,7 @@ export const EditProfile = ({
     validationSchema,
     defaultValues,
   });
-  const { userId } = data;
+  const { userId } = data !== null ? data : "";
   const { mutateAsync: update, isLoading: isUpdating } = useUpdateUserDetail();
   const onSubmitHandler = async (data: any) => {
     const convertedData = objectToFormData({
@@ -92,7 +92,7 @@ export const ProfileEdit = ({ register, errors, setValue, data }: any) => {
           imageSrc={data?.userImageUrl ?? ""}
           setValue={setValue}
           isUser={true}
-          name={"image"}
+          show={true}
         />
 
         <FormControl

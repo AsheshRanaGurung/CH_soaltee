@@ -14,9 +14,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
-import { LocationIcon } from "@src/assets/svgs";
+import { Facebook, Instragram, LocationIcon, Twitter } from "@src/assets/svgs";
 import { SocialCustom } from "@src/components/atoms/Icons/SocialCustom";
-import { FaFacebookF, FaInstagram, FaRegCopyright } from "react-icons/fa";
+import { FaRegCopyright } from "react-icons/fa";
 
 const pages = ["Home", "Earn Points", "Redeem Points"];
 export const Footer = () => {
@@ -33,36 +33,20 @@ export const Footer = () => {
           p={["30px 0"]}
         >
           <GridItem>
-            <Image src={imageList.FootersLogo} />
+            <Image src={imageList.Logo} />
 
             <Flex justifyContent={"space-between"} w={"22%"} mt={"10px"}>
               <SocialCustom
                 icon={
-                  <FaFacebookF
+                  <Instragram
                     style={{
-                      color: "white",
+                      height: "20px",
                     }}
                   />
                 }
               />
-              <SocialCustom
-                icon={
-                  <FaInstagram
-                    style={{
-                      color: "white",
-                    }}
-                  />
-                }
-              />
-              <SocialCustom
-                icon={
-                  <EmailIcon
-                    style={{
-                      color: "white",
-                    }}
-                  />
-                }
-              />
+              <SocialCustom icon={<Facebook />} />
+              <SocialCustom icon={<Twitter />} />
             </Flex>
           </GridItem>
           <GridItem marginTop={"30px"}>

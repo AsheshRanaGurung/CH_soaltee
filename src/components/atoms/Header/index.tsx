@@ -18,10 +18,12 @@ import { Link } from "react-scroll";
 interface Props {
   id: string;
   name: string;
+  path: string | undefined;
 }
 const Links = [
   { id: "earn_point", name: "Earn Point" },
   { id: "redeem_point", name: "Redeem Point" },
+  { id: "History", name: "History", path: NAVIGATION_ROUTES.History },
 ];
 const NavLink = (props: Props) => {
   const { id, name } = props;
@@ -61,8 +63,13 @@ export default function Header({ navigation }: any) {
             {navigation && (
               <HStack spacing={8} alignItems={"center"}>
                 <HStack as={"nav"} spacing={4} display={{ md: "flex" }}>
-                  {Links.map((link) => (
-                    <NavLink key={link.id} id={link.id} name={link.name} />
+                  {Links?.map((link) => (
+                    <NavLink
+                      key={link.id}
+                      id={link.id}
+                      name={link.name}
+                      path={link.path}
+                    />
                   ))}
                 </HStack>
               </HStack>
@@ -86,7 +93,12 @@ export default function Header({ navigation }: any) {
             <Box pb={4} display={{ md: "none" }}>
               <Stack as={"nav"} spacing={4}>
                 {Links.map((link) => (
-                  <NavLink key={link.id} id={link.id} name={link.name} />
+                  <NavLink
+                    key={link.id}
+                    id={link.id}
+                    name={link.name}
+                    path={link.path}
+                  />
                 ))}
               </Stack>
             </Box>

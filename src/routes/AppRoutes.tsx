@@ -22,6 +22,7 @@ import VoucherAdd from "@src/pages/Voucher/add";
 import OfferPage from "@src/pages/Offers";
 import StaffManagementPage from "@src/pages/StaffManagement";
 import PageNotFound from "@src/pages/NotFound";
+import HistoryTransaction from "@src/components/templates/user/History";
 
 const routes = [
   {
@@ -37,7 +38,12 @@ const routes = [
     path: NAVIGATION_ROUTES.USER_DASHBOARD,
     element: <PrivateRoute Component={UserDashboard} allowedRoles={["USER"]} />,
   },
-
+  {
+    path: NAVIGATION_ROUTES.History,
+    element: (
+      <PrivateRoute Component={HistoryTransaction} allowedRoles={["USER"]} />
+    ),
+  },
   {
     path: NAVIGATION_ROUTES.SERVICE,
     element: (

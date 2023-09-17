@@ -11,7 +11,7 @@ interface IProps {
   isUser?: boolean;
   name?: string;
   imageUploadStyle?: string;
-  setShow?: React.Dispatch<React.SetStateAction<boolean>>;
+  show?: boolean;
 }
 
 const ImageWithPreview = styled.div<any>`
@@ -74,6 +74,7 @@ const ImageUpload: React.FC<IProps> = ({
   imageSrc,
   isUser,
   name = "image",
+  show,
   ...rest
 }) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
@@ -131,7 +132,7 @@ const ImageUpload: React.FC<IProps> = ({
           </Button>
         </>
       )}
-      <ImageWithPreview {...rest}>
+      <ImageWithPreview {...rest} style={{ display: show ? "none" : "block" }}>
         <ImageStyled {...rest}>
           <label htmlFor="fileInput">Choose a file</label>
           <input
@@ -153,7 +154,7 @@ const ImageUpload: React.FC<IProps> = ({
           )}
         </ImageStyled>
         {selectedImage && (
-          <div>
+          <div style={{ display: show ? "none" : "block" }}>
             <img src={selectedImage} />
           </div>
         )}

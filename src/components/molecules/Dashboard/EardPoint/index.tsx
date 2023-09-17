@@ -37,6 +37,7 @@ export const EarnPoint = () => {
     proverty: prov,
     tier: tiers,
   });
+  console.log("tierOprtion", tierOprtion);
   return (
     <Card borderRadius={"14px"}>
       <CardHeader fontSize={"18px"} fontWeight={"800"}>
@@ -51,22 +52,33 @@ export const EarnPoint = () => {
               placeholder="All"
               control={control}
               isLoading={isLoading}
-              labelKey="name"
-              valueKey="id"
               isError={isError}
-              selectOptions={propertyList}
+              selectOptions={
+                propertyList?.map((item: { id: any; name: any }) => {
+                  return {
+                    value: item?.id,
+                    label: item?.name,
+                  };
+                }) ?? []
+              }
               onAdditionalOnChange={(e) => setProv(e.target.value || "-1")}
             />
+
             <SelectCustom
               name="tier"
               errors={errors as Partial<FieldErrorsImpl<any>>}
               placeholder="tier"
-              labelKey="membershipName"
-              valueKey="id"
               control={control}
               isLoading={isLoading}
               isError={isError}
-              selectOptions={tierOprtion}
+              selectOptions={
+                tierOprtion?.map((item: { id: any; membershipName: any }) => {
+                  return {
+                    value: item?.id,
+                    label: item?.membershipName,
+                  };
+                }) ?? []
+              }
               onAdditionalOnChange={(e) => setTiers(e.target.value || "-1")}
             />
           </Flex>
