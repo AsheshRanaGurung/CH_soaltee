@@ -2,8 +2,14 @@ import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
 import { EarnCard } from "./EarnCard";
 import { colors } from "@src/theme/colors";
+import { useQuery } from "react-query";
+import { getAllOffer } from "@src/service/offer";
 
 export const EarnPoint = () => {
+  const { data } = useQuery(["offer"], getAllOffer, {
+    select: ({ data }) => data.datalist,
+  });
+  console.log("data", data);
   return (
     <>
       <Box padding={["60px 0"]}>

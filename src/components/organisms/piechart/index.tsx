@@ -154,10 +154,12 @@ export const PieChartCard = () => {
     formState: { errors },
   } = useForm();
   const propertyList = usePropertyList();
+  console.log("ss", propertyList);
   const { data, isLoading, isError } = useGetTotalTier({
     proverty: prov,
     tier: tiers,
   });
+
   return (
     <Card>
       <div className="piechart-wrapper">
@@ -172,12 +174,17 @@ export const PieChartCard = () => {
                   name="property"
                   errors={errors as Partial<FieldErrorsImpl<any>>}
                   placeholder="All"
-                  labelKey="name"
-                  valueKey="id"
                   control={control}
                   isLoading={isLoading}
                   isError={isError}
-                  selectOptions={propertyList || []}
+                  selectOptions={
+                    propertyList?.map((item: { id: any; name: any }) => {
+                      return {
+                        value: item?.id,
+                        label: item?.name,
+                      };
+                    }) ?? []
+                  }
                   onAdditionalOnChange={(e) => setProv(e.target.value || "-1")}
                 />
                 <SelectCustom
@@ -185,11 +192,16 @@ export const PieChartCard = () => {
                   errors={errors as Partial<FieldErrorsImpl<any>>}
                   placeholder="Today"
                   control={control}
-                  labelKey="label"
-                  valueKey="value"
                   isLoading={isLoading}
                   isError={isError}
-                  selectOptions={date || []}
+                  selectOptions={
+                    date?.map((item: { value: any; label: any }) => {
+                      return {
+                        value: item?.value,
+                        label: item?.label,
+                      };
+                    }) ?? []
+                  }
                   onAdditionalOnChange={(e) =>
                     setTiers(e.target.value || "month")
                   }

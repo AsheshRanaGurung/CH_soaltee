@@ -23,4 +23,5 @@ export const NAVIGATION_ROUTES = {
   OFFER: "/offers",
   STAFF_MANAGEMENT: "/staff-management",
   NOT_FOUND: "/not-found",
+  History: "/history",
 };

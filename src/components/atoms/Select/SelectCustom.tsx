@@ -29,8 +29,6 @@ export const SelectCustom = <T extends FieldValues = FieldValues>(
     isFieldRequired,
     onAdditionalOnChange,
     isError,
-    valueKey,
-    labelKey,
   } = props;
   const {
     field,
@@ -69,9 +67,9 @@ export const SelectCustom = <T extends FieldValues = FieldValues>(
       >
         {selectOptions &&
           selectOptions.length !== 0 &&
-          selectOptions.map((option: any) => (
-            <option key={option[valueKey]} value={option[valueKey]}>
-              {option[labelKey]}
+          selectOptions.map((item: any) => (
+            <option key={item?.value} value={item?.value}>
+              {item?.label}
             </option>
           ))}
       </Select>
@@ -100,7 +98,5 @@ export interface ISelectInput<T extends FieldValues = FieldValues>
   isError?: boolean;
   selectOptions?: any;
   isFieldRequired?: boolean;
-  valueKey: string;
-  labelKey: string;
   onAdditionalOnChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

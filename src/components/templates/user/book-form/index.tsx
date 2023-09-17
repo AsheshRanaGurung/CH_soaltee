@@ -108,7 +108,7 @@ export const BookForm = () => {
                     <GridItem>
                       <DateComponent
                         name="checkOutDate"
-                        label="Check In"
+                        label="Check Out"
                         changeDate={changeCheckOutDate}
                         error={errors.checkInDate?.message || ""}
                         endIcons="true"

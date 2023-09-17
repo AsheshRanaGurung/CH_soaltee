@@ -1,7 +1,7 @@
 import { imageList } from "@src/assets/images";
 import { MemberCard } from "./MemberCard";
 import { Box } from "@chakra-ui/layout";
-import { Container, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Container, Heading } from "@chakra-ui/react";
 import Header from "@src/components/atoms/Header";
 import { EarnPoint } from "../earnPoint";
 import { SpecialOffer } from "../specialoffer/SpecialOffer";
@@ -12,8 +12,14 @@ import { Latestoffer } from "../footer/Latestoffer";
 import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
+import { getAllOffer } from "@src/service/offer";
+import { useQuery } from "react-query";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper";
 
-const HeaderWrapper = styled.div`
+import "swiper/css";
+import "swiper/css/pagination";
+export const HeaderWrapper = styled.div`
   div.fixed {
     background: #c4afaa;
     transition: "all 0.3s ease";
@@ -37,6 +43,9 @@ export const Userpage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const { data: offerData } = useQuery("offer", getAllOffer, {
+    select: ({ data }) => data.datalist,
+  });
 
   return (
     <>
@@ -70,36 +79,40 @@ export const Userpage = () => {
           <Heading color={colors.gray_900} fontSize={"44px"} m={["30px 0"]}>
             Special Offers
           </Heading>
-          <Grid
-            gap={6}
-            mt={4}
-            templateColumns={{
-              xl: "repeat(1, 4fr 4fr )",
-              md: "repeat(1,2fr)",
-              sm: "repeat(1,2fr)",
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={20}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
             }}
+            modules={[Autoplay, Pagination]}
+            pagination={{
+              clickable: true,
+            }}
+            className="mySwiper"
           >
-            <GridItem>
-              <SpecialOffer
-                title={"Let's Get Lost on Our Adventures"}
-                desc={
-                  "Save at least 15% on stays worldwide, from relaxing retreats to off-the-grid adventures"
-                }
-                ButtonText={"Claim Voucher"}
-                img={imageList.Fame}
-              />
-            </GridItem>
-            <GridItem>
-              <SpecialOffer
-                title={"Let's Get Lost on Our Adventures"}
-                desc={
-                  "Save at least 15% on stays worldwide, from relaxing retreats to off-the-grid adventures"
-                }
-                ButtonText={"Claim Voucher"}
-                img={imageList.FooterWall}
-              />
-            </GridItem>
-          </Grid>
+            {offerData?.map(
+              (
+                item: {
+                  offerName: string;
+                  description: string;
+                  offerImage: any;
+                },
+                index: number
+              ) => (
+                // eslint-disable-next-line react/jsx-key
+                <SwiperSlide key={index}>
+                  <SpecialOffer
+                    title={item?.offerName}
+                    desc={item?.description}
+                    ButtonText={"Claim Voucher"}
+                    img={item?.offerImage}
+                  />
+                </SwiperSlide>
+              )
+            )}
+          </Swiper>
         </Container>
       </Box>
       <BookForm />

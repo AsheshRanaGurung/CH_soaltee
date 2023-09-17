@@ -5,8 +5,8 @@ export const nationality: any = [
 ];
 
 export const date: any = [
-  { value: "Weekly", label: "Weekly" },
-  { value: "Monthly", label: "Monthly" },
+  { value: "week", label: "Week" },
+  { value: "month", label: "Month" },
 ];
 
 export const property: any = [

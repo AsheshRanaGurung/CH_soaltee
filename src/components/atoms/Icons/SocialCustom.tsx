@@ -9,10 +9,10 @@ export const SocialCustom: React.FC<IPropIcons> = ({ icon }) => {
     <Box
       w="30px"
       h="30px"
-      background={"#A1233D"}
       display={"flex"}
       alignItems={"center"}
       justifyContent={"center"}
+      cursor={"pointer"}
     >
       {icon}
     </Box>

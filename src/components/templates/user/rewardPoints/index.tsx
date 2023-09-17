@@ -35,7 +35,7 @@ export const Redeem = () => {
             </GridItem>
             <GridItem>
               <RedeemPoint
-                title={"Hotel Nights and More"}
+                title={"Soaltee Moments"}
                 desc={
                   "Use points for dining, golf, spas and more during the stay"
                 }

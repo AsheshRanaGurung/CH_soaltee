@@ -45,12 +45,12 @@ const ProfilePage = () => {
     await queryClient.refetchQueries("user_detail");
     setUpdatedData(data);
   };
-  const imageUrl = data?.userImageUrl ?? "";
-  const imgProfile = `${baseURL}users/get-profile-image/${data?.userImageUrl.trim()}`;
+  const imageUrl = data?.userImageUrl !== undefined ? data?.userImageUrl : "";
+  const imgProfile = `${baseURL}users/get-profile-image/${data?.userImageUrl}`;
   return (
     <>
       <Box
-        background={`url(${imageList.ProfileImage}) center center/cover no-repeat`}
+        background={`url(${imageList?.ProfileImage}) center center/cover no-repeat`}
         h={"300px"}
         position={"relative"}
       >
@@ -93,6 +93,7 @@ const ProfilePage = () => {
         ) : (
           <Avatar
             src={imageUrl}
+            name="Profile"
             style={{ borderRadius: "50%", width: "100%", height: "100%" }}
           />
         )}
