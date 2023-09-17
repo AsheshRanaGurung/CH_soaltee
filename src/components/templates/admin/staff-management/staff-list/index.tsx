@@ -66,7 +66,7 @@ const StaffManagementList: React.FC<IMemberProps> = ({
 
   useEffect(() => {
     if (isUpdate && updateId) {
-      const data = tableData.find((x: IMember) => x.id === updateId);
+      const data = tableData.find((x: IMember) => x.userId === updateId);
       reset({
         ...data,
       });

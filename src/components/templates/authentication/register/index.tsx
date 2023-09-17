@@ -1,7 +1,6 @@
-import { Button, VStack } from "@chakra-ui/react";
+import { Button, VStack, Link } from "@chakra-ui/react";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { colors } from "@src/theme/colors";
 import Checkbox from "@src/components/atoms/Checkbox";
 import { useFormHook } from "@src/hooks/useFormhook";
@@ -12,7 +11,20 @@ import FormControl from "@src/components/atoms/FormControl";
 import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 import { usePropertyList } from "@src/constant/usePropertyList";
 import { useNationalityList } from "@src/constant/useNationalityList";
+import styled from "styled-components";
 
+import { Link as RouterLink } from "react-router-dom";
+
+export const AccountDetailStyle = styled.div`
+  font-weight: 600;
+  text-align: center;
+  margin-top: 10px;
+  .signup {
+    color: ${colors.primary};
+    margin-left: 10px;
+    cursor: pointer;
+  }
+`;
 interface ISignupProps {
   mutate: any;
   isLoading: boolean;
@@ -144,6 +156,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             >
               I agree the
               <Link
+                as={RouterLink}
                 to={NAVIGATION_ROUTES.CONFIGURATION}
                 style={{
                   textDecoration: "underline",
@@ -174,6 +187,12 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
           >
             Sign Up
           </Button>
+          <AccountDetailStyle>
+            <span>{`Already have an account?`}</span>
+            <Link as={RouterLink} to={NAVIGATION_ROUTES.LOGIN}>
+              <span className="signup">SignIn</span>
+            </Link>
+          </AccountDetailStyle>
         </FormWrapper>
       </form>
     </>

@@ -9,7 +9,6 @@ const PrivateRoute = ({ Component, allowedRoles }: any) => {
   const isAuthenticated = localStorage.getItem("token");
   const navigate = useNavigate();
   const role = isAuthenticated && jwt_decode<DecodedToken>(isAuthenticated);
-
   useEffect(() => {
     if (!isAuthenticated) {
       navigate(NAVIGATION_ROUTES.LOGIN);

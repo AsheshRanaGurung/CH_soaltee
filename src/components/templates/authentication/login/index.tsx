@@ -18,7 +18,7 @@ export const FormWrapper = styled.div`
   margin-top: 5%;
   width: 400px;
 `;
-const AccountDetailStyle = styled.div`
+export const AccountDetailStyle = styled.div`
   font-weight: 600;
   text-align: center;
   margin-top: 10px;

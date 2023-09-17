@@ -51,7 +51,7 @@ export const api = {
   },
   member_management: {
     add: "/auth/save-users",
-    fetch: "/auth/get-users",
+    fetch: "/auth/get-users?pageIndex={page}&pageSize={limit}",
     update: "/auth/update-user/:id",
     fetchById: "/users/get-all-user-details/:id",
     get_history:

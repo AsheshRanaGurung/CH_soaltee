@@ -9,11 +9,15 @@ import { useQuery } from "react-query";
 const MemberManagementPage = () => {
   const [pageParams, setPageParams] = useState({
     page: 1,
-    limit: 10,
+    limit: 50,
   });
-  const { data, isLoading } = useQuery("member_management", getAllMembers, {
-    select: ({ data }) => data.data,
-  });
+  const { data, isLoading } = useQuery(
+    ["member_management", pageParams],
+    getAllMembers,
+    {
+      select: ({ data }) => data.data,
+    }
+  );
   const paginatedData = getPaginatedData({
     tableData: data,
     pageParams,

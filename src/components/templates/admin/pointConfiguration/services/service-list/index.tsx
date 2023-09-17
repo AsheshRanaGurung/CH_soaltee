@@ -72,12 +72,23 @@ const ServiceList: React.FC<IServiceProps> = ({
   }, [data]);
   useEffect(() => {
     if (isUpdate && updateId) {
-      const data = tableData.find((x: IService) => x.id === updateId);
+      const dataValue = tableData.find((x: any) => x.id === updateId);
+
+      const filteredData1 = defaultVal.filter(
+        (item1: any) =>
+          !dataValue?.membershipServiceResponseDtos?.some(
+            (item2: any) => item2.membershipName === item1.membershipName
+          )
+      );
+
+      const combinedData =
+        dataValue?.membershipServiceResponseDtos?.concat(filteredData1);
+
       reset({
-        id: data?.id,
-        serviceName: data?.serviceName,
-        serviceCode: data?.serviceCode,
-        membershipServiceResponseDtos: data?.membershipServiceResponseDtos,
+        id: dataValue?.id,
+        serviceName: dataValue?.serviceName,
+        serviceCode: dataValue?.serviceCode,
+        membershipServiceResponseDtos: combinedData,
       });
     }
   }, [isUpdate, updateId, tableData]);

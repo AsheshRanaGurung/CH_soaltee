@@ -2,8 +2,16 @@ import { IMember } from "@src/interface/member-management";
 import { api } from "../api";
 import { HttpClient } from "../config/api";
 
-export const getAllMembers = () => {
-  return HttpClient.get(api.member_management.fetch);
+export const getAllMembers = (pageParams: any) => {
+  const pageIndex = pageParams.queryKey[1].page;
+  const pageSize = pageParams.queryKey[1].limit;
+  return HttpClient.get(
+    api.member_management.fetch.replace(
+      `pageIndex={page}&pageSize={limit}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+    )
+  );
+  // return HttpClient.get(api.member_management.fetch);
 };
 
 export const createMember = (data: IMember) => {

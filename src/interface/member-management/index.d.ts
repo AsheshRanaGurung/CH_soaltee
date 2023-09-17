@@ -12,6 +12,8 @@ export interface IMember {
   isBlocked?: boolean;
   roleId?: string | number;
   dateOfBirth?: string;
+  userId?: string;
+  membershipTierId?: string | number;
 }
 
 export interface IMemberHistory {
@@ -21,4 +23,5 @@ export interface IMemberHistory {
   serviceName?: string;
   transactionType?: string;
   txnDate?: any;
+  propertyName?: string;
 }
