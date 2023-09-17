@@ -74,7 +74,7 @@ const MemberHistory: React.FC<IMemberHistoryProps> = ({ data }) => {
                 <Text color={colors.secondary_dark}>
                   {itmm.fullName} has been{" "}
                   {itmm.transactionType === "REEDEM" ? "Deducted" : "Credited"}{" "}
-                  with {itmm.rewardPoints} points.
+                  with {itmm.rewardPoints} points from {itmm.propertyName}.
                 </Text>
               </div>
             </WrapperContent>

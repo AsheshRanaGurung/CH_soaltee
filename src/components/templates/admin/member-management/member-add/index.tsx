@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import { useNationalityList } from "@src/constant/useNationalityList";
+import { useMemberTierList } from "@src/constant/useMemberTierList";
 
 export const CreateMemberManagementForm = ({
   register,
@@ -15,6 +16,7 @@ export const CreateMemberManagementForm = ({
     setIsSwitchOpen((initialValue) => !initialValue);
   };
   const nationalityList = useNationalityList();
+  const tierList = useMemberTierList();
   return (
     <>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -87,6 +89,21 @@ export const CreateMemberManagementForm = ({
             required
             options={propertyList || []}
           />
+          {id && (
+            <FormControl
+              control="reactSelect"
+              register={register}
+              name="membershipTierId"
+              placeholder="Choose Tier"
+              label="Tier"
+              required
+              onChange={(e: any) => setValue("membershipTierId", e.value)}
+              error={errors.membershipTierId?.message || ""}
+              options={tierList || []}
+              labelKey={"membershipName"}
+              valueKey={"id"}
+            />
+          )}
           {id && (
             <FormControl
               control="switch"

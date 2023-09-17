@@ -62,9 +62,9 @@ const StaffTable: React.FC<IMemberTable> = ({
         Header: "Action",
         width: "10%",
 
-        Cell: ({ row }: CellProps<{ id: string }>) => {
+        Cell: ({ row }: CellProps<{ userId: string }>) => {
           const onEdit = () => {
-            onEditData && onEditData(row.original?.id);
+            onEditData && onEditData(row.original?.userId);
           };
 
           return (

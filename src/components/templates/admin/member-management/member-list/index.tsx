@@ -30,6 +30,7 @@ const defaultValues = {
   phoneNumber: "",
   nationalityId: "",
   dateOfBirth: "",
+  membershipTierId: "",
   isActive: false,
 };
 const validationSchema = yup.object().shape({
@@ -102,6 +103,7 @@ const MemberManagementList: React.FC<IMemberProps> = ({
         nationalityId: data.nationalityId,
         propertyId: data?.propertyId,
         isBlocked: data.isBlocked,
+        membershipTierId: data.membershipTierId,
         roleId: "2",
       });
     } else {
