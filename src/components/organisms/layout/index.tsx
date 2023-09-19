@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useContext } from "react";
 import { Box } from "@chakra-ui/react";
 import useWindowSize from "@src/hooks/useWindowResize";
 import Sidebar from "@src/components/molecules/sidebar/Sidebar";
-import { SidebarState } from "@src/hooks/useContext";
+import { PageParamsContext, SidebarState } from "@src/hooks/useContext";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const LAYOUT_WIDTHS = {
@@ -13,6 +13,10 @@ const LAYOUT_WIDTHS = {
 const Layout = ({ children }: ILayout) => {
   const { width } = useWindowSize();
   const [showSidebar, setShowSidebar] = useState(true);
+  const [pageParams, setPageParams] = useState({
+    limit: 10,
+    page: 1,
+  });
   useEffect(() => {
     if (width < 640) {
       setShowSidebar(false);
@@ -31,13 +35,15 @@ const Layout = ({ children }: ILayout) => {
       <Sidebar width={sidebarWidth} isCollapse={!showSidebar} />
       <Box height="100vh" maxH="100vh" overflowY="auto">
         <SidebarState.Provider value={{ showSidebar, setShowSidebar }}>
-          <RxHamburgerMenu
-            onClick={() => setShowSidebar(!showSidebar)}
-            style={{ position: "absolute", top: "24px", cursor: "pointer" }}
-          />
-          <Box sx={{ "&::-webkit-scrollbar": { display: "none" } }}>
-            {children}
-          </Box>
+          <PageParamsContext.Provider value={{ pageParams, setPageParams }}>
+            <RxHamburgerMenu
+              onClick={() => setShowSidebar(!showSidebar)}
+              style={{ position: "absolute", top: "24px", cursor: "pointer" }}
+            />
+            <Box sx={{ "&::-webkit-scrollbar": { display: "none" } }}>
+              {children}
+            </Box>
+          </PageParamsContext.Provider>
         </SidebarState.Provider>
       </Box>
     </Box>
@@ -49,7 +55,13 @@ interface ILayout {
 }
 
 export default Layout;
-
+export const usePageParams = () => {
+  const context = useContext(PageParamsContext);
+  if (!context) {
+    throw new Error("usePageParams must be used within a PageParamsProvider");
+  }
+  return context;
+};
 export function getSidebarState() {
   const sidebarOpen = useContext(SidebarState);
   return sidebarOpen as {

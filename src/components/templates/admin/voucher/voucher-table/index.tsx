@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
-import DataTable, { Pagination } from "@src/components/organisms/table";
-import TableActions from "@src/components/organisms/table/TableActions";
-import { getPaginatedData } from "@src/components/organisms/table/pagination";
+import BasicTable from "@src/components/molecules/table";
+import TableHeadings from "@src/components/molecules/table-heading";
+import TableActions from "@src/components/molecules/table/TableActions";
 import { IVoucher } from "@src/interface/voucher";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useMemo, useState } from "react";
@@ -18,73 +18,53 @@ interface IVoucherTable {
   onMemberModalOpen?: () => void;
   onEditData?: ((id: string) => void) | undefined;
   onViewData?: ((id: string) => void) | undefined;
-
   onDeleteData?: ((id: string) => void) | undefined;
 }
 
 const VoucherTable: React.FC<IVoucherTable> = ({
   tableData,
-  tableDataFetching,
   onAction,
   onViewData,
-  title,
-  btnText,
-  CurrentText,
   onDeleteData,
 }) => {
   const navigate = useNavigate();
-  const [pageParams, setPageParams] = useState({
+  const [pageParams, _] = useState({
     page: 1,
     limit: 10,
   });
-  const paginatedData = getPaginatedData({
-    tableData,
-    pageParams,
-  });
-  const _pageChange = (page: number) => {
-    setPageParams({ ...pageParams, page });
-  };
-  const _pageSizeChange = (limit: number) =>
-    setPageParams({ ...pageParams, limit, page: 1 });
 
   const columns = useMemo(
     () => [
       {
-        Header: "S.N",
-        accessor: (_: IVoucher, index: number) =>
+        header: "S.N",
+        accessorFn: (_: IVoucher, index: number) =>
           (pageParams.page - 1) * pageParams.limit + (index + 1),
-        width: "10%",
       },
 
       {
-        Header: "Voucher Name",
-        accessor: "voucherName",
-        width: "20%",
+        header: "Voucher Name",
+        accessorKey: "voucherName",
       },
       {
-        Header: "Service",
-        accessor: "serviceName",
-        width: "20%",
+        header: "Service",
+        accessorKey: "serviceCategory.serviceName",
       },
       {
-        Header: "Discount Percentage",
-        accessor: "discountPercentage",
-        width: "20%",
+        header: "Discount Percentage",
+        accessorKey: "discountPercentage",
       },
       {
-        Header: "Maximum Amount",
-        accessor: "maximumAmounts",
-        width: "20%",
+        header: "Maximum Amount",
+        accessorKey: "maximumAmounts",
       },
       {
-        Header: "Maximum limit",
-        accessor: "maximumLimits",
-        width: "20%",
+        header: "Maximum limit",
+        accessorKey: "maximumLimits",
       },
 
       {
-        Header: "Action",
-        Cell: ({ row }: CellProps<{ id: string; name: string }>) => {
+        header: "Action",
+        cell: ({ row }: CellProps<{ id: string; name: string }>) => {
           const onEdit = () => {
             navigate(NAVIGATION_ROUTES.VOUCHER_ADD, {
               state: row.original,
@@ -106,6 +86,7 @@ const VoucherTable: React.FC<IVoucherTable> = ({
             </Stack>
           );
         },
+
         width: 120,
       },
     ],
@@ -114,24 +95,12 @@ const VoucherTable: React.FC<IVoucherTable> = ({
 
   return (
     <>
-      <DataTable
-        data={paginatedData || []}
-        loading={tableDataFetching}
-        columns={columns}
-        CurrentText={CurrentText}
-        btnText={btnText}
+      <TableHeadings
+        btnText="Add Voucher"
+        CurrentText="Voucher List"
         onAction={onAction}
-        title={title}
-      ></DataTable>
-
-      <Pagination
-        enabled={true}
-        queryPageIndex={pageParams.page}
-        queryPageSize={pageParams.limit}
-        totalCount={tableData?.length || 0}
-        pageChange={_pageChange}
-        pageSizeChange={_pageSizeChange}
       />
+      <BasicTable data={tableData || []} columns={columns} count={20} />
     </>
   );
 };

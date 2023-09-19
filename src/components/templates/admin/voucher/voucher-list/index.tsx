@@ -62,7 +62,6 @@ const VoucherList: React.FC<IVoucherList> = ({
         CurrentText="Voucher List"
         onAction={() => {
           onCloseHandler();
-
           navigate(NAVIGATION_ROUTES.VOUCHER_ADD);
         }}
         onDeleteData={(id: string) => {
