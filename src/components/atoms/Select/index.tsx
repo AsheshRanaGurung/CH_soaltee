@@ -76,7 +76,9 @@ const ReactSelect = ({
     label: option[labelKey],
     value: option[valueKey],
   }));
-
+  const formattedValue = value
+    ? { label: value[labelKey], value: value[valueKey] }
+    : {};
   return (
     <FormControl isInvalid={!!error} isRequired={isRequired} mb={3}>
       {label && (
@@ -94,7 +96,7 @@ const ReactSelect = ({
           isDisabled: isSelected?.includes(option.value),
         }))}
         onChange={onChange}
-        value={value}
+        defaultValue={value && formattedValue}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && <FormErrorMessage fontSize={"12px"}>{error}</FormErrorMessage>}

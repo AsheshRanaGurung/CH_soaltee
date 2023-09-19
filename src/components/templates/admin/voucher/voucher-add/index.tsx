@@ -50,7 +50,22 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
   const { state } = location;
   const validationSchema = yup.object().shape({
     voucherName: yup.string().required("Voucher Name is required"),
-    serviceId: yup.string().required("Please select service"),
+    serviceId: yup
+      .mixed()
+      .test(
+        "is-service-valid",
+        "Please select a valid service",
+        function (value) {
+          if (typeof value === "string") {
+            return true;
+          } else if (typeof value === "object") {
+            return true;
+          }
+          return false;
+        }
+      )
+      .required("Please select service"),
+
     discountPercentage: yup.string().required("percentage is required"),
   });
 
@@ -61,14 +76,14 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
   const serviceList = useServiceList();
   useEffect(() => {
     if (state?.id) {
-      reset({ ...state });
+      reset({ ...state, serviceId: state.serviceCategory });
     }
   }, [state]);
   const onSubmitHandler = (data: IVoucher) => {
     const formData = new FormData();
     const dat = {
       voucherName: data?.voucherName,
-      serviceId: data?.serviceId,
+      serviceId: data?.serviceId?.id,
       discountPercentage: data?.discountPercentage,
       maximumAmounts: data?.maximumAmounts,
       maximumLimits: data?.maximumLimits,
@@ -121,8 +136,8 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             label="Service Name"
             required
             labelKey="serviceName"
-            onChange={(e: any) => setValue("serviceId", e.value)}
-            // value={"2"}
+            onChange={(e: any) => setValue("serviceId", e)}
+            value={state?.serviceCategory}
             valueKey="id"
             error={errors?.serviceId?.message || ""}
             options={serviceList || []}

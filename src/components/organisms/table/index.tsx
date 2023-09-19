@@ -44,9 +44,8 @@ import {
   TriangleDownIcon,
   TriangleUpIcon,
 } from "@chakra-ui/icons";
-// import { DrawerComponent } from "../drawer";
 import { Search } from "@src/components/molecules/search";
-import { TableHeading } from "@src/components/atoms/TableHeading";
+import { TableTitle } from "@src/components/atoms/TableTitle";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import NoDataAvailable from "../nodata";
 
@@ -183,7 +182,7 @@ const DataTable = React.memo(
           rowGap={2}
           ml={{ base: 2, md: 0 }}
         >
-          <TableHeading currentText={CurrentText ?? ""} />
+          <TableTitle currentText={CurrentText ?? ""} />
           <Flex gap={2} alignItems="center">
             <Flex position="relative">
               <Search setSearchValue={setSearchValue} />
@@ -399,7 +398,6 @@ export const Pagination = ({
       pageSizeChange(pageSizeChanges);
     }
   }, [pageSizeChanges]);
-
   const renderPageButtons = () => {
     const pageButtons = [];
     let ellipsisStart = false;

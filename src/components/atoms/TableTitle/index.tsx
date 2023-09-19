@@ -1,7 +1,7 @@
 import { Text } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
 
-export const TableHeading = ({ currentText }: { currentText: string }) => {
+export const TableTitle = ({ currentText }: { currentText: string }) => {
   return (
     <>
       {currentText && (

@@ -1,7 +1,9 @@
 export interface IVoucher {
   id?: string | number;
   voucherName?: string;
-  serviceId?: string | number;
+  serviceId?: {
+    id?: string | number;
+  };
   discountPercentage?: string | number;
   maximumAmounts?: string | number;
   maximumLimits?: string | number;

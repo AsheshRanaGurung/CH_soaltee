@@ -1,45 +1,57 @@
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
-import { getPaginatedData } from "@src/components/organisms/table/pagination";
-import MemberManagementList from "@src/components/templates/admin/member-management/member-list";
+import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import { getAllMembers } from "@src/service/member-management";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useDisclosure } from "@chakra-ui/react";
+import MemberManagementList from "@src/components/templates/admin/member-management/member-list";
+import ModalForm from "@src/components/molecules/modal";
+import { CreateMemberManagementForm } from "@src/components/templates/admin/member-management/member-add";
 
 const MemberManagementPage = () => {
-  const [pageParams, setPageParams] = useState({
-    page: 1,
-    limit: 50,
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [updateId, setUpdateId] = useState("");
+  const { data, isLoading } = usePageinationHook({
+    key: "member_management",
+    url: getAllMembers,
   });
-  const { data, isLoading } = useQuery(
-    ["member_management", pageParams],
-    getAllMembers,
-    {
-      select: ({ data }) => data.data,
-    }
-  );
-  const paginatedData = getPaginatedData({
-    tableData: data,
-    pageParams,
-  });
-  const _pageChange = (page: number) => {
-    setPageParams({ ...pageParams, page });
-  };
-  const _pageSizeChange = (limit: number) =>
-    setPageParams({ ...pageParams, limit, page: 1 });
+  const {
+    isOpen: isMemberOpen,
+    onOpen: onMemberModalOpen,
+    onClose: onMemberModalClose,
+  } = useDisclosure();
 
+  const onCloseHandler = () => {
+    setUpdateId("");
+    setIsUpdate(false);
+    onMemberModalClose();
+  };
   return (
     <>
       <BreadCrumb name="Member Management" />
       <Content>
         <MemberManagementList
-          paginatedData={paginatedData}
-          _pageChange={_pageChange}
-          _pageSizeChange={_pageSizeChange}
-          tableData={data}
-          tableDataFetching={isLoading}
-          pageParams={pageParams}
+          setIsUpdate={setIsUpdate}
+          setUpdateId={setUpdateId}
+          onMemberModalOpen={onMemberModalOpen}
+          onCloseHandler={onCloseHandler}
+          data={data}
+          isLoading={isLoading}
         />
+        <ModalForm
+          isModalOpen={isMemberOpen}
+          onCloseModal={onMemberModalClose}
+          title={isUpdate ? "Update Member" : "Add Member"}
+        >
+          <CreateMemberManagementForm
+            isUpdate={isUpdate}
+            updateId={updateId}
+            tableData={data}
+            setUpdateId={setUpdateId}
+            setIsUpdate={setIsUpdate}
+            onMemberModalClose={onMemberModalClose}
+          />
+        </ModalForm>
       </Content>
     </>
   );
