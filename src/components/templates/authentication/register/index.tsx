@@ -48,7 +48,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
     validationSchema,
   });
   const onSubmit = (data: any) => {
-    mutate({ ...data, roleId: 0 });
+    mutate({ ...data, roleId: 2 });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

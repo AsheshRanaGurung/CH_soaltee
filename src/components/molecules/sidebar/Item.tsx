@@ -34,14 +34,14 @@ const Item = ({
         p={2}
         mb={3}
         borderRadius={9}
-        bgColor={active ? (isChild ? colors.primary : colors.primary) : ""}
+        bgColor={active ? (isChild ? colors.secondary : colors.primary) : ""}
         transition="all ease-in-out"
         height={"50px"}
         fontWeight={active ? (isChild ? "500" : "500") : "400"}
         color={
           active
             ? isChild
-              ? colors.white
+              ? colors.text_secondary
               : colors.white
             : colors.text_secondary
         }
@@ -67,10 +67,14 @@ const Item = ({
           },
           "&:hover": {
             transition: "all ease-in-out",
-            color: active ? (isChild ? colors.white : colors.white) : "",
+            color: active
+              ? isChild
+                ? colors.text_secondary
+                : colors.white
+              : "",
             bgColor: active
               ? isChild
-                ? colors.primary
+                ? colors.secondary
                 : colors.primary
               : colors.secondary,
             "svg path": {

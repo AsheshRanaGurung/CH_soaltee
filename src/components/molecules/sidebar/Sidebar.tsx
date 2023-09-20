@@ -16,6 +16,7 @@ import styled from "styled-components";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { colors } from "@src/theme/colors";
 import { Logo } from "@src/assets/svgs";
+import { useState } from "react";
 const Icon = styled.div``;
 interface ISidebar {
   isCollapse: boolean;
@@ -30,6 +31,10 @@ const Sidebar = ({
   onExitSidebar,
   width,
 }: ISidebar) => {
+  const [openIndex, setOpenIndex] = useState(-1);
+  const handleToggleDropdown = (index: any) => {
+    setOpenIndex(index === openIndex ? -1 : index);
+  };
   const navItems = [
     {
       name: "Dashboard",
@@ -183,8 +188,15 @@ const Sidebar = ({
         <ListItem mx={3} my={6}>
           <Link as={RouterLink} to={NAVIGATION_ROUTES.DASHBOARD}></Link>
         </ListItem>
-        {navItems.map((item) => (
-          <NavItem key={item.name} {...item} isCollapse={isCollapse} />
+        {navItems.map((item, index) => (
+          <NavItem
+            key={item.name}
+            {...item}
+            isCollapse={isCollapse}
+            openIndex={openIndex}
+            setOpenIndex={handleToggleDropdown}
+            index={index}
+          />
         ))}
       </List>
     </Box>

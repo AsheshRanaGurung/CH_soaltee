@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { colors } from "@src/theme/colors";
 import { FaMinus, FaPlus } from "react-icons/fa";
+
 interface INavItem {
   visible: boolean;
   name: string;
@@ -12,6 +13,9 @@ interface INavItem {
   child?: INavItemChild[];
   icon?: React.ReactNode;
   isCollapse?: boolean;
+  openIndex?: any;
+  setOpenIndex?: any;
+  index?: any;
 }
 
 interface INavItemChild {
@@ -20,22 +24,50 @@ interface INavItemChild {
   to: string;
   icon?: React.ReactNode;
 }
+
 const Wrapper = styled(Box)`
   text-decoration: none;
   transition: transform 0.5s ease;
 `;
+
 const ItemsWrapper = styled(Item)`
   text-decoration: none;
 `;
-const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
+
+const NavItem = ({
+  name,
+  to,
+  child,
+  icon,
+  isCollapse,
+  visible,
+  openIndex,
+  setOpenIndex,
+  index,
+}: INavItem) => {
   const location = useLocation();
   const activeParent = child?.some((item) => item.to === location.pathname);
   const [active, setActive] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(activeParent);
-
+  const isDropdownOpen =
+    localStorage.getItem(`dropdown_${index}`) === String(activeParent);
   useEffect(() => {
     setActive(to === location.pathname);
   }, [location.pathname]);
+  const handleToggleDropdown = () => {
+    if (openIndex === index) {
+      setOpenIndex(-1);
+      localStorage.setItem(`dropdown_${index}`, "false");
+    } else {
+      setOpenIndex(index);
+      localStorage.setItem(`dropdown_${index}`, "true");
+    }
+  };
+  useEffect(() => {
+    if (isDropdownOpen) {
+      setOpenIndex(index);
+    }
+  }, []);
+
   return (
     <>
       {visible ? (
@@ -79,7 +111,7 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
               }}
               fontSize="15px"
               fontWeight={activeParent ? 500 : 400}
-              onClick={() => setShowDropdown(!showDropdown)}
+              onClick={handleToggleDropdown}
             >
               <Flex
                 alignItems="center"
@@ -103,7 +135,7 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
               </Flex>
               {!isCollapse && (
                 <Icon
-                  as={showDropdown ? FaMinus : FaPlus}
+                  as={openIndex === index ? FaMinus : FaPlus}
                   fontSize="xs"
                   sx={{
                     transition: "0.1s",
@@ -126,7 +158,7 @@ const NavItem = ({ name, to, child, icon, isCollapse, visible }: INavItem) => {
                 />
               )}
             </Flex>
-            {showDropdown && !isCollapse && (
+            {!isCollapse && openIndex === index && (
               <Wrapper>
                 {child.map((c: INavItemChild) => {
                   return (
