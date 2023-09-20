@@ -16,6 +16,15 @@ export const getAllProperty = (pageParams: any) => {
   );
   // return HttpClient.get(api.master_data.property_list.fetch);
 };
+export const getAllPropertySelect = () => {
+  return HttpClient.get(
+    api.master_data.property_list.fetch.replace(
+      `pageIndex={page}&pageSize={limit}`,
+      `pageIndex=${1}&pageSize=${50}`
+    )
+  );
+  // return HttpClient.get(api.master_data.property_list.fetch);
+};
 
 export const createProperty = (data: IProperty) => {
   return HttpClient.post(`${api.master_data.property_list.add}`, {
