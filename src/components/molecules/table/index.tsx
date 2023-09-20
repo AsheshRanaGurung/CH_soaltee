@@ -86,7 +86,7 @@ export default function BasicTable({
               {row.getVisibleCells().map((cell) => {
                 return (
                   <td key={cell.id}>
-                    {cell.getValue() === undefined || cell.getValue() === null
+                    {cell.getValue() === null
                       ? "-"
                       : flexRender(
                           cell.column.columnDef.cell,
