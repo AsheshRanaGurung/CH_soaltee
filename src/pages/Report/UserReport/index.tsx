@@ -6,8 +6,9 @@ import TableHeadings from "@src/components/molecules/table-heading";
 import { usePageParams } from "@src/components/organisms/layout";
 import UserFilter from "@src/components/templates/admin/report/user-filter";
 import { usePageinationHook } from "@src/hooks/usePaginationHook";
-import { useMemo, useState } from "react";
 import { getAllReport } from "@src/service/report";
+import { useMemo, useState } from "react";
+
 const UserReport = () => {
   const [para, setPara] = useState({});
   const {
