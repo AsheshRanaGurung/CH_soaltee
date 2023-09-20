@@ -23,7 +23,7 @@ interface Props {
 const Links = [
   { id: "earn_point", name: "Earn Point" },
   { id: "redeem_point", name: "Redeem Point" },
-  { id: "History", name: "History", path: NAVIGATION_ROUTES.History },
+  { id: "History", name: "History", path: NAVIGATION_ROUTES.HISTORY },
 ];
 const NavLink = (props: Props) => {
   const { id, name } = props;

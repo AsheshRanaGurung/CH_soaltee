@@ -11,7 +11,6 @@ export const getAllMembers = (pageParams: any) => {
       `pageIndex=${pageIndex}&pageSize=${pageSize}`
     )
   );
-  // return HttpClient.get(api.member_management.fetch);
 };
 
 export const createMember = (data: IMember) => {

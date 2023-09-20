@@ -1,18 +1,77 @@
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
+import ModalFooterForm from "@src/components/molecules/modal/footer";
+import { useFormHook } from "@src/hooks/useFormhook";
 import { IProperty } from "@src/interface/master-data/property";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { propertyValidation } from "@src/schema/master-data";
+import {
+  useCreateProperty,
+  useUpdateProperty,
+} from "@src/service/master-data/property";
+import { useEffect } from "react";
 interface IpropertyProps {
-  register: UseFormRegister<IProperty>;
-  errors: FieldErrors;
+  isUpdate: any;
+  updateId: any;
+  tableData: any;
+  setIsUpdate: any;
+  setUpdateId: any;
+  onPropertyModalClose: any;
 }
+const defaultValues = {
+  name: "",
+  code: "",
+  phoneNumber: "",
+  contactPerson: "",
+  contactPersonPhoneNo: "",
+};
 
 export const CreatePropertyForm: React.FC<IpropertyProps> = ({
-  register,
-  errors,
+  isUpdate,
+  updateId,
+  tableData,
+  setIsUpdate,
+  setUpdateId,
+  onPropertyModalClose,
 }) => {
+  const { handleSubmit, register, errors, reset } = useFormHook({
+    validationSchema: propertyValidation,
+    defaultValues,
+  });
+  useEffect(() => {
+    if (isUpdate && updateId) {
+      const data = tableData.find((x: IProperty) => x.id === updateId);
+      reset({
+        ...data,
+      });
+    }
+  }, [isUpdate, updateId]);
+  const { mutateAsync: mutate, isLoading } = useCreateProperty();
+  const { mutateAsync: update, isLoading: isUpdating } = useUpdateProperty();
+  const onCloseHandler = () => {
+    reset(defaultValues);
+    setUpdateId("");
+    setIsUpdate(false);
+    onPropertyModalClose();
+  };
+
+  const onSubmitHandler = (data: IProperty) => {
+    if (updateId) {
+      update({
+        id: updateId,
+        data: {
+          ...data,
+          id: updateId,
+        },
+      });
+      onCloseHandler();
+    } else {
+      mutate(data);
+      onCloseHandler();
+    }
+  };
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box mx={{ base: "none", md: "auto" }}>
         <Flex direction="column" gap={4.5}>
           <FormControl
@@ -63,8 +122,14 @@ export const CreatePropertyForm: React.FC<IpropertyProps> = ({
             required
           />
         </Flex>
+        <ModalFooterForm
+          onCloseModal={onPropertyModalClose}
+          resetButtonText={"Cancel"}
+          isLoading={isLoading || isUpdating}
+          submitButtonText={isUpdate ? "Update Property" : "Add Property"}
+        />
         <Spacer />
       </Box>
-    </>
+    </form>
   );
 };

@@ -1,47 +1,92 @@
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
-import { getPaginatedData } from "@src/components/organisms/table/pagination";
-import PropertyList from "@src/components/templates/admin/master-data/property/property-list";
-import { getAllProperty } from "@src/service/master-data/property";
+import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import { useState } from "react";
-
-import { useQuery } from "react-query";
+import { useDisclosure } from "@chakra-ui/react";
+import ModalForm from "@src/components/molecules/modal";
+import {
+  getAllProperty,
+  useDeleteProperty,
+} from "@src/service/master-data/property";
+import { CreatePropertyForm } from "@src/components/templates/admin/master-data/property/property-add";
+import PropertyList from "@src/components/templates/admin/master-data/property/property-list";
+import DeleteContent from "@src/components/organisms/delete-content";
 
 const PropertyPage = () => {
-  const [pageParams, setPageParams] = useState({
-    page: 1,
-    limit: 10,
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [updateId, setUpdateId] = useState("");
+  const [deleteId, setDeleteId] = useState("");
+  const { data, isLoading } = usePageinationHook({
+    key: "property",
+    url: getAllProperty,
   });
+  const {
+    isOpen: isPropertyOpen,
+    onOpen: onPropertyModalOpen,
+    onClose: onPropertyModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDeletePropertyOpen,
+    onOpen: onDeletePropertyOpen,
+    onClose: onDeletePropertyClose,
+  } = useDisclosure();
 
-  const { data, isLoading } = useQuery(
-    ["property", pageParams],
-    getAllProperty,
-    {
-      select: ({ data }) => data.data.content,
-    }
-  );
-  const paginatedData = getPaginatedData({
-    tableData: data,
-    pageParams,
-  });
-  const _pageChange = (page: number) => {
-    setPageParams({ ...pageParams, page });
+  const onCloseHandler = () => {
+    setUpdateId("");
+    setIsUpdate(false);
+    onPropertyModalClose();
   };
-  const _pageSizeChange = (limit: number) =>
-    setPageParams({ ...pageParams, limit, page: 1 });
+  const { mutateAsync: deleteProperty, isLoading: isDeleting } =
+    useDeleteProperty();
+
+  const onDeleteProperty = async (id: string) => {
+    const result = await deleteProperty({
+      id: id,
+    });
+    result.status === 200 && onDeletePropertyClose();
+  };
 
   return (
     <>
-      <BreadCrumb name="Master Data" subname="Property List" />
+      <BreadCrumb name="Property" />
       <Content>
         <PropertyList
-          paginatedData={paginatedData}
-          _pageChange={_pageChange}
-          _pageSizeChange={_pageSizeChange}
-          tableData={data}
-          tableDataFetching={isLoading}
-          pageParams={pageParams}
+          setIsUpdate={setIsUpdate}
+          setUpdateId={setUpdateId}
+          onPropertyModalOpen={onPropertyModalOpen}
+          onCloseHandler={onCloseHandler}
+          data={data}
+          onDeletePropertyOpen={onDeletePropertyOpen}
+          isLoading={isLoading}
+          onDeleteProperty={onDeleteProperty}
+          setDeleteId={setDeleteId}
         />
+        <ModalForm
+          isModalOpen={isPropertyOpen}
+          onCloseModal={onPropertyModalClose}
+          title={isUpdate ? "Update Property" : "Add Property"}
+        >
+          <CreatePropertyForm
+            isUpdate={isUpdate}
+            updateId={updateId}
+            tableData={data?.data}
+            setUpdateId={setUpdateId}
+            setIsUpdate={setIsUpdate}
+            onPropertyModalClose={onPropertyModalClose}
+          />
+        </ModalForm>
+        <ModalForm
+          isModalOpen={isDeletePropertyOpen}
+          onCloseModal={onDeletePropertyClose}
+          title={"Delete Property"}
+        >
+          <DeleteContent
+            handleSubmit={() => onDeleteProperty(deleteId)}
+            title="Property"
+            isLoading={isDeleting}
+            onCloseModal={onDeletePropertyClose}
+          />
+        </ModalForm>
       </Content>
     </>
   );

@@ -16,13 +16,13 @@ import ProfileDetail from "@src/pages/MemberManagement/ProfileDetail";
 import BonusPage from "@src/pages/PointConfig/Bonus";
 import ForgotPasswordPage from "@src/pages/Auth/forgot-password";
 import ProfilePage from "@src/components/templates/user/Profile";
-import ReportPage from "@src/pages/Report";
 import VoucherPage from "@src/pages/Voucher";
 import VoucherAdd from "@src/pages/Voucher/add";
 import OfferPage from "@src/pages/Offers";
 import StaffManagementPage from "@src/pages/StaffManagement";
 import PageNotFound from "@src/pages/NotFound";
 import HistoryTransaction from "@src/components/templates/user/History";
+import UserReport from "@src/pages/Report/UserReport";
 
 const routes = [
   {
@@ -39,7 +39,7 @@ const routes = [
     element: <PrivateRoute Component={UserDashboard} allowedRoles={["USER"]} />,
   },
   {
-    path: NAVIGATION_ROUTES.History,
+    path: NAVIGATION_ROUTES.HISTORY,
     element: (
       <PrivateRoute Component={HistoryTransaction} allowedRoles={["USER"]} />
     ),
@@ -62,7 +62,7 @@ const routes = [
     element: <RestrictedRoute Component={Signup} />,
   },
   {
-    path: NAVIGATION_ROUTES.MEMBERTIER,
+    path: NAVIGATION_ROUTES.MEMBER_TIER,
     element: (
       <PrivateRoute
         Component={MemberPage}
@@ -71,7 +71,16 @@ const routes = [
     ),
   },
   {
-    path: NAVIGATION_ROUTES.SETPASSWORD,
+    path: NAVIGATION_ROUTES.USER_REPORT,
+    element: (
+      <PrivateRoute
+        Component={UserReport}
+        allowedRoles={["SUPERADMIN", "ADMIN"]}
+      />
+    ),
+  },
+  {
+    path: NAVIGATION_ROUTES.SET_PASSWORD,
     element: <RestrictedRoute Component={SetPassword} />,
   },
 
@@ -124,15 +133,7 @@ const routes = [
     path: NAVIGATION_ROUTES.USER_PROFILE,
     element: <PrivateRoute Component={ProfilePage} allowedRoles={["USER"]} />,
   },
-  {
-    path: NAVIGATION_ROUTES.REPORT,
-    element: (
-      <PrivateRoute
-        Component={ReportPage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
-    ),
-  },
+
   {
     path: NAVIGATION_ROUTES.VOUCHER,
     element: (

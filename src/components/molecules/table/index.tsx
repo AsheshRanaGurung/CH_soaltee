@@ -12,8 +12,6 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const TableWrapper = styled.div`
-  background-color: ${colors.white};
-  padding: 20px;
   table {
     width: 100%;
   }
