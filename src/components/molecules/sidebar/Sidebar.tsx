@@ -100,6 +100,11 @@ const Sidebar = ({
           to: NAVIGATION_ROUTES.USER_REPORT,
           visible: true,
         },
+        {
+          name: "Earning Report",
+          to: NAVIGATION_ROUTES.EARNING_REPORT,
+          visible: true,
+        },
       ],
     },
     {
