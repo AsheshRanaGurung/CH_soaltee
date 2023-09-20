@@ -46,6 +46,7 @@ const Profile = ({ type }: any) => {
           onClick={() => {
             localStorage.removeItem("token"), navigate(NAVIGATION_ROUTES.LOGIN);
             localStorage.removeItem("imageName");
+            localStorage.clear();
           }}
         >
           Logout

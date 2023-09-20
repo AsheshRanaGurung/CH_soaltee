@@ -196,7 +196,7 @@ const MemberProfile = () => {
           background={`${data?.tierColorCode}`}
           fontWeight={"400"}
         >
-          {data?.tierName.toUpperCase()}
+          {data?.tierName?.toUpperCase() || null}
         </Heading>
       </Box>
       <Wrapper>
@@ -205,7 +205,7 @@ const MemberProfile = () => {
           <div className="profile-card">
             <div>
               <Text fontSize={"3xl"}>{state?.fullName}</Text>
-              <Text>{data?.tierName}</Text>
+              <Text>{data?.tierName || "--"}</Text>
             </div>
             <div>
               <Button
