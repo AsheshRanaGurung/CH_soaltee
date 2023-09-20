@@ -1,176 +1,100 @@
-import { useDisclosure } from "@chakra-ui/react";
-import ModalForm from "@src/components/organisms/modal";
-import { useEffect, useState } from "react";
-import { useFormHook } from "@src/hooks/useFormhook";
-import * as yup from "yup";
-import { CreatePropertyForm } from "@src/components/templates/admin/master-data/property/property-add";
-import {
-  useCreateProperty,
-  useDeleteProperty,
-  useUpdateProperty,
-} from "@src/service/master-data/property";
-import PropertyTable from "../property-table";
+import { Stack } from "@chakra-ui/react";
+import { useMemo } from "react";
 import { IProperty } from "@src/interface/master-data/property";
-import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
-import { IParams } from "@src/interface/params";
-import { Pagination } from "@src/components/organisms/table";
+import { usePageParams } from "@src/components/organisms/layout";
+import { CellProps } from "react-table";
+import TableActions from "@src/components/molecules/table/TableActions";
+import TableHeadings from "@src/components/molecules/table-heading";
+import BasicTable from "@src/components/molecules/table";
 
 interface IPropertyProps {
-  tableData: IProperty[];
-  tableDataFetching: boolean;
-  _pageSizeChange: (limit: number) => void;
-  _pageChange: (page: number) => void;
-  paginatedData: IProperty[];
-  pageParams: IParams;
+  setUpdateId: any;
+  setIsUpdate: any;
+  onPropertyModalOpen: any;
+  onCloseHandler: any;
+  data: any;
+  isLoading: any;
+  onDeletePropertyOpen: any;
+  onDeleteProperty: any;
+  setDeleteId: any;
 }
 
-const defaultValues = {
-  name: "",
-  code: "",
-  phoneNumber: "",
-  contactPerson: "",
-  contactPersonPhoneNo: "",
-};
-
-const validationSchema = yup.object().shape({
-  name: yup.string().required("Property Name is required"),
-  code: yup.string().required("Property Code is required"),
-  phoneNumber: createPhoneNumberSchema(),
-  contactPerson: yup.string().required("Contact Person Name is required"),
-  contactPersonPhoneNo: createPhoneNumberSchema(),
-});
-
 const PropertyList: React.FC<IPropertyProps> = ({
-  tableData,
-  tableDataFetching,
-  _pageSizeChange,
-  _pageChange,
-  paginatedData,
-  pageParams,
+  setUpdateId,
+  setIsUpdate,
+  onPropertyModalOpen,
+  onDeletePropertyOpen,
+  onCloseHandler,
+  data,
+  isLoading,
+  setDeleteId,
 }) => {
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [updateId, setUpdateId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
+  const { pageParams } = usePageParams();
 
-  const {
-    isOpen: isPropertyOpen,
-    onOpen: onPropertyModalOpen,
-    onClose: onPropertyModalClose,
-  } = useDisclosure();
-  const {
-    isOpen: isDeletePropertyOpen,
-    onOpen: onDeletePropertyOpen,
-    onClose: onDeletePropertyClose,
-  } = useDisclosure();
+  const columns = useMemo(
+    () => [
+      {
+        header: "S.N",
+        accessorFn: (_: IProperty, index: number) =>
+          (pageParams.page - 1) * pageParams.limit + (index + 1),
+      },
 
-  const { handleSubmit, register, errors, reset } = useFormHook({
-    validationSchema,
-    defaultValues,
-  });
+      {
+        header: "Property Name",
+        accessorKey: "name",
+        width: "10%",
+      },
+      {
+        Header: "Property Code",
+        accessorKey: "code",
+      },
+      {
+        Header: "Phone Number",
+        accessorKey: "phoneNumber",
+      },
+      {
+        Header: "Contact person",
+        accessorKey: "contactPerson",
+      },
+      {
+        header: "Action",
 
-  useEffect(() => {
-    if (isUpdate && updateId) {
-      const data = tableData.find((x: IProperty) => x.id === updateId);
-      reset({
-        name: data?.name,
-        code: data?.code,
-        phoneNumber: data?.phoneNumber,
-        contactPerson: data?.contactPerson,
-        contactPersonPhoneNo: data?.contactPersonPhoneNo,
-      });
-    }
-  }, [isUpdate, updateId]);
-
-  const { mutateAsync: mutate, isLoading } = useCreateProperty();
-  const { mutateAsync: update, isLoading: isUpdating } = useUpdateProperty();
-  const onCloseHandler = () => {
-    reset(defaultValues);
-    setUpdateId("");
-    setIsUpdate(false);
-    onPropertyModalClose();
-  };
-
-  const onSubmitHandler = (data: IProperty) => {
-    if (updateId) {
-      update({
-        id: updateId,
-        data: {
-          ...data,
-          id: updateId,
+        cell: ({ row }: CellProps<{ id: string }>) => {
+          const onEdit = () => {
+            setUpdateId(row.original.id);
+            setIsUpdate(true);
+            onPropertyModalOpen();
+          };
+          const onDelete = () => {
+            setDeleteId(row.original.id);
+            onDeletePropertyOpen();
+          };
+          return (
+            <Stack alignItems={"flex-start"}>
+              <TableActions onEdit={onEdit} onDelete={onDelete} />
+            </Stack>
+          );
         },
-      });
-      onCloseHandler();
-    } else {
-      mutate(data);
-      onCloseHandler();
-    }
-  };
-
-  const { mutateAsync: deletePropertyTier, isLoading: isDeleting } =
-    useDeleteProperty();
-
-  const onDelete = async (id: string) => {
-    const result = await deletePropertyTier({
-      id: id,
-    });
-    result.status === 200 && onDeletePropertyClose();
-  };
+      },
+    ],
+    [pageParams]
+  );
 
   return (
     <>
-      <PropertyTable
-        tableDataFetching={tableDataFetching}
-        paginatedData={paginatedData}
-        pageParams={pageParams}
-        title="Filter By"
+      <TableHeadings
         btnText="Add Property"
         CurrentText="Property List"
         onAction={() => {
           onCloseHandler();
           onPropertyModalOpen();
         }}
-        onEditData={(id: string) => {
-          setUpdateId(id);
-          setIsUpdate(true);
-          onPropertyModalOpen();
-        }}
-        onDeleteData={(id: string) => {
-          setDeleteId(id);
-          onDeletePropertyOpen();
-        }}
       />
-      <ModalForm
-        isModalOpen={isPropertyOpen}
-        title={isUpdate ? "Update Property" : "Add Property"}
-        onCloseModal={onPropertyModalClose}
-        resetButtonText={"Cancel"}
-        isLoading={isLoading || isUpdating}
-        submitButtonText={isUpdate ? "Update Property" : "Add Property"}
-        submitHandler={handleSubmit(onSubmitHandler)}
-        showFooter={true}
-      >
-        <CreatePropertyForm register={register} errors={errors} />
-      </ModalForm>
-
-      <ModalForm
-        title={"Delete"}
-        isModalOpen={isDeletePropertyOpen}
-        onCloseModal={onDeletePropertyClose}
-        resetButtonText={"No"}
-        isLoading={isDeleting}
-        submitButtonText={"Yes"}
-        handleSubmit={() => onDelete(deleteId ?? "")}
-        showFooter={true}
-      >
-        Are you sure you want to delete the Property detail?
-      </ModalForm>
-      <Pagination
-        enabled={true}
-        queryPageIndex={pageParams.page}
-        queryPageSize={pageParams.limit}
-        totalCount={tableData?.length || 0}
-        pageChange={_pageChange}
-        pageSizeChange={_pageSizeChange}
+      <BasicTable
+        data={data?.data || []}
+        columns={columns}
+        isLoading={isLoading}
+        totalPages={data?.totalPages}
       />
     </>
   );

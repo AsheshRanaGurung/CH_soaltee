@@ -6,16 +6,31 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  useDisclosure,
 } from "@chakra-ui/react";
-import { IDrawer } from "@src/interface/product";
-export const DrawerComponent = ({ title, children }: IDrawer) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+interface IDrawer {
+  title?: string;
+  children?: string;
+  leftIcon?: any;
+  btnText?: any;
+  onDrawerModalClose?: any;
+  onDrawerModalOpen?: any;
+  isDrawerOpen?: any;
+}
+export const DrawerComponent: React.FC<IDrawer> = ({
+  title,
+  children,
+  leftIcon,
+  btnText,
+  onDrawerModalOpen,
+  onDrawerModalClose,
+  isDrawerOpen,
+}) => {
   return (
     <>
-      <Button onClick={onOpen}>Filter</Button>
-      <Drawer isOpen={isOpen} onClose={onClose}>
+      <Button onClick={onDrawerModalOpen} leftIcon={leftIcon}>
+        {btnText}
+      </Button>
+      <Drawer isOpen={isDrawerOpen} onClose={onDrawerModalClose}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />

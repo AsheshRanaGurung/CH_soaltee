@@ -20,7 +20,8 @@ export const api = {
     },
   },
   report: {
-    fetch: "/report/overall-report",
+    fetch:
+      "/report/overall-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}",
   },
   master_data: {
     member_tier: {
@@ -32,8 +33,7 @@ export const api = {
     },
     property_list: {
       add: "/property/save-property",
-      // fetch: "/property/fetch-all?pageIndex={page}&pageSize={limit}",
-      fetch: "/property/fetch-all",
+      fetch: "/property/get-all-properties?pageIndex={page}&pageSize={limit}",
       delete: "/property/delete-property/:id",
       update: "/property/update-property/:id",
     },

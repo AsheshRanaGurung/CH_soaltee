@@ -9,8 +9,15 @@ const Wrapper = styled.div`
   margin: 15px 0px 0px 0px;
   min-height: 500px;
 `;
-
+const Container = styled.div`
+  background-color: ${colors.white};
+  padding: 20px;
+`;
 const Content: React.FC<IProps> = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>;
+  return (
+    <Wrapper>
+      <Container>{children}</Container>
+    </Wrapper>
+  );
 };
 export default Content;

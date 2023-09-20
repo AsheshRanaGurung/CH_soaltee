@@ -3,10 +3,10 @@ import { FC } from "react";
 
 interface IModal {
   isLoading?: boolean;
-  onCloseModal: () => void;
+  onCloseModal?: () => void;
   resetButtonText?: string;
   submitButtonText?: string;
-  onApprove?: any;
+  onClick?: any;
 }
 
 const ModalFooterForm: FC<IModal> = ({
@@ -14,19 +14,22 @@ const ModalFooterForm: FC<IModal> = ({
   onCloseModal,
   resetButtonText,
   submitButtonText,
+  onClick,
 }) => {
   return (
     <>
-      <Button
-        variant="outlined"
-        mr={3}
-        borderRadius="0"
-        w="100%"
-        onClick={onCloseModal}
-        size={"md"}
-      >
-        {resetButtonText}
-      </Button>
+      {resetButtonText && (
+        <Button
+          variant="outlined"
+          mr={3}
+          borderRadius="0"
+          w="100%"
+          onClick={onCloseModal}
+          size={"md"}
+        >
+          {resetButtonText}
+        </Button>
+      )}
 
       <Button
         type="submit"
@@ -34,6 +37,7 @@ const ModalFooterForm: FC<IModal> = ({
         w="100%"
         size={"md"}
         isLoading={isLoading}
+        onClick={onClick}
       >
         {submitButtonText}
       </Button>

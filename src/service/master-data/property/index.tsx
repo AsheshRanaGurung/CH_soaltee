@@ -5,16 +5,16 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { useQueryClient, useMutation } from "react-query";
 
-export const getAllProperty = () => {
-  // const pageIndex = pageParams.queryKey[1].page;
-  // const pageSize = pageParams.queryKey[1].limit;
-  // return HttpClient.get(
-  //   api.master_data.property_list.fetch.replace(
-  //     `pageIndex={page}&pageSize={limit}`,
-  //     `pageIndex=${pageIndex}&pageSize=${pageSize}`
-  //   )
-  // );
-  return HttpClient.get(api.master_data.property_list.fetch);
+export const getAllProperty = (pageParams: any) => {
+  const pageIndex = pageParams.queryKey[1].page;
+  const pageSize = pageParams.queryKey[1].limit;
+  return HttpClient.get(
+    api.master_data.property_list.fetch.replace(
+      `pageIndex={page}&pageSize={limit}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+    )
+  );
+  // return HttpClient.get(api.master_data.property_list.fetch);
 };
 
 export const createProperty = (data: IProperty) => {
@@ -65,7 +65,7 @@ export const useUpdateProperty = () => {
     },
   });
 };
-export const deletePropertyTier = ({ id }: any) => {
+export const deleteProperty = ({ id }: any) => {
   return HttpClient.delete(
     api.master_data.property_list.delete.replace(":id", id)
   );
@@ -73,7 +73,7 @@ export const deletePropertyTier = ({ id }: any) => {
 
 const useDeleteProperty = () => {
   const queryClient = useQueryClient();
-  return useMutation(deletePropertyTier, {
+  return useMutation(deleteProperty, {
     onSuccess: () => {
       toastSuccess("Property Tier deleted successfuly");
       queryClient.refetchQueries("property");

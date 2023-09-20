@@ -14,7 +14,6 @@ interface ISignupProps {
 }
 
 const SetPasswordTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
-  //extract token from params
   const { token = "" } = useParams<{
     token: string;
   }>();

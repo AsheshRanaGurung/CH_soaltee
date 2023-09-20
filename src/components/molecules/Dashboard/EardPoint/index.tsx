@@ -37,7 +37,6 @@ export const EarnPoint = () => {
     proverty: prov,
     tier: tiers,
   });
-  console.log("tierOprtion", tierOprtion);
   return (
     <Card borderRadius={"14px"}>
       <CardHeader fontSize={"18px"} fontWeight={"800"}>

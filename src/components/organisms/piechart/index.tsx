@@ -154,7 +154,6 @@ export const PieChartCard = () => {
     formState: { errors },
   } = useForm();
   const propertyList = usePropertyList();
-  console.log("ss", propertyList);
   const { data, isLoading, isError } = useGetTotalTier({
     proverty: prov,
     tier: tiers,

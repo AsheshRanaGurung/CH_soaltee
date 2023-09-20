@@ -83,17 +83,22 @@ const Sidebar = ({
     },
     {
       name: "Report",
-      to: NAVIGATION_ROUTES.REPORT,
       icon: (
         <Icon>
           <FaChartSimple />
         </Icon>
       ),
       visible: true,
+      child: [
+        {
+          name: "User Report",
+          to: NAVIGATION_ROUTES.USER_REPORT,
+          visible: true,
+        },
+      ],
     },
     {
       name: "Master Data",
-      // to: NAVIGATION_ROUTES.MASTER,
       icon: (
         <Icon>
           <FaDatabase />
@@ -108,7 +113,7 @@ const Sidebar = ({
         },
         {
           name: "Membership Tier",
-          to: NAVIGATION_ROUTES.MEMBERTIER,
+          to: NAVIGATION_ROUTES.MEMBER_TIER,
           visible: true,
         },
       ],
