@@ -23,6 +23,7 @@ import StaffManagementPage from "@src/pages/StaffManagement";
 import PageNotFound from "@src/pages/NotFound";
 import HistoryTransaction from "@src/components/templates/user/History";
 import UserReport from "@src/pages/Report/UserReport";
+import EarningReport from "@src/pages/Report/EarningReport";
 
 const routes = [
   {
@@ -75,6 +76,15 @@ const routes = [
     element: (
       <PrivateRoute
         Component={UserReport}
+        allowedRoles={["SUPERADMIN", "ADMIN"]}
+      />
+    ),
+  },
+  {
+    path: NAVIGATION_ROUTES.EARNING_REPORT,
+    element: (
+      <PrivateRoute
+        Component={EarningReport}
         allowedRoles={["SUPERADMIN", "ADMIN"]}
       />
     ),

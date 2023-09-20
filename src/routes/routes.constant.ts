@@ -24,4 +24,5 @@ export const NAVIGATION_ROUTES = {
   NOT_FOUND: "/not-found",
   HISTORY: "/history",
   USER_REPORT: "/user-report",
+  EARNING_REPORT: "/earning-report",
 };
