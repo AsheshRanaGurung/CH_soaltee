@@ -22,6 +22,8 @@ export const api = {
   report: {
     fetch:
       "/report/overall-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}",
+    fetch_earning:
+      "/report/earning-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}",
   },
   master_data: {
     member_tier: {
