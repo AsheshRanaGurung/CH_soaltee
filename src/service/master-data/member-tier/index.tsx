@@ -4,8 +4,16 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 
-export const getAllMemberTier = () => {
-  return HttpClient.get(api.master_data.member_tier.fetch);
+export const getAllMemberTier = (pageParams: any) => {
+  const pageIndex = pageParams.queryKey[1]?.page;
+  const pageSize = pageParams.queryKey[1]?.limit;
+  return HttpClient.get(
+    api.master_data.member_tier.fetch.replace(
+      `pageIndex={page}&pageSize={limit}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+    )
+  );
+  // return HttpClient.get(api.master_data.member_tier.fetch);
 };
 
 const getMemberTierid = (id: string) => () => {

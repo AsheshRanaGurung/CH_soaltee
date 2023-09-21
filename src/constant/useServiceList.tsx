@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 export const useServiceList = () => {
   const [data, setData] = useState([]);
   const { data: serviceData } = useQuery("service", getAllService, {
-    select: (data) => data?.data?.datalist,
+    select: (data) => data?.data?.data,
   });
 
   useEffect(() => {

@@ -5,12 +5,10 @@ import { useQuery } from "react-query";
 export const usePropertyList = () => {
   const [data, setData] = useState([]);
   const { data: propertyData } = useQuery("property", getAllPropertySelect, {
-    select: (data) => data?.data?.data?.content,
+    select: (data) => data?.data?.data,
   });
-
   useEffect(() => {
     setData(propertyData);
   }, [propertyData]);
-
   return data;
 };

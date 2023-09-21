@@ -18,7 +18,7 @@ import Header from "@src/components/atoms/Header";
 import { EditProfile } from "./EditProfile/Index";
 import { Footer } from "../footer";
 import { getUserDetail } from "@src/service/user";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { baseURL } from "@src/service/config/api";
@@ -40,11 +40,11 @@ const ProfilePage = () => {
       setUpdatedData(data);
     }
   }, [data]);
-  const queryClient = useQueryClient();
-  const handleFormSubmit = async (data: any) => {
-    await queryClient.refetchQueries("user_detail");
-    setUpdatedData(data);
-  };
+  // const queryClient = useQueryClient();
+  // const handleFormSubmit = async (data: any) => {
+  //   await queryClient.refetchQueries("user_detail");
+  //   setUpdatedData(data);
+  // };
   const imageUrl = data?.userImageUrl !== undefined ? data?.userImageUrl : "";
   const imgProfile = `${baseURL}users/get-profile-image/${data?.userImageUrl}`;
   return (
@@ -170,9 +170,6 @@ const ProfilePage = () => {
         isOpen={isOpen}
         onClose={onClose}
         data={updatedData}
-        handleFormSubmit={() => {
-          handleFormSubmit(data);
-        }}
         dataProfile={data}
       />
       <Footer />

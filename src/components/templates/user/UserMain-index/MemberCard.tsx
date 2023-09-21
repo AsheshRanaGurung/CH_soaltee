@@ -18,6 +18,7 @@ import { getUserDetail } from "@src/service/user";
 import { getImage } from "@src/service/image";
 import { useState, useEffect } from "react";
 import { colors } from "@src/theme/colors";
+// import { CardLock } from "@src/components/atoms/CardLock";
 
 export const MemberCard = () => {
   const { data } = useQuery("user_detail", getUserDetail, {
@@ -86,6 +87,14 @@ export const MemberCard = () => {
                     }) no-repeat right`,
                   }}
                 >
+                  {/* <CardLock
+                    bg_color={colors.white}
+                    left={187}
+                    top={105}
+                    width={60}
+                    height={60}
+                    position="absolute"
+                  /> */}
                   <Box position={"absolute"} zIndex={"1"}>
                     <CardHeader color={colors.light_white}></CardHeader>
                     <CardBody>
@@ -115,8 +124,17 @@ export const MemberCard = () => {
                     fontStyle={"italic"}
                     fontWeight={"400"}
                     marginBottom={"20px"}
+                    width={"fit-content"}
+                    display={"flex"}
+                    gap={"12px"}
                   >
                     {tierName?.toUpperCase()}
+                    {/* <CardLock
+                      tierIcon={true}
+                      bg_color={colors.primary}
+                      width={30}
+                      height={30}
+                    /> */}
                   </Heading>
                   <Progress
                     value={progressWidth}

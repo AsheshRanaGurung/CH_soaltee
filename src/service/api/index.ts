@@ -8,13 +8,14 @@ export const api = {
   configuration: {
     service: {
       add: "/service-category/create-service",
-      fetch: "/service-category/get-all-service",
+      fetch:
+        "/service-category/get-all-service?pageIndex={page}&pageSize={limit}",
       delete: "/service-category/delete-service-category/:id",
       update: "/service-category/update-service-category/:id",
     },
     bonus: {
       add: "/bonus/save-bonus",
-      fetch: "/bonus/get-all-bonus",
+      fetch: "/bonus/get-all-bonus?pageIndex={page}&pageSize={limit}",
       delete: "/bonus/delete-bonus/:id",
       update: "/bonus/update-bonus/:id",
     },
@@ -49,7 +50,7 @@ export const api = {
     update: "",
   },
   staff_management: {
-    fetch: "/users/get-staff-details",
+    fetch: "/users/get-staff-details?pageIndex={page}&pageSize={limit}",
   },
   member_management: {
     add: "/auth/save-users",
@@ -73,13 +74,14 @@ export const api = {
   },
   voucher: {
     add: "/voucher/create-voucher",
-    fetch: "/voucher/get-all-voucher",
+    fetch: "/voucher/get-all-voucher?pageIndex={page}&pageSize={limit}",
+    // fetch: "/voucher/get-all-voucher",
     delete: "/voucher/delete-voucher-promo/:id",
     update: "/voucher/update-voucher-promo/:id",
     fetchID: "/voucher/get-voucher-promo",
   },
   offer: {
-    fetch: "/offers/get-all-offers",
+    fetch: "/offers/get-all-offers?pageIndex={page}&pageSize={limit}",
     add: "/offers/save-offer",
     update: "/offers/update-offer/:id",
     delete: "/offers/delete-offer/:id",

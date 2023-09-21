@@ -1,17 +1,16 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-} from "@chakra-ui/form-control";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { colors } from "@src/theme/colors";
 import Select from "react-select";
 import styled from "styled-components";
+import { Text } from "@chakra-ui/react";
+import { get } from "lodash";
+import { Controller } from "react-hook-form";
 
 const SelectWrapper = styled(Select)<any>`
   .css-13cymwt-control {
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-bottom: ${(props) =>
+      props.error ? "1px solid red" : "1px solid rgba(0, 0, 0, 0.15)"};
     border-radius: 0px;
     border-color: none;
     box-shadow: none;
@@ -33,8 +32,8 @@ const SelectWrapper = styled(Select)<any>`
     }
   }
   .css-1nmdiq5-menu {
-    z-index: 2 !important;
-    color: ${colors.primary_dark};
+    z-index: 3 !important;
+    color: ${colors.black};
   }
   .css-art2ul-ValueContainer2 {
     padding: 0px;
@@ -55,11 +54,7 @@ export const colourStyles = {
   },
 };
 const ReactSelect = ({
-  register,
-  selectedOption,
-  onChange,
   options,
-  rules,
   valueKey,
   labelKey,
   name,
@@ -67,39 +62,58 @@ const ReactSelect = ({
   isRequired,
   label,
   required,
-  helperText,
-  value,
   isSelected,
+  control,
   ...rest
 }: any) => {
-  const formattedOptions = options.map((option: any) => ({
-    label: option[labelKey],
-    value: option[valueKey],
-  }));
-  const formattedValue = value
-    ? { label: value[labelKey], value: value[valueKey] }
-    : {};
+  const formattedOptions =
+    options &&
+    options.map((option: any) => ({
+      label: option[labelKey],
+      value: option[valueKey],
+    }));
   return (
-    <FormControl isInvalid={!!error} isRequired={isRequired} mb={3}>
+    <FormControl
+      id={name}
+      isInvalid={!!get(error, name)}
+      isRequired={isRequired}
+      mb={3}
+    >
       {label && (
         <FormLabel htmlFor={name} fontWeight={500} fontSize={"14px"} m={0}>
           {label}
           {required && <span style={{ color: colors.red }}>&nbsp;*</span>}
         </FormLabel>
       )}
-      <SelectWrapper
-        {...register(name, rules)}
-        {...rest}
-        id={name}
-        options={formattedOptions.map((option: any) => ({
-          ...option,
-          isDisabled: isSelected?.includes(option.value),
-        }))}
-        onChange={onChange}
-        defaultValue={value && formattedValue}
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => {
+          const hasError = !!error;
+          const errorBorderStyle = {
+            borderBottom: hasError ? `solid 1px red` : "",
+          };
+          return (
+            <>
+              <SelectWrapper
+                {...field}
+                {...rest}
+                defaultValue={field.value}
+                options={formattedOptions.map((option: any) => ({
+                  ...option,
+                  isDisabled: isSelected?.includes(option.value),
+                }))}
+                style={errorBorderStyle}
+              />
+              {error && (
+                <Text color={colors.red} fontSize={"12px"} mt={2}>
+                  {error}
+                </Text>
+              )}
+            </>
+          );
+        }}
       />
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      {error && <FormErrorMessage fontSize={"12px"}>{error}</FormErrorMessage>}
     </FormControl>
   );
 };

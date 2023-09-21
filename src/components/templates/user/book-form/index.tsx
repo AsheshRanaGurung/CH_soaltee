@@ -8,14 +8,14 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
-import DateComponent from "@src/components/atoms/DateInput";
 import FormControl from "@src/components/atoms/FormControl";
+import ReactSelect from "@src/components/atoms/Select";
 import { usePropertyList } from "@src/constant/usePropertyList";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { useState } from "react";
 
 export const BookForm = () => {
-  const { register, errors, watch } = useFormHook({});
+  const { register, errors, watch, control } = useFormHook({});
 
   const handleButtonClick = () => {
     const url = `https://bookingengine.aegis.com.np/aegis-7001?arrival_date=${
@@ -77,25 +77,26 @@ export const BookForm = () => {
                 </Heading>
                 <form>
                   <GridItem>
-                    <FormControl
-                      control="reactSelect"
-                      register={register}
+                    <ReactSelect
+                      control={control}
                       name="propertyId"
-                      placeholder="Choose Property"
-                      label="Property Name *"
+                      placeholder="Choose Property Name"
+                      label="Property Name"
+                      error={errors.propertyId?.message || ""}
+                      labelKey={"name"}
+                      valueKey={"id"}
                       required
-                      labelKey="name"
-                      valueKey="id"
                       bg_color="white"
                       height="40px"
                       color="black"
-                      error={errors.propertyId?.message || ""}
                       options={propertyList || []}
                     />
                   </GridItem>
                   <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
                     <GridItem>
-                      <DateComponent
+                      <FormControl
+                        control="date"
+                        register={register}
                         name="checkinDate"
                         label="Check In"
                         changeDate={changeCheckInDate}
@@ -106,7 +107,9 @@ export const BookForm = () => {
                       />
                     </GridItem>
                     <GridItem>
-                      <DateComponent
+                      <FormControl
+                        control="date"
+                        register={register}
                         name="checkOutDate"
                         label="Check Out"
                         changeDate={changeCheckOutDate}

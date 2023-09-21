@@ -35,7 +35,7 @@ const DateInput = styled.div`
     background: ${colors.primary};
   }
   .react-datepicker-wrapper {
-    color: ${colors.primary_dark};
+    color: ${colors.black};
   }
 `;
 

@@ -6,11 +6,19 @@ import { AxiosError } from "axios";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
-export const getAllOffer = () => {
-  return HttpClient.get(api.offer.fetch);
+export const getAllOffer = (pageParams: any) => {
+  const pageIndex = pageParams.queryKey[1]?.page;
+  const pageSize = pageParams.queryKey[1]?.limit;
+  return HttpClient.get(
+    api.offer.fetch.replace(
+      `pageIndex={page}&pageSize={limit}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+    )
+  );
+  // return HttpClient.get(api.offer.fetch);
 };
 
-const createOffer = (data: any) => {
+export const createOffer = (data: any) => {
   return HttpClient.post(`${api.offer.add}`, data);
 };
 

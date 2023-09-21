@@ -4,7 +4,6 @@ import ImageUpload from "@src/components/atoms/ImageUpload";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { IVoucher } from "@src/interface/voucher";
 import styled from "styled-components";
-import * as yup from "yup";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -13,6 +12,8 @@ import { useEffect } from "react";
 import { Text } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
 import { useServiceList } from "@src/constant/useServiceList";
+import { voucherValidationSchema } from "@src/schema/voucher";
+import ReactSelect from "@src/components/atoms/Select";
 
 interface IVoucherProps {
   mutate?: any;
@@ -48,42 +49,26 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
 }) => {
   const location = useLocation();
   const { state } = location;
-  const validationSchema = yup.object().shape({
-    voucherName: yup.string().required("Voucher Name is required"),
-    serviceId: yup
-      .mixed()
-      .test(
-        "is-service-valid",
-        "Please select a valid service",
-        function (value) {
-          if (typeof value === "string") {
-            return true;
-          } else if (typeof value === "object") {
-            return true;
-          }
-          return false;
-        }
-      )
-      .required("Please select service"),
 
-    discountPercentage: yup.string().required("percentage is required"),
-  });
-
-  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
-    validationSchema,
-  });
+  const { handleSubmit, register, errors, reset, setValue, control } =
+    useFormHook({
+      validationSchema: voucherValidationSchema,
+    });
 
   const serviceList = useServiceList();
   useEffect(() => {
     if (state?.id) {
-      reset({ ...state, serviceId: state.serviceCategory });
+      reset({
+        ...state,
+        serviceId: { label: state.serviceName, value: state.serviceId },
+      });
     }
   }, [state]);
   const onSubmitHandler = (data: IVoucher) => {
     const formData = new FormData();
     const dat = {
       voucherName: data?.voucherName,
-      serviceId: data?.serviceId?.id,
+      serviceId: data?.serviceId?.value,
       discountPercentage: data?.discountPercentage,
       maximumAmounts: data?.maximumAmounts,
       maximumLimits: data?.maximumLimits,
@@ -128,18 +113,15 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             error={errors?.voucherName?.message || ""}
             required
           />
-          <FormControl
-            control="reactSelect"
-            register={register}
+          <ReactSelect
+            control={control}
             name="serviceId"
             placeholder="Choose Service"
             label="Service Name"
+            error={errors.serviceId?.message || ""}
+            labelKey={"serviceName"}
+            valueKey={"id"}
             required
-            labelKey="serviceName"
-            onChange={(e: any) => setValue("serviceId", e)}
-            value={state?.serviceCategory}
-            valueKey="id"
-            error={errors?.serviceId?.message || ""}
             options={serviceList || []}
           />
           <FormControl

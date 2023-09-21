@@ -14,6 +14,7 @@ import { useNationalityList } from "@src/constant/useNationalityList";
 import styled from "styled-components";
 
 import { Link as RouterLink } from "react-router-dom";
+import ReactSelect from "@src/components/atoms/Select";
 
 export const AccountDetailStyle = styled.div`
   font-weight: 600;
@@ -41,14 +42,32 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
       .required("Email is required")
       .email("Invalid email format"),
     phoneNumber: createPhoneNumberSchema(),
-    nationalityId: yup.string().required("Nationality is required"),
+    nationalityId: yup
+      .mixed()
+      .test(
+        "is-nationality-valid",
+        "Please select nationality",
+        function (value) {
+          if (typeof value === "object") {
+            return true;
+          }
+          return false;
+        }
+      )
+      .required("Please select nationality"),
     dateOfBirth: yup.string().required("DOB is required"),
   });
-  const { handleSubmit, register, errors, control, setValue } = useFormHook({
+  const { handleSubmit, register, errors, control } = useFormHook({
     validationSchema,
   });
   const onSubmit = (data: any) => {
-    mutate({ ...data, roleId: 2 });
+    const { propertyId, nationalityId, ...rest } = data;
+    mutate({
+      ...rest,
+      roleId: 2,
+      nationalityId: data.nationalityId?.value,
+      propertyId: data.propertyId?.value,
+    });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,30 +133,27 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             error={errors.phoneNumber?.message || ""}
           />
 
-          <FormControl
-            control="reactSelect"
-            register={register}
+          <ReactSelect
+            control={control}
             name="propertyId"
-            placeholder="Choose Property (optional)"
-            onChange={(e: any) => setValue("propertyId", e.value)}
+            placeholder="Choose Property Name"
             label="Property Name"
+            error={errors.propertyId?.message || ""}
             labelKey={"name"}
             valueKey={"id"}
             required
             options={propertyList || []}
           />
-          <FormControl
-            control="reactSelect"
-            register={register}
+          <ReactSelect
+            control={control}
             name="nationalityId"
             placeholder="Choose your nationality"
             label="Nationality"
-            onChange={(e: any) => setValue("nationalityId", e.value)}
             required
             error={errors.nationalityId?.message || ""}
             options={nationalityList || []}
-            labelKey="countryName"
-            valueKey="id"
+            labelKey={"countryName"}
+            valueKey={"id"}
           />
           <FormControl
             control="input"
