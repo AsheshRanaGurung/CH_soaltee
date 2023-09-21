@@ -10,13 +10,14 @@ import { AxiosError } from "axios";
 import { useMutation } from "react-query";
 import { createByService } from "@src/service/profile/byservice";
 import { colors } from "@src/theme/colors";
-type FormValues = {
-  propertyname: string;
-  services: {
-    service: string | number;
-    amount: number | null | string;
-  }[];
-};
+import ReactSelect from "@src/components/atoms/Select";
+// type FormValues = {
+//   propertyname: string;
+//   services: {
+//     service: string | number;
+//     amount: number | null | string;
+//   }[];
+// };
 const defaultValues = {
   propertyname: "",
   services: [
@@ -27,7 +28,14 @@ const defaultValues = {
   ],
 };
 const validationSchema: any = yup.object().shape({
-  propertyname: yup.string().required("Property Name is required"),
+  propertyname: yup
+    .mixed()
+    .test("is-property-valid", "Please select Property", function (value) {
+      if (typeof value === "object") {
+        return true;
+      }
+      return false;
+    }),
   services: yup.array().of(
     yup.object().shape({
       service: yup.mixed().required("Service is required"),
@@ -36,11 +44,10 @@ const validationSchema: any = yup.object().shape({
   ),
 });
 export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
-  const { register, handleSubmit, control, errors, watch, setValue } =
-    useFormHook({
-      validationSchema,
-      defaultValues,
-    });
+  const { register, handleSubmit, control, errors, watch } = useFormHook({
+    validationSchema,
+    defaultValues,
+  });
   const { fields, append, remove } = useFieldArray({
     name: "services",
     control,
@@ -48,7 +55,7 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
   const selectedValue = watch("services");
 
   const selectedServiceIds = selectedValue.map((item: any) =>
-    Number(item.service)
+    Number(item.service.value)
   );
   const { id } = data.userId;
   const { mutate, isLoading } = useMutation(createByService, {
@@ -63,16 +70,16 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    const serviceArray = data.services.map((item) => {
+  const onSubmit = (data: any) => {
+    const serviceArray = data.services.map((item: any) => {
       return {
-        serviceId: Number(item.service),
+        serviceId: Number(item.service?.value),
         totalAmount: Number(item.amount),
       };
     });
     mutate({
       userId: id,
-      propertyId: Number(data.propertyname),
+      propertyId: Number(data.propertyname.value),
       transactionType: "SERVICE",
       lpServiceListDtos: serviceArray,
     });
@@ -80,20 +87,16 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl
-          control="select"
-          register={register}
+        <ReactSelect
+          control={control}
           name="propertyname"
+          placeholder="Select property"
           label="Property Name"
-          labelKey="name"
-          valueKey="id"
-          onChange={(e: any) => {
-            setValue(`propertyname`, e.value);
-          }}
-          placeholder="Select Property"
-          error={errors?.propertyname?.message || ""}
-          options={data?.propertyList || []}
+          error={errors.propertyname?.message || ""}
+          labelKey={"name"}
+          valueKey={"id"}
           required
+          options={data.propertyList || []}
         />
         {fields.map((field, i) => {
           return (
@@ -106,20 +109,16 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
                 key={field.id}
               >
                 <GridItem>
-                  <FormControl
-                    control="select"
-                    register={register}
+                  <ReactSelect
+                    control={control}
                     name={`services.${i}.service`}
+                    placeholder="Select property"
                     label="Service"
-                    labelKey="serviceName"
-                    valueKey="id"
-                    placeholder="Select Service"
-                    onChange={(e: any) => {
-                      setValue(`services.${i}.service`, e.value);
-                    }}
                     error={(errors?.services as any)?.service?.message || ""}
-                    options={data?.serviceList || []}
+                    labelKey={"serviceName"}
+                    valueKey={"id"}
                     required
+                    options={data?.serviceList || []}
                     isSelected={selectedServiceIds}
                   />
                 </GridItem>

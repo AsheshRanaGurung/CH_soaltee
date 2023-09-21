@@ -17,6 +17,7 @@ const TableHeadings = ({
   onDrawerModalClose,
   onDrawerModalOpen,
   isDrawerOpen,
+  onClick,
 }: any) => {
   return (
     <Flex
@@ -29,7 +30,9 @@ const TableHeadings = ({
       <TableTitle currentText={CurrentText ?? ""} />
       {type === "report" ? (
         <Flex gap={2} mb={3} alignItems={"center"}>
-          <Button leftIcon={<ExportIcon />}>Export</Button>
+          <Button leftIcon={<ExportIcon />} onClick={onClick}>
+            Export
+          </Button>
           <DrawerComponent
             title={drawerTitle}
             leftIcon={<FilterIcon />}

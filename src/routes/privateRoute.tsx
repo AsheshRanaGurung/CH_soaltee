@@ -29,7 +29,7 @@ const PrivateRoute = ({ Component, allowedRoles }: any) => {
   return (
     <div>
       {role && role?.role?.length > 0 && !role.role.includes("USER") ? (
-        <Layout>
+        <Layout role={role.role}>
           <Component />
         </Layout>
       ) : (

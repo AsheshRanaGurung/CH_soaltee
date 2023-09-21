@@ -6,7 +6,8 @@ import TableHeadings from "@src/components/molecules/table-heading";
 import { usePageParams } from "@src/components/organisms/layout";
 import UserFilter from "@src/components/templates/admin/report/user-filter";
 import { usePageinationHook } from "@src/hooks/usePaginationHook";
-import { getAllEarningReport } from "@src/service/report";
+import { exportEarningReport, getAllEarningReport } from "@src/service/report";
+import { exportToCSV } from "@src/utility/exportCSV";
 import { useMemo, useState } from "react";
 
 const EarningReport = () => {
@@ -23,6 +24,13 @@ const EarningReport = () => {
     enabled: true,
   });
   const { pageParams } = usePageParams();
+  const exportUserReports = async () => {
+    const dataList = await exportEarningReport({ ...pageParams, ...para });
+    if (dataList && data && data.data.length > 0) {
+      exportToCSV({ data: dataList.data, fileName: "earning_report" });
+    }
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -82,6 +90,7 @@ const EarningReport = () => {
           isDrawerOpen={isDrawerOpen}
           onDrawerModalOpen={onDrawerModalOpen}
           onDrawerModalClose={onDrawerModalClose}
+          onClick={exportUserReports}
         >
           <UserFilter
             setPara={setPara}

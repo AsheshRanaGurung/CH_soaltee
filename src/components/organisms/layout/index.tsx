@@ -10,7 +10,7 @@ const LAYOUT_WIDTHS = {
   SMALL: "80px",
 };
 
-const Layout = ({ children }: ILayout) => {
+const Layout = ({ children, role }: ILayout) => {
   const { width } = useWindowSize();
   const [showSidebar, setShowSidebar] = useState(true);
   const [pageParams, setPageParams] = useState({
@@ -32,7 +32,7 @@ const Layout = ({ children }: ILayout) => {
 
   return (
     <Box display="grid" gridTemplateColumns="auto 1fr">
-      <Sidebar width={sidebarWidth} isCollapse={!showSidebar} />
+      <Sidebar width={sidebarWidth} isCollapse={!showSidebar} role={role} />
       <Box height="100vh" maxH="100vh" overflowY="auto">
         <SidebarState.Provider value={{ showSidebar, setShowSidebar }}>
           <PageParamsContext.Provider value={{ pageParams, setPageParams }}>
@@ -52,6 +52,7 @@ const Layout = ({ children }: ILayout) => {
 
 interface ILayout {
   children: React.ReactNode;
+  role?: any;
 }
 
 export default Layout;

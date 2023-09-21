@@ -64,6 +64,8 @@ const ReactSelect = ({
   required,
   isSelected,
   control,
+  isClearable = true,
+  onChange,
   ...rest
 }: any) => {
   const formattedOptions =
@@ -99,6 +101,7 @@ const ReactSelect = ({
                 {...field}
                 {...rest}
                 defaultValue={field.value}
+                isClearable={isClearable}
                 options={formattedOptions.map((option: any) => ({
                   ...option,
                   isDisabled: isSelected?.includes(option.value),
