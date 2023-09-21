@@ -48,10 +48,7 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.SERVICE,
     element: (
-      <PrivateRoute
-        Component={ServicePage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
+      <PrivateRoute Component={ServicePage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
   {
@@ -65,10 +62,7 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.MEMBER_TIER,
     element: (
-      <PrivateRoute
-        Component={MemberPage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
+      <PrivateRoute Component={MemberPage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
   {
@@ -97,10 +91,7 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.PROPERTY,
     element: (
-      <PrivateRoute
-        Component={PropertyPage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
+      <PrivateRoute Component={PropertyPage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
   {
@@ -129,10 +120,7 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.BONUS,
     element: (
-      <PrivateRoute
-        Component={BonusPage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
+      <PrivateRoute Component={BonusPage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
   {

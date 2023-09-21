@@ -2,7 +2,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
 import ModalForm from "@src/components/molecules/modal";
-import { CreateStaffManagementForm } from "@src/components/templates/admin/staff-management/staff-add";
+import { CreateMemberManagementForm } from "@src/components/templates/admin/member-management/member-add";
 import StaffManagementList from "@src/components/templates/admin/staff-management/staff-list";
 import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import { getAllStaff } from "@src/service/staff-management";
@@ -26,9 +26,6 @@ const StaffManagementPage = () => {
     setIsUpdate(false);
     onStaffManagementModalClose();
   };
-  // const { data, isLoading } = useQuery("staff_management", getAllStaff, {
-  //   select: ({ data }) => data.datalist,
-  // });
 
   return (
     <>
@@ -47,13 +44,15 @@ const StaffManagementPage = () => {
           onCloseModal={onStaffManagementModalClose}
           title={isUpdate ? "Update Staff" : "Add Staff"}
         >
-          <CreateStaffManagementForm
+          <CreateMemberManagementForm
             isUpdate={isUpdate}
             updateId={updateId}
             tableData={data}
             setUpdateId={setUpdateId}
             setIsUpdate={setIsUpdate}
-            onStaffManagementModalClose={onStaffManagementModalClose}
+            onModalClose={onStaffManagementModalClose}
+            roleId="3"
+            querykey="staff_management"
           />
         </ModalForm>
       </Content>

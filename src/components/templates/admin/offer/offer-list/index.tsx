@@ -54,16 +54,11 @@ const OfferList: React.FC<IOfferProps> = ({
         accessorKey: "subTitle",
         width: "20%",
       },
-      // {
-      //   header: "Description",
-      //   accessorKey: "description",
-      //   width: "20%",
-      // },
       {
         header: "Image",
         accessorKey: "offerImage",
-        cell: ({ value }: { value: string }) => {
-          return <img src={value} alt="Image" width="100" />;
+        cell: ({ row }: any) => {
+          return <img src={row.original.offerImage} alt="Image" width="100" />;
         },
       },
       {

@@ -42,9 +42,15 @@ export const getAllService = (pageParams: any) => {
       `pageIndex=${pageIndex}&pageSize=${pageSize}`
     )
   );
-  // return HttpClient.get(api.configuration.service.fetch);
 };
-
+export const getAllServiceSelect = () => {
+  return HttpClient.get(
+    api.configuration.service.fetch.replace(
+      `pageIndex={page}&pageSize={limit}`,
+      `pageIndex=${1}&pageSize=${50}`
+    )
+  );
+};
 //update service
 export const updateService = ({ id, data }: { id: string; data: IService }) => {
   return HttpClient.post(api.configuration.service.update.replace(":id", id), {

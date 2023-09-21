@@ -80,8 +80,8 @@ const MemberList: React.FC<IMemberTier> = ({
         header: "Image",
         accessorKey: "imageUrl",
         width: "15%",
-        cell: ({ value }: { value: string }) => {
-          return <img src={value} alt="Image" width="100" />;
+        cell: ({ row }: any) => {
+          return <img src={row.original.imageUrl} alt="Image" width="100" />;
         },
       },
 

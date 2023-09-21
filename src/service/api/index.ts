@@ -22,9 +22,13 @@ export const api = {
   },
   report: {
     fetch:
-      "/report/overall-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}",
+      "/report/overall-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}&fromDate={fromDate}&toDate={toDate}",
     fetch_earning:
-      "/report/earning-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}",
+      "/report/earning-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}&fromDate={fromDate}&toDate={toDate}",
+    export_user:
+      "/excel/overall-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}&fromDate={fromDate}&toDate={toDate}",
+    export_earning:
+      "/excel/earning-report?pageIndex={page}&pageSize={limit}&tier={tier}&property={property}&nationality={nationality}&totalAmount={totalAmount}&fromDate={fromDate}&toDate={toDate}",
   },
   master_data: {
     member_tier: {

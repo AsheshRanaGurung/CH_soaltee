@@ -32,10 +32,11 @@ export const CreateMemberManagementForm = ({
   tableData,
   setIsUpdate,
   setUpdateId,
-  onMemberModalClose,
+  onModalClose,
+  roleId,
+  querykey,
 }: any) => {
   const propertyList = usePropertyList();
-
   const { register, errors, reset, handleSubmit, control, setValue } =
     useFormHook({
       validationSchema: memberManagementValidation,
@@ -46,7 +47,9 @@ export const CreateMemberManagementForm = ({
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData?.data.find((x: IMember) => x.id === updateId);
+
       setIndividualData(data);
+      setIsSwitchOpen(data.isBlocked);
       reset({
         ...data,
         nationalityId: { label: data.nationality, value: data.nationalityId },
@@ -63,7 +66,7 @@ export const CreateMemberManagementForm = ({
   const { mutate, isLoading } = useMutation(createMember, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
-      queryClient.refetchQueries("member_management");
+      queryClient.refetchQueries(querykey);
       onCloseHandler();
     },
     onError: (error: AxiosError<{ message: string }>) => {
@@ -74,13 +77,14 @@ export const CreateMemberManagementForm = ({
     reset(defaultValues);
     setUpdateId("");
     setIsUpdate(false);
-    onMemberModalClose();
+    onModalClose();
   };
 
   const [isSwitchOpen, setIsSwitchOpen] = useState(false);
   const toggleSwitch = () => {
     setIsSwitchOpen((initialValue) => !initialValue);
   };
+
   const nationalityList = useNationalityList();
 
   const onSubmitHandler = async (data: any) => {
@@ -95,7 +99,7 @@ export const CreateMemberManagementForm = ({
         propertyId: data?.propertyId?.value,
         isBlocked: data.isBlocked,
         membershipTierId: data.membershipTierId?.value,
-        roleId: "2",
+        roleId: roleId,
       });
     } else {
       mutate({
@@ -106,7 +110,7 @@ export const CreateMemberManagementForm = ({
         phoneNumber: data.phoneNumber,
         nationalityId: data.nationalityId?.value,
         propertyId: data.propertyId?.value,
-        roleId: "2",
+        roleId: roleId,
       });
     }
   };
@@ -189,7 +193,7 @@ export const CreateMemberManagementForm = ({
             required
             options={propertyList || []}
           />
-          {updateId && (
+          {updateId && roleId === "2" && (
             <ReactSelect
               control={control}
               register={register}
@@ -216,7 +220,7 @@ export const CreateMemberManagementForm = ({
           )}
         </Flex>
         <ModalFooterForm
-          onCloseModal={onMemberModalClose}
+          onCloseModal={onModalClose}
           resetButtonText={"Cancel"}
           isLoading={isLoading}
           submitButtonText={isUpdate ? "Update Member" : "Add Member"}

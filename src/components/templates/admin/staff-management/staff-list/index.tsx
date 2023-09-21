@@ -58,9 +58,9 @@ const StaffManagementList: React.FC<IMemberProps> = ({
         header: "Action",
         width: "10%",
 
-        cell: ({ row }: CellProps<{ userId: string }>) => {
+        cell: ({ row }: CellProps<{ id: string }>) => {
           const onEdit = () => {
-            setUpdateId(row.original.userId);
+            setUpdateId(row.original.id);
             setIsUpdate(true);
             onStaffManagementModalOpen();
           };

@@ -15,7 +15,14 @@ const defaultValues = {
   rewardPoints: "",
 };
 const validationSchema = yup.object().shape({
-  propertyname: yup.string().required("Property Name is required"),
+  propertyname: yup
+    .mixed()
+    .test("is-property-valid", "Please select Property", function (value) {
+      if (typeof value === "object") {
+        return true;
+      }
+      return false;
+    }),
   rewardPoints: yup.string().required("Reward Points is required"),
 });
 

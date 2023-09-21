@@ -49,7 +49,9 @@ const MemberManagementPage = () => {
             tableData={data}
             setUpdateId={setUpdateId}
             setIsUpdate={setIsUpdate}
-            onMemberModalClose={onMemberModalClose}
+            onModalClose={onMemberModalClose}
+            roleId="2"
+            querykey="member_management"
           />
         </ModalForm>
       </Content>

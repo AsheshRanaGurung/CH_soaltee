@@ -5,24 +5,45 @@ import ModalFooterForm from "@src/components/molecules/modal/footer";
 import { useMemberTierList } from "@src/constant/useMemberTierList";
 import { useNationalityList } from "@src/constant/useNationalityList";
 import { usePropertyList } from "@src/constant/usePropertyList";
+import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
 import { useForm } from "react-hook-form";
 
+const defaultValues = {
+  propertyId: "",
+  membershipTierId: "",
+  nationalityId: "",
+  totalAmount: "",
+  dateFrom: "",
+  dateTo: "",
+};
 const UserFilter = ({ setPara, isLoading, onDrawerModalClose }: any) => {
-  const { handleSubmit, register, control } = useForm();
-
+  const { handleSubmit, register, control, reset, setValue } = useForm({
+    defaultValues,
+  });
   const propertyList = usePropertyList();
   const tierList = useMemberTierList();
   const nationalityList = useNationalityList();
-
+  const changeValidFromDate = (date: any) => {
+    setValue("dateFrom", formatDateToYYYYMMDD(date));
+  };
+  const changeValidToDate = (date: any) => {
+    setValue("dateTo", formatDateToYYYYMMDD(date));
+  };
   const onSubmitHandler = async (data: any) => {
     const extraParams = {
       tier: data.membershipTierId?.value,
       property: data.propertyId?.value,
       nationality: data.nationalityId?.value,
       totalAmount: data.totalAmount,
+      fromDate: data.dateFrom,
+      toDate: data.dateTo,
     };
     setPara(extraParams);
   };
+  const onClear = () => {
+    reset(defaultValues);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -62,10 +83,27 @@ const UserFilter = ({ setPara, isLoading, onDrawerModalClose }: any) => {
             placeholder={"Bill amount"}
             label={"Bill amount (greater than)"}
           />
+          <FormControl
+            control="date"
+            register={register}
+            name="dateFrom"
+            label="Date From"
+            endIcons="true"
+            changeDate={changeValidFromDate}
+          />
+          <FormControl
+            control="date"
+            register={register}
+            name="dateTo"
+            label="Date To"
+            endIcons="true"
+            changeDate={changeValidToDate}
+          />
           <ModalFooterForm
-            // onCloseModal={onDrawerClose}
-            // resetButtonText={"Cancel"}
             isLoading={isLoading}
+            onCloseModal={onClear}
+            direction={"column-reverse"}
+            resetButtonText={"Clear"}
             submitButtonText={"Filter"}
             onClick={onDrawerModalClose}
           />

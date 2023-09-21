@@ -7,7 +7,9 @@
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
+* common form for staff and member ([c90feb8](https://gitlab.com/paras205/boilerplate-react/commit/c90feb8c58d5d0a5161d009ea95e45daf4f13e8d))
 * fix ([a0797d9](https://gitlab.com/paras205/boilerplate-react/commit/a0797d9070451ef411bc8149c7f259810907942d))
+* fix rolewise sidebar ([218c83b](https://gitlab.com/paras205/boilerplate-react/commit/218c83bfe374b8240e98718e6d2f865d92493376))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
@@ -25,17 +27,16 @@
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
 * remove console ([b88c476](https://gitlab.com/paras205/boilerplate-react/commit/b88c476a0c58d18c628bf21657472ce251ab81b8))
 * routing issue, update issue ([a29aa53](https://gitlab.com/paras205/boilerplate-react/commit/a29aa534fa6fda413d9adecc1d623caffeda9a42))
+* show image in table ([0ac451f](https://gitlab.com/paras205/boilerplate-react/commit/0ac451fc3dca50e3cebbc9d121565a3f500ba8ed))
 
 
 ### Features
 
 * add additional folder ([6a3e80e](https://gitlab.com/paras205/boilerplate-react/commit/6a3e80e0283bb533435461c064b30935cd953ddf))
 * add and member list completed ([934b4ea](https://gitlab.com/paras205/boilerplate-react/commit/934b4eab6da534d90b24e3b7fe2844ec5de668b4))
-* added lock icon if its next tier ([fd3ee59](https://gitlab.com/paras205/boilerplate-react/commit/fd3ee590d3f786cd73a11177d6f0f2a79198efa2))
 * added password component, refactored input component ([5676063](https://gitlab.com/paras205/boilerplate-react/commit/5676063ecf247dd38bd7be2ca29c19d3b9c6d76a))
 * added set password template ([75f9471](https://gitlab.com/paras205/boilerplate-react/commit/75f9471f735d8a6cf734924dcc21e0f56326750a))
 * added tier image fetch api in user dashboard ([17ced13](https://gitlab.com/paras205/boilerplate-react/commit/17ced133a26c56a7fca397b8a8d44961e7aec0db))
-* added visibility toggle in reward point\ ([dfce16b](https://gitlab.com/paras205/boilerplate-react/commit/dfce16b8ca64258d0132ad080bb5bcb19fbf9069))
 * adjusted column width, added edit and add modal in member tier ([827e90e](https://gitlab.com/paras205/boilerplate-react/commit/827e90ebb34d3c5ee73046ad70f05feac8f87be0))
 * admin loagin integartion ([6a58586](https://gitlab.com/paras205/boilerplate-react/commit/6a5858668898a187d75d9633e45aef0ec1867ac1))
 * api integration for add member tier ([591e472](https://gitlab.com/paras205/boilerplate-react/commit/591e4724e8b1fbd33f620dc73ed81df0beed9334))
@@ -48,6 +49,7 @@
 * custom input ([d323c8f](https://gitlab.com/paras205/boilerplate-react/commit/d323c8f84f00f51287e6c564fa41478402ce5ae9))
 * dashboard rewardPoint ([deff013](https://gitlab.com/paras205/boilerplate-react/commit/deff013adbac58d59d98ac6a8241634e040100a7))
 * disabled select if already selected earlier ([17ec76c](https://gitlab.com/paras205/boilerplate-react/commit/17ec76ce3e20f68927377bf1318cee4017490877))
+* export user report ([8bc2232](https://gitlab.com/paras205/boilerplate-react/commit/8bc22329aafb74c457fc06e44a3a8258e9a7f665))
 * forgot password page design and api implementation ([83fdd11](https://gitlab.com/paras205/boilerplate-react/commit/83fdd1147575e825dfdff059120828e07843d96e))
 * header navbar ([db616a8](https://gitlab.com/paras205/boilerplate-react/commit/db616a8aa8ca6b88e5900b684437b8ebf9b3f345))
 * login component ([f753932](https://gitlab.com/paras205/boilerplate-react/commit/f753932002845eaab1196b776d992ee5ecac0547))
@@ -58,14 +60,9 @@
 * password validation ([a14954c](https://gitlab.com/paras205/boilerplate-react/commit/a14954c5935baa2dcd783af303ed3b8ea450aab0))
 * refetched point for manual and added phone validation ([1d51211](https://gitlab.com/paras205/boilerplate-react/commit/1d51211fd510cf093aab1d4739037ff4e30ab572))
 * resolved modal issue, integrated api for update property ([56fc7b3](https://gitlab.com/paras205/boilerplate-react/commit/56fc7b3dce0062608340685fa86dcee7ab0d45da))
-* step card ui ([6ebf17a](https://gitlab.com/paras205/boilerplate-react/commit/6ebf17a0620643184fb0d3de7a352792b26c3e86))
 * table changes ([efc1491](https://gitlab.com/paras205/boilerplate-react/commit/efc1491a997cc0f44fd7720a21fed789d69c01df))
 * table changes ([b545c66](https://gitlab.com/paras205/boilerplate-react/commit/b545c668a87aa21a950ccbfd387d5cc97bd70ad4))
-* user tier slider ([8a34fc5](https://gitlab.com/paras205/boilerplate-react/commit/8a34fc51f8eae330bd6b337349f06fcb8f504ef1))
 * voucher changes ([2b3f9ca](https://gitlab.com/paras205/boilerplate-react/commit/2b3f9ca9b0d7b2fd3b5bb01c7b4795f93b7ea297))
-* working on iser page ([d0b073c](https://gitlab.com/paras205/boilerplate-react/commit/d0b073c0f6fada176fb92ae54b612cd14b7b0eda))
-* working on user page ([2071508](https://gitlab.com/paras205/boilerplate-react/commit/20715084dc7d400315303d786fa470a5ad9395e4))
-* working on user page --added hotel block and reduced code ([ee8126d](https://gitlab.com/paras205/boilerplate-react/commit/ee8126d98e32bf879a0dc5bf0dd020df3d00a765))
 
 
 

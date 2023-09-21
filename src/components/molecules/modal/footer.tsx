@@ -7,11 +7,13 @@ interface IModal {
   resetButtonText?: string;
   submitButtonText?: string;
   onClick?: any;
+  direction?: any;
 }
 
 const ModalFooterForm: FC<IModal> = ({
   isLoading,
   onCloseModal,
+  direction,
   resetButtonText,
   submitButtonText,
   onClick,
@@ -21,13 +23,14 @@ const ModalFooterForm: FC<IModal> = ({
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
+      flexDirection={direction || "row"}
       mt={8}
       mb={4}
+      gap={3}
     >
       {resetButtonText && (
         <Button
           variant="outlined"
-          mr={3}
           borderRadius="0"
           w="100%"
           onClick={onCloseModal}
