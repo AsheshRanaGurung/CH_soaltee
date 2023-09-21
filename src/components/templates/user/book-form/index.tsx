@@ -4,14 +4,21 @@ import {
   Container,
   Grid,
   GridItem,
+  HStack,
   Heading,
   Image,
+  Stack,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
 import FormControl from "@src/components/atoms/FormControl";
+import { BackgroundTextWithImage } from "@src/components/molecules/bg-text-image";
 import ReactSelect from "@src/components/atoms/Select";
 import { usePropertyList } from "@src/constant/usePropertyList";
 import { useFormHook } from "@src/hooks/useFormhook";
+import { colors } from "@src/theme/colors";
+import { font } from "@src/theme/font";
 import { useState } from "react";
 
 export const BookForm = () => {
@@ -49,7 +56,7 @@ export const BookForm = () => {
 
   return (
     <>
-      <Box bg={"#fff3f3"} p={["60px 0"]}>
+      <Box p={["60px 0"]}>
         <Container maxW={"1400px"}>
           <Grid
             templateColumns={{
@@ -57,25 +64,79 @@ export const BookForm = () => {
               md: "repeat(2,2fr,1fr)",
               sm: "repeat(1,1fr)",
             }}
+            background="#252525"
+            alignItems="center"
           >
             <GridItem>
-              <Box>
-                <Image src={imageList.ResturantWall} h={"700px"} w={"100%"} />
-              </Box>
+              <BackgroundTextWithImage
+                img={imageList.ResturantWall}
+                height="700px"
+              >
+                <Image src={imageList.Rating} mb={3} />
+                <HStack gap={6}>
+                  <Stack width="60%">
+                    <Heading
+                      fontSize="x-large"
+                      marginBottom={3}
+                      fontFamily={font.cormorant}
+                      textTransform="capitalize"
+                    >
+                      Call us, it’s toll - free.
+                    </Heading>
+                    <Text
+                      marginBottom={"15px"}
+                      as="div"
+                      fontFamily={font.josefin}
+                    >
+                      Over 30,000 people work for us in 5 different locations.
+                      We provide special services worldwide with exclusive
+                      services and specialist.
+                    </Text>
+                  </Stack>
+                  <Stack>
+                    <HStack gap={3}>
+                      <Image src={imageList.Phone} width={35} />
+                      <VStack alignItems="left">
+                        <Text
+                          as="div"
+                          fontFamily={font.josefin}
+                          color={colors.primary}
+                        >
+                          880 987 786 678
+                        </Text>
+
+                        <Text as="div" fontFamily={font.josefin}>
+                          For More Information
+                        </Text>
+                      </VStack>
+                    </HStack>
+                  </Stack>
+                </HStack>
+              </BackgroundTextWithImage>
             </GridItem>
-            <GridItem p={"80px"} bg={"#252525"}>
+            <GridItem p={"80px"}>
               <Box h={"100%"} color={"white"} p={["20px 0"]}>
                 <Heading
                   fontSize={"20px"}
                   fontWeight={"400"}
                   paddingBottom={"10px"}
+                  fontFamily={font.cormorant}
                 >
                   BOOK HOTEL FOR EXCITING REWARDS
                 </Heading>
-                <Heading paddingBottom={"20px"}>
+                <Heading
+                  paddingBottom={"20px"}
+                  fontSize="42px"
+                  fontFamily={font.cormorant}
+                >
                   We are more than just a room
                 </Heading>
-                <form>
+
+                <form
+                  style={{
+                    fontFamily: "Josefin Sans",
+                  }}
+                >
                   <GridItem>
                     <ReactSelect
                       control={control}

@@ -1,74 +1,76 @@
 import { Grid, GridItem, Heading, Text } from "@chakra-ui/layout";
 import { imageList } from "@src/assets/images";
+import Icons from "@src/components/atoms/Icons";
+import styled from "styled-components";
+
 import {
   Box,
   Button,
   Card,
   CardBody,
-  CardHeader,
+  HStack,
   Image,
-  Link,
   ListItem,
   Progress,
+  Stack,
   UnorderedList,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { useQuery } from "react-query";
-import { getUserDetail } from "@src/service/user";
-import { getImage } from "@src/service/image";
-import { useState, useEffect } from "react";
+
 import { colors } from "@src/theme/colors";
-// import { CardLock } from "@src/components/atoms/CardLock";
+import { font } from "@src/theme/font";
+import { LockIcon } from "@chakra-ui/icons";
+import { PasswordViewIcon } from "@src/components/atoms/Password";
+const IconWrapper = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 30px;
+`;
+const ToggleIconWrapper = styled.div`
+  button {
+    color: ${colors.white};
+    font-size: 20px;
+  }
+`;
 
-export const MemberCard = () => {
-  const { data } = useQuery("user_detail", getUserDetail, {
-    select: ({ data }) => data.data,
-  });
-  const {
-    tierName,
-    fullName,
-    totalRewardPoints,
-    customerId,
-    nextMembershipTier,
-    pointsToNextTier,
-    tierImage,
-  } = data ?? "";
-  const { data: imageData } = useQuery("image", () => getImage(tierImage), {
-    enabled: !!tierImage,
-  });
-  const [imageSrc, setImageSrc] = useState<string | null>(tierImage);
-
-  useEffect(() => {
-    const blobData = new Blob([imageData?.data], { type: "image/jpeg" });
-
-    const imageUrl = URL.createObjectURL(blobData);
-
-    // Set the URL as the image source
-    setImageSrc(imageUrl);
-
-    // Clean up the URL when the component unmounts
-    return () => {
-      URL.revokeObjectURL(imageUrl);
-      setImageSrc("");
-    };
-  }, [imageData]);
+export const MemberCard = ({
+  image,
+  tierName,
+  fullName,
+  customerId,
+  pointsToNextTier,
+  tierDescription,
+  totalRewardPoints,
+  nextMembershipTier,
+}: any) => {
   const progressWidth =
     (totalRewardPoints / (totalRewardPoints + pointsToNextTier)) * 100;
+  const { isOpen: isVisible, onToggle: onToggleVisibility } = useDisclosure();
   return (
-    <Grid
-      gap={8}
-      templateColumns={{
-        xl: "repeat(1,3fr 2fr )",
-        md: "repeat(2,4fr,1fr)",
-        sm: "repeat(1,2fr)",
-      }}
-      paddingBottom={"80px"}
-      paddingTop={"80px"}
-    >
-      <GridItem position={"relative"}>
-        <Card bg={colors.card_bg}>
+    <Grid bg="transparent" gap={8} paddingBottom={"80px"} paddingTop={"80px"}>
+      <GridItem
+        position={"relative"}
+        border={`1px solid #FFF0E5AD`}
+        borderRadius={16}
+        py={5}
+        _after={{
+          content: `""`,
+          position: "absolute",
+          width: "100%",
+          borderRadius: "16px",
+          background: "rgba(255, 228, 208, 0.23)",
+          backdropFilter:
+            tierName === nextMembershipTier ? "none" : "blur(5px)",
+          top: 0,
+          height: "100%",
+        }}
+      >
+        <Card
+          background="transparent"
+          zIndex={tierName === nextMembershipTier ? 0 : 3}
+        >
           <CardBody>
-            <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 4fr)"}>
+            <Grid gap={16} mt={4} templateColumns={"repeat(1,2fr 4fr 1fr)"}>
               <GridItem>
                 <Card
                   width={"430px"}
@@ -82,35 +84,38 @@ export const MemberCard = () => {
                     content: `''`,
                     height: "100%",
                     width: "100%",
-                    bg: `url(${
-                      imageSrc || imageList.DummyTier
-                    }) no-repeat right`,
+                    bg: `url(${image || imageList.DummyTier}) no-repeat right`,
                   }}
                 >
-                  {/* <CardLock
-                    bg_color={colors.white}
-                    left={187}
-                    top={105}
-                    width={60}
-                    height={60}
-                    position="absolute"
-                  /> */}
+                  <IconWrapper>
+                    {tierName === nextMembershipTier && (
+                      <Icons icon={<LockIcon />} />
+                    )}
+                  </IconWrapper>
                   <Box position={"absolute"} zIndex={"1"}>
-                    <CardHeader color={colors.light_white}></CardHeader>
-                    <CardBody>
-                      <Box color={colors.light_white}>
-                        <Text fontSize={"14px"} fontStyle={"italic"}>
+                    <CardBody pl={8}>
+                      <Box color={colors.light_white} pt={4}>
+                        <Text fontSize="md" mb="2">
+                          Heritage Club Member Card
+                        </Text>
+                        <HStack gap={3} mb={3}>
+                          <Image src={imageList.Trophy} />
+                          <Heading fontSize="xl" textTransform="uppercase">
+                            {tierName} tier
+                          </Heading>
+                        </HStack>
+                        <Text fontSize={"14px"} fontFamily={font.cormorant}>
                           Member Name
                         </Text>
-                        <Heading fontSize={"21px"}>
+                        <Heading fontSize={"18px"}>
                           {fullName?.toUpperCase()}
                         </Heading>
                       </Box>
-                      <Box color={colors.light_white} marginTop={"25px"}>
-                        <Text fontSize={"14px"} fontStyle={"italic"}>
-                          Member Number{" "}
+                      <Box color={colors.light_white} marginTop={"10px"}>
+                        <Text fontSize={"14px"} fontFamily={font.cormorant}>
+                          Member Number
                         </Text>
-                        <Heading fontSize={"21px"}>{customerId}</Heading>
+                        <Heading fontSize={"18px"}>{customerId}</Heading>
                       </Box>
                     </CardBody>
                   </Box>
@@ -119,92 +124,82 @@ export const MemberCard = () => {
               <GridItem>
                 <Box marginTop={"10px"}>
                   <Heading
-                    color={colors.gray_900}
-                    fontSize={"28px"}
-                    fontStyle={"italic"}
+                    color={colors.white}
+                    fontSize={"34px"}
                     fontWeight={"400"}
                     marginBottom={"20px"}
-                    width={"fit-content"}
-                    display={"flex"}
-                    gap={"12px"}
+                    fontFamily={font.cormorant}
                   >
-                    {tierName?.toUpperCase()}
-                    {/* <CardLock
-                      tierIcon={true}
-                      bg_color={colors.primary}
-                      width={30}
-                      height={30}
-                    /> */}
+                    {tierName?.toUpperCase()} TIER
                   </Heading>
                   <Progress
                     value={progressWidth}
                     colorScheme="green"
                     size="sm"
                   />
-                  <Text
-                    fontSize={"14px"}
-                    color={colors.gray_600}
-                    marginTop={"8px"}
-                    marginLeft={"5px"}
-                  >
-                    Earn {pointsToNextTier} points to reach {nextMembershipTier}
-                  </Text>
-
-                  <Button padding={"30px"} marginTop={"40px"}>
-                    <Image
-                      src={imageList.AwardIcon}
-                      w={"22px"}
-                      height={"22px"}
-                    />
+                  <Stack gap={6}>
                     <Text
-                      fontWeight={"400"}
-                      fontSize={"16px"}
-                      marginLeft={"10px"}
-                      marginRight={"15px"}
+                      color={colors.white}
+                      fontWeight="600"
+                      marginTop={"8px"}
+                      marginLeft={"5px"}
                     >
-                      Reward Points
-                    </Text>{" "}
-                    {totalRewardPoints}
-                  </Button>
-                  <Link
-                    color={colors.primary}
-                    display={"block"}
-                    marginTop={"20px"}
+                      Earn {pointsToNextTier} points to reach{" "}
+                      {nextMembershipTier}
+                    </Text>
+                    {tierDescription && (
+                      <UnorderedList
+                        color={colors.white}
+                        fontSize="sm"
+                        fontWeight="400"
+                      >
+                        <ListItem>{tierDescription}</ListItem>
+                      </UnorderedList>
+                    )}
+                  </Stack>
+                </Box>
+              </GridItem>
+              <GridItem>
+                <Box marginTop={"10px"}>
+                  <Stack
+                    background={colors.primary}
+                    color={colors.white}
+                    borderRadius="12px 12px 0 0"
+                    p={5}
                   >
-                    Click here to redeem
-                  </Link>
+                    <Text>Reward Points</Text>
+                    <HStack>
+                      <Heading>
+                        {isVisible
+                          ? totalRewardPoints?.toFixed(2)
+                          : totalRewardPoints
+                              ?.toFixed(2)
+                              ?.toString()
+                              .replace(/[0-9]/g, "X")}
+                      </Heading>
+                      <ToggleIconWrapper>
+                        <PasswordViewIcon
+                          isVisible={isVisible}
+                          onToggle={onToggleVisibility}
+                        />
+                      </ToggleIconWrapper>
+                    </HStack>
+                  </Stack>
+                  <Button
+                    variant="outlined"
+                    color={colors.black}
+                    display={"block"}
+                    width="100%"
+                    borderRadius="0 0 12px 12px"
+                    height="50px"
+                    border="none"
+                    fontFamily={font.cormorant}
+                  >
+                    View Transaction History
+                  </Button>
                 </Box>
               </GridItem>
             </Grid>
-          </CardBody>
-        </Card>
-        <Box>
-          <ArrowForwardIcon
-            position={"absolute"}
-            w={"50px"}
-            h={"50px"}
-            background={"white"}
-            padding={"15px"}
-            borderRadius={"6px"}
-            right={"-15px"}
-            top={"50%"}
-            cursor={"pointer"}
-          />
-        </Box>
-      </GridItem>
-      <GridItem>
-        <Card bg={colors.card_bg} borderRadius={"14px"} h={"315px"}>
-          <CardBody p={"48px"}>
-            <Heading fontWeight={"600"} fontSize={"24px"} marginBottom={"10px"}>
-              Membership card Rules*
-            </Heading>
-            <UnorderedList>
-              <ListItem>Reach each tier and enjoy our free services</ListItem>
-              <ListItem>Earn points based on services you use</ListItem>
-              <ListItem>Redeem your points with Soaltee loyalty</ListItem>
-              <ListItem>Earn points based on services you use</ListItem>
-              <ListItem> Spend minimum 8,000 to earn points</ListItem>
-            </UnorderedList>
           </CardBody>
         </Card>
       </GridItem>

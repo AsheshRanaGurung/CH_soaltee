@@ -19,7 +19,7 @@ import Gift from "./Capa_1.png";
 import FooterLogo from "./foter.png";
 import FooterWall from "./footerWall.jpg";
 import ResturantWall from "./Resturant.jpg";
-import DinnerWall from "./jeff-trierweiler-d5YOnQDFAsw-unsplash.jpg";
+import DinnerWall from "./subscribe-bg.png";
 import FootersLogo from "./footerLogo.png";
 import Background from "./background.png";
 import EditProfile from "./edit_profile.png";
@@ -27,6 +27,19 @@ import DashProfile from "./dashProfile.png";
 import ProfileBackground from "./background.png";
 import DummyUser from "./profile.png";
 import DummyTier from "./default-tier.jpg";
+import Refer from "./refer.png";
+import Banquet from "./banquet.png";
+import Food from "./food.png";
+import Soaltee from "./soaltee.png";
+import Resort from "./soalteeresort.png";
+import Westend from "./soalteewestend.png";
+import Premier from "./soalteepremier.png";
+import Rating from "./stars.png";
+import Phone from "./phone.png";
+import Spend from "./spend.png";
+import Earn from "./earn.png";
+import Redeem from "./redeem.png";
+import Trophy from "./trophy.png";
 import AvatarImg from "./avatar.png";
 
 export const imageList = {
@@ -59,5 +72,18 @@ export const imageList = {
   ProfileBackground,
   DummyUser,
   DummyTier,
+  Refer,
+  Banquet,
+  Food,
+  Soaltee,
+  Resort,
+  Westend,
+  Premier,
+  Rating,
+  Phone,
+  Spend,
+  Earn,
+  Redeem,
+  Trophy,
   AvatarImg,
 };

@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 export const useMemberTierList = () => {
   const [data, setData] = useState([]);
   const { data: memberData } = useQuery("member_tier", getAllMemberTier, {
-    select: ({ data }) => data?.datalist,
+    select: ({ data }) => data?.data,
   });
 
   useEffect(() => {
