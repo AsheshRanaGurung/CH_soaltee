@@ -27,6 +27,7 @@ import DashProfile from "./dashProfile.png";
 import ProfileBackground from "./background.png";
 import DummyUser from "./profile.png";
 import DummyTier from "./default-tier.jpg";
+import AvatarImg from "./avatar.png";
 
 export const imageList = {
   HotelImage,
@@ -58,4 +59,5 @@ export const imageList = {
   ProfileBackground,
   DummyUser,
   DummyTier,
+  AvatarImg,
 };

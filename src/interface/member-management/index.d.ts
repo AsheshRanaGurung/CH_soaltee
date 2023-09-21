@@ -5,7 +5,11 @@ export interface IMember {
   phoneNumber?: string;
   nationalityId?: string;
   isActive?: boolean;
-  propertyId?: string;
+  propertyId?:
+    | string
+    | {
+        value?: number | string;
+      };
   property?: {
     id?: number | string;
   };

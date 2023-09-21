@@ -7,4 +7,8 @@ export const propertyValidation = yup.object().shape({
   phoneNumber: createPhoneNumberSchema(),
   contactPerson: yup.string().required("Contact Person Name is required"),
   contactPersonPhoneNo: createPhoneNumberSchema(),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
 });

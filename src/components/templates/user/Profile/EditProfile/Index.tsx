@@ -1,14 +1,15 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
-import ModalForm from "@src/components/organisms/modal";
 import { useFormHook } from "@src/hooks/useFormhook";
-import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
-import * as yup from "yup";
 import { useEffect } from "react";
 import ImageUpload from "@src/components/atoms/ImageUpload";
 import { useUpdateUserDetail } from "@src/service/user";
 import { objectToFormData } from "objecttoformdataconverter";
 import { useNationalityList } from "@src/constant/useNationalityList";
+import ModalForm from "@src/components/molecules/modal";
+import { userProfileValidationSchema } from "@src/schema/user/profile";
+import ModalFooterForm from "@src/components/molecules/modal/footer";
+import ReactSelect from "@src/components/atoms/Select";
 
 const defaultValues = {
   fullName: "",
@@ -16,12 +17,7 @@ const defaultValues = {
   phoneNumber: "",
   nationalityId: "",
 };
-const validationSchema = yup.object().shape({
-  fullName: yup.string().required("Full Name is required"),
-  email: yup.string().required("Email is required"),
-  phoneNumber: createPhoneNumberSchema(),
-  nationalityId: yup.string().required("Nationality is required"),
-});
+
 export const EditProfile = ({
   isOpen,
   onClose,
@@ -31,20 +27,30 @@ export const EditProfile = ({
   onClose: () => void;
   data: any;
   dataProfile: any;
-  handleFormSubmit: (data: any) => void;
+  // handleFormSubmit: (data: any) => void;
 }) => {
-  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
-    validationSchema,
-    defaultValues,
-  });
-  const { userId } = data !== null ? data : "";
+  return (
+    <ModalForm isModalOpen={isOpen} onCloseModal={onClose} title="Edit Profile">
+      <ProfileEdit dataProfile={data} onClose={onClose} />
+    </ModalForm>
+  );
+};
+
+export const ProfileEdit = ({ dataProfile, onClose }: any) => {
+  const { register, errors, setValue, reset, handleSubmit, control } =
+    useFormHook({
+      validationSchema: userProfileValidationSchema,
+      defaultValues,
+    });
   const { mutateAsync: update, isLoading: isUpdating } = useUpdateUserDetail();
+  const { userId } = dataProfile !== null ? dataProfile : "";
+
   const onSubmitHandler = async (data: any) => {
     const convertedData = objectToFormData({
       data: JSON.stringify({
         fullName: data?.fullName,
         phoneNumber: +data?.phoneNumber,
-        nationalityId: data?.nationalityId,
+        nationalityId: data?.nationalityId?.value,
       }),
       image: data?.image,
     });
@@ -54,91 +60,77 @@ export const EditProfile = ({
   };
   useEffect(() => {
     reset({
-      fullName: data?.fullName,
-      email: data?.email,
-      phoneNumber: data?.phoneNumber,
-      nationalityId: data?.nationalityId,
+      fullName: dataProfile?.fullName,
+      email: dataProfile?.email,
+      phoneNumber: dataProfile?.phoneNumber,
+      nationalityId: {
+        label: dataProfile.nationality,
+        value: dataProfile.nationalityId,
+      },
     });
-  }, [data]);
-
-  return (
-    <ModalForm
-      isModalOpen={isOpen}
-      onCloseModal={onClose}
-      showFooter={true}
-      resetButtonText={"Cancel"}
-      submitButtonText={"Done"}
-      submitHandler={handleSubmit(onSubmitHandler)}
-      title="Edit Profile"
-      isLoading={isUpdating}
-    >
-      <ProfileEdit
-        register={register}
-        errors={errors}
-        dataProfile={data}
-        setValue={setValue}
-        isLoading={isUpdating}
-      />
-    </ModalForm>
-  );
-};
-
-export const ProfileEdit = ({ register, errors, setValue, data }: any) => {
+  }, [dataProfile]);
   const nationalityList = useNationalityList();
   return (
-    <Box mx={{ base: "none", md: "auto" }}>
-      <Flex direction="column" gap={4.5}>
-        <ImageUpload
-          imageSrc={data?.userImageUrl ?? ""}
-          setValue={setValue}
-          isUser={true}
-          show={true}
-        />
+    <form onSubmit={handleSubmit(onSubmitHandler)}>
+      <Box mx={{ base: "none", md: "auto" }}>
+        <Flex direction="column" gap={4.5}>
+          <ImageUpload
+            imageSrc={dataProfile?.userImageUrl ?? ""}
+            setValue={setValue}
+            isUser={true}
+            show={true}
+          />
 
-        <FormControl
-          control="input"
-          name="fullName"
-          register={register}
-          placeholder={"Full Name "}
-          label={"Full Name "}
-          error={errors?.fullName?.message || ""}
-          required
-        />
+          <FormControl
+            control="input"
+            name="fullName"
+            register={register}
+            placeholder={"Full Name "}
+            label={"Full Name "}
+            error={errors?.fullName?.message || ""}
+            required
+          />
 
-        <FormControl
-          control="input"
-          name="email"
-          register={register}
-          placeholder={"Email"}
-          label={"Email"}
-          error={errors?.email?.message || ""}
-          disabled
-        />
+          <FormControl
+            control="input"
+            name="email"
+            register={register}
+            placeholder={"Email"}
+            label={"Email"}
+            error={errors?.email?.message || ""}
+            disabled
+          />
 
-        <FormControl
-          control="input"
-          name="phoneNumber"
-          type="number"
-          register={register}
-          placeholder={"Mobile Number"}
-          label={"Mobile Number"}
-          error={errors?.phoneNumber?.message || ""}
-          required
+          <FormControl
+            control="input"
+            name="phoneNumber"
+            type="number"
+            register={register}
+            placeholder={"Mobile Number"}
+            label={"Mobile Number"}
+            error={errors?.phoneNumber?.message || ""}
+            required
+          />
+          <ReactSelect
+            control={control}
+            name="nationalityId"
+            placeholder="Choose your nationality"
+            label="Nationality"
+            required
+            error={errors.nationalityId?.message || ""}
+            options={nationalityList || []}
+            labelKey={"countryName"}
+            valueKey={"id"}
+          />
+        </Flex>
+        <ModalFooterForm
+          onCloseModal={onClose}
+          resetButtonText={"Cancel"}
+          isLoading={isUpdating}
+          submitButtonText="Update Profile"
         />
-        <FormControl
-          control="reactSelect"
-          register={register}
-          name="nationalityId"
-          placeholder="Choose your nationality"
-          label="Nationality"
-          onChange={(e: any) => setValue("nationalityId", e.value)}
-          required
-          error={errors.nationalityId?.message || ""}
-          options={nationalityList || []}
-          labelKey="countryName"
-          valueKey="id"
-        />
-      </Flex>
-    </Box>
+        <Spacer />
+      </Box>
+    </form>
   );
 };

@@ -33,8 +33,16 @@ export const useCreateService = () => {
   });
 };
 
-export const getAllService = () => {
-  return HttpClient.get(api.configuration.service.fetch);
+export const getAllService = (pageParams: any) => {
+  const pageIndex = pageParams.queryKey[1]?.page;
+  const pageSize = pageParams.queryKey[1]?.limit;
+  return HttpClient.get(
+    api.configuration.service.fetch.replace(
+      `pageIndex={page}&pageSize={limit}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+    )
+  );
+  // return HttpClient.get(api.configuration.service.fetch);
 };
 
 //update service

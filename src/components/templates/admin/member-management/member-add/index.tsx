@@ -12,6 +12,8 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
 import { useMemberTierList } from "@src/constant/useMemberTierList";
+import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
+import ReactSelect from "@src/components/atoms/Select";
 
 const defaultValues = {
   fullName: "",
@@ -34,18 +36,29 @@ export const CreateMemberManagementForm = ({
 }: any) => {
   const propertyList = usePropertyList();
 
-  const { register, errors, setValue, reset, handleSubmit } = useFormHook({
-    validationSchema: memberManagementValidation,
-    defaultValues,
-  });
+  const { register, errors, reset, handleSubmit, control, setValue } =
+    useFormHook({
+      validationSchema: memberManagementValidation,
+      defaultValues,
+    });
+  const [individualData, setIndividualData] = useState<IMember | null>(null);
+
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData?.data.find((x: IMember) => x.id === updateId);
+      setIndividualData(data);
       reset({
         ...data,
+        nationalityId: { label: data.nationality, value: data.nationalityId },
+        propertyId: { label: data.propertyName, value: data.propertyId },
+        membershipTierId: {
+          label: data.membershipTierName,
+          value: data.tierId,
+        },
       });
     }
   }, [isUpdate, updateId, tableData?.data]);
+
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createMember, {
     onSuccess: (response) => {
@@ -70,7 +83,7 @@ export const CreateMemberManagementForm = ({
   };
   const nationalityList = useNationalityList();
 
-  const onSubmitHandler = async (data: IMember) => {
+  const onSubmitHandler = async (data: any) => {
     if (updateId) {
       mutate({
         id: updateId,
@@ -78,10 +91,10 @@ export const CreateMemberManagementForm = ({
         email: data.email,
         phoneNumber: data.phoneNumber,
         dateOfBirth: data.dateOfBirth,
-        nationalityId: data.nationalityId,
-        propertyId: data?.propertyId,
+        nationalityId: data.nationalityId?.value,
+        propertyId: data?.propertyId?.value,
         isBlocked: data.isBlocked,
-        membershipTierId: data.membershipTierId,
+        membershipTierId: data.membershipTierId?.value,
         roleId: "2",
       });
     } else {
@@ -91,14 +104,17 @@ export const CreateMemberManagementForm = ({
         email: data.email,
         dateOfBirth: data.dateOfBirth,
         phoneNumber: data.phoneNumber,
-        nationalityId: data.nationalityId,
-        propertyId: data.propertyId,
+        nationalityId: data.nationalityId?.value,
+        propertyId: data.propertyId?.value,
         roleId: "2",
       });
     }
   };
 
   const tierList = useMemberTierList();
+  const changeDateOfBirth = (date: any) => {
+    setValue("dateOfBirth", formatDateToYYYYMMDD(date));
+  };
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -133,53 +149,54 @@ export const CreateMemberManagementForm = ({
             required
           />
           <FormControl
-            control="input"
-            name="dateOfBirth"
-            defaultValue={"2023-09-07"}
-            type="date"
+            control="date"
+            register={register}
+            defaultValue={
+              individualData &&
+              individualData?.dateOfBirth &&
+              new Date(individualData.dateOfBirth)
+            }
             required
+            name="dateOfBirth"
             label="Date of birth"
+            endIcons="true"
+            changeDate={changeDateOfBirth}
             color="black"
             padding="10px"
             height="40px"
             lineHeight="2"
-            register={register}
             error={errors.dateOfBirth?.message || ""}
           />
-          <FormControl
-            control="reactSelect"
-            register={register}
+          <ReactSelect
+            control={control}
             name="nationalityId"
             placeholder="Choose your nationality"
             label="Nationality"
             required
-            onChange={(e: any) => setValue("nationalityId", e.value)}
             error={errors.nationalityId?.message || ""}
             options={nationalityList || []}
             labelKey={"countryName"}
             valueKey={"id"}
           />
-          <FormControl
-            control="reactSelect"
-            register={register}
+          <ReactSelect
+            control={control}
             name="propertyId"
             placeholder="Choose Property Name"
-            onChange={(e: any) => setValue("propertyId", e.value)}
             label="Property Name"
+            error={errors.propertyId?.message || ""}
             labelKey={"name"}
             valueKey={"id"}
             required
             options={propertyList || []}
           />
           {updateId && (
-            <FormControl
-              control="reactSelect"
+            <ReactSelect
+              control={control}
               register={register}
               name="membershipTierId"
               placeholder="Choose Tier"
               label="Tier"
               required
-              onChange={(e: any) => setValue("membershipTierId", e.value)}
               error={errors.membershipTierId?.message || ""}
               options={tierList || []}
               labelKey={"membershipName"}

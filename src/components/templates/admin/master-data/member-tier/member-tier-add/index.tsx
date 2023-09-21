@@ -2,25 +2,26 @@ import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import ImageUpload from "@src/components/atoms/ImageUpload";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
-import {
-  Control,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
 import { ChromePicker } from "react-color";
 import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import { ColorPickerMinusIcon, ColorPickerPlusIcon } from "@src/assets/svgs";
+import { memberTierValidationSchema } from "@src/schema/master-data/member-tier";
+import {
+  useCreateMemberTier,
+  useUpdateMemberTier,
+} from "@src/service/master-data/member-tier";
+import ModalFooterForm from "@src/components/molecules/modal/footer";
+import { useFormHook } from "@src/hooks/useFormhook";
 
-interface IMemberProps {
-  register: UseFormRegister<IMemberTierDetail>;
-  setValue: UseFormSetValue<IMemberTierDetail>;
-  errors: FieldErrors;
-  id?: number | string;
-  control: Control<any, any>;
-}
+const defaultValues = {
+  membershipName: "",
+  pointsFrom: "",
+  pointsTo: "",
+  image: "",
+};
+
 const ColorStyled = styled.div`
   border: 1px solid rgba(233, 233, 233, 1);
   .chrome-picker {
@@ -29,12 +30,18 @@ const ColorStyled = styled.div`
   }
 `;
 
-export const CreateMemberForm: React.FC<IMemberProps> = ({
-  register,
-  errors,
-  setValue,
-  id,
+export const CreateMemberForm = ({
+  isUpdate,
+  updateId,
+  tableData,
+  setIsUpdate,
+  setUpdateId,
+  onMemberModalClose,
 }: any) => {
+  const { register, errors, setValue, reset, handleSubmit } = useFormHook({
+    validationSchema: memberTierValidationSchema,
+    defaultValues,
+  });
   const [color, setColor] = useState(`${colors.primary}`);
 
   const [isColorPicked, setIsColorPicked] = useState(false);
@@ -47,8 +54,59 @@ export const CreateMemberForm: React.FC<IMemberProps> = ({
   useEffect(() => {
     setValue("colorCode", color);
   }, []);
+  useEffect(() => {
+    if (isUpdate && updateId) {
+      const data = tableData?.data.find(
+        (x: IMemberTierDetail) => x.id === updateId
+      );
+      reset({
+        membershipName: data?.membershipName,
+        pointsFrom: data?.pointsFrom,
+        pointsTo: data?.pointsTo,
+      });
+    }
+  }, [isUpdate, updateId]);
+
+  const { mutateAsync: mutate, isLoading } = useCreateMemberTier();
+
+  const { mutateAsync: update, isLoading: isUpdating } = useUpdateMemberTier();
+
+  const onCloseHandler = () => {
+    reset(defaultValues);
+    setUpdateId("");
+    setIsUpdate(false);
+    onMemberModalClose();
+  };
+
+  const onSubmitHandler = async (data: IMemberTierDetail) => {
+    const formData = new FormData();
+    const dat = {
+      membershipName: data.membershipName,
+      pointsFrom: data.pointsFrom,
+      pointsTo: data.pointsTo,
+      colorCode: data.colorCode,
+      description: data?.description,
+    };
+    formData.append("data", JSON.stringify(dat));
+    if (updateId) {
+      if (data.image) {
+        formData.append("image", data.image as Blob);
+        const result = await update({ id: updateId, data: formData });
+        result.status === 200 && onCloseHandler();
+      } else {
+        formData.append("image", "");
+        const result = await update({ id: updateId, data: formData });
+        result.status === 200 && onCloseHandler();
+      }
+    } else {
+      formData.append("image", data.image as Blob);
+      const result = await mutate(formData);
+      result.status === 200 && onCloseHandler();
+    }
+    reset();
+  };
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box mx={{ base: "none", md: "auto" }}>
         <Flex direction="column" gap={4.5}>
           <FormControl
@@ -112,10 +170,20 @@ export const CreateMemberForm: React.FC<IMemberProps> = ({
           <Text fontSize={"sm"} mt={5} mb={2} fontWeight={"500"}>
             Image
           </Text>
-          <ImageUpload setValue={setValue} required={!id} />
+          <ImageUpload
+            setValue={setValue}
+            // required={!id}
+          />
         </Flex>
         <Spacer />
+        <ModalFooterForm
+          onCloseModal={onMemberModalClose}
+          resetButtonText={"Cancel"}
+          isLoading={isLoading || isUpdating}
+          submitButtonText={isUpdate ? "Update Tier" : "Add Tier"}
+        />
+        <Spacer />
       </Box>
-    </>
+    </form>
   );
 };

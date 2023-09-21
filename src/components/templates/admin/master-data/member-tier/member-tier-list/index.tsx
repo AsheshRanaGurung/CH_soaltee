@@ -1,214 +1,143 @@
-import { useDisclosure } from "@chakra-ui/react";
-import ModalForm from "@src/components/organisms/modal";
-import { useEffect, useState } from "react";
-import { CreateMemberForm } from "../member-tier-add";
-import { useFormHook } from "@src/hooks/useFormhook";
-import * as yup from "yup";
-import {
-  useCreateMemberTier,
-  useDeleteMemberTier,
-  useUpdateMemberTier,
-} from "@src/service/master-data/member-tier";
-import MemberTierTable from "../member-tier-table";
+import { Stack } from "@chakra-ui/react";
+import { useMemo } from "react";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
-import { IParams } from "@src/interface/params";
-import { Pagination } from "@src/components/organisms/table";
-import { MemberPreview } from "../member-privew";
+import TableHeadings from "@src/components/molecules/table-heading";
+import BasicTable from "@src/components/molecules/table";
+import { usePageParams } from "@src/components/organisms/layout";
+import { ColorInList } from "@src/assets/svgs";
+import { CellProps } from "react-table";
+import styled from "styled-components";
+import TableActions from "@src/components/molecules/table/TableActions";
 interface IMemberTier {
-  tableData: IMemberTierDetail[];
-  tableDataFetching: boolean;
-  _pageSizeChange: (limit: number) => void;
-  _pageChange: (page: number) => void;
-  paginatedData: IMemberTierDetail[];
-  pageParams: IParams;
+  setUpdateId: any;
+  setIsUpdate: any;
+  onMemberModalOpen: any;
+  onCloseHandler: any;
+  data: any;
+  isLoading: any;
+  onDeleteMemberTierOpen: any;
+  onDeleteMemberTier: any;
+  setDeleteId: any;
+  setViewId: any;
+  onViewMemberTierOpen: any;
 }
 
-const defaultValues = {
-  membershipName: "",
-  pointsFrom: "",
-  pointsTo: "",
-  image: "",
-};
-
-const validationSchema = yup.object().shape({
-  membershipName: yup.string().required("Membership Name is required"),
-  pointsFrom: yup.number().required("Point is required"),
-  pointsTo: yup
-    .number()
-    .required("Point is required")
-    .test(
-      "is-greater",
-      "Point To must be greater than Point From",
-      function (value: any) {
-        const { pointsFrom } = this.parent;
-        return value && value > pointsFrom;
-      }
-    ),
-});
-
+const ColorTierStyled = styled.div`
+  svg {
+    path {
+      fill: ${(props) => props.color || "transparent"};
+    }
+  }
+`;
 const MemberList: React.FC<IMemberTier> = ({
-  tableData,
-  tableDataFetching,
-  _pageSizeChange,
-  _pageChange,
-  paginatedData,
-  pageParams,
+  setUpdateId,
+  setIsUpdate,
+  onMemberModalOpen,
+  onCloseHandler,
+  data,
+  isLoading,
+  onDeleteMemberTierOpen,
+  setDeleteId,
+  setViewId,
+  onViewMemberTierOpen,
 }) => {
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [updateId, setUpdateId] = useState("");
-  const [viewId, setViewId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
-  const {
-    isOpen: isMemberOpen,
-    onOpen: onMemberModalOpen,
-    onClose: onMemberModalClose,
-  } = useDisclosure();
-  const {
-    isOpen: isViewOpen,
-    onOpen: onViewOpen,
-    onClose: onViewClose,
-  } = useDisclosure();
-  const {
-    isOpen: isDeleteMemberOpen,
-    onOpen: onDeleteMemberOpen,
-    onClose: onDeleteMemberClose,
-  } = useDisclosure();
+  const { pageParams } = usePageParams();
 
-  useEffect(() => {
-    if (isUpdate && updateId) {
-      const data = tableData.find((x: IMemberTierDetail) => x.id === updateId);
-      reset({
-        membershipName: data?.membershipName,
-        pointsFrom: data?.pointsFrom,
-        pointsTo: data?.pointsTo,
-      });
-    }
-  }, [isUpdate, updateId]);
+  const columns = useMemo(
+    () => [
+      {
+        header: "S.N",
+        accessorFn: (_: IMemberTierDetail, index: number) =>
+          (pageParams.page - 1) * pageParams.limit + (index + 1),
+        width: "10%",
+      },
 
-  const { handleSubmit, register, errors, reset, setValue, control } =
-    useFormHook({
-      validationSchema,
-    });
+      {
+        header: "Tier Name",
+        accessorKey: "membershipName",
+        width: "20%",
+      },
+      {
+        header: "Tier Color",
+        width: "15%",
+        cell: ({ row }: { row: any }) => (
+          <ColorTierStyled color={row.original.colorCode}>
+            <ColorInList />
+          </ColorTierStyled>
+        ),
+      },
+      {
+        header: "Points From Tier",
+        accessorKey: "pointsFrom",
+        width: "15%",
+      },
+      {
+        header: "Points To Tier",
+        accessorKey: "pointsTo",
+        width: "15%",
+      },
+      {
+        header: "Image",
+        accessorKey: "imageUrl",
+        width: "15%",
+        cell: ({ value }: { value: string }) => {
+          return <img src={value} alt="Image" width="100" />;
+        },
+      },
 
-  const { mutateAsync: mutate, isLoading } = useCreateMemberTier();
-  const { mutateAsync: deleteMemberTier, isLoading: isDeleting } =
-    useDeleteMemberTier();
-  const onDelete = async (id: string) => {
-    const result = await deleteMemberTier({
-      id: id,
-    });
-    result.status === 200 && onDeleteMemberClose();
-  };
-  const { mutateAsync: update, isLoading: isUpdating } = useUpdateMemberTier();
-
-  const onCloseHandler = () => {
-    reset(defaultValues);
-    setDeleteId("");
-    setUpdateId("");
-    setIsUpdate(false);
-    onMemberModalClose();
-  };
-
-  const onSubmitHandler = async (data: IMemberTierDetail) => {
-    const formData = new FormData();
-    const dat = {
-      membershipName: data.membershipName,
-      pointsFrom: data.pointsFrom,
-      pointsTo: data.pointsTo,
-      colorCode: data.colorCode,
-      description: data?.description,
-    };
-    formData.append("data", JSON.stringify(dat));
-    if (updateId) {
-      if (data.image) {
-        formData.append("image", data.image as Blob);
-        const result = await update({ id: updateId, data: formData });
-        result.status === 200 && onCloseHandler();
-      } else {
-        formData.append("image", "");
-        const result = await update({ id: updateId, data: formData });
-        result.status === 200 && onCloseHandler();
-      }
-    } else {
-      formData.append("image", data.image as Blob);
-      const result = await mutate(formData);
-      result.status === 200 && onCloseHandler();
-    }
-    reset();
-  };
+      {
+        header: "Action",
+        cell: ({ row }: CellProps<{ id: string; name: string }>) => {
+          const onEdit = () => {
+            setUpdateId(row.original.id);
+            setIsUpdate(true);
+            onMemberModalOpen();
+          };
+          const onDelete = () => {
+            setDeleteId(row.original.id);
+            onDeleteMemberTierOpen();
+          };
+          const onView = () => {
+            setViewId(row.original.id);
+            onViewMemberTierOpen();
+          };
+          return (
+            <Stack alignItems={"flex-start"}>
+              <TableActions
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onView={onView}
+              />
+            </Stack>
+          );
+        },
+        width: 120,
+      },
+    ],
+    [pageParams]
+  );
 
   return (
     <>
-      <MemberTierTable
-        paginatedData={paginatedData}
-        pageParams={pageParams}
-        tableDataFetching={tableDataFetching}
-        title="Filter By"
+      <TableHeadings
         btnText="Add Member Tier"
         CurrentText="Member Tier List"
         onAction={() => {
           onCloseHandler();
           onMemberModalOpen();
         }}
-        onEditData={(id: string) => {
-          setUpdateId(id);
-          setIsUpdate(true);
-          onMemberModalOpen();
-        }}
-        onViewData={(id: string) => {
-          setViewId(id);
-          onViewOpen();
-        }}
-        onDeleteData={(id: string) => {
-          setDeleteId(id);
-          onDeleteMemberOpen();
-        }}
       />
-      <MemberPreview
+      <BasicTable
+        data={data?.data || []}
+        columns={columns}
+        isLoading={isLoading}
+        totalPages={data?.totalPages}
+      />
+      {/* <MemberPreview
         isViewOpen={isViewOpen}
         onClose={onViewClose}
         viewId={viewId}
-      />
-
-      <ModalForm
-        isModalOpen={isMemberOpen}
-        isLoading={isLoading || isUpdating}
-        onCloseModal={onMemberModalClose}
-        resetButtonText={"Cancel"}
-        submitButtonText={isUpdate ? "Update Member Tier" : "Add Member Tier"}
-        submitHandler={handleSubmit(onSubmitHandler)}
-        showFooter={true}
-        title={isUpdate ? "Update Member Tier" : "Add Member Tier"}
-      >
-        <CreateMemberForm
-          register={register}
-          errors={errors}
-          control={control}
-          setValue={setValue}
-          id={updateId}
-        />
-      </ModalForm>
-
-      <ModalForm
-        title={"Delete"}
-        isLoading={isDeleting}
-        isModalOpen={isDeleteMemberOpen}
-        onCloseModal={onDeleteMemberClose}
-        resetButtonText={"No"}
-        submitButtonText={"Yes"}
-        handleSubmit={() => onDelete(deleteId)}
-        showFooter={true}
-      >
-        Are you sure you want to delete the Member Tier ?
-      </ModalForm>
-      <Pagination
-        enabled={true}
-        queryPageIndex={pageParams.page}
-        queryPageSize={pageParams.limit}
-        totalCount={tableData?.length || 0}
-        pageChange={_pageChange}
-        pageSizeChange={_pageSizeChange}
-      />
+      /> */}
     </>
   );
 };

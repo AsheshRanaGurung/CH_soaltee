@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { FC } from "react";
 
 interface IModal {
@@ -17,7 +17,13 @@ const ModalFooterForm: FC<IModal> = ({
   onClick,
 }) => {
   return (
-    <>
+    <Box
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      mt={8}
+      mb={4}
+    >
       {resetButtonText && (
         <Button
           variant="outlined"
@@ -41,7 +47,7 @@ const ModalFooterForm: FC<IModal> = ({
       >
         {submitButtonText}
       </Button>
-    </>
+    </Box>
   );
 };
 

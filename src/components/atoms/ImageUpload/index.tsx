@@ -3,6 +3,7 @@ import { Button, Box, Avatar } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import { CrossIcon } from "@src/assets/svgs";
+import { imageList } from "@src/assets/images";
 
 interface IProps {
   setValue?: any;
@@ -89,8 +90,13 @@ const ImageUpload: React.FC<IProps> = ({
     }
   };
   const handleClearImage = () => {
-    setSelectedImage(null);
-    setImageName("");
+    if (!isUser) {
+      setSelectedImage(null);
+      setImageName("");
+    } else {
+      setImageName("");
+      setSelectedImage(imageList.AvatarImg);
+    }
   };
   return (
     <Box textAlign="center">
@@ -107,14 +113,14 @@ const ImageUpload: React.FC<IProps> = ({
                 cursor: "pointer",
                 marginBottom: "12px",
                 position: "relative",
-                borderRadius: 0,
+                borderRadius: "50%",
               }}
             />
           ) : (
             <Avatar
               src={selectedImage}
               style={{
-                borderRadius: 0,
+                borderRadius: "50%",
                 width: "100px",
                 height: "100px",
                 display: "flex",
@@ -153,8 +159,8 @@ const ImageUpload: React.FC<IProps> = ({
             <p>No file selected</p>
           )}
         </ImageStyled>
-        {selectedImage && (
-          <div style={{ display: show ? "none" : "block" }}>
+        {selectedImage && !isUser && (
+          <div>
             <img src={selectedImage} />
           </div>
         )}

@@ -4,8 +4,16 @@ import { HttpClient } from "@src/service/config/api";
 import { toastSuccess } from "@src/service/service-toast";
 import { useQueryClient, useMutation } from "react-query";
 
-export const getAllBonus = () => {
-  return HttpClient.get(api.configuration.bonus.fetch);
+export const getAllBonus = (pageParams: any) => {
+  const pageIndex = pageParams.queryKey[1]?.page;
+  const pageSize = pageParams.queryKey[1]?.limit;
+  return HttpClient.get(
+    api.configuration.bonus.fetch.replace(
+      `pageIndex={page}&pageSize={limit}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+    )
+  );
+  // return HttpClient.get(api.configuration.bonus.fetch);
 };
 
 export const createBonus = (data: IBonus) => {

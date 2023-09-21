@@ -6,8 +6,8 @@ import { AxiosError } from "axios";
 import { useQueryClient, useMutation } from "react-query";
 
 export const getAllProperty = (pageParams: any) => {
-  const pageIndex = pageParams.queryKey[1].page;
-  const pageSize = pageParams.queryKey[1].limit;
+  const pageIndex = pageParams.queryKey[1]?.page;
+  const pageSize = pageParams.queryKey[1]?.limit;
   return HttpClient.get(
     api.master_data.property_list.fetch.replace(
       `pageIndex={page}&pageSize={limit}`,

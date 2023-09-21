@@ -3,6 +3,7 @@ export interface IVoucher {
   voucherName?: string;
   serviceId?: {
     id?: string | number;
+    value?: number;
   };
   discountPercentage?: string | number;
   maximumAmounts?: string | number;
