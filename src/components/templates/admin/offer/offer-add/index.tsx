@@ -1,8 +1,6 @@
 import { Box, Spacer } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import ImageUpload from "@src/components/atoms/ImageUpload";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Text } from "@chakra-ui/react";
 import { offerValidationSchema } from "@src/schema/offer";
 import { useFormHook } from "@src/hooks/useFormhook";
@@ -27,11 +25,10 @@ export const CreateOfferForm = ({
   setUpdateId,
   onOfferModalClose,
 }: any) => {
-  const { handleSubmit, register, errors, reset, setValue, watch } =
-    useFormHook({
-      validationSchema: offerValidationSchema,
-      defaultValues,
-    });
+  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
+    validationSchema: offerValidationSchema,
+    defaultValues,
+  });
 
   useEffect(() => {
     if (isUpdate && updateId) {
@@ -96,23 +93,24 @@ export const CreateOfferForm = ({
           error={errors?.subTitle?.message || ""}
           required
         />
-
-        <Text fontSize={"sm"} mb={2} fontWeight={"500"}>
-          Description
-        </Text>
-        <CKEditor
-          editor={ClassicEditor}
-          data={watch("description")}
-          onChange={(_, editor) => {
-            const data = editor.getData();
-            setValue("description", data);
-          }}
+        <FormControl
+          onChange={(data: string) => setValue("description", data)}
+          control="editor"
+          name="description"
+          label={"Description"}
+          required
+          placeholder={"description"}
+          error={errors?.description?.message ?? ""}
         />
 
         <Text fontSize={"sm"} mt={5} mb={2} fontWeight={"500"}>
           Image
+          {!updateId && <span style={{ color: "red" }}>&nbsp;*</span>}
         </Text>
-        <ImageUpload setValue={setValue} name={"image"} />
+        <ImageUpload
+          setValue={setValue}
+          error={updateId ? errors?.image?.message : ""}
+        />
 
         {/* <Spacer /> */}
         <ModalFooterForm

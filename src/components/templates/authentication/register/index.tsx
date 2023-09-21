@@ -4,17 +4,17 @@ import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
 import Checkbox from "@src/components/atoms/Checkbox";
 import { useFormHook } from "@src/hooks/useFormhook";
-import * as yup from "yup";
 import Heading from "@src/components/atoms/Heading";
 import { FormWrapper } from "../login";
 import FormControl from "@src/components/atoms/FormControl";
-import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 import { usePropertyList } from "@src/constant/usePropertyList";
 import { useNationalityList } from "@src/constant/useNationalityList";
 import styled from "styled-components";
 
 import { Link as RouterLink } from "react-router-dom";
 import ReactSelect from "@src/components/atoms/Select";
+import { signupValidationSchema } from "@src/schema/auth/signup";
+import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
 
 export const AccountDetailStyle = styled.div`
   font-weight: 600;
@@ -35,30 +35,9 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
     terms: false,
     offers: false,
   });
-  const validationSchema = yup.object().shape({
-    fullName: yup.string().required("Name is required"),
-    email: yup
-      .string()
-      .required("Email is required")
-      .email("Invalid email format"),
-    phoneNumber: createPhoneNumberSchema(),
-    nationalityId: yup
-      .mixed()
-      .test(
-        "is-nationality-valid",
-        "Please select nationality",
-        function (value) {
-          if (typeof value === "object") {
-            return true;
-          }
-          return false;
-        }
-      )
-      .required("Please select nationality"),
-    dateOfBirth: yup.string().required("DOB is required"),
-  });
-  const { handleSubmit, register, errors, control } = useFormHook({
-    validationSchema,
+
+  const { handleSubmit, register, errors, control, setValue } = useFormHook({
+    validationSchema: signupValidationSchema,
   });
   const onSubmit = (data: any) => {
     const { propertyId, nationalityId, ...rest } = data;
@@ -84,6 +63,9 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
   useEffect(() => {
     isSubmitDisabled = true;
   }, [isLoading]);
+  const changeDateOfBirth = (date: any) => {
+    setValue("dateOfBirth", formatDateToYYYYMMDD(date));
+  };
   return (
     <>
       <Heading title="Sign Up" text="Enter your details to sign up" />
@@ -109,18 +91,20 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             error={errors.email?.message || ""}
           />
           <FormControl
-            control="input"
-            name="dateOfBirth"
-            defaultValue={"2023-09-07"}
-            type="date"
+            control="date"
+            register={register}
             required
+            name="dateOfBirth"
             label="Date of birth"
+            endIcons="true"
+            changeDate={changeDateOfBirth}
             color="black"
             padding="10px"
             height="40px"
             lineHeight="2"
-            register={register}
+            bg_color={colors.secondary}
             error={errors.dateOfBirth?.message || ""}
+            maxDate={new Date()}
           />
           <FormControl
             control="input"
@@ -141,7 +125,6 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             error={errors.propertyId?.message || ""}
             labelKey={"name"}
             valueKey={"id"}
-            required
             options={propertyList || []}
           />
           <ReactSelect

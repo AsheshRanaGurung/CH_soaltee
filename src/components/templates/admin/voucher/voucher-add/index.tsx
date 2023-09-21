@@ -4,9 +4,6 @@ import ImageUpload from "@src/components/atoms/ImageUpload";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { IVoucher } from "@src/interface/voucher";
 import styled from "styled-components";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Text } from "@chakra-ui/react";
@@ -26,21 +23,16 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 15px 65px;
 `;
-const FormWrap = styled.div`
-  margin-top: 15px;
-  label {
-    .chakra-form-control {
-      margin-bottom: 5px;
-    }
-  }
-  .ck.ck-editor__main > .ck-editor__editable {
-    min-height: 300px;
-    padding-left: 22px;
-  }
-  span {
-    color: ${colors.red};
-  }
-`;
+
+const defaultValues = {
+  voucherName: "",
+  serviceId: "",
+  discountPercentage: "",
+  maximumAmounts: "",
+  maximumLimits: "",
+  voucherDescription: "",
+};
+
 export const CreateVoucherForm: React.FC<IVoucherProps> = ({
   mutate,
   isLoading,
@@ -53,6 +45,7 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
   const { handleSubmit, register, errors, reset, setValue, control } =
     useFormHook({
       validationSchema: voucherValidationSchema,
+      defaultValues,
     });
 
   const serviceList = useServiceList();
@@ -152,35 +145,25 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             required
           />
         </Wrapper>
-        <FormWrap>
-          <Text fontSize={"sm"} mb={2} fontWeight={500}>
-            Voucher Description
-            <span>&nbsp;*</span>
-          </Text>
-          <CKEditor
-            editor={ClassicEditor}
-            data={state?.voucherDescription || ""}
-            // onReady={(editor) => {}}
-            onChange={(_, editor) => {
-              const data = editor.getData();
-              setValue("voucherDescription", data);
-            }}
-          />
-        </FormWrap>
+        <FormControl
+          onChange={(data: string) => setValue("voucherDescription", data)}
+          control="editor"
+          name="voucherDescription"
+          label={"Voucher Description"}
+          required
+          placeholder={"description"}
+          error={errors?.voucherDescription?.message ?? ""}
+        />
 
-        {/* <TextEditor /> */}
-        <FormWrap>
-          <Text fontSize={"sm"} mb={2} fontWeight={500}>
-            Voucher Image
-            <span>&nbsp;*</span>
-          </Text>
-          <ImageUpload
-            name={"image"}
-            setValue={setValue}
-            required={!state?.id}
-            imageUploadStyle="row"
-          />
-        </FormWrap>
+        <Text fontSize={"sm"} my={2} fontWeight={500}>
+          Voucher Image
+          <span style={{ color: colors.red }}>&nbsp;*</span>
+        </Text>
+        <ImageUpload
+          setValue={setValue}
+          error={update ? errors?.image?.message : ""}
+          imageUploadStyle="row"
+        />
         <Flex gap={4} mt={3}>
           <Button
             type="submit"

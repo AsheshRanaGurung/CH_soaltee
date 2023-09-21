@@ -17,8 +17,8 @@ import ReactSelect from "@src/components/atoms/Select";
 const defaultValues = {
   bonusName: "",
   bonusValue: "",
-  validFrom: new Date().toLocaleDateString(),
-  validTo: new Date().toLocaleDateString(),
+  validFrom: "",
+  validTo: "",
   serviceId: "",
 };
 export const AddBonus = ({
@@ -122,10 +122,11 @@ export const AddBonus = ({
         labelKey={"serviceName"}
         valueKey={"id"}
         required
+        error={errors?.serviceId?.message || ""}
         options={serviceList || []}
       />
 
-      <Box position="relative" zIndex={2}>
+      <Box position="relative" zIndex={1}>
         <FormControl
           control="date"
           register={register}
@@ -135,19 +136,23 @@ export const AddBonus = ({
           error={errors.validFrom?.message || ""}
           changeDate={changeValidFromDate}
           defaultValue={updateId && new Date(watch("validFrom"))}
+          required
         />
       </Box>
-      <FormControl
-        control="date"
-        register={register}
-        name="validTo"
-        label="Valid To"
-        endIcons="true"
-        error={errors.validFrom?.message || ""}
-        changeDate={changeValidToDate}
-        minDate={validFrom}
-        defaultValue={updateId && new Date(watch("validTo"))}
-      />
+      <Box>
+        <FormControl
+          control="date"
+          register={register}
+          name="validTo"
+          label="Valid To"
+          endIcons="true"
+          error={errors.validTo?.message || ""}
+          changeDate={changeValidToDate}
+          minDate={validFrom}
+          defaultValue={updateId && new Date(watch("validTo"))}
+          required
+        />
+      </Box>
       <FormControl
         control="input"
         name="bonusValue"

@@ -15,7 +15,7 @@ import { Controller, useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerIcon } from "@src/assets/svgs";
 
-const DateInput = styled.div`
+const DateInput = styled.div<any>`
   z-index: 1;
   position: relative;
   .react-datepicker-wrapper {
@@ -23,6 +23,8 @@ const DateInput = styled.div`
   }
   .picker {
     padding: 8px;
+    background-color: ${(props) =>
+      props.bg_color ? props.bg_color : "transparent"};
   }
   input {
     width: 100%;
@@ -51,6 +53,10 @@ interface IDate {
   changeDate: (date: any) => any;
   defaultValue?: any;
   minDate?: any;
+  bg_color?: string;
+  required?: boolean;
+  maxDate?: any;
+  labelColor?: string;
 }
 
 const DateComponent = ({
@@ -63,16 +69,25 @@ const DateComponent = ({
   changeDate,
   defaultValue,
   minDate,
+  bg_color,
+  maxDate,
+  labelColor,
   ...rest
 }: IDate) => {
   const { control } = useForm();
-
+  const hasError = !!error;
   return (
     <FormControl isInvalid={!!error}>
       {label && (
-        <FormLabel htmlFor={name} fontWeight={600} fontSize={"14px"} m={0}>
+        <FormLabel
+          htmlFor={name}
+          fontWeight={600}
+          fontSize={"14px"}
+          m={0}
+          style={labelColor ? { color: labelColor } : {}}
+        >
           {label}
-          {rest.isRequired && <span style={{ color: "red" }}>&nbsp;*</span>}
+          {rest.required && <span style={{ color: "red" }}>&nbsp;*</span>}
         </FormLabel>
       )}
 
@@ -86,7 +101,9 @@ const DateComponent = ({
         <InputGroup
           sx={{
             border: "none",
-            borderBottom: "1px solid rgba(0, 0, 0, 0.15)",
+            borderBottom: hasError
+              ? `1px solid ${colors.red}`
+              : "1px solid rgba(0, 0, 0, 0.15)",
             borderRadius: "0",
             paddingX: 0,
             width: "100%",
@@ -111,18 +128,19 @@ const DateComponent = ({
                   placeholderText="YYYY-DD-MM"
                   dateFormat="yyyy-MM-dd"
                   minDate={minDate}
-                  onChangeRaw={(e) => {
-                    e.preventDefault();
-                  }}
-                  // excludeDates={checkInDate ? [checkInDate] : []}
-
+                  maxDate={maxDate}
                   // onChangeRaw={(e) => {
-                  //   if (e.target.value) {
-                  //     const rawDate = e.target.value;
-                  //     const newDate = rawDate?.split("-");
-                  //     changeDate(newDate[0] && new Date(newDate[0]));
-                  //   }
+                  //   e.preventDefault();
                   // }}
+                  // excludeDates={maxDate ? [maxDate] :minDate?: [minDate]}
+
+                  onChangeRaw={(e) => {
+                    if (e.target.value) {
+                      const rawDate = e.target.value;
+                      const newDate = rawDate?.split("-");
+                      changeDate(newDate[0] && new Date(newDate[0]));
+                    }
+                  }}
                 />
               );
             }}
@@ -138,8 +156,8 @@ const DateComponent = ({
 
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && (
-        <FormErrorMessage mt={0} mb={2}>
-          {error.message ?? ""}
+        <FormErrorMessage mt={0} mb={2} fontSize={12}>
+          {error ?? ""}
         </FormErrorMessage>
       )}
     </FormControl>

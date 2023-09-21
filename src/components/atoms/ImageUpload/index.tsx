@@ -13,6 +13,7 @@ interface IProps {
   name?: string;
   imageUploadStyle?: string;
   show?: boolean;
+  error?: any;
 }
 
 const ImageWithPreview = styled.div<any>`
@@ -46,6 +47,13 @@ const ImageWithPreview = styled.div<any>`
   svg:hover {
     background: var(--chakra-colors-blackAlpha-100);
   }
+  .error-msg {
+    font-size: 12px;
+    color: ${colors.red};
+    text-align:left;
+    margin-bottom:4px;
+    margin-top:4px;
+  }
 `;
 
 const ImageStyled = styled.div<any>`
@@ -76,6 +84,7 @@ const ImageUpload: React.FC<IProps> = ({
   isUser,
   name = "image",
   show,
+  error,
   ...rest
 }) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
@@ -160,10 +169,11 @@ const ImageUpload: React.FC<IProps> = ({
           )}
         </ImageStyled>
         {selectedImage && !isUser && (
-          <div>
+          <div style={{ marginTop: "12px" }}>
             <img src={selectedImage} />
           </div>
         )}
+        {error && <p className="error-msg">{error}</p>}
       </ImageWithPreview>
     </Box>
   );

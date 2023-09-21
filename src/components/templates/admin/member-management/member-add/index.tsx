@@ -170,6 +170,7 @@ export const CreateMemberManagementForm = ({
             height="40px"
             lineHeight="2"
             error={errors.dateOfBirth?.message || ""}
+            maxDate={new Date()}
           />
           <ReactSelect
             control={control}

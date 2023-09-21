@@ -6,13 +6,19 @@ import { Text } from "@chakra-ui/react";
 import { get } from "lodash";
 import { Controller } from "react-hook-form";
 
-const SelectWrapper = styled(Select)<any>`
+const SelectWrapper = styled(Select)<{
+  error: boolean;
+  bg_color: string;
+  labelColor: string;
+}>`
   .css-13cymwt-control {
     border: none;
     border-bottom: ${(props) =>
-      props.error ? "1px solid red" : "1px solid rgba(0, 0, 0, 0.15)"};
+      props.error
+        ? `1px solid ${colors.red}`
+        : "1px solid rgba(0, 0, 0, 0.15)"};
     border-radius: 0px;
-    border-color: none;
+    // border-color: none;
     box-shadow: none;
     background: ${(props) => (props.bg_color ? props.bg_color : "transparent")};
   }
@@ -64,6 +70,7 @@ const ReactSelect = ({
   required,
   isSelected,
   control,
+  labelColor,
   isClearable = true,
   onChange,
   ...rest
@@ -82,7 +89,14 @@ const ReactSelect = ({
       mb={3}
     >
       {label && (
-        <FormLabel htmlFor={name} fontWeight={500} fontSize={"14px"} m={0}>
+        <FormLabel
+          htmlFor={name}
+          fontWeight={500}
+          fontSize={"14px"}
+          mb={2}
+          style={labelColor ? { color: labelColor } : {}}
+        >
+          {" "}
           {label}
           {required && <span style={{ color: colors.red }}>&nbsp;*</span>}
         </FormLabel>
@@ -92,9 +106,6 @@ const ReactSelect = ({
         control={control}
         render={({ field }) => {
           const hasError = !!error;
-          const errorBorderStyle = {
-            borderBottom: hasError ? `solid 1px red` : "",
-          };
           return (
             <>
               <SelectWrapper
@@ -106,7 +117,7 @@ const ReactSelect = ({
                   ...option,
                   isDisabled: isSelected?.includes(option.value),
                 }))}
-                style={errorBorderStyle}
+                error={hasError}
               />
               {error && (
                 <Text color={colors.red} fontSize={"12px"} mt={2}>

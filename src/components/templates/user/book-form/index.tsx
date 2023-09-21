@@ -115,12 +115,13 @@ export const BookForm = () => {
               </BackgroundTextWithImage>
             </GridItem>
             <GridItem p={"80px"}>
-              <Box h={"100%"} color={"white"} p={["20px 0"]}>
+              <Box h={"100%"} p={["20px 0"]}>
                 <Heading
                   fontSize={"20px"}
                   fontWeight={"400"}
                   paddingBottom={"10px"}
                   fontFamily={font.cormorant}
+                  color={colors.white}
                 >
                   BOOK HOTEL FOR EXCITING REWARDS
                 </Heading>
@@ -128,6 +129,7 @@ export const BookForm = () => {
                   paddingBottom={"20px"}
                   fontSize="42px"
                   fontFamily={font.cormorant}
+                  color={colors.white}
                 >
                   We are more than just a room
                 </Heading>
@@ -147,9 +149,9 @@ export const BookForm = () => {
                       labelKey={"name"}
                       valueKey={"id"}
                       required
-                      bg_color="white"
+                      bg_color={colors.white}
                       height="40px"
-                      color="black"
+                      labelColor={colors.white}
                       options={propertyList || []}
                     />
                   </GridItem>
@@ -165,6 +167,8 @@ export const BookForm = () => {
                         endIcons="true"
                         defaultValue={checkInDate}
                         minDate={initialCheckInDate}
+                        bg_color={colors.white}
+                        labelColor={colors.white}
                       />
                     </GridItem>
                     <GridItem>
@@ -178,6 +182,8 @@ export const BookForm = () => {
                         endIcons="true"
                         defaultValue={checkOutDate}
                         minDate={initialCheckOutDate}
+                        bg_color={colors.white}
+                        labelColor={colors.white}
                       />
                     </GridItem>
                   </Grid>
