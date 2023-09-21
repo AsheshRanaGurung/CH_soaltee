@@ -1,7 +1,7 @@
 import { imageList } from "@src/assets/images";
 import { MemberCard } from "./MemberCard";
 import { Box } from "@chakra-ui/layout";
-import { Container, Heading } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import Header from "@src/components/atoms/Header";
 import { EarnPoint } from "../earnPoint";
 import { SpecialOffer } from "../specialoffer/SpecialOffer";
@@ -9,26 +9,63 @@ import { Redeem } from "../rewardPoints";
 import { Footer } from "../footer";
 import { BookForm } from "../book-form";
 import { Latestoffer } from "../footer/Latestoffer";
-import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import { getAllOffer } from "@src/service/offer";
-import { useQuery } from "react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper";
+import { Navigation, Autoplay, Pagination } from "swiper";
+import { HeadingText } from "@src/components/molecules/heading-text";
+
+import { useQuery } from "react-query";
+import { getUserDetail } from "@src/service/user";
+import { getImage } from "@src/service/image";
+import { useState, useEffect } from "react";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Hotel } from "../hotels";
+import { redeemData, stepCardData, earnPointsData } from "@src/constant/index";
+
+import { CardStep } from "../step-card/Card";
+import { font } from "@src/theme/font";
 export const HeaderWrapper = styled.div`
   div.fixed {
-    background: #c4afaa;
+    background: ${colors.white};
     transition: "all 0.3s ease";
     height: 50px;
   }
 `;
 
+export const SwiperWrapper = styled.div`
+  position: relative;
+  z-index: 2;
+  .swiper {
+    height: 500px;
+    position: unset !important;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    right: -4%;
+    background: ${colors.slider_nav};
+    z-index: 999;
+    position: absolute;
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-weight: bold;
+    &:after {
+      font-size: 16px;
+    }
+  }
+  .swiper-button-prev {
+    left: -4%;
+  }
+`;
+
 export const Userpage = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [_scrolled, setScrolled] = useState(false);
   function handleScroll() {
     if (window.scrollY > 150) {
       setScrolled(true);
@@ -44,9 +81,80 @@ export const Userpage = () => {
     };
   }, []);
   const { data: offerData } = useQuery("offer", getAllOffer, {
-    select: ({ data }) => data.datalist,
+    select: ({ data }) => data.data,
   });
 
+  const { data } = useQuery("user_detail", getUserDetail, {
+    select: ({ data }) => data.data,
+  });
+  const { tierImage } = data ?? "";
+  const { nextTierImage } = data ?? "";
+
+  const { data: imageData } = useQuery("image", () => getImage(tierImage), {
+    enabled: !!tierImage,
+  });
+  //get next tier image
+  const { data: nextTier } = useQuery(
+    "next_image",
+    () => getImage(nextTierImage),
+    {
+      enabled: !!nextTierImage,
+    }
+  );
+  const [imageSrc, setImageSrc] = useState<string | null>(tierImage);
+  const [nextImageSrc, setNextImageSrc] = useState<string | null>(
+    nextTierImage
+  );
+
+  useEffect(() => {
+    const blobData = new Blob([imageData?.data], { type: "image/jpeg" });
+
+    const imageUrl = URL.createObjectURL(blobData);
+
+    // Set the URL as the image source
+    setImageSrc(imageUrl);
+
+    // Clean up the URL when the component unmounts
+    return () => {
+      URL.revokeObjectURL(imageUrl);
+      setImageSrc("");
+    };
+  }, [imageData]);
+
+  useEffect(() => {
+    const blobData = new Blob([nextTier?.data], { type: "image/jpeg" });
+
+    const imageUrl = URL.createObjectURL(blobData);
+
+    // Set the URL as the image source
+    setNextImageSrc(imageUrl);
+
+    // Clean up the URL when the component unmounts
+    return () => {
+      URL.revokeObjectURL(imageUrl);
+      setNextImageSrc("");
+    };
+  }, [nextTier]);
+  const commonTier = {
+    fullName: data?.fullName,
+    customerId: data?.customerId,
+    pointsToNextTier: data?.pointsToNextTier,
+    tierDescription: data?.nextTierDescription,
+    totalRewardPoints: data?.totalRewardPoints,
+    nextMembershipTier: data?.nextMembershipTier,
+  };
+  const tierInfoData = [
+    {
+      ...commonTier,
+      image: imageSrc,
+      tierName: data?.tierName,
+    },
+    {
+      ...commonTier,
+      image: nextImageSrc,
+      tierName: data?.nextMembershipTier,
+    },
+  ];
   return (
     <>
       <HeaderWrapper>
@@ -55,70 +163,123 @@ export const Userpage = () => {
           top={0}
           left={0}
           right={0}
-          zIndex={9}
-          background={scrolled ? "#c4afaa" : "transparent"}
+          zIndex={99}
+          background={colors.white}
         >
           <Header navigation={true} />
         </Box>
       </HeaderWrapper>
       <Box
         background={`${colors.secondary} url(${imageList.BackgoundImage}) center center/cover no-repeat`}
-        paddingTop={16}
+        marginTop="95px"
+        fontFamily={font.josefin}
       >
-        <Container maxW={"1400px"}>
-          <MemberCard />
+        <Container maxW={"1400px"} height="700px">
+          <SwiperWrapper>
+            <Swiper
+              slidesPerView={1}
+              spaceBetween={20}
+              modules={[Navigation, Autoplay]}
+              navigation
+              pagination={{
+                clickable: true,
+              }}
+              className="mySwiper"
+            >
+              {tierInfoData?.map((item: any, index: any) => (
+                <SwiperSlide key={index}>
+                  <MemberCard
+                    image={item?.image}
+                    tierName={item?.tierName}
+                    fullName={item?.fullName}
+                    customerId={item?.customerId}
+                    pointsToNextTier={item?.pointsToNextTier}
+                    tierDescription={item?.nextTierDescription}
+                    totalRewardPoints={item?.totalRewardPoints}
+                    nextMembershipTier={item?.nextMembershipTier}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </SwiperWrapper>
         </Container>
-        <Box bg={colors.secondary} id="earn_point">
+        <Box id="earn_point" background={colors.white}>
           <Container maxW={"1400px"}>
-            <EarnPoint />
+            <EarnPoint data={earnPointsData} />
           </Container>
         </Box>
       </Box>
-      <Box p={["40px 0"]}>
-        <Container maxW={"1400px"}>
-          <Heading color={colors.gray_900} fontSize={"44px"} m={["30px 0"]}>
-            Special Offers
-          </Heading>
-          <Swiper
-            slidesPerView={3}
-            spaceBetween={20}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            modules={[Autoplay, Pagination]}
-            pagination={{
-              clickable: true,
-            }}
-            className="mySwiper"
-          >
-            {offerData?.map(
-              (
-                item: {
+      <Box
+        p={["40px 0"]}
+        position="relative"
+        zIndex={4}
+        background={colors.secondary}
+        _before={{
+          content: `""`,
+          background: colors.secondary,
+          position: "absolute",
+          top: 0,
+          height: "100%",
+          width: "100%",
+          transform: "translateY(-25%)",
+        }}
+      >
+        <Container maxW={"1400px"} position="relative" zIndex={12}>
+          <HeadingText
+            heading="SOALTEE HERITAGE CLUB"
+            maintitle="Our Special Offers"
+            titletext="We provide special services worldwide with exclusive services and specialist."
+          />
+          <SwiperWrapper>
+            <Swiper
+              slidesPerView={2}
+              spaceBetween={20}
+              // autoplay={{
+              //   delay: 2500,
+              //   disableOnInteraction: false,
+              // }}
+              modules={[Navigation, Autoplay, Pagination]}
+              navigation
+              pagination={{
+                clickable: true,
+              }}
+              className="mySwiper"
+            >
+              {offerData?.map(
+                (item: {
                   offerName: string;
                   description: string;
                   offerImage: any;
-                },
-                index: number
-              ) => (
-                // eslint-disable-next-line react/jsx-key
-                <SwiperSlide key={index}>
-                  <SpecialOffer
-                    title={item?.offerName}
-                    desc={item?.description}
-                    ButtonText={"Claim Voucher"}
-                    img={item?.offerImage}
-                  />
-                </SwiperSlide>
-              )
-            )}
-          </Swiper>
+                  offerId: number;
+                }) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <SwiperSlide key={item?.offerId}>
+                    <SpecialOffer
+                      title={item?.offerName}
+                      desc={item?.description}
+                      // buttonText={"Claim Voucher"}
+                      img={item?.offerImage}
+                    />
+                  </SwiperSlide>
+                )
+              )}
+            </Swiper>
+          </SwiperWrapper>
         </Container>
       </Box>
+
+      <CardStep data={stepCardData} />
+
       <BookForm />
-      <Box id="redeem_point">
-        <Redeem />
+      <Box id="redeem_point" background={colors.secondary} p={["60px 0"]}>
+        <HeadingText
+          heading="SOALTEE HERITAGE CLUB"
+          maintitle="How to Redeem your Points"
+          titletext="Enjoy any services we provide by Redeeming your points"
+        />
+        <Redeem data={redeemData} />
       </Box>
+      <Hotel />
       <Latestoffer />
       <Footer />
     </>

@@ -9,7 +9,10 @@ enum Type {
   PASSWORD = "password",
 }
 
-const PasswordViewIcon = ({ onToggle, isVisible }: ISetPasswordViewIcon) => {
+export const PasswordViewIcon = ({
+  onToggle,
+  isVisible,
+}: ISetPasswordViewIcon) => {
   return (
     <IconButton
       aria-label="password"

@@ -46,4 +46,6 @@ export const colors = {
   text_secondary: "#6D7887",
   voucher_heading: "#595C60",
   model_bottom: "#d2cfcfc2",
+  slider_nav: "#3E3C3C",
+  primary_light_500: "#FFDEDE",
 };

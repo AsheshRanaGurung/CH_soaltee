@@ -1,30 +1,30 @@
-import { Box, Card, Heading, Text } from "@chakra-ui/react";
-import { Image } from "@chakra-ui/react";
+import { Box, Card, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { ICardData } from "@src/interface/user";
 import { colors } from "@src/theme/colors";
 import { font } from "@src/theme/font";
 
-export const EarnCard = ({ img, title, desc }: ICardData) => {
+export const StepCard = ({ img, title, desc, count }: ICardData) => {
   return (
     <>
       <Card
-        bg={colors.white}
         borderRadius={12}
-        boxShadow=" 0px 4px 24px 0px #0000001A"
-        alignItems="center"
-        textAlign="center"
+        alignItems="flex-start"
+        textAlign="left"
         py={25}
         height={220}
+        boxShadow="none"
       >
-        <Box
-          w="90px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
+        <Flex width="100%" alignItems="center" justifyContent="space-between">
           <Image src={img} />
-        </Box>
-        <Box marginTop={"20px"} paddingBottom={25}>
+          <Heading
+            color={colors.light_gray}
+            fontSize={"40px"}
+            fontFamily={font.cormorant}
+          >
+            {count}
+          </Heading>
+        </Flex>
+        <Box marginTop={"20px"} paddingBottom={25} textAlign="left">
           <Heading
             color={"#3C3B3B"}
             fontSize={"26px"}
