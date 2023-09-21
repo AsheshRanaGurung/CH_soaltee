@@ -60,7 +60,7 @@ export const OfferViewPage = ({ onClose, isOpen, viewId }: IMemberTier) => {
                   >
                     Offer Sub-Title
                   </Heading>
-                  <Text fontSize={"16px"}>{offerData?.serviceName}</Text>
+                  <Text fontSize={"16px"}>{offerData?.subTitle}</Text>
                 </GridItem>
               </SimpleGrid>
               <Box marginTop={"20px"} paddingBottom={"20px"}>

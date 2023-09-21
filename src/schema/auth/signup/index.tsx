@@ -1,9 +1,12 @@
-import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 import * as yup from "yup";
+import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
 
-export const memberManagementValidation = yup.object().shape({
-  fullName: yup.string().required("Full Name is required"),
-  email: yup.string().required("Email is required"),
+export const signupValidationSchema = yup.object().shape({
+  fullName: yup.string().required("Name is required"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
   phoneNumber: createPhoneNumberSchema(),
   nationalityId: yup
     .mixed()
@@ -18,14 +21,7 @@ export const memberManagementValidation = yup.object().shape({
       }
     )
     .required("Please select nationality"),
-  propertyId: yup
-    .mixed()
-    .test("is-property-valid", "Please select Property", function (value) {
-      if (typeof value === "object") {
-        return true;
-      }
-      return false;
-    }),
+
   dateOfBirth: yup
     .string()
     .required("DOB is required")
