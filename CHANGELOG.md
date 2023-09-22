@@ -28,6 +28,10 @@
 * add and member list completed ([934b4ea](https://gitlab.com/paras205/boilerplate-react/commit/934b4eab6da534d90b24e3b7fe2844ec5de668b4))
 * added password component, refactored input component ([5676063](https://gitlab.com/paras205/boilerplate-react/commit/5676063ecf247dd38bd7be2ca29c19d3b9c6d76a))
 * added set password template ([75f9471](https://gitlab.com/paras205/boilerplate-react/commit/75f9471f735d8a6cf734924dcc21e0f56326750a))
+<<<<<<< HEAD
+* added tier image fetch api in user dashboard ([17ced13](https://gitlab.com/paras205/boilerplate-react/commit/17ced133a26c56a7fca397b8a8d44961e7aec0db))
+=======
+>>>>>>> 9f239bb741822da6101598976121075c7a439185
 * adjusted column width, added edit and add modal in member tier ([827e90e](https://gitlab.com/paras205/boilerplate-react/commit/827e90ebb34d3c5ee73046ad70f05feac8f87be0))
 * admin loagin integartion ([6a58586](https://gitlab.com/paras205/boilerplate-react/commit/6a5858668898a187d75d9633e45aef0ec1867ac1))
 * api integration for add member tier ([591e472](https://gitlab.com/paras205/boilerplate-react/commit/591e4724e8b1fbd33f620dc73ed81df0beed9334))
@@ -41,11 +45,17 @@
 * refetched point for manual and added phone validation ([1d51211](https://gitlab.com/paras205/boilerplate-react/commit/1d51211fd510cf093aab1d4739037ff4e30ab572))
 * resolved modal issue, integrated api for update property ([56fc7b3](https://gitlab.com/paras205/boilerplate-react/commit/56fc7b3dce0062608340685fa86dcee7ab0d45da))
 <<<<<<< HEAD
+* table changes ([efc1491](https://gitlab.com/paras205/boilerplate-react/commit/efc1491a997cc0f44fd7720a21fed789d69c01df))
+* table changes ([b545c66](https://gitlab.com/paras205/boilerplate-react/commit/b545c668a87aa21a950ccbfd387d5cc97bd70ad4))
+* voucher changes ([2b3f9ca](https://gitlab.com/paras205/boilerplate-react/commit/2b3f9ca9b0d7b2fd3b5bb01c7b4795f93b7ea297))
+=======
+<<<<<<< HEAD
 =======
 * table changes ([efc1491](https://gitlab.com/paras205/boilerplate-react/commit/efc1491a997cc0f44fd7720a21fed789d69c01df))
 * table changes ([b545c66](https://gitlab.com/paras205/boilerplate-react/commit/b545c668a87aa21a950ccbfd387d5cc97bd70ad4))
 * voucher changes ([e32131c](https://gitlab.com/paras205/boilerplate-react/commit/e32131c325d7e2e1b7083424ae78b39822a68658))
 >>>>>>> 25215f9dea902029f9c158a1afda11369f92dbea
+>>>>>>> 9f239bb741822da6101598976121075c7a439185
 
 
 

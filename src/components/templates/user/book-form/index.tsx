@@ -71,46 +71,54 @@ export const BookForm = () => {
                 img={imageList.ResturantWall}
                 height="700px"
               >
-                <Image src={imageList.Rating} mb={3} />
-                <HStack gap={6}>
-                  <Stack width="60%">
-                    <Heading
-                      fontSize="x-large"
-                      marginBottom={3}
-                      fontFamily={font.cormorant}
-                      textTransform="capitalize"
-                    >
-                      Call us, it’s toll - free.
-                    </Heading>
-                    <Text
-                      marginBottom={"15px"}
-                      as="div"
-                      fontFamily={font.josefin}
-                    >
-                      Over 30,000 people work for us in 5 different locations.
-                      We provide special services worldwide with exclusive
-                      services and specialist.
-                    </Text>
-                  </Stack>
-                  <Stack>
-                    <HStack gap={3}>
-                      <Image src={imageList.Phone} width={35} />
-                      <VStack alignItems="left">
-                        <Text
-                          as="div"
-                          fontFamily={font.josefin}
-                          color={colors.primary}
-                        >
-                          880 987 786 678
-                        </Text>
+                <Box
+                  color={"#FFFFFF"}
+                  w={"90%"}
+                  p={["40px 20px"]}
+                  position="absolute"
+                  bottom={0}
+                >
+                  <Image src={imageList.Rating} mb={3} />
+                  <HStack gap={6}>
+                    <Stack width="60%">
+                      <Heading
+                        fontSize="x-large"
+                        marginBottom={3}
+                        fontFamily={font.cormorant}
+                        textTransform="capitalize"
+                      >
+                        Call us, it’s toll - free.
+                      </Heading>
+                      <Text
+                        marginBottom={"15px"}
+                        as="div"
+                        fontFamily={font.josefin}
+                      >
+                        Over 30,000 people work for us in 5 different locations.
+                        We provide special services worldwide with exclusive
+                        services and specialist.
+                      </Text>
+                    </Stack>
+                    <Stack>
+                      <HStack gap={3}>
+                        <Image src={imageList.Phone} width={35} />
+                        <VStack alignItems="left">
+                          <Text
+                            as="div"
+                            fontFamily={font.josefin}
+                            color={colors.primary}
+                          >
+                            880 987 786 678
+                          </Text>
 
-                        <Text as="div" fontFamily={font.josefin}>
-                          For More Information
-                        </Text>
-                      </VStack>
-                    </HStack>
-                  </Stack>
-                </HStack>
+                          <Text as="div" fontFamily={font.josefin}>
+                            For More Information
+                          </Text>
+                        </VStack>
+                      </HStack>
+                    </Stack>
+                  </HStack>
+                </Box>
               </BackgroundTextWithImage>
             </GridItem>
             <GridItem p={"80px"}>

@@ -1,11 +1,10 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
-import { font } from "@src/theme/font";
+import { Box } from "@chakra-ui/react";
 
 export const BackgroundTextWithImage = ({
-  offer,
   img,
   height,
   children,
+  styles,
 }: any) => {
   return (
     <>
@@ -14,6 +13,7 @@ export const BackgroundTextWithImage = ({
         background={`url(${img}) center center/cover no-repeat`}
         borderRadius="8px"
         height={height}
+        sx={styles}
         _before={{
           content: `""`,
           position: "absolute",
@@ -25,7 +25,7 @@ export const BackgroundTextWithImage = ({
             "linear-gradient(0deg, rgba(0, 0, 0, 0.91) 22.02%, rgba(0, 0, 0, 0) 100%)",
         }}
       >
-        {offer && (
+        {/* {offer && (
           <Box
             h={"40px"}
             padding={"5px"}
@@ -59,16 +59,8 @@ export const BackgroundTextWithImage = ({
               </Heading>
             </Flex>
           </Box>
-        )}
-        <Box
-          color={"#FFFFFF"}
-          w={"90%"}
-          p={["40px 20px"]}
-          position="absolute"
-          bottom={0}
-        >
-          {children}
-        </Box>
+        )} */}
+        {children}
       </Box>
     </>
   );

@@ -28,7 +28,7 @@ const Profile = ({ type }: any) => {
         cursor={"pointer"}
         minW={0}
       >
-        <Avatar size={"md"} src={imageUrl} />
+        <Avatar size={"md"} src={imageUrl} name={data?.fullName} />
       </MenuButton>
       <MenuList>
         {type !== "admin" && (

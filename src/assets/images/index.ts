@@ -41,6 +41,7 @@ import Earn from "./earn.png";
 import Redeem from "./redeem.png";
 import Trophy from "./trophy.png";
 import AvatarImg from "./avatar.png";
+import ReferalImage from "./referal.png";
 
 export const imageList = {
   HotelImage,
@@ -86,4 +87,5 @@ export const imageList = {
   Redeem,
   Trophy,
   AvatarImg,
+  ReferalImage,
 };
