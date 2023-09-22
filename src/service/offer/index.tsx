@@ -9,13 +9,13 @@ import { useNavigate } from "react-router-dom";
 export const getAllOffer = (pageParams: any) => {
   const pageIndex = pageParams.queryKey[1]?.page;
   const pageSize = pageParams.queryKey[1]?.limit;
+  const name = pageParams.queryKey[1]?.name;
   return HttpClient.get(
     api.offer.fetch.replace(
-      `pageIndex={page}&pageSize={limit}`,
-      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}&name=${name}`
     )
   );
-  // return HttpClient.get(api.offer.fetch);
 };
 
 export const createOffer = (data: any) => {

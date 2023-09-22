@@ -24,6 +24,7 @@ import PageNotFound from "@src/pages/NotFound";
 import HistoryTransaction from "@src/components/templates/user/History";
 import UserReport from "@src/pages/Report/UserReport";
 import EarningReport from "@src/pages/Report/EarningReport";
+import SettingPage from "@src/pages/Settings";
 
 const routes = [
   {
@@ -170,6 +171,12 @@ const routes = [
         Component={StaffManagementPage}
         allowedRoles={["SUPERADMIN", "ADMIN"]}
       />
+    ),
+  },
+  {
+    path: NAVIGATION_ROUTES.SETTINGS,
+    element: (
+      <PrivateRoute Component={SettingPage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
 ];

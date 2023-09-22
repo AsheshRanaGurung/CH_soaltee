@@ -22,8 +22,18 @@ import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { baseURL } from "@src/service/config/api";
+import { ChangePassword } from "./ChangePassword";
 const ProfilePage = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenChange,
+    onOpen: onOpenChange,
+    onClose: onCloseChange,
+  } = useDisclosure();
   const location = useLocation();
   const { state } = location;
 
@@ -40,11 +50,7 @@ const ProfilePage = () => {
       setUpdatedData(data);
     }
   }, [data]);
-  // const queryClient = useQueryClient();
-  // const handleFormSubmit = async (data: any) => {
-  //   await queryClient.refetchQueries("user_detail");
-  //   setUpdatedData(data);
-  // };
+
   const imageUrl = data?.userImageUrl !== undefined ? data?.userImageUrl : "";
   const imgProfile = `${baseURL}users/get-profile-image/${data?.userImageUrl}`;
   return (
@@ -149,11 +155,12 @@ const ProfilePage = () => {
                 </List>
               </Box>
               <Box>
-                <Button marginRight={"10px"} onClick={onOpen}>
+                <Button marginRight={"10px"} onClick={onOpenEdit}>
                   Edit Profile
                 </Button>
                 <Button
                   bg={"white"}
+                  onClick={onOpenChange}
                   borderRadius={"8px"}
                   color={"#B4304B"}
                   border={"1px solid #B4304B"}
@@ -165,10 +172,15 @@ const ProfilePage = () => {
           </Box>
         </Container>
       </Box>
-
+      <ChangePassword
+        isOpen={isOpenChange}
+        onClose={onCloseChange}
+        data={updatedData}
+        dataProfile={data}
+      />
       <EditProfile
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenEdit}
+        onClose={onCloseEdit}
         data={updatedData}
         dataProfile={data}
       />

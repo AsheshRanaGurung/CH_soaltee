@@ -5,10 +5,11 @@ import { HttpClient } from "../config/api";
 export const getAllMembers = (pageParams: any) => {
   const pageIndex = pageParams.queryKey[1]?.page;
   const pageSize = pageParams.queryKey[1]?.limit;
+  const name = pageParams.queryKey[1]?.name;
   return HttpClient.get(
     api.member_management.fetch.replace(
-      `pageIndex={page}&pageSize={limit}`,
-      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}&name=${name}`
     )
   );
 };

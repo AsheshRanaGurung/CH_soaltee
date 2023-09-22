@@ -8,16 +8,22 @@ import { useDisclosure } from "@chakra-ui/react";
 import ModalForm from "@src/components/molecules/modal";
 import { AddBonus } from "@src/components/templates/admin/pointConfiguration/bonus/bonus-add";
 import DeleteContent from "@src/components/organisms/delete-content";
+import TableHeadings from "@src/components/molecules/table-heading";
 
 const BonusPage = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const { data, isLoading } = usePageinationHook({
     key: "bonus",
     url: getAllBonus,
+    extraParams: { name: keyword },
   });
+  const handleSearch = (e: any) => {
+    setKeyword(e);
+  };
   const {
     isOpen: isBonusOpen,
     onOpen: onBonusModalOpen,
@@ -41,14 +47,20 @@ const BonusPage = () => {
     });
     result.status === 200 && onDeleteBonusClose();
   };
-  // const { data, isLoading } = useQuery("bonus", getAllBonus, {
-  //   select: ({ data }) => data.datalist,
-  // });
 
   return (
     <>
       <BreadCrumb name="Point Configuration" subname="Bonus" />
       <Content>
+        <TableHeadings
+          onSearch={(e: any) => handleSearch(e)}
+          btnText="Add Bonus"
+          CurrentText="Bonus List"
+          onAction={() => {
+            onCloseHandler();
+            onBonusModalOpen();
+          }}
+        />
         <BonusList
           setIsUpdate={setIsUpdate}
           setUpdateId={setUpdateId}

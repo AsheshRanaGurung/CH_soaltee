@@ -7,13 +7,22 @@ import { useQueryClient, useMutation, useQuery } from "react-query";
 export const getAllMemberTier = (pageParams: any) => {
   const pageIndex = pageParams.queryKey[1]?.page;
   const pageSize = pageParams.queryKey[1]?.limit;
+  const name = pageParams.queryKey[1]?.name;
   return HttpClient.get(
     api.master_data.member_tier.fetch.replace(
-      `pageIndex={page}&pageSize={limit}`,
-      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}&name=${name}`
     )
   );
-  // return HttpClient.get(api.master_data.member_tier.fetch);
+};
+
+export const getAllMemberTierSelect = () => {
+  return HttpClient.get(
+    api.master_data.member_tier.fetch.replace(
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${1}&pageSize=${50}&name=`
+    )
+  );
 };
 
 const getMemberTierid = (id: string) => () => {

@@ -3,7 +3,6 @@ import { useMemo } from "react";
 import { IOffers } from "@src/interface/offers";
 import { CellProps } from "react-table";
 import { usePageParams } from "@src/components/organisms/layout";
-import TableHeadings from "@src/components/molecules/table-heading";
 import BasicTable from "@src/components/molecules/table";
 import TableActions from "@src/components/molecules/table/TableActions";
 
@@ -25,7 +24,6 @@ const OfferList: React.FC<IOfferProps> = ({
   setUpdateId,
   setIsUpdate,
   onOfferModalOpen,
-  onCloseHandler,
   data,
   isLoading,
   onDeleteOfferOpen,
@@ -93,14 +91,6 @@ const OfferList: React.FC<IOfferProps> = ({
   );
   return (
     <>
-      <TableHeadings
-        btnText="Add Offer"
-        CurrentText="Offer List"
-        onAction={() => {
-          onCloseHandler();
-          onOfferModalOpen();
-        }}
-      />
       <BasicTable
         data={data?.data || []}
         columns={columns}

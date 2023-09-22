@@ -2,6 +2,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
 import ModalForm from "@src/components/molecules/modal";
+import TableHeadings from "@src/components/molecules/table-heading";
 import DeleteContent from "@src/components/organisms/delete-content";
 import { CreateServiceForm } from "@src/components/templates/admin/pointConfiguration/services/service-add";
 import ServiceList from "@src/components/templates/admin/pointConfiguration/services/service-list";
@@ -16,11 +17,16 @@ const ServicePage = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const { data, isLoading } = usePageinationHook({
     key: "service",
     url: getAllService,
+    extraParams: { name: keyword },
   });
+  const handleSearch = (e: any) => {
+    setKeyword(e);
+  };
   const {
     isOpen: isServiceOpen,
     onOpen: onServiceModalOpen,
@@ -47,13 +53,20 @@ const ServicePage = () => {
     });
     result.status === 200 && onDeleteServiceClose();
   };
-  // const { data, isLoading } = useQuery("service", getAllService, {
-  //   select: ({ data }) => data.datalist,
-  // });
+
   return (
     <>
       <BreadCrumb name="Point Configuration" subname="Service" />
       <Content>
+        <TableHeadings
+          onSearch={(e: any) => handleSearch(e)}
+          btnText="Add Service"
+          CurrentText="Service List"
+          onAction={() => {
+            onCloseHandler();
+            onServiceModalOpen();
+          }}
+        />
         <ServiceList
           setIsUpdate={setIsUpdate}
           setUpdateId={setUpdateId}

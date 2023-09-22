@@ -27,7 +27,6 @@ export const EditProfile = ({
   onClose: () => void;
   data: any;
   dataProfile: any;
-  // handleFormSubmit: (data: any) => void;
 }) => {
   return (
     <ModalForm isModalOpen={isOpen} onCloseModal={onClose} title="Edit Profile">
@@ -64,8 +63,8 @@ export const ProfileEdit = ({ dataProfile, onClose }: any) => {
       email: dataProfile?.email,
       phoneNumber: dataProfile?.phoneNumber,
       nationalityId: {
-        label: dataProfile.nationality,
-        value: dataProfile.nationalityId,
+        label: dataProfile?.nationality,
+        value: dataProfile?.nationalityId,
       },
     });
   }, [dataProfile]);

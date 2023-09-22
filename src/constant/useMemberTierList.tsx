@@ -1,10 +1,10 @@
-import { getAllMemberTier } from "@src/service/master-data/member-tier";
+import { getAllMemberTierSelect } from "@src/service/master-data/member-tier";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 export const useMemberTierList = () => {
   const [data, setData] = useState([]);
-  const { data: memberData } = useQuery("member_tier", getAllMemberTier, {
+  const { data: memberData } = useQuery("member_tier", getAllMemberTierSelect, {
     select: ({ data }) => data?.data,
   });
 

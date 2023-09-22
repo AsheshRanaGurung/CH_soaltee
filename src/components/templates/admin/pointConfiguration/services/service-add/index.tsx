@@ -1,10 +1,10 @@
 import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
 import FormControl from "@src/components/atoms/FormControl";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
+import { useMemberTierList } from "@src/constant/useMemberTierList";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { IService } from "@src/interface/pointConfig";
 import { serviceValidationSchema } from "@src/schema/pointConfigiration/service";
-import { getAllMemberTier } from "@src/service/master-data/member-tier";
 import {
   createServiceApi,
   updateService,
@@ -13,7 +13,7 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { colors } from "@src/theme/colors";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
@@ -27,7 +27,6 @@ const Wrapper = styled.div`
 const defaultValues = {
   serviceName: "",
   serviceCode: "",
-  // membershipServiceResponseDtos: [],
 };
 export const CreateServiceForm = ({
   isUpdate,
@@ -95,7 +94,6 @@ export const CreateServiceForm = ({
     }
   };
 
-  // const { mutateAsync: mutate, isLoading } = useCreateService();
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createServiceApi, {
     onSuccess: (response) => {
@@ -110,7 +108,7 @@ export const CreateServiceForm = ({
       );
     },
   });
-  // const { mutateAsync: update, isLoading: isUpdating } = useUpdateService();
+
   const { mutate: update, isLoading: isUpdating } = useMutation(updateService, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message);
@@ -121,9 +119,7 @@ export const CreateServiceForm = ({
     },
   });
 
-  const { data } = useQuery("member_tier", getAllMemberTier, {
-    select: ({ data }) => data.data,
-  });
+  const data = useMemberTierList();
   const defaultVal =
     data?.map((item: any) => ({
       id: item.id,
@@ -147,7 +143,6 @@ export const CreateServiceForm = ({
             (item2: any) => item2.membershipName === item1.membershipName
           )
       );
-
       const combinedData =
         dataValue?.membershipServiceResponseDtos?.concat(filteredData1);
 
@@ -158,7 +153,7 @@ export const CreateServiceForm = ({
         membershipServiceResponseDtos: combinedData,
       });
     }
-  }, [isUpdate, updateId, tableData?.data]);
+  }, [isUpdate, updateId, data, tableData?.data]);
 
   return (
     <>

@@ -3,7 +3,6 @@ import { useMemo } from "react";
 import { usePageParams } from "@src/components/organisms/layout";
 import { CellProps } from "react-table";
 import TableActions from "@src/components/molecules/table/TableActions";
-import TableHeadings from "@src/components/molecules/table-heading";
 import BasicTable from "@src/components/molecules/table";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
@@ -73,7 +72,6 @@ const ServiceList: React.FC<IServiceProps> = ({
   setUpdateId,
   setIsUpdate,
   onServiceModalOpen,
-  onCloseHandler,
   data,
   isLoading,
   onDeleteServiceOpen,
@@ -155,14 +153,6 @@ const ServiceList: React.FC<IServiceProps> = ({
 
   return (
     <>
-      <TableHeadings
-        btnText="Add Service"
-        CurrentText="Service List"
-        onAction={() => {
-          onCloseHandler();
-          onServiceModalOpen();
-        }}
-      />
       <BasicTable
         data={data?.data || []}
         columns={columns}

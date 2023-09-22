@@ -3,7 +3,6 @@ import { useMemo } from "react";
 import { usePageParams } from "@src/components/organisms/layout";
 import { CellProps } from "react-table";
 import TableActions from "@src/components/molecules/table/TableActions";
-import TableHeadings from "@src/components/molecules/table-heading";
 import BasicTable from "@src/components/molecules/table";
 interface IBonusProps {
   setUpdateId: any;
@@ -21,7 +20,6 @@ const BonusList: React.FC<IBonusProps> = ({
   setUpdateId,
   setIsUpdate,
   onBonusModalOpen,
-  onCloseHandler,
   data,
   isLoading,
   onDeleteBonusOpen,
@@ -87,14 +85,6 @@ const BonusList: React.FC<IBonusProps> = ({
   );
   return (
     <>
-      <TableHeadings
-        btnText="Add Bonus"
-        CurrentText="Bonus List"
-        onAction={() => {
-          onCloseHandler();
-          onBonusModalOpen();
-        }}
-      />
       <BasicTable
         data={data?.data || []}
         columns={columns}

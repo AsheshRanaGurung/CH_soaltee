@@ -2,6 +2,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
 import ModalForm from "@src/components/molecules/modal";
+import TableHeadings from "@src/components/molecules/table-heading";
 import DeleteContent from "@src/components/organisms/delete-content";
 import { OfferViewPage } from "@src/components/templates/admin/offer/offer-Page";
 import { CreateOfferForm } from "@src/components/templates/admin/offer/offer-add";
@@ -15,9 +16,12 @@ const OfferPage = () => {
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
   const [viewId, setViewId] = useState("");
+  const [keyword, setKeyword] = useState("");
+
   const { data, isLoading } = usePageinationHook({
     key: "offer",
     url: getAllOffer,
+    extraParams: { name: keyword },
   });
   const {
     isOpen: isOfferOpen,
@@ -50,14 +54,23 @@ const OfferPage = () => {
     });
     result.status === 200 && onDeleteOfferClose();
   };
-  // const { data, isLoading } = useQuery(["offer", pageParams], getAllOffer, {
-  //   select: ({ data }) => data.datalist,
-  // });
+  const handleSearch = (e: any) => {
+    setKeyword(e);
+  };
 
   return (
     <>
       <BreadCrumb name="Offers" />
       <Content>
+        <TableHeadings
+          onSearch={(e: any) => handleSearch(e)}
+          btnText="Add Offer"
+          CurrentText="Offer List"
+          onAction={() => {
+            onCloseHandler();
+            onOfferModalOpen();
+          }}
+        />
         <OfferList
           setIsUpdate={setIsUpdate}
           setUpdateId={setUpdateId}

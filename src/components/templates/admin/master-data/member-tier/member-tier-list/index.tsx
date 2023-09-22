@@ -1,7 +1,6 @@
 import { Stack } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { IMemberTierDetail } from "@src/interface/master-data/property";
-import TableHeadings from "@src/components/molecules/table-heading";
 import BasicTable from "@src/components/molecules/table";
 import { usePageParams } from "@src/components/organisms/layout";
 import { ColorInList } from "@src/assets/svgs";
@@ -33,7 +32,6 @@ const MemberList: React.FC<IMemberTier> = ({
   setUpdateId,
   setIsUpdate,
   onMemberModalOpen,
-  onCloseHandler,
   data,
   isLoading,
   onDeleteMemberTierOpen,
@@ -119,14 +117,6 @@ const MemberList: React.FC<IMemberTier> = ({
 
   return (
     <>
-      <TableHeadings
-        btnText="Add Member Tier"
-        CurrentText="Member Tier List"
-        onAction={() => {
-          onCloseHandler();
-          onMemberModalOpen();
-        }}
-      />
       <BasicTable
         data={data?.data || []}
         columns={columns}
