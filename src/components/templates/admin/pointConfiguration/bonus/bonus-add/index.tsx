@@ -6,13 +6,13 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { createBonus, updateBonus } from "@src/service/point-config/bonus";
 import { useServiceList } from "@src/constant/useServiceList";
-import { useEffect, useState } from "react";
-import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
+import { useEffect } from "react";
 import { bonusValidationSchema } from "@src/schema/pointConfigiration/bonus";
 import { IBonus } from "@src/interface/pointConfig";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
 import { useFormHook } from "@src/hooks/useFormhook";
 import ReactSelect from "@src/components/atoms/Select";
+import DateComponent from "@src/components/atoms/DateInput";
 
 const defaultValues = {
   bonusName: "",
@@ -29,17 +29,14 @@ export const AddBonus = ({
   setUpdateId,
   onBonusModalClose,
 }: any) => {
-  const { register, errors, setValue, reset, handleSubmit, watch, control } =
-    useFormHook({
-      validationSchema: bonusValidationSchema,
-      defaultValues,
-    });
-  // const [individualData, setIndividualData] = useState<IMember | null>(null);
+  const { register, errors, reset, handleSubmit, control } = useFormHook({
+    validationSchema: bonusValidationSchema,
+    defaultValues,
+  });
 
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData?.data.find((x: IBonus) => x.id === updateId);
-      // setIndividualData(data);
       reset({
         ...data,
         serviceId: { label: data.serviceName, value: data.serviceId },
@@ -76,15 +73,8 @@ export const AddBonus = ({
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
-  const [validFrom, setValidFrom] = useState();
   const serviceList = useServiceList();
-  const changeValidFromDate = (date: any) => {
-    setValidFrom(date);
-    setValue("validFrom", formatDateToYYYYMMDD(date));
-  };
-  const changeValidToDate = (date: any) => {
-    setValue("validTo", formatDateToYYYYMMDD(date));
-  };
+
   const onSubmit = (data: any) => {
     const { serviceId, ...rest } = data;
     if (updateId) {
@@ -125,31 +115,24 @@ export const AddBonus = ({
         error={errors?.serviceId?.message || ""}
         options={serviceList || []}
       />
-
-      <Box position="relative" zIndex={1}>
-        <FormControl
-          control="date"
-          register={register}
+      <Box position="relative" zIndex={2}>
+        <DateComponent
+          control={control}
           name="validFrom"
           label="Valid From"
           endIcons="true"
           error={errors.validFrom?.message || ""}
-          changeDate={changeValidFromDate}
-          defaultValue={updateId && new Date(watch("validFrom"))}
           required
         />
       </Box>
+
       <Box>
-        <FormControl
-          control="date"
-          register={register}
+        <DateComponent
+          control={control}
           name="validTo"
           label="Valid To"
           endIcons="true"
           error={errors.validTo?.message || ""}
-          changeDate={changeValidToDate}
-          minDate={validFrom}
-          defaultValue={updateId && new Date(watch("validTo"))}
           required
         />
       </Box>

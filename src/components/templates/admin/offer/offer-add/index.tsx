@@ -4,7 +4,7 @@ import ImageUpload from "@src/components/atoms/ImageUpload";
 import { Text } from "@chakra-ui/react";
 import { offerValidationSchema } from "@src/schema/offer";
 import { useFormHook } from "@src/hooks/useFormhook";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IOffers } from "@src/interface/offers";
 import { useCreateOffer, useUpdateOffer } from "@src/service/offer";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
@@ -15,6 +15,10 @@ const defaultValues = {
   offerName: "",
   description: "",
   subTitle: "",
+};
+type IndividualDataType = {
+  description?: string;
+  offerImage?: any;
 };
 
 export const CreateOfferForm = ({
@@ -29,11 +33,14 @@ export const CreateOfferForm = ({
     validationSchema: offerValidationSchema,
     defaultValues,
   });
+  const [individualData, setIndividualData] = useState<IndividualDataType>({});
 
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData?.data.find((x: IOffers) => x.offerId === updateId);
+      setIndividualData(data);
       reset({ ...data });
+      setValue("image", data?.offerImage);
     }
   }, [isUpdate, updateId]);
 
@@ -100,6 +107,9 @@ export const CreateOfferForm = ({
           label={"Description"}
           required
           placeholder={"description"}
+          data={
+            (updateId && individualData && individualData?.description) ?? ""
+          }
           error={errors?.description?.message ?? ""}
         />
 
@@ -109,7 +119,8 @@ export const CreateOfferForm = ({
         </Text>
         <ImageUpload
           setValue={setValue}
-          error={updateId ? errors?.image?.message : ""}
+          error={errors?.image?.message}
+          imageSrc={isUpdate ? individualData?.offerImage : undefined}
         />
 
         {/* <Spacer /> */}

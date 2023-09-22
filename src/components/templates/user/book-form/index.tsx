@@ -12,7 +12,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
-import FormControl from "@src/components/atoms/FormControl";
 import { BackgroundTextWithImage } from "@src/components/molecules/bg-text-image";
 import ReactSelect from "@src/components/atoms/Select";
 import { usePropertyList } from "@src/constant/usePropertyList";
@@ -20,16 +19,16 @@ import { useFormHook } from "@src/hooks/useFormhook";
 import { colors } from "@src/theme/colors";
 import { font } from "@src/theme/font";
 import { useState } from "react";
+import DateComponent from "@src/components/atoms/DateInput";
+import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
 
 export const BookForm = () => {
-  const { register, errors, watch, control } = useFormHook({});
+  const { errors, watch, control } = useFormHook({});
 
   const handleButtonClick = () => {
-    const url = `https://bookingengine.aegis.com.np/aegis-7001?arrival_date=${
-      watch("checkinDate") ? watch("checkinDate") : "2022-09-08"
-    }&departure_date=${
-      watch("checkoutDate") ? watch("checkoutDate") : "2022-09-09"
-    }`;
+    const checkIn = watch("checkinDate");
+    const checkOut = checkOutDate && formatDateToYYYYMMDD(checkOutDate);
+    const url = `https://bookingengine.aegis.com.np/aegis-7001?arrival_date=${checkIn}&departure_date=${checkOut}`;
     window.open(url, "_blank");
   };
   const currentDate = new Date();
@@ -51,7 +50,7 @@ export const BookForm = () => {
     setCheckOutDate(newCheckoutDate);
   };
   const changeCheckOutDate = (date: any) => {
-    setCheckOutDate(date);
+    setCheckOutDate(new Date(date));
   };
 
   return (
@@ -157,33 +156,31 @@ export const BookForm = () => {
                   </GridItem>
                   <Grid gap={4} mt={4} templateColumns={"repeat(1,2fr 2fr)"}>
                     <GridItem>
-                      <FormControl
-                        control="date"
-                        register={register}
+                      <DateComponent
+                        control={control}
                         name="checkinDate"
                         label="Check In"
-                        changeDate={changeCheckInDate}
                         error={errors.checkInDate?.message || ""}
                         endIcons="true"
                         defaultValue={checkInDate}
                         minDate={initialCheckInDate}
                         bg_color={colors.white}
                         labelColor={colors.white}
+                        onChange={changeCheckInDate}
                       />
                     </GridItem>
                     <GridItem>
-                      <FormControl
-                        control="date"
-                        register={register}
-                        name="checkOutDate"
+                      <DateComponent
+                        control={control}
+                        name="checkoutDate"
                         label="Check Out"
-                        changeDate={changeCheckOutDate}
-                        error={errors.checkInDate?.message || ""}
+                        error={errors.checkOutDate?.message || ""}
                         endIcons="true"
                         defaultValue={checkOutDate}
                         minDate={initialCheckOutDate}
                         bg_color={colors.white}
                         labelColor={colors.white}
+                        onChange={changeCheckOutDate}
                       />
                     </GridItem>
                   </Grid>

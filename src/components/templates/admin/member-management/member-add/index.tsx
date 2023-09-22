@@ -12,8 +12,8 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
 import { useMemberTierList } from "@src/constant/useMemberTierList";
-import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
 import ReactSelect from "@src/components/atoms/Select";
+import DateComponent from "@src/components/atoms/DateInput";
 
 const defaultValues = {
   fullName: "",
@@ -37,18 +37,15 @@ export const CreateMemberManagementForm = ({
   querykey,
 }: any) => {
   const propertyList = usePropertyList();
-  const { register, errors, reset, handleSubmit, control, setValue } =
-    useFormHook({
-      validationSchema: memberManagementValidation,
-      defaultValues,
-    });
-  const [individualData, setIndividualData] = useState<IMember | null>(null);
+  const { register, errors, reset, handleSubmit, control } = useFormHook({
+    validationSchema: memberManagementValidation,
+    defaultValues,
+  });
 
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData?.data.find((x: IMember) => x.id === updateId);
 
-      setIndividualData(data);
       setIsSwitchOpen(data.isBlocked);
       reset({
         ...data,
@@ -116,9 +113,7 @@ export const CreateMemberManagementForm = ({
   };
 
   const tierList = useMemberTierList();
-  const changeDateOfBirth = (date: any) => {
-    setValue("dateOfBirth", formatDateToYYYYMMDD(date));
-  };
+
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -152,31 +147,20 @@ export const CreateMemberManagementForm = ({
             error={errors?.phoneNumber?.message || ""}
             required
           />
-          <FormControl
-            control="date"
-            register={register}
-            defaultValue={
-              individualData &&
-              individualData?.dateOfBirth &&
-              new Date(individualData.dateOfBirth)
-            }
+          <DateComponent
+            control={control}
             required
             name="dateOfBirth"
             label="Date of birth"
             endIcons="true"
-            changeDate={changeDateOfBirth}
-            color="black"
-            padding="10px"
-            height="40px"
-            lineHeight="2"
             error={errors.dateOfBirth?.message || ""}
             maxDate={new Date()}
           />
           <ReactSelect
             control={control}
             name="nationalityId"
-            placeholder="Choose your nationality"
-            label="Nationality"
+            placeholder="Choose your country"
+            label="Country"
             required
             error={errors.nationalityId?.message || ""}
             options={nationalityList || []}

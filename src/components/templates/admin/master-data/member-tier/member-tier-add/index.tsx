@@ -6,7 +6,11 @@ import { ChromePicker } from "react-color";
 import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
-import { ColorPickerMinusIcon, ColorPickerPlusIcon } from "@src/assets/svgs";
+import {
+  ColorInList,
+  ColorPickerMinusIcon,
+  ColorPickerPlusIcon,
+} from "@src/assets/svgs";
 import { memberTierValidationSchema } from "@src/schema/master-data/member-tier";
 import {
   useCreateMemberTier,
@@ -21,6 +25,11 @@ const defaultValues = {
   pointsTo: "",
   image: "",
 };
+type IndividualDataType = {
+  description?: string;
+  imageUrl?: string;
+  colorCode?: string;
+};
 
 const ColorStyled = styled.div`
   border: 1px solid rgba(233, 233, 233, 1);
@@ -30,6 +39,13 @@ const ColorStyled = styled.div`
   }
 `;
 
+const ColorTierStyled = styled.div`
+  svg {
+    path {
+      fill: ${(props) => props.color || "transparent"};
+    }
+  }
+`;
 export const CreateMemberForm = ({
   isUpdate,
   updateId,
@@ -38,10 +54,12 @@ export const CreateMemberForm = ({
   setUpdateId,
   onMemberModalClose,
 }: any) => {
-  const { register, errors, setValue, reset, handleSubmit } = useFormHook({
-    validationSchema: memberTierValidationSchema,
-    defaultValues,
-  });
+  const { register, errors, setValue, reset, handleSubmit, watch } =
+    useFormHook({
+      validationSchema: memberTierValidationSchema,
+      defaultValues,
+    });
+  const [individualData, setIndividualData] = useState<IndividualDataType>({});
   const [color, setColor] = useState(`${colors.primary}`);
 
   const [isColorPicked, setIsColorPicked] = useState(false);
@@ -59,11 +77,13 @@ export const CreateMemberForm = ({
       const data = tableData?.data.find(
         (x: IMemberTierDetail) => x.id === updateId
       );
+      setIndividualData(data);
       reset({
         membershipName: data?.membershipName,
         pointsFrom: data?.pointsFrom,
         pointsTo: data?.pointsTo,
       });
+      setValue("colorCode", individualData?.colorCode);
     }
   }, [isUpdate, updateId]);
 
@@ -84,7 +104,7 @@ export const CreateMemberForm = ({
       membershipName: data.membershipName,
       pointsFrom: data.pointsFrom,
       pointsTo: data.pointsTo,
-      colorCode: data.colorCode,
+      colorCode: data.colorCode || individualData?.colorCode,
       description: data?.description,
     };
     formData.append("data", JSON.stringify(dat));
@@ -145,22 +165,34 @@ export const CreateMemberForm = ({
             label={"Description"}
             required
             placeholder={"description"}
+            data={
+              (updateId && individualData && individualData?.description) ?? ""
+            }
             error={errors?.description?.message ?? ""}
           />
           <Flex
-            gap={1}
+            justifyContent="space-between"
             onClick={() => {
               setIsColorPicked(!isColorPicked);
             }}
             cursor="pointer"
             mt={5}
           >
-            {!isColorPicked ? (
-              <ColorPickerPlusIcon />
-            ) : (
-              <ColorPickerMinusIcon />
-            )}
-            Pick a Color
+            <Flex gap={1}>
+              {!isColorPicked ? (
+                <ColorPickerPlusIcon />
+              ) : (
+                <ColorPickerMinusIcon />
+              )}
+              Pick a Color
+            </Flex>
+            <Box>
+              <ColorTierStyled
+                color={watch("colorCode") || individualData?.colorCode}
+              >
+                <ColorInList />
+              </ColorTierStyled>
+            </Box>
           </Flex>
           {isColorPicked && (
             <ColorStyled>
@@ -172,7 +204,8 @@ export const CreateMemberForm = ({
           </Text>
           <ImageUpload
             setValue={setValue}
-            // required={!id}
+            error={errors?.image?.message}
+            imageSrc={updateId ? individualData?.imageUrl : undefined}
           />
         </Flex>
         <Spacer />

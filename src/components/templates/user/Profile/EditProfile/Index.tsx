@@ -113,8 +113,8 @@ export const ProfileEdit = ({ dataProfile, onClose }: any) => {
           <ReactSelect
             control={control}
             name="nationalityId"
-            placeholder="Choose your nationality"
-            label="Nationality"
+            placeholder="Choose your country"
+            label="Country"
             required
             error={errors.nationalityId?.message || ""}
             options={nationalityList || []}

@@ -5,7 +5,7 @@ import { useFormHook } from "@src/hooks/useFormhook";
 import { IVoucher } from "@src/interface/voucher";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Text } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
 import { useServiceList } from "@src/constant/useServiceList";
@@ -23,6 +23,10 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 15px 65px;
 `;
+type IndividualDataType = {
+  voucherDescription?: string;
+  imageUrl?: string;
+};
 
 const defaultValues = {
   voucherName: "",
@@ -47,10 +51,12 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
       validationSchema: voucherValidationSchema,
       defaultValues,
     });
+  const [individualData, setIndividualData] = useState<IndividualDataType>({});
 
   const serviceList = useServiceList();
   useEffect(() => {
     if (state?.id) {
+      setIndividualData(state);
       reset({
         ...state,
         serviceId: { label: state.serviceName, value: state.serviceId },
@@ -153,6 +159,12 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
           required
           placeholder={"description"}
           error={errors?.voucherDescription?.message ?? ""}
+          data={
+            (state?.id &&
+              individualData &&
+              individualData?.voucherDescription) ??
+            ""
+          }
         />
 
         <Text fontSize={"sm"} my={2} fontWeight={500}>
@@ -161,8 +173,9 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
         </Text>
         <ImageUpload
           setValue={setValue}
-          error={update ? errors?.image?.message : ""}
+          error={errors?.image?.message}
           imageUploadStyle="row"
+          imageSrc={update ? individualData?.imageUrl : undefined}
         />
         <Flex gap={4} mt={3}>
           <Button
