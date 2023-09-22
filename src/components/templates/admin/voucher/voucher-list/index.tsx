@@ -1,7 +1,5 @@
-import { useFormHook } from "@src/hooks/useFormhook";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router-dom";
-import TableHeadings from "@src/components/molecules/table-heading";
 import BasicTable from "@src/components/molecules/table";
 import TableActions from "@src/components/molecules/table/TableActions";
 import { Stack } from "@chakra-ui/react";
@@ -19,15 +17,15 @@ interface IVoucherList {
   onViewVoucherOpen: any;
 }
 
-const defaultValues = {
-  voucherName: "",
-  service: "",
-  discountPercentage: "",
-  maximumAmounts: "",
-  maximumLimits: "",
-  description: "",
-  voucherImage: "",
-};
+// const defaultValues = {
+//   voucherName: "",
+//   service: "",
+//   discountPercentage: "",
+//   maximumAmounts: "",
+//   maximumLimits: "",
+//   description: "",
+//   voucherImage: "",
+// };
 
 const VoucherList: React.FC<IVoucherList> = ({
   tableData,
@@ -40,12 +38,12 @@ const VoucherList: React.FC<IVoucherList> = ({
   const navigate = useNavigate();
   const { pageParams } = usePageParams();
 
-  const { reset } = useFormHook({});
+  // const { reset } = useFormHook({});
 
-  const onCloseHandler = () => {
-    reset(defaultValues);
-    setDeleteId("");
-  };
+  // const onCloseHandler = () => {
+  //   reset(defaultValues);
+  //   setDeleteId("");
+  // };
   const columns = useMemo(
     () => [
       {
@@ -109,14 +107,6 @@ const VoucherList: React.FC<IVoucherList> = ({
   );
   return (
     <>
-      <TableHeadings
-        btnText="Add Voucher"
-        CurrentText="Voucher List"
-        onAction={() => {
-          onCloseHandler();
-          navigate(NAVIGATION_ROUTES.VOUCHER_ADD);
-        }}
-      />
       <BasicTable
         data={tableData?.data || []}
         columns={columns}

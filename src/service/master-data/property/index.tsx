@@ -8,22 +8,21 @@ import { useQueryClient, useMutation } from "react-query";
 export const getAllProperty = (pageParams: any) => {
   const pageIndex = pageParams.queryKey[1]?.page;
   const pageSize = pageParams.queryKey[1]?.limit;
+  const name = pageParams.queryKey[1]?.name;
   return HttpClient.get(
     api.master_data.property_list.fetch.replace(
-      `pageIndex={page}&pageSize={limit}`,
-      `pageIndex=${pageIndex}&pageSize=${pageSize}`
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}&name=${name}`
     )
   );
-  // return HttpClient.get(api.master_data.property_list.fetch);
 };
 export const getAllPropertySelect = () => {
   return HttpClient.get(
     api.master_data.property_list.fetch.replace(
-      `pageIndex={page}&pageSize={limit}`,
-      `pageIndex=${1}&pageSize=${50}`
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${1}&pageSize=${50}&name=`
     )
   );
-  // return HttpClient.get(api.master_data.property_list.fetch);
 };
 
 export const createProperty = (data: IProperty) => {

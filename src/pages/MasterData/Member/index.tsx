@@ -2,6 +2,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
 import ModalForm from "@src/components/molecules/modal";
+import TableHeadings from "@src/components/molecules/table-heading";
 import DeleteContent from "@src/components/organisms/delete-content";
 import { MemberPreview } from "@src/components/templates/admin/master-data/member-tier/member-privew";
 import { CreateMemberForm } from "@src/components/templates/admin/master-data/member-tier/member-tier-add";
@@ -18,11 +19,18 @@ const MemberPage = () => {
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
   const [viewId, setViewId] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const { data, isLoading } = usePageinationHook({
     key: "member_tier",
     url: getAllMemberTier,
+    extraParams: { name: keyword },
   });
+
+  const handleSearch = (e: any) => {
+    setKeyword(e);
+  };
+
   const {
     isOpen: isMemberOpen,
     onOpen: onMemberModalOpen,
@@ -54,14 +62,19 @@ const MemberPage = () => {
     result.status === 200 && onDeleteMemberTierClose();
   };
 
-  // const { data, isLoading } = useQuery("member_tier", getAllMemberTier, {
-  //   select: ({ data }) => data.datalist,
-  // });
-
   return (
     <>
       <BreadCrumb name="Master Data" subname="Membership Tier" />
       <Content>
+        <TableHeadings
+          onSearch={(e: any) => handleSearch(e)}
+          btnText="Add Member Tier"
+          CurrentText="Member Tier List"
+          onAction={() => {
+            onCloseHandler();
+            onMemberModalOpen();
+          }}
+        />
         <MemberList
           setIsUpdate={setIsUpdate}
           setUpdateId={setUpdateId}

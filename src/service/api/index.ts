@@ -9,13 +9,14 @@ export const api = {
     service: {
       add: "/service-category/create-service",
       fetch:
-        "/service-category/get-all-service?pageIndex={page}&pageSize={limit}",
+        "/service-category/get-all-service?pageIndex={page}&pageSize={limit}&name={name}",
       delete: "/service-category/delete-service-category/:id",
       update: "/service-category/update-service-category/:id",
     },
     bonus: {
       add: "/bonus/save-bonus",
-      fetch: "/bonus/get-all-bonus?pageIndex={page}&pageSize={limit}",
+      fetch:
+        "/bonus/get-all-bonus?pageIndex={page}&pageSize={limit}&name={name}",
       delete: "/bonus/delete-bonus/:id",
       update: "/bonus/update-bonus/:id",
     },
@@ -33,14 +34,16 @@ export const api = {
   master_data: {
     member_tier: {
       add: "/membership/create-tier",
-      fetch: "/membership/get-all-tier",
+      fetch:
+        "/membership/get-all-tier?pageIndex={page}&pageSize={limit}&name={name}",
       fetchBYid: "/membership/get-tier-by-id",
       delete: "/membership/delete-tier/:id",
       update: "/membership/update-tier/:id",
     },
     property_list: {
       add: "/property/save-property",
-      fetch: "/property/get-all-properties?pageIndex={page}&pageSize={limit}",
+      fetch:
+        "/property/get-all-properties?pageIndex={page}&pageSize={limit}&name={name}",
       delete: "/property/delete-property/:id",
       update: "/property/update-property/:id",
     },
@@ -54,11 +57,12 @@ export const api = {
     update: "",
   },
   staff_management: {
-    fetch: "/users/get-staff-details?pageIndex={page}&pageSize={limit}",
+    fetch:
+      "/users/get-staff-details?pageIndex={page}&pageSize={limit}&name={name}",
   },
   member_management: {
     add: "/auth/save-users",
-    fetch: "/auth/get-users?pageIndex={page}&pageSize={limit}",
+    fetch: "/auth/get-users?pageIndex={page}&pageSize={limit}&name={name}",
     update: "/auth/update-user/:id",
     fetchById: "/users/get-all-user-details/:id",
     get_history:
@@ -78,14 +82,15 @@ export const api = {
   },
   voucher: {
     add: "/voucher/create-voucher",
-    fetch: "/voucher/get-all-voucher?pageIndex={page}&pageSize={limit}",
-    // fetch: "/voucher/get-all-voucher",
+    fetch:
+      "/voucher/get-all-voucher?pageIndex={page}&pageSize={limit}&name={name}",
     delete: "/voucher/delete-voucher-promo/:id",
     update: "/voucher/update-voucher-promo/:id",
     fetchID: "/voucher/get-voucher-promo",
   },
   offer: {
-    fetch: "/offers/get-all-offers?pageIndex={page}&pageSize={limit}",
+    fetch:
+      "/offers/get-all-offers?pageIndex={page}&pageSize={limit}&name={name}",
     add: "/offers/save-offer",
     update: "/offers/update-offer/:id",
     delete: "/offers/delete-offer/:id",

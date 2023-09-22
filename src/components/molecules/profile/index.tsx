@@ -32,21 +32,30 @@ const Profile = ({ type }: any) => {
       </MenuButton>
       <MenuList>
         {type !== "admin" && (
-          <MenuItem
-            onClick={() =>
-              navigate(NAVIGATION_ROUTES.USER_PROFILE, {
-                state: data,
-              })
-            }
-          >
-            Profile
-          </MenuItem>
+          <>
+            <MenuItem
+              onClick={() =>
+                navigate(NAVIGATION_ROUTES.USER_PROFILE, {
+                  state: data,
+                })
+              }
+            >
+              Profile
+            </MenuItem>
+            <MenuItem
+              onClick={() =>
+                navigate(NAVIGATION_ROUTES.HISTORY, {
+                  state: data,
+                })
+              }
+            >
+              History
+            </MenuItem>
+          </>
         )}
         <MenuItem
           onClick={() => {
             localStorage.removeItem("token"), navigate(NAVIGATION_ROUTES.LOGIN);
-            localStorage.removeItem("imageName");
-            localStorage.clear();
           }}
         >
           Logout

@@ -2,13 +2,11 @@ import { AddIcon } from "@chakra-ui/icons";
 import { Button, Flex } from "@chakra-ui/react";
 import { ExportIcon, FilterIcon } from "@src/assets/svgs";
 import { TableTitle } from "@src/components/atoms/TableTitle";
-
-import { Search } from "@src/components/molecules/search";
 import { DrawerComponent } from "@src/components/organisms/drawer";
+import DebouncedSearchInput from "@src/utility/debounceSearch";
 const TableHeadings = ({
   btnText,
   CurrentText,
-  setSearchValue,
   onAction,
   onDisableButton,
   type,
@@ -18,6 +16,7 @@ const TableHeadings = ({
   onDrawerModalOpen,
   isDrawerOpen,
   onClick,
+  onSearch,
 }: any) => {
   return (
     <Flex
@@ -47,7 +46,8 @@ const TableHeadings = ({
       ) : (
         <Flex gap={2} mb={3} alignItems="center">
           <Flex position="relative">
-            <Search setSearchValue={setSearchValue} />
+            {/* <Search setSearchValue={setSearchValue} /> */}
+            <DebouncedSearchInput onSearch={onSearch} />
           </Flex>
           <Flex gap={2} alignItems="center">
             {btnText && (

@@ -11,15 +11,24 @@ import {
 import { CreatePropertyForm } from "@src/components/templates/admin/master-data/property/property-add";
 import PropertyList from "@src/components/templates/admin/master-data/property/property-list";
 import DeleteContent from "@src/components/organisms/delete-content";
+import TableHeadings from "@src/components/molecules/table-heading";
 
 const PropertyPage = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
+  const [keyword, setKeyword] = useState("");
+
   const { data, isLoading } = usePageinationHook({
     key: "property",
     url: getAllProperty,
+    extraParams: { name: keyword },
   });
+
+  const handleSearch = (e: any) => {
+    setKeyword(e);
+  };
+
   const {
     isOpen: isPropertyOpen,
     onOpen: onPropertyModalOpen,
@@ -50,6 +59,15 @@ const PropertyPage = () => {
     <>
       <BreadCrumb name="Property" />
       <Content>
+        <TableHeadings
+          onSearch={(e: any) => handleSearch(e)}
+          btnText="Add Property"
+          CurrentText="Property List"
+          onAction={() => {
+            onCloseHandler();
+            onPropertyModalOpen();
+          }}
+        />
         <PropertyList
           setIsUpdate={setIsUpdate}
           setUpdateId={setUpdateId}

@@ -1,7 +1,6 @@
 import { Stack } from "@chakra-ui/react";
 import { CellProps } from "react-table";
 import TableActions from "@src/components/molecules/table/TableActions";
-import TableHeadings from "@src/components/molecules/table-heading";
 import BasicTable from "@src/components/molecules/table";
 import { usePageParams } from "@src/components/organisms/layout";
 import { useMemo } from "react";
@@ -19,7 +18,6 @@ const StaffManagementList: React.FC<IMemberProps> = ({
   setUpdateId,
   setIsUpdate,
   onStaffManagementModalOpen,
-  onCloseHandler,
   data,
   isLoading,
 }) => {
@@ -78,14 +76,6 @@ const StaffManagementList: React.FC<IMemberProps> = ({
 
   return (
     <>
-      <TableHeadings
-        btnText="Add Staff"
-        CurrentText="Staff List"
-        onAction={() => {
-          onCloseHandler();
-          onStaffManagementModalOpen();
-        }}
-      />
       <BasicTable
         data={data?.data || []}
         columns={columns}
