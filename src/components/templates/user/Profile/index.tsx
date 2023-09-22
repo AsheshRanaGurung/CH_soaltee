@@ -7,13 +7,15 @@ import {
   Heading,
   Image,
   List,
+  VStack,
   ListIcon,
   ListItem,
+  HStack,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
-import { AwardIcon, LocationIcon, MailIcon, PhoneIcon } from "@src/assets/svgs";
+import { AwardIcon, GlobalIcon, MailIcon, PhoneIcon } from "@src/assets/svgs";
 import Header from "@src/components/atoms/Header";
 import { EditProfile } from "./EditProfile/Index";
 import { Footer } from "../footer";
@@ -22,6 +24,10 @@ import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { baseURL } from "@src/service/config/api";
+import { font } from "@src/theme/font";
+import { colors } from "@src/theme/colors";
+import { HeaderWrapper } from "../UserMain-index";
+import { ReferalLayout } from "../referal";
 import { ChangePassword } from "./ChangePassword";
 const ProfilePage = () => {
   const {
@@ -50,7 +56,11 @@ const ProfilePage = () => {
       setUpdatedData(data);
     }
   }, [data]);
-
+  // const queryClient = useQueryClient();
+  // const handleFormSubmit = async (data: any) => {
+  //   await queryClient.refetchQueries("user_detail");
+  //   setUpdatedData(data);
+  // };
   const imageUrl = data?.userImageUrl !== undefined ? data?.userImageUrl : "";
   const imgProfile = `${baseURL}users/get-profile-image/${data?.userImageUrl}`;
   return (
@@ -58,14 +68,26 @@ const ProfilePage = () => {
       <Box
         background={`url(${imageList?.ProfileImage}) center center/cover no-repeat`}
         h={"300px"}
+        marginTop="100px"
         position={"relative"}
       >
-        <Header navigation={false} />
+        <HeaderWrapper>
+          <Box
+            position={"fixed"}
+            top={0}
+            left={0}
+            right={0}
+            zIndex={99}
+            background={colors.white}
+          >
+            <Header navigation={true} />
+          </Box>
+        </HeaderWrapper>
         <Box
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          mt={"50px"}
+          height="100%"
         >
           <Heading
             color={"white"}
@@ -75,8 +97,9 @@ const ProfilePage = () => {
             p={3}
             h={"50px"}
             borderRadius={"65px"}
-            background={"#979797"}
+            background={"#979797" || data?.tierColorCode}
             fontWeight={"400"}
+            fontFamily={font.cormorant}
           >
             {data?.tierName && data?.tierName.toUpperCase()}
           </Heading>
@@ -88,7 +111,7 @@ const ProfilePage = () => {
         borderRadius={"50%"}
         border={"4px solid white"}
         position={"absolute"}
-        top={"20%"}
+        top={"16%"}
         left={"5%"}
       >
         {imageUrl ? (
@@ -99,77 +122,115 @@ const ProfilePage = () => {
         ) : (
           <Avatar
             src={imageUrl}
-            name="Profile"
+            name={data?.fullName}
             style={{ borderRadius: "50%", width: "100%", height: "100%" }}
           />
         )}
       </Box>
       <Box>
         <Container maxW={"1400px"}>
-          <Box mt={"20px"} ml={"18%"} mb={"80px"}>
+          <VStack
+            mt={"20px"}
+            ml="17%"
+            mb={"80px"}
+            justifyContent="space-around"
+            alignItems="baseline"
+          >
             <Flex justifyContent={"space-between"}>
               <Box>
                 <Text
-                  fontSize={"3xl"}
-                  marginBottom={"10px"}
+                  fontSize={"4xl"}
                   textTransform={"capitalize"}
+                  fontFamily={font.cormorant}
+                  fontWeight="bold"
                 >
                   {data?.fullName}
                 </Text>
+                <Text
+                  fontSize={"md"}
+                  marginBottom={"10px"}
+                  textTransform={"capitalize"}
+                  fontFamily={font.josefin}
+                  fontWeight="400"
+                  color={colors.black_1}
+                >
+                  MemberId : {data?.customerId}
+                </Text>
+
                 <Box
                   bg={"none"}
-                  border={"2px solid #E9E9E9"}
-                  h={"70px"}
-                  w={"200px"}
                   display={"flex"}
                   justifyContent={"space-between"}
                   alignItems={"center"}
                   padding={"10px"}
-                  borderRadius={"8px"}
-                  marginBottom={"20px"}
+                >
+                  <List spacing={4} mb={20}>
+                    <ListItem
+                      color={colors.black_1}
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <ListIcon as={MailIcon} fontSize="3xl" />
+                      Email : &nbsp;
+                      <Text fontSize={"16px"}>{data?.email}</Text>
+                    </ListItem>
+                    <ListItem
+                      color={colors.black_1}
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <ListIcon as={PhoneIcon} fontSize="3xl" />
+                      Phone Number : &nbsp;
+                      <Text fontSize={"16px"}>{data?.phoneNumber}</Text>
+                    </ListItem>
+                    <ListItem
+                      color={colors.black_1}
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <ListIcon as={GlobalIcon} fontSize="3xl" />
+                      Nationality : &nbsp;
+                      <Text fontSize={"16px"}> {data?.nationality}</Text>
+                    </ListItem>
+                  </List>
+                </Box>
+              </Box>
+              <Flex gap={10} flexDirection="column">
+                <Box display="flex">
+                  <Button marginRight={"10px"} onClick={onOpenEdit}>
+                    Edit Profile
+                  </Button>
+                  <Button
+                    bg={"white"}
+                    borderRadius={"8px"}
+                    color={"#B4304B"}
+                    border={"1px solid #B4304B"}
+                    onClick={onOpenChange}
+                  >
+                    Change Password
+                  </Button>
+                </Box>
+                <HStack
+                  border={"2px solid #E9E9E9"}
+                  h={"70px"}
+                  minWidth={"200px"}
+                  p={5}
                 >
                   <AwardIcon />
-                  <Text fontSize={"16px"} color={"#696969"}>
+                  <Text fontSize={"16px"} color={colors.black_1}>
                     Reward Points
                   </Text>
-                  <Heading fontSize={"18px"} fontWeight={"500"}>
-                    {data?.totalRewardPoints || "0"}
+                  <Heading fontSize="2xl" fontWeight={"500"}>
+                    {data?.totalRewardPoints?.toFixed(2) || "0"}
                   </Heading>
-                </Box>
-                <List spacing={4}>
-                  <ListItem color={"#696969"} display={"flex"}>
-                    <ListIcon as={MailIcon} />
-                    Email: &nbsp;
-                    <Text fontSize={"16px"}>{data?.email}</Text>
-                  </ListItem>
-                  <ListItem color={"#696969"} display={"flex"}>
-                    <ListIcon as={PhoneIcon} />
-                    Phone Number: &nbsp;
-                    <Text fontSize={"16px"}>{data?.phoneNumber}</Text>
-                  </ListItem>
-                  <ListItem color={"#696969"} display={"flex"}>
-                    <ListIcon as={LocationIcon} />
-                    Nationality: &nbsp;
-                    <Text fontSize={"16px"}> {data?.nationality}</Text>
-                  </ListItem>
-                </List>
-              </Box>
-              <Box>
-                <Button marginRight={"10px"} onClick={onOpenEdit}>
-                  Edit Profile
-                </Button>
-                <Button
-                  bg={"white"}
-                  onClick={onOpenChange}
-                  borderRadius={"8px"}
-                  color={"#B4304B"}
-                  border={"1px solid #B4304B"}
-                >
-                  Change Password
-                </Button>
-              </Box>
+                </HStack>
+              </Flex>
             </Flex>
-          </Box>
+            <HStack width="90%" gap={30}>
+              <ReferalLayout />
+              <Image src={imageList.ReferalImage} />
+            </HStack>
+          </VStack>
         </Container>
       </Box>
       <ChangePassword

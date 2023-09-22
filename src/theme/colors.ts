@@ -48,4 +48,5 @@ export const colors = {
   model_bottom: "#d2cfcfc2",
   slider_nav: "#3E3C3C",
   primary_light_500: "#FFDEDE",
+  light_bg: "#F2F2F2",
 };

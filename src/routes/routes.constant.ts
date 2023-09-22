@@ -25,4 +25,5 @@ export const NAVIGATION_ROUTES = {
   HISTORY: "/history",
   USER_REPORT: "/user-report",
   EARNING_REPORT: "/earning-report",
+  OFFER_DETAIL: "/offer-detail",
 };

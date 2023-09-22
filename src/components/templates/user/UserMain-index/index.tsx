@@ -11,10 +11,9 @@ import { BookForm } from "../book-form";
 import { Latestoffer } from "../footer/Latestoffer";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
-import { getAllOffer } from "@src/service/offer";
+import { getAllOfferSelect } from "@src/service/offer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay, Pagination } from "swiper";
-import { HeadingText } from "@src/components/molecules/heading-text";
 
 import { useQuery } from "react-query";
 import { getUserDetail } from "@src/service/user";
@@ -24,11 +23,15 @@ import { useState, useEffect } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Hotel } from "../hotels";
 import { redeemData, stepCardData, earnPointsData } from "@src/constant/index";
-
+import { HeadingText } from "@src/components/molecules/heading-text";
 import { CardStep } from "../step-card/Card";
 import { font } from "@src/theme/font";
+import { Hotel } from "../hotels";
+import { useNavigate } from "react-router-dom";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
+import { useOfferData } from "@src/constant/useOffer";
+
 export const HeaderWrapper = styled.div`
   div.fixed {
     background: ${colors.white};
@@ -80,9 +83,10 @@ export const Userpage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const { data: offerData } = useQuery("offer", getAllOffer, {
+  const { data: offerData } = useQuery("offer", getAllOfferSelect, {
     select: ({ data }) => data.data,
   });
+  const [initialOffer, setInitialOfferId] = useState("");
 
   const { data } = useQuery("user_detail", getUserDetail, {
     select: ({ data }) => data.data,
@@ -155,6 +159,14 @@ export const Userpage = () => {
       tierName: data?.nextMembershipTier,
     },
   ];
+  const offerResponse = useOfferData(initialOffer);
+  const navigate = useNavigate();
+  const fetchOfferDetail = (id: any) => {
+    setInitialOfferId(id);
+    const offerResult = offerResponse;
+    navigate(NAVIGATION_ROUTES.OFFER_DETAIL, { state: offerResult });
+  };
+
   return (
     <>
       <HeaderWrapper>
@@ -257,8 +269,9 @@ export const Userpage = () => {
                     <SpecialOffer
                       title={item?.offerName}
                       desc={item?.description}
-                      // buttonText={"Claim Voucher"}
+                      buttonText={"View More"}
                       img={item?.offerImage}
+                      viewDetail={() => fetchOfferDetail(item.offerId)}
                     />
                   </SwiperSlide>
                 )

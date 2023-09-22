@@ -24,6 +24,7 @@ import PageNotFound from "@src/pages/NotFound";
 import HistoryTransaction from "@src/components/templates/user/History";
 import UserReport from "@src/pages/Report/UserReport";
 import EarningReport from "@src/pages/Report/EarningReport";
+import { OfferDetail } from "@src/components/templates/user/offer-detail";
 import SettingPage from "@src/pages/Settings";
 
 const routes = [
@@ -39,6 +40,10 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.USER_DASHBOARD,
     element: <PrivateRoute Component={UserDashboard} allowedRoles={["USER"]} />,
+  },
+  {
+    path: NAVIGATION_ROUTES.OFFER_DETAIL,
+    element: <PrivateRoute Component={OfferDetail} allowedRoles={["USER"]} />,
   },
   {
     path: NAVIGATION_ROUTES.HISTORY,
