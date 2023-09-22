@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Box, Avatar } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
@@ -107,13 +107,20 @@ const ImageUpload: React.FC<IProps> = ({
       setSelectedImage(imageList.AvatarImg);
     }
   };
+  useEffect(() => {
+    if (imageSrc) {
+      const splitData = imageSrc.split("/");
+      setImageName(splitData[splitData.length - 1] + ".jpg");
+    }
+  }, [imageSrc]);
+
   return (
     <Box textAlign="center">
       {isUser && (
         <>
           {imageSrc ? (
             <img
-              src={selectedImage || imageSrc}
+              src={imageSrc || selectedImage}
               alt="Uploaded Image"
               style={{
                 width: "100px",
@@ -160,17 +167,15 @@ const ImageUpload: React.FC<IProps> = ({
           {imageName ? (
             <div>
               <p id="selectedFileName">{imageName}</p>
-              <div onClick={handleClearImage}>
-                <CrossIcon />
-              </div>
+              <div onClick={handleClearImage}>{!imageSrc && <CrossIcon />}</div>
             </div>
           ) : (
             <p>No file selected</p>
           )}
         </ImageStyled>
-        {selectedImage && !isUser && (
+        {(selectedImage || imageSrc) && !isUser && (
           <div style={{ marginTop: "12px" }}>
-            <img src={selectedImage} />
+            <img src={selectedImage || imageSrc} />
           </div>
         )}
         {error && <p className="error-msg">{error}</p>}

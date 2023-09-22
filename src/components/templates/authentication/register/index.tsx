@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
 import ReactSelect from "@src/components/atoms/Select";
 import { signupValidationSchema } from "@src/schema/auth/signup";
-import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
+import DateComponent from "@src/components/atoms/DateInput";
 
 export const AccountDetailStyle = styled.div`
   font-weight: 600;
@@ -36,7 +36,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
     offers: false,
   });
 
-  const { handleSubmit, register, errors, control, setValue } = useFormHook({
+  const { handleSubmit, register, errors, control } = useFormHook({
     validationSchema: signupValidationSchema,
   });
   const onSubmit = (data: any) => {
@@ -63,9 +63,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
   useEffect(() => {
     isSubmitDisabled = true;
   }, [isLoading]);
-  const changeDateOfBirth = (date: any) => {
-    setValue("dateOfBirth", formatDateToYYYYMMDD(date));
-  };
+
   return (
     <>
       <Heading title="Sign Up" text="Enter your details to sign up" />
@@ -90,21 +88,16 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             register={register}
             error={errors.email?.message || ""}
           />
-          <FormControl
-            control="date"
-            register={register}
+
+          <DateComponent
+            control={control}
             required
             name="dateOfBirth"
             label="Date of birth"
             endIcons="true"
-            changeDate={changeDateOfBirth}
-            color="black"
-            padding="10px"
-            height="40px"
-            lineHeight="2"
-            bg_color={colors.secondary}
             error={errors.dateOfBirth?.message || ""}
             maxDate={new Date()}
+            bg_color={colors.secondary}
           />
           <FormControl
             control="input"
@@ -130,8 +123,8 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
           <ReactSelect
             control={control}
             name="nationalityId"
-            placeholder="Choose your nationality"
-            label="Nationality"
+            placeholder="Choose your country"
+            label="Country"
             required
             error={errors.nationalityId?.message || ""}
             options={nationalityList || []}

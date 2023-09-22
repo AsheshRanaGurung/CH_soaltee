@@ -18,4 +18,5 @@ export const memberTierValidationSchema = yup.object().shape({
       }
     )
     .typeError("Points must be a number"),
+  description: yup.string().required("Description is required"),
 });

@@ -23,11 +23,19 @@ export const bonusValidationSchema = yup.object().shape({
   validTo: yup
     .string()
     .required("Valid to date is required")
-    .test("is-valid-to", "Invalid Date", function (value) {
-      if (!value) {
-        return false;
+    .test(
+      "is-valid-to",
+      "Valid To date must be greater than Valid From date",
+      function (value, context) {
+        const validFromDate = context.parent.validFrom;
+        if (!value) {
+          return false;
+        }
+        if (new Date(value) <= new Date(validFromDate)) {
+          return false;
+        }
+        return true;
       }
-      return true;
-    }),
+    ),
   bonusValue: yup.string().required("Bonus value is required"),
 });

@@ -7,15 +7,11 @@ export const userProfileValidationSchema = yup.object().shape({
   phoneNumber: createPhoneNumberSchema(),
   nationalityId: yup
     .mixed()
-    .test(
-      "is-nationality-valid",
-      "Please select nationality",
-      function (value) {
-        if (typeof value === "object") {
-          return true;
-        }
-        return false;
+    .test("is-nationality-valid", "Please select country", function (value) {
+      if (typeof value === "object") {
+        return true;
       }
-    )
-    .required("Please select nationality"),
+      return false;
+    })
+    .required("Please select country"),
 });

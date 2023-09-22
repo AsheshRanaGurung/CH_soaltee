@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
 import {
@@ -10,10 +10,11 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerIcon } from "@src/assets/svgs";
+import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
 
 const DateInput = styled.div<any>`
   z-index: 1;
@@ -23,8 +24,7 @@ const DateInput = styled.div<any>`
   }
   .picker {
     padding: 8px;
-    background-color: ${(props) =>
-      props.bg_color ? props.bg_color : "transparent"};
+    background: ${(props) => (props.bg_color ? props.bg_color : "transparent")};
   }
   input {
     width: 100%;
@@ -50,13 +50,15 @@ interface IDate {
   isDisabled?: boolean;
   endIcons?: React.ReactNode;
   labelDisabled?: string;
-  changeDate: (date: any) => any;
-  defaultValue?: any;
   minDate?: any;
   bg_color?: string;
   required?: boolean;
   maxDate?: any;
   labelColor?: string;
+  control?: any;
+  isClearable?: boolean;
+  defaultValue?: any;
+  onChange?: any;
 }
 
 const DateComponent = ({
@@ -66,18 +68,26 @@ const DateComponent = ({
   helperText,
   error,
   endIcons,
-  changeDate,
-  defaultValue,
   minDate,
   bg_color,
   maxDate,
   labelColor,
+  control,
+  defaultValue,
+  onChange,
   ...rest
 }: IDate) => {
-  const { control } = useForm();
   const hasError = !!error;
+  const datepickerRef = useRef(null);
+
+  function handleClickDatepickerIcon() {
+    const datepickerElement = datepickerRef.current as any;
+    if (datepickerElement) {
+      datepickerElement.setOpen(true);
+    }
+  }
   return (
-    <FormControl isInvalid={!!error}>
+    <FormControl isInvalid={!!error} id={name}>
       {label && (
         <FormLabel
           htmlFor={name}
@@ -87,7 +97,7 @@ const DateComponent = ({
           style={labelColor ? { color: labelColor } : {}}
         >
           {label}
-          {rest.required && <span style={{ color: "red" }}>&nbsp;*</span>}
+          {rest.required && <span style={{ color: colors.red }}>&nbsp;*</span>}
         </FormLabel>
       )}
 
@@ -97,7 +107,7 @@ const DateComponent = ({
         </FormLabel>
       )}
 
-      <DateInput>
+      <DateInput bg_color={bg_color}>
         <InputGroup
           sx={{
             border: "none",
@@ -114,33 +124,30 @@ const DateComponent = ({
           <Controller
             name={name}
             control={control}
-            render={({ field: { onChange, value } }) => {
+            defaultValue={defaultValue} // Set the default value
+            render={({ field }) => {
+              const handleChange = (date: any) => {
+                const formattedDate = formatDateToYYYYMMDD(date);
+                field.onChange(formattedDate);
+                onChange && onChange(formattedDate);
+              };
               return (
                 <DatePicker
-                  // {...rest}
-                  value={value}
-                  selected={value ? value : defaultValue}
+                  {...rest}
+                  onChange={handleChange}
+                  selected={
+                    defaultValue
+                      ? new Date(defaultValue)
+                      : field.value
+                      ? new Date(field.value)
+                      : null
+                  }
                   className="picker"
-                  onChange={(value) => {
-                    onChange(value);
-                    changeDate(value);
-                  }}
                   placeholderText="YYYY-DD-MM"
                   dateFormat="yyyy-MM-dd"
                   minDate={minDate}
                   maxDate={maxDate}
-                  // onChangeRaw={(e) => {
-                  //   e.preventDefault();
-                  // }}
-                  // excludeDates={maxDate ? [maxDate] :minDate?: [minDate]}
-
-                  onChangeRaw={(e) => {
-                    if (e.target.value) {
-                      const rawDate = e.target.value;
-                      const newDate = rawDate?.split("-");
-                      changeDate(newDate[0] && new Date(newDate[0]));
-                    }
-                  }}
+                  ref={datepickerRef}
                 />
               );
             }}
@@ -148,7 +155,7 @@ const DateComponent = ({
 
           {endIcons && (
             <InputRightElement top="0px" zIndex="99999">
-              <DatePickerIcon />
+              <DatePickerIcon onClick={() => handleClickDatepickerIcon()} />
             </InputRightElement>
           )}
         </InputGroup>
