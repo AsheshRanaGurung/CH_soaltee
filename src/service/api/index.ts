@@ -58,6 +58,7 @@ export const api = {
     fetchRecentActivity: "dashboard/get-recent-activity",
   },
   staff_management: {
+    qr_fetch: "/staff/get-property-link",
     fetch:
       "/users/get-staff-details?pageIndex={page}&pageSize={limit}&name={name}",
   },
@@ -101,6 +102,8 @@ export const api = {
   nationality: "/nationality/fetch-all",
   referal_link: "/users/get-referral-link",
   send_email: "/email/send-ref-email",
+  transcaction_history:
+    "/users/user-txn-history?pageIndex={page}&pageSize={limit}&type={type}&propertyId={propertyId}&dates={dates}",
 };
 export interface IResponse<T = any> {
   data: T;

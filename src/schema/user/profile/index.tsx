@@ -3,7 +3,10 @@ import * as yup from "yup";
 
 export const userProfileValidationSchema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
-  email: yup.string().required("Email is required"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
   phoneNumber: createPhoneNumberSchema(),
   nationalityId: yup
     .mixed()

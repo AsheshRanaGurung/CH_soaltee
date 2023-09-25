@@ -4,6 +4,7 @@ import Layout from "@src/components/organisms/layout";
 import jwt_decode from "jwt-decode";
 import { DecodedToken } from "@src/interface/decodedToken";
 import { useEffect } from "react";
+import { UserLayout } from "@src/components/organisms/user-layout";
 
 const PrivateRoute = ({ Component, allowedRoles }: any) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -33,7 +34,9 @@ const PrivateRoute = ({ Component, allowedRoles }: any) => {
           <Component />
         </Layout>
       ) : (
-        <Component />
+        <UserLayout>
+          <Component />
+        </UserLayout>
       )}
     </div>
   );

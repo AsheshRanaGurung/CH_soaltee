@@ -93,8 +93,8 @@ const ReactSelect = ({
           htmlFor={name}
           fontWeight={500}
           fontSize={"14px"}
-          mb={2}
           style={labelColor ? { color: labelColor } : {}}
+          mb={2}
         >
           {" "}
           {label}
