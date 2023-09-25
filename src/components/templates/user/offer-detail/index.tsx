@@ -74,9 +74,14 @@ export const OfferTemplate = ({
           <Heading fontFamily={font.cormorant} fontSize={44}>
             {title}
           </Heading>
-          <Text fontFamily={font.josefin} fontWeight="400">
-            {description}
-          </Text>
+
+          <Text
+            fontFamily={font.josefin}
+            fontWeight="400"
+            dangerouslySetInnerHTML={{
+              __html: description,
+            }}
+          />
         </Stack>
       </Container>
     </>

@@ -45,10 +45,12 @@ const TableHeadings = ({
         </Flex>
       ) : (
         <Flex gap={2} mb={3} alignItems="center">
-          <Flex position="relative">
-            {/* <Search setSearchValue={setSearchValue} /> */}
-            <DebouncedSearchInput onSearch={onSearch} />
-          </Flex>
+          {onSearch && (
+            <Flex position="relative">
+              {/* <Search setSearchValue={setSearchValue} /> */}
+              <DebouncedSearchInput onSearch={onSearch} />
+            </Flex>
+          )}
           <Flex gap={2} alignItems="center">
             {btnText && (
               <Button
