@@ -10,6 +10,7 @@ import {
 import { imageList } from "@src/assets/images";
 import FormControl from "@src/components/atoms/FormControl";
 import { useFormHook } from "@src/hooks/useFormhook";
+import { font } from "@src/theme/font";
 
 export const Latestoffer = () => {
   const { register, errors } = useFormHook({});
@@ -22,12 +23,21 @@ export const Latestoffer = () => {
       <Container maxW={"1400px"}>
         <Grid gap={4} templateColumns={"repeat(1,2fr 2fr)"} p={12}>
           <GridItem>
-            <Heading color={"white"} fontSize={"44px"} fontWeight={"300"}>
+            <Heading
+              color={"white"}
+              fontSize={"44px"}
+              fontWeight="500"
+              fontFamily={font.cormorant}
+            >
               Get the latest offers <br></br>Sign up for our newsletter
             </Heading>
           </GridItem>
           <GridItem>
-            <Heading fontSize={"18px"} color={"white"} fontWeight={"300"}>
+            <Heading
+              fontSize={"18px"}
+              color={"white"}
+              fontFamily={font.josefin}
+            >
               Hear about our latest offers by signing up to our mailing list.
             </Heading>
             <Flex>

@@ -2,13 +2,11 @@ import { AddIcon } from "@chakra-ui/icons";
 import { Button, Flex } from "@chakra-ui/react";
 import { ExportIcon, FilterIcon } from "@src/assets/svgs";
 import { TableTitle } from "@src/components/atoms/TableTitle";
-
-import { Search } from "@src/components/molecules/search";
 import { DrawerComponent } from "@src/components/organisms/drawer";
+import DebouncedSearchInput from "@src/utility/debounceSearch";
 const TableHeadings = ({
   btnText,
   CurrentText,
-  setSearchValue,
   onAction,
   onDisableButton,
   type,
@@ -17,6 +15,8 @@ const TableHeadings = ({
   onDrawerModalClose,
   onDrawerModalOpen,
   isDrawerOpen,
+  onClick,
+  onSearch,
 }: any) => {
   return (
     <Flex
@@ -29,7 +29,9 @@ const TableHeadings = ({
       <TableTitle currentText={CurrentText ?? ""} />
       {type === "report" ? (
         <Flex gap={2} mb={3} alignItems={"center"}>
-          <Button leftIcon={<ExportIcon />}>Export</Button>
+          <Button leftIcon={<ExportIcon />} onClick={onClick}>
+            Export
+          </Button>
           <DrawerComponent
             title={drawerTitle}
             leftIcon={<FilterIcon />}
@@ -44,7 +46,8 @@ const TableHeadings = ({
       ) : (
         <Flex gap={2} mb={3} alignItems="center">
           <Flex position="relative">
-            <Search setSearchValue={setSearchValue} />
+            {/* <Search setSearchValue={setSearchValue} /> */}
+            <DebouncedSearchInput onSearch={onSearch} />
           </Flex>
           <Flex gap={2} alignItems="center">
             {btnText && (

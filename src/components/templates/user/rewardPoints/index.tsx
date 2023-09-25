@@ -1,19 +1,12 @@
-import { Box, Container, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
 import { RedeemPoint } from "./RedeemPoint";
-import { imageList } from "@src/assets/images";
+import { ICard } from "@src/interface/user";
 
-export const Redeem = () => {
+export const Redeem = ({ data }: ICard) => {
   return (
     <>
-      <Box p={["60px 0"]}>
+      <Box>
         <Container maxW={"1400px"}>
-          <Heading
-            color={"#212B36"}
-            textAlign={"center"}
-            paddingBottom={"10px"}
-          >
-            How to Redeem Points
-          </Heading>
           <Grid
             gap={6}
             mt={4}
@@ -24,42 +17,15 @@ export const Redeem = () => {
             }}
             p={["20px 0"]}
           >
-            <GridItem>
-              <RedeemPoint
-                title={"Hotel Nights and More"}
-                desc={
-                  "Use points for dining, golf, spas and more during the stay"
-                }
-                img={imageList.FiveStart}
-              />
-            </GridItem>
-            <GridItem>
-              <RedeemPoint
-                title={"Soaltee Moments"}
-                desc={
-                  "Use points for dining, golf, spas and more during the stay"
-                }
-                img={imageList.happyImage}
-              />
-            </GridItem>
-            <GridItem>
-              <RedeemPoint
-                title={"Car Rental"}
-                desc={
-                  "Use points for dining, golf, spas and more during the stay"
-                }
-                img={imageList.FameImage}
-              />
-            </GridItem>
-            <GridItem>
-              <RedeemPoint
-                title={"Shopping and Gift Cards"}
-                desc={
-                  "Use points for dining, golf, spas and more during the stay"
-                }
-                img={imageList.Gift}
-              />
-            </GridItem>
+            {data.map((item: any) => (
+              <GridItem key={item.key}>
+                <RedeemPoint
+                  title={item.title}
+                  desc={item.desc}
+                  img={item.img}
+                />
+              </GridItem>
+            ))}
           </Grid>
         </Container>
       </Box>

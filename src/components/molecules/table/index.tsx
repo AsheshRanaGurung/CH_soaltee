@@ -1,3 +1,4 @@
+import NoDataAvailable from "@src/components/organisms/nodata";
 import Pagination from "./Pagination";
 import { colors } from "@src/theme/colors";
 import {
@@ -10,6 +11,7 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 import styled from "styled-components";
+import Spinner from "@src/components/atoms/Spinner";
 
 const TableWrapper = styled.div`
   table {
@@ -37,10 +39,8 @@ export default function BasicTable({
   data,
   columns,
   showPagination = true,
-  count,
   totalPages,
-  key,
-  url,
+  isLoading,
 }: any) {
   const [filtering, setFiltering] = useState("");
   const table = useReactTable({
@@ -81,32 +81,38 @@ export default function BasicTable({
         </thead>
 
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => {
-                return (
+          {isLoading ? (
+            <tr>
+              <td colSpan={table.getHeaderGroups()[0].headers.length}>
+                <Spinner />
+              </td>
+            </tr>
+          ) : data && data.length === 0 ? (
+            <tr>
+              <td colSpan={table.getHeaderGroups()[0].headers.length}>
+                <NoDataAvailable content="No Data Available" />
+              </td>
+            </tr>
+          ) : (
+            table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>
-                    {cell.getValue() === undefined || cell.getValue() === null
+                    {cell.getValue() === null
                       ? "-"
                       : flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
                   </td>
-                );
-              })}
-            </tr>
-          ))}
+                ))}
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
-      {showPagination && (
-        <Pagination
-          table={table}
-          count={count}
-          totalPages={totalPages}
-          key={key}
-          url={url}
-        />
+      {showPagination && data && data.length > 0 && (
+        <Pagination table={table} totalPages={totalPages} />
       )}
     </TableWrapper>
   );

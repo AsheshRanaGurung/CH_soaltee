@@ -22,7 +22,7 @@ interface IMemberTier {
   isOpen: boolean;
   viewId: string;
 }
-export const OfferPage = ({ onClose, isOpen, viewId }: IMemberTier) => {
+export const OfferViewPage = ({ onClose, isOpen, viewId }: IMemberTier) => {
   const { data: offerData } = useGetAllOfferId(viewId);
 
   return (
@@ -60,7 +60,7 @@ export const OfferPage = ({ onClose, isOpen, viewId }: IMemberTier) => {
                   >
                     Offer Sub-Title
                   </Heading>
-                  <Text fontSize={"16px"}>{offerData?.serviceName}</Text>
+                  <Text fontSize={"16px"}>{offerData?.subTitle}</Text>
                 </GridItem>
               </SimpleGrid>
               <Box marginTop={"20px"} paddingBottom={"20px"}>

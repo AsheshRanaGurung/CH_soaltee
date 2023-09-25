@@ -24,17 +24,20 @@ interface ISidebar {
   onExitSidebar?: () => void;
   isHovered?: boolean;
   width: string;
+  role?: any;
 }
 const Sidebar = ({
   isCollapse,
   onEnterSidebar,
   onExitSidebar,
+  role,
   width,
 }: ISidebar) => {
   const [openIndex, setOpenIndex] = useState(-1);
   const handleToggleDropdown = (index: any) => {
     setOpenIndex(index === openIndex ? -1 : index);
   };
+
   const navItems = [
     {
       name: "Dashboard",
@@ -114,7 +117,7 @@ const Sidebar = ({
           <FaDatabase />
         </Icon>
       ),
-      visible: true,
+      visible: role.includes("SUPERADMIN"),
       child: [
         {
           name: "Property Setup",
@@ -136,7 +139,7 @@ const Sidebar = ({
           <FaHandHoldingDollar />
         </Icon>
       ),
-      visible: true,
+      visible: role.includes("SUPERADMIN"),
       child: [
         {
           name: "Service",
@@ -146,11 +149,6 @@ const Sidebar = ({
         {
           name: "Bonus",
           to: NAVIGATION_ROUTES.BONUS,
-          visible: true,
-        },
-        {
-          name: "Other",
-          to: NAVIGATION_ROUTES.LOGIN,
           visible: true,
         },
       ],
@@ -163,7 +161,7 @@ const Sidebar = ({
           <FaGear />
         </Icon>
       ),
-      visible: true,
+      visible: role.includes("SUPERADMIN"),
     },
   ];
 

@@ -6,11 +6,29 @@ import { AxiosError } from "axios";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
-export const getAllOffer = () => {
-  return HttpClient.get(api.offer.fetch);
+export const getAllOffer = (pageParams: any) => {
+  const pageIndex = pageParams.queryKey[1]?.page;
+  const pageSize = pageParams.queryKey[1]?.limit;
+  const name = pageParams.queryKey[1]?.name;
+  return HttpClient.get(
+    api.offer.fetch.replace(
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}&name=${name}`
+    )
+  );
 };
 
-const createOffer = (data: any) => {
+export const getAllOfferSelect = () => {
+  return HttpClient.get(
+    api.offer.fetch.replace(
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${1}&pageSize=${50}&name=`
+    )
+  );
+  // return HttpClient.get(api.master_data.property_list.fetch);
+};
+
+export const createOffer = (data: any) => {
   return HttpClient.post(`${api.offer.add}`, data);
 };
 
@@ -65,7 +83,7 @@ export const useDeleteOffer = () => {
   });
 };
 
-const getAllOfferId = (id: string) => () => {
+export const getAllOfferId = (id: string) => () => {
   return HttpClient.get(`${api.offer.fetchID}/${id}`);
 };
 

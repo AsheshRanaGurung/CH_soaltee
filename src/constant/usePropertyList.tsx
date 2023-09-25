@@ -1,11 +1,14 @@
-import { usePageinationHook } from "@src/hooks/usePaginationHook";
-import { getAllProperty } from "@src/service/master-data/property";
+import { getAllPropertySelect } from "@src/service/master-data/property";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
 export const usePropertyList = () => {
-  const { data } = usePageinationHook({
-    key: "property",
-    url: getAllProperty,
+  const [data, setData] = useState([]);
+  const { data: propertyData } = useQuery("property", getAllPropertySelect, {
+    select: (data) => data?.data?.data,
   });
-
-  return data?.data;
+  useEffect(() => {
+    setData(propertyData);
+  }, [propertyData]);
+  return data;
 };

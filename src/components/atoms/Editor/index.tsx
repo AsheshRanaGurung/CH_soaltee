@@ -67,7 +67,7 @@ const Editor = ({
         }}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      {error && <FormErrorMessage>{error}</FormErrorMessage>}
+      {error && <FormErrorMessage fontSize={12}>{error}</FormErrorMessage>}
     </FormControl>
   );
 };

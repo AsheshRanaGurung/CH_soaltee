@@ -4,15 +4,13 @@ import ImageUpload from "@src/components/atoms/ImageUpload";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { IVoucher } from "@src/interface/voucher";
 import styled from "styled-components";
-import * as yup from "yup";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Text } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
 import { useServiceList } from "@src/constant/useServiceList";
+import { voucherValidationSchema } from "@src/schema/voucher";
+import ReactSelect from "@src/components/atoms/Select";
 
 interface IVoucherProps {
   mutate?: any;
@@ -25,21 +23,20 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 15px 65px;
 `;
-const FormWrap = styled.div`
-  margin-top: 15px;
-  label {
-    .chakra-form-control {
-      margin-bottom: 5px;
-    }
-  }
-  .ck.ck-editor__main > .ck-editor__editable {
-    min-height: 300px;
-    padding-left: 22px;
-  }
-  span {
-    color: ${colors.red};
-  }
-`;
+type IndividualDataType = {
+  voucherDescription?: string;
+  imageUrl?: string;
+};
+
+const defaultValues = {
+  voucherName: "",
+  serviceId: "",
+  discountPercentage: "",
+  maximumAmounts: "",
+  maximumLimits: "",
+  voucherDescription: "",
+};
+
 export const CreateVoucherForm: React.FC<IVoucherProps> = ({
   mutate,
   isLoading,
@@ -48,42 +45,29 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
 }) => {
   const location = useLocation();
   const { state } = location;
-  const validationSchema = yup.object().shape({
-    voucherName: yup.string().required("Voucher Name is required"),
-    serviceId: yup
-      .mixed()
-      .test(
-        "is-service-valid",
-        "Please select a valid service",
-        function (value) {
-          if (typeof value === "string") {
-            return true;
-          } else if (typeof value === "object") {
-            return true;
-          }
-          return false;
-        }
-      )
-      .required("Please select service"),
 
-    discountPercentage: yup.string().required("percentage is required"),
-  });
-
-  const { handleSubmit, register, errors, reset, setValue } = useFormHook({
-    validationSchema,
-  });
+  const { handleSubmit, register, errors, reset, setValue, control } =
+    useFormHook({
+      validationSchema: voucherValidationSchema,
+      defaultValues,
+    });
+  const [individualData, setIndividualData] = useState<IndividualDataType>({});
 
   const serviceList = useServiceList();
   useEffect(() => {
     if (state?.id) {
-      reset({ ...state, serviceId: state.serviceCategory });
+      setIndividualData(state);
+      reset({
+        ...state,
+        serviceId: { label: state.serviceName, value: state.serviceId },
+      });
     }
   }, [state]);
   const onSubmitHandler = (data: IVoucher) => {
     const formData = new FormData();
     const dat = {
       voucherName: data?.voucherName,
-      serviceId: data?.serviceId?.id,
+      serviceId: data?.serviceId?.value,
       discountPercentage: data?.discountPercentage,
       maximumAmounts: data?.maximumAmounts,
       maximumLimits: data?.maximumLimits,
@@ -128,18 +112,15 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             error={errors?.voucherName?.message || ""}
             required
           />
-          <FormControl
-            control="reactSelect"
-            register={register}
+          <ReactSelect
+            control={control}
             name="serviceId"
             placeholder="Choose Service"
             label="Service Name"
+            error={errors.serviceId?.message || ""}
+            labelKey={"serviceName"}
+            valueKey={"id"}
             required
-            labelKey="serviceName"
-            onChange={(e: any) => setValue("serviceId", e)}
-            value={state?.serviceCategory}
-            valueKey="id"
-            error={errors?.serviceId?.message || ""}
             options={serviceList || []}
           />
           <FormControl
@@ -170,35 +151,32 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             required
           />
         </Wrapper>
-        <FormWrap>
-          <Text fontSize={"sm"} mb={2} fontWeight={500}>
-            Voucher Description
-            <span>&nbsp;*</span>
-          </Text>
-          <CKEditor
-            editor={ClassicEditor}
-            data={state?.voucherDescription || ""}
-            // onReady={(editor) => {}}
-            onChange={(_, editor) => {
-              const data = editor.getData();
-              setValue("voucherDescription", data);
-            }}
-          />
-        </FormWrap>
+        <FormControl
+          onChange={(data: string) => setValue("voucherDescription", data)}
+          control="editor"
+          name="voucherDescription"
+          label={"Voucher Description"}
+          required
+          placeholder={"description"}
+          error={errors?.voucherDescription?.message ?? ""}
+          data={
+            (state?.id &&
+              individualData &&
+              individualData?.voucherDescription) ??
+            ""
+          }
+        />
 
-        {/* <TextEditor /> */}
-        <FormWrap>
-          <Text fontSize={"sm"} mb={2} fontWeight={500}>
-            Voucher Image
-            <span>&nbsp;*</span>
-          </Text>
-          <ImageUpload
-            name={"image"}
-            setValue={setValue}
-            required={!state?.id}
-            imageUploadStyle="row"
-          />
-        </FormWrap>
+        <Text fontSize={"sm"} my={2} fontWeight={500}>
+          Voucher Image
+          <span style={{ color: colors.red }}>&nbsp;*</span>
+        </Text>
+        <ImageUpload
+          setValue={setValue}
+          error={errors?.image?.message}
+          imageUploadStyle="row"
+          imageSrc={update ? individualData?.imageUrl : undefined}
+        />
         <Flex gap={4} mt={3}>
           <Button
             type="submit"

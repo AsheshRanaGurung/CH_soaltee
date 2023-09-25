@@ -12,6 +12,8 @@ import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
 import { useMemberTierList } from "@src/constant/useMemberTierList";
+import ReactSelect from "@src/components/atoms/Select";
+import DateComponent from "@src/components/atoms/DateInput";
 
 const defaultValues = {
   fullName: "",
@@ -30,27 +32,38 @@ export const CreateMemberManagementForm = ({
   tableData,
   setIsUpdate,
   setUpdateId,
-  onMemberModalClose,
+  onModalClose,
+  roleId,
+  querykey,
 }: any) => {
   const propertyList = usePropertyList();
-
-  const { register, errors, setValue, reset, handleSubmit } = useFormHook({
+  const { register, errors, reset, handleSubmit, control } = useFormHook({
     validationSchema: memberManagementValidation,
     defaultValues,
   });
+
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData?.data.find((x: IMember) => x.id === updateId);
+
+      setIsSwitchOpen(data.isBlocked);
       reset({
         ...data,
+        nationalityId: { label: data.nationality, value: data.nationalityId },
+        propertyId: { label: data.propertyName, value: data.propertyId },
+        membershipTierId: {
+          label: data.membershipTierName,
+          value: data.tierId,
+        },
       });
     }
   }, [isUpdate, updateId, tableData?.data]);
+
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createMember, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
-      queryClient.refetchQueries("member_management");
+      queryClient.refetchQueries(querykey);
       onCloseHandler();
     },
     onError: (error: AxiosError<{ message: string }>) => {
@@ -61,16 +74,17 @@ export const CreateMemberManagementForm = ({
     reset(defaultValues);
     setUpdateId("");
     setIsUpdate(false);
-    onMemberModalClose();
+    onModalClose();
   };
 
   const [isSwitchOpen, setIsSwitchOpen] = useState(false);
   const toggleSwitch = () => {
     setIsSwitchOpen((initialValue) => !initialValue);
   };
+
   const nationalityList = useNationalityList();
 
-  const onSubmitHandler = async (data: IMember) => {
+  const onSubmitHandler = async (data: any) => {
     if (updateId) {
       mutate({
         id: updateId,
@@ -78,11 +92,11 @@ export const CreateMemberManagementForm = ({
         email: data.email,
         phoneNumber: data.phoneNumber,
         dateOfBirth: data.dateOfBirth,
-        nationalityId: data.nationalityId,
-        propertyId: data?.propertyId,
+        nationalityId: data.nationalityId?.value,
+        propertyId: data?.propertyId?.value,
         isBlocked: data.isBlocked,
-        membershipTierId: data.membershipTierId,
-        roleId: "2",
+        membershipTierId: data.membershipTierId?.value,
+        roleId: roleId,
       });
     } else {
       mutate({
@@ -91,14 +105,15 @@ export const CreateMemberManagementForm = ({
         email: data.email,
         dateOfBirth: data.dateOfBirth,
         phoneNumber: data.phoneNumber,
-        nationalityId: data.nationalityId,
-        propertyId: data.propertyId,
-        roleId: "2",
+        nationalityId: data.nationalityId?.value,
+        propertyId: data.propertyId?.value,
+        roleId: roleId,
       });
     }
   };
 
   const tierList = useMemberTierList();
+
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -132,54 +147,45 @@ export const CreateMemberManagementForm = ({
             error={errors?.phoneNumber?.message || ""}
             required
           />
-          <FormControl
-            control="input"
+          <DateComponent
+            control={control}
+            required
             name="dateOfBirth"
-            defaultValue={"2023-09-07"}
-            type="date"
-            required
             label="Date of birth"
-            color="black"
-            padding="10px"
-            height="40px"
-            lineHeight="2"
-            register={register}
+            endIcons="true"
             error={errors.dateOfBirth?.message || ""}
+            maxDate={new Date()}
           />
-          <FormControl
-            control="reactSelect"
-            register={register}
+          <ReactSelect
+            control={control}
             name="nationalityId"
-            placeholder="Choose your nationality"
-            label="Nationality"
+            placeholder="Choose your country"
+            label="Country"
             required
-            onChange={(e: any) => setValue("nationalityId", e.value)}
             error={errors.nationalityId?.message || ""}
             options={nationalityList || []}
             labelKey={"countryName"}
             valueKey={"id"}
           />
-          <FormControl
-            control="reactSelect"
-            register={register}
+          <ReactSelect
+            control={control}
             name="propertyId"
             placeholder="Choose Property Name"
-            onChange={(e: any) => setValue("propertyId", e.value)}
             label="Property Name"
+            error={errors.propertyId?.message || ""}
             labelKey={"name"}
             valueKey={"id"}
             required
             options={propertyList || []}
           />
-          {updateId && (
-            <FormControl
-              control="reactSelect"
+          {updateId && roleId === "2" && (
+            <ReactSelect
+              control={control}
               register={register}
               name="membershipTierId"
               placeholder="Choose Tier"
               label="Tier"
               required
-              onChange={(e: any) => setValue("membershipTierId", e.value)}
               error={errors.membershipTierId?.message || ""}
               options={tierList || []}
               labelKey={"membershipName"}
@@ -199,7 +205,7 @@ export const CreateMemberManagementForm = ({
           )}
         </Flex>
         <ModalFooterForm
-          onCloseModal={onMemberModalClose}
+          onCloseModal={onModalClose}
           resetButtonText={"Cancel"}
           isLoading={isLoading}
           submitButtonText={isUpdate ? "Update Member" : "Add Member"}

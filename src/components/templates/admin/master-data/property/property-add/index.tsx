@@ -94,6 +94,17 @@ export const CreatePropertyForm: React.FC<IpropertyProps> = ({
           />
           <FormControl
             control="input"
+            width="400px"
+            name="email"
+            mb={20}
+            required
+            placeholder="Enter your mail"
+            label="Email"
+            register={register}
+            error={errors.email?.message || ""}
+          />
+          <FormControl
+            control="input"
             type="number"
             name="phoneNumber"
             register={register}

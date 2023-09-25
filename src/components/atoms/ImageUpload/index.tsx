@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Box, Avatar } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
 import styled from "styled-components";
 import { CrossIcon } from "@src/assets/svgs";
+import { imageList } from "@src/assets/images";
 
 interface IProps {
   setValue?: any;
@@ -12,6 +13,7 @@ interface IProps {
   name?: string;
   imageUploadStyle?: string;
   show?: boolean;
+  error?: any;
 }
 
 const ImageWithPreview = styled.div<any>`
@@ -45,6 +47,13 @@ const ImageWithPreview = styled.div<any>`
   svg:hover {
     background: var(--chakra-colors-blackAlpha-100);
   }
+  .error-msg {
+    font-size: 12px;
+    color: ${colors.red};
+    text-align:left;
+    margin-bottom:4px;
+    margin-top:4px;
+  }
 `;
 
 const ImageStyled = styled.div<any>`
@@ -75,6 +84,7 @@ const ImageUpload: React.FC<IProps> = ({
   isUser,
   name = "image",
   show,
+  error,
   ...rest
 }) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
@@ -89,16 +99,28 @@ const ImageUpload: React.FC<IProps> = ({
     }
   };
   const handleClearImage = () => {
-    setSelectedImage(null);
-    setImageName("");
+    if (!isUser) {
+      setSelectedImage(null);
+      setImageName("");
+    } else {
+      setImageName("");
+      setSelectedImage(imageList.AvatarImg);
+    }
   };
+  useEffect(() => {
+    if (imageSrc) {
+      const splitData = imageSrc.split("/");
+      setImageName(splitData[splitData.length - 1] + ".jpg");
+    }
+  }, [imageSrc]);
+
   return (
     <Box textAlign="center">
       {isUser && (
         <>
           {imageSrc ? (
             <img
-              src={selectedImage || imageSrc}
+              src={imageSrc || selectedImage}
               alt="Uploaded Image"
               style={{
                 width: "100px",
@@ -107,14 +129,14 @@ const ImageUpload: React.FC<IProps> = ({
                 cursor: "pointer",
                 marginBottom: "12px",
                 position: "relative",
-                borderRadius: 0,
+                borderRadius: "50%",
               }}
             />
           ) : (
             <Avatar
               src={selectedImage}
               style={{
-                borderRadius: 0,
+                borderRadius: "50%",
                 width: "100px",
                 height: "100px",
                 display: "flex",
@@ -145,19 +167,18 @@ const ImageUpload: React.FC<IProps> = ({
           {imageName ? (
             <div>
               <p id="selectedFileName">{imageName}</p>
-              <div onClick={handleClearImage}>
-                <CrossIcon />
-              </div>
+              <div onClick={handleClearImage}>{!imageSrc && <CrossIcon />}</div>
             </div>
           ) : (
             <p>No file selected</p>
           )}
         </ImageStyled>
-        {selectedImage && (
-          <div style={{ display: show ? "none" : "block" }}>
-            <img src={selectedImage} />
+        {(selectedImage || imageSrc) && !isUser && (
+          <div style={{ marginTop: "12px" }}>
+            <img src={selectedImage || imageSrc} />
           </div>
         )}
+        {error && <p className="error-msg">{error}</p>}
       </ImageWithPreview>
     </Box>
   );

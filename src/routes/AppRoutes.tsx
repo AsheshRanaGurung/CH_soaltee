@@ -24,6 +24,8 @@ import PageNotFound from "@src/pages/NotFound";
 import HistoryTransaction from "@src/components/templates/user/History";
 import UserReport from "@src/pages/Report/UserReport";
 import EarningReport from "@src/pages/Report/EarningReport";
+import { OfferDetail } from "@src/components/templates/user/offer-detail";
+import SettingPage from "@src/pages/Settings";
 
 const routes = [
   {
@@ -40,6 +42,10 @@ const routes = [
     element: <PrivateRoute Component={UserDashboard} allowedRoles={["USER"]} />,
   },
   {
+    path: NAVIGATION_ROUTES.OFFER_DETAIL,
+    element: <PrivateRoute Component={OfferDetail} allowedRoles={["USER"]} />,
+  },
+  {
     path: NAVIGATION_ROUTES.HISTORY,
     element: (
       <PrivateRoute Component={HistoryTransaction} allowedRoles={["USER"]} />
@@ -48,10 +54,7 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.SERVICE,
     element: (
-      <PrivateRoute
-        Component={ServicePage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
+      <PrivateRoute Component={ServicePage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
   {
@@ -65,10 +68,7 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.MEMBER_TIER,
     element: (
-      <PrivateRoute
-        Component={MemberPage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
+      <PrivateRoute Component={MemberPage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
   {
@@ -97,10 +97,7 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.PROPERTY,
     element: (
-      <PrivateRoute
-        Component={PropertyPage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
+      <PrivateRoute Component={PropertyPage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
   {
@@ -129,10 +126,7 @@ const routes = [
   {
     path: NAVIGATION_ROUTES.BONUS,
     element: (
-      <PrivateRoute
-        Component={BonusPage}
-        allowedRoles={["SUPERADMIN", "ADMIN"]}
-      />
+      <PrivateRoute Component={BonusPage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
   {
@@ -182,6 +176,12 @@ const routes = [
         Component={StaffManagementPage}
         allowedRoles={["SUPERADMIN", "ADMIN"]}
       />
+    ),
+  },
+  {
+    path: NAVIGATION_ROUTES.SETTINGS,
+    element: (
+      <PrivateRoute Component={SettingPage} allowedRoles={["SUPERADMIN"]} />
     ),
   },
 ];
