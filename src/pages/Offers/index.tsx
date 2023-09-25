@@ -4,7 +4,7 @@ import Content from "@src/components/molecules/content";
 import ModalForm from "@src/components/molecules/modal";
 import TableHeadings from "@src/components/molecules/table-heading";
 import DeleteContent from "@src/components/organisms/delete-content";
-import { OfferViewPage } from "@src/components/templates/admin/offer/offer-page";
+import { OfferViewPage } from "@src/components/templates/admin/offer/offer-Page";
 import { CreateOfferForm } from "@src/components/templates/admin/offer/offer-add";
 import OfferList from "@src/components/templates/admin/offer/offer-list";
 import { usePageinationHook } from "@src/hooks/usePaginationHook";

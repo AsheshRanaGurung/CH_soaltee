@@ -1,4 +1,4 @@
-## 0.0.14 (2023-09-23)
+## 0.0.14 (2023-09-25)
 
 
 ### Bug Fixes
@@ -42,7 +42,6 @@
 * changes on dashboard and chart ([8cfd96d](https://gitlab.com/paras205/boilerplate-react/commit/8cfd96df9181f07fc3215ddd2144a0744b9e5b62))
 * changes on page ([dfb579f](https://gitlab.com/paras205/boilerplate-react/commit/dfb579fe11b8d4d35f8e548ba5798cf50cf145a7))
 * changes on report page ([31ba041](https://gitlab.com/paras205/boilerplate-react/commit/31ba04144a8d8aad72e5434163168fd7d0973586))
-* copy referal link ([e79ba09](https://gitlab.com/paras205/boilerplate-react/commit/e79ba09cc5bac351e25d5650ccf112ee2f072027))
 * created profile  design changes ([dd38dc0](https://gitlab.com/paras205/boilerplate-react/commit/dd38dc05e611f2eb185ea980105e9d7db10c7fd4))
 * crud offer ([ee8114d](https://gitlab.com/paras205/boilerplate-react/commit/ee8114dc41edda539a402bd873e11f9a59d94123))
 * custom input ([d323c8f](https://gitlab.com/paras205/boilerplate-react/commit/d323c8f84f00f51287e6c564fa41478402ce5ae9))

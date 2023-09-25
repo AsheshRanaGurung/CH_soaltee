@@ -24,7 +24,7 @@ import UserReport from "@src/pages/Report/UserReport";
 import EarningReport from "@src/pages/Report/EarningReport";
 import { OfferDetail } from "@src/pages/OfferDetail";
 import SettingPage from "@src/pages/Settings";
-import HistoryTransaction from "@src/components/templates/user/history";
+import HistoryTransaction from "@src/components/templates/user/History";
 import ServicePage from "@src/pages/PointConfig/Service";
 
 const routes = [
