@@ -1,11 +1,29 @@
 version: '3'
 services:
   app:
-    container_name: soaltee_frontend
-    image: soaltee_frontend
+    container_name: soaltee_frontend_staging
+    image: soaltee_frontend_staging
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80
+    restart: always
+  uat:
+    container_name: soaltee_frontend_uat
+    image: soaltee_frontend_uat
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 3050:80
+    restart: always
+  prod:
+    container_name: soaltee_frontend_prod
+    image: soaltee_frontend_prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4000:80
     restart: always
