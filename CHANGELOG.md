@@ -9,6 +9,8 @@
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
 * fix ([a0797d9](https://gitlab.com/paras205/boilerplate-react/commit/a0797d9070451ef411bc8149c7f259810907942d))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
+* fixed email validation ([eb0c7c0](https://gitlab.com/paras205/boilerplate-react/commit/eb0c7c0a1810d6bef60e604fa1313365b4a52d02))
+* fixed points ui & footer ([dbc405f](https://gitlab.com/paras205/boilerplate-react/commit/dbc405fac5a963293f393d2dd075ccfea044eda1))
 * fixed signup validation ([3fcd71e](https://gitlab.com/paras205/boilerplate-react/commit/3fcd71e491c636a116e68085e8a9326db227cd9e))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
@@ -56,12 +58,10 @@
 * logot session clear from font side ([29ac586](https://gitlab.com/paras205/boilerplate-react/commit/29ac5861e27e9b8d2e15e114cc47f0b540ea00ee))
 * new MemberTier ([09b7d5b](https://gitlab.com/paras205/boilerplate-react/commit/09b7d5b206b69c4971f215b514ee7c5535749c88))
 * password validation ([a14954c](https://gitlab.com/paras205/boilerplate-react/commit/a14954c5935baa2dcd783af303ed3b8ea450aab0))
-* refal code signup, added favicon ([bd4e566](https://gitlab.com/paras205/boilerplate-react/commit/bd4e5667fe49bd2ab592373785e8ee45a9ff3251))
 * refetched point for manual and added phone validation ([1d51211](https://gitlab.com/paras205/boilerplate-react/commit/1d51211fd510cf093aab1d4739037ff4e30ab572))
 * resolved modal issue, integrated api for update property ([56fc7b3](https://gitlab.com/paras205/boilerplate-react/commit/56fc7b3dce0062608340685fa86dcee7ab0d45da))
 * table changes ([efc1491](https://gitlab.com/paras205/boilerplate-react/commit/efc1491a997cc0f44fd7720a21fed789d69c01df))
 * table changes ([b545c66](https://gitlab.com/paras205/boilerplate-react/commit/b545c668a87aa21a950ccbfd387d5cc97bd70ad4))
-* user transaction ([0d9abfc](https://gitlab.com/paras205/boilerplate-react/commit/0d9abfc95e90bb6787fdde52a676995da6d82fc4))
 * voucher changes ([2b3f9ca](https://gitlab.com/paras205/boilerplate-react/commit/2b3f9ca9b0d7b2fd3b5bb01c7b4795f93b7ea297))
 
 

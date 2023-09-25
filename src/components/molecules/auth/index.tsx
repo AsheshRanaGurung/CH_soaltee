@@ -80,8 +80,8 @@ const Authentication: React.FC<IProps> = ({ children }) => {
         <Footer>
           <p>Privacy policy</p>
           <p>Terms & Services</p>
-          <p>©2017 Soaltee Hotel Limited</p>
         </Footer>
+        <Footer>©2023 The Soaltee Hotels & Resorts. All Rights Reserved</Footer>
       </FormContent>
     </Wrapper>
   );

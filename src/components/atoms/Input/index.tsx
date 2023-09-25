@@ -27,6 +27,7 @@ interface IInput extends InputProps {
   labelDisabled?: string;
   variant?: string;
   label_color?: string;
+  marginBottom?: string;
 }
 
 const Input = ({
@@ -46,6 +47,7 @@ const Input = ({
   required,
   variant,
   label_color,
+  marginBottom,
   ...rest
 }: IInput) => {
   return (
@@ -60,8 +62,11 @@ const Input = ({
           htmlFor={name}
           fontWeight={500}
           fontSize={"14px"}
-          m={0}
+          marginTop={0}
+          marginRight={0}
+          marginLeft={0}
           color={label_color}
+          marginBottom={marginBottom ? marginBottom : 0}
         >
           {label}
           {required && <span style={{ color: "red" }}>&nbsp;*</span>}

@@ -6,7 +6,7 @@ import TableHeadings from "@src/components/molecules/table-heading";
 import DeleteContent from "@src/components/organisms/delete-content";
 import { CreateOfferForm } from "@src/components/templates/admin/offer/offer-add";
 import OfferList from "@src/components/templates/admin/offer/offer-list";
-import { OfferViewPage } from "@src/components/templates/admin/offer/offer-page";
+import { OfferViewPage } from "@src/components/templates/admin/offer/offer-Page";
 import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import { getAllOffer, useDeleteOffer } from "@src/service/offer";
 import { useState } from "react";
