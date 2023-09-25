@@ -112,7 +112,7 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
                   <ReactSelect
                     control={control}
                     name={`services.${i}.service`}
-                    placeholder="Select property"
+                    placeholder="Select service"
                     label="Service"
                     error={(errors?.services as any)?.service?.message || ""}
                     labelKey={"serviceName"}

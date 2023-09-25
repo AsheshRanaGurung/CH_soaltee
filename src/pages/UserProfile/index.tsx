@@ -25,6 +25,7 @@ import { UserLayout } from "@src/components/organisms/user-layout";
 import { ChangePassword } from "@src/components/templates/user/profile/change-password";
 import { EditProfile } from "@src/components/templates/user/profile/edit-profile";
 import { UserInfo } from "@src/components/molecules/user-info";
+import GoBackButton from "@src/components/atoms/GoBackButton";
 const ProfilePage = () => {
   const {
     isOpen: isOpenEdit,
@@ -68,6 +69,10 @@ const ProfilePage = () => {
           marginTop="100px"
           position={"relative"}
         >
+          <Box>
+            {" "}
+            <GoBackButton />
+          </Box>
           <Box
             display={"flex"}
             justifyContent={"center"}

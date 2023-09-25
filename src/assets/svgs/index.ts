@@ -26,3 +26,4 @@ export { ReactComponent as Instragram } from "./logos_instragram.svg";
 export { ReactComponent as ExportIcon } from "./exportIcon.svg";
 export { ReactComponent as FilterIcon } from "./filterIcon.svg";
 export { ReactComponent as DegradeIcon } from "./degradeIcon.svg";
+export { ReactComponent as GoBackIcon } from "./goBack.svg";

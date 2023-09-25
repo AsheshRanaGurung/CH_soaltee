@@ -87,7 +87,7 @@ const UserReport = () => {
 
       {
         header: "Total Spend",
-        accessorKey: "redeemPoints",
+        accessorKey: "totalAmount",
       },
     ],
     [pageParams]

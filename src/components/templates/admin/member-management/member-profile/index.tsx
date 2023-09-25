@@ -241,15 +241,28 @@ const MemberProfile = () => {
                 </Text>
               </div>
               <div className="basic-info-item">
-                <Icons icon={<FaRegCalendarAlt />} />
-                <Text color={colors.secondary_dark}>
-                  Last active : {"8-31-2023"}
-                </Text>
-              </div>
-              <div className="basic-info-item">
                 <Icons icon={<MembershipIcon />} />
                 <Text color={colors.secondary_dark}>
                   Membership number : {state?.customerId}
+                </Text>
+              </div>
+              <div className="basic-info-item">
+                <Icons icon={<FaRegCalendarAlt />} />
+                <Text color={colors.secondary_dark}>
+                  Date of birth : {state?.dateOfBirth}
+                </Text>
+              </div>
+              <div className="basic-info-item">
+                <Icons icon={<FaRegCalendarAlt />} />
+                <Text color={colors.secondary_dark}>
+                  Last active : {state?.lastActive}
+                </Text>
+              </div>
+
+              <div className="basic-info-item">
+                <Icons icon={<MembershipIcon />} />
+                <Text color={colors.secondary_dark}>
+                  Property name : {state?.propertyName}
                 </Text>
               </div>
             </div>
