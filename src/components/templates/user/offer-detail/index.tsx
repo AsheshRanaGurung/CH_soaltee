@@ -1,37 +1,84 @@
-import { useLocation } from "react-router-dom";
-import { OfferTemplate } from "./OfferTemplate";
-import Header from "@src/components/atoms/Header";
-import { HeaderWrapper } from "../UserMain-index";
+import { Container, Heading, Stack, Text, Box } from "@chakra-ui/react";
+import { BackgroundTextWithImage } from "@src/components/molecules/bg-text-image";
 import { colors } from "@src/theme/colors";
-import { Box } from "@chakra-ui/react";
-import { Footer } from "../footer";
+import { font } from "@src/theme/font";
 
-export const OfferDetail = () => {
-  const { state } = useLocation();
-  console.log(state);
-  const { offerImage, offerName, description, subTitle } = state;
+interface IOffer {
+  title: string;
+  heading: string;
+  subtitle: string;
+  image: string;
+  description: string;
+}
+export const OfferTemplate = ({
+  title,
+  heading,
+  subtitle,
+  image,
+  description,
+}: IOffer) => {
   return (
     <>
-      <HeaderWrapper>
+      <BackgroundTextWithImage
+        img={image}
+        height="500px"
+        styles={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: "40px",
+        }}
+      >
         <Box
-          position={"fixed"}
-          top={0}
-          left={0}
-          right={0}
-          zIndex={99}
-          background={colors.white}
+          color={"#FFFFFF"}
+          p={["40px 20px"]}
+          position="absolute"
+          textAlign="center"
         >
-          <Header navigation={true} />
+          <Stack>
+            <Text
+              marginBottom={"15px"}
+              as="div"
+              fontFamily={font.cormorant}
+              fontSize="md"
+            >
+              {heading}
+            </Text>
+            <Heading
+              fontSize={60}
+              marginBottom={3}
+              fontFamily={font.cormorant}
+              textTransform="capitalize"
+              fontWeight="bold"
+              position="relative"
+              _after={{
+                content: `""`,
+                position: "absolute",
+                height: "2px",
+                width: "40%",
+                background: `${colors.white}`,
+                bottom: "-7px",
+                left: 0,
+                right: 0,
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              {subtitle}
+            </Heading>
+          </Stack>
         </Box>
-      </HeaderWrapper>
-      <OfferTemplate
-        title={offerName}
-        heading="SOALTEE HERITAGE CLUB"
-        subtitle={subTitle}
-        description={description}
-        image={offerImage}
-      />
-      <Footer />
+      </BackgroundTextWithImage>
+      <Container maxW={"1400px"} marginBottom={50}>
+        <Stack>
+          <Heading fontFamily={font.cormorant} fontSize={44}>
+            {title}
+          </Heading>
+          <Text fontFamily={font.josefin} fontWeight="400">
+            {description}
+          </Text>
+        </Stack>
+      </Container>
     </>
   );
 };

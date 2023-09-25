@@ -98,6 +98,8 @@ export const api = {
   },
   fetchImage: "/membership/get-tier-image/:id",
   nationality: "/nationality/fetch-all",
+  referal_link: "/users/get-referral-link",
+  send_email: "/email/send-ref-email",
 };
 export interface IResponse<T = any> {
   data: T;
