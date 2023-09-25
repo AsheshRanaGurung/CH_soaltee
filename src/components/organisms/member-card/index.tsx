@@ -10,10 +10,8 @@ import {
   CardBody,
   HStack,
   Image,
-  ListItem,
   Progress,
   Stack,
-  UnorderedList,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -21,6 +19,8 @@ import { colors } from "@src/theme/colors";
 import { font } from "@src/theme/font";
 import { LockIcon } from "@chakra-ui/icons";
 import { PasswordViewIcon } from "@src/components/atoms/Password";
+import { useNavigate } from "react-router-dom";
+import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 const IconWrapper = styled.div`
   position: absolute;
   top: 30px;
@@ -41,6 +41,7 @@ interface IMemberCard {
   tierDescription: string;
   totalRewardPoints: number;
   nextMembershipTier: string;
+  nextTierDescription: string;
 }
 export const MemberCard = ({
   image,
@@ -51,10 +52,12 @@ export const MemberCard = ({
   tierDescription,
   totalRewardPoints,
   nextMembershipTier,
+  nextTierDescription,
 }: IMemberCard) => {
   const progressWidth =
     (totalRewardPoints / (totalRewardPoints + pointsToNextTier)) * 100;
   const { isOpen: isVisible, onToggle: onToggleVisibility } = useDisclosure();
+  const navigate = useNavigate();
   return (
     <Grid bg="transparent" gap={8} paddingBottom={"80px"} paddingTop={"80px"}>
       <GridItem
@@ -110,7 +113,7 @@ export const MemberCard = ({
                         <HStack gap={3} mb={3}>
                           <Image src={imageList.Trophy} />
                           <Heading fontSize="xl" textTransform="uppercase">
-                            {tierName} tier
+                            {tierName}
                           </Heading>
                         </HStack>
                         <Text fontSize={"14px"} fontFamily={font.cormorant}>
@@ -139,7 +142,7 @@ export const MemberCard = ({
                     marginBottom={"20px"}
                     fontFamily={font.cormorant}
                   >
-                    {tierName?.toUpperCase()} TIER
+                    {tierName?.toUpperCase()}
                   </Heading>
                   <Progress
                     value={progressWidth}
@@ -157,13 +160,14 @@ export const MemberCard = ({
                       {nextMembershipTier}
                     </Text>
                     {tierDescription && (
-                      <UnorderedList
+                      <Text
                         color={colors.white}
                         fontSize="sm"
                         fontWeight="400"
-                      >
-                        <ListItem>{tierDescription}</ListItem>
-                      </UnorderedList>
+                        dangerouslySetInnerHTML={{
+                          __html: tierDescription || nextTierDescription,
+                        }}
+                      />
                     )}
                   </Stack>
                 </Box>
@@ -203,6 +207,7 @@ export const MemberCard = ({
                     height="50px"
                     border="none"
                     fontFamily={font.cormorant}
+                    onClick={() => navigate(NAVIGATION_ROUTES.HISTORY)}
                   >
                     View Transaction History
                   </Button>

@@ -21,7 +21,6 @@ import { baseURL } from "@src/service/config/api";
 import { font } from "@src/theme/font";
 import { colors } from "@src/theme/colors";
 import { ReferalLayout } from "../../components/templates/user/referal";
-import { UserLayout } from "@src/components/organisms/user-layout";
 import { ChangePassword } from "@src/components/templates/user/profile/change-password";
 import { EditProfile } from "@src/components/templates/user/profile/edit-profile";
 import { UserInfo } from "@src/components/molecules/user-info";
@@ -62,7 +61,7 @@ const ProfilePage = () => {
   const imgProfile = `${baseURL}users/get-profile-image/${data?.userImageUrl}`;
   return (
     <>
-      <UserLayout>
+      <>
         <Box
           background={`url(${imageList?.ProfileImage}) center center/cover no-repeat`}
           h={"300px"}
@@ -179,7 +178,7 @@ const ProfilePage = () => {
           data={updatedData}
           dataProfile={data}
         />
-      </UserLayout>
+      </>
     </>
   );
 };

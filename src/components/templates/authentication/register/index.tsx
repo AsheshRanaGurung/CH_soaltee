@@ -11,7 +11,7 @@ import { usePropertyList } from "@src/constant/usePropertyList";
 import { useNationalityList } from "@src/constant/useNationalityList";
 import styled from "styled-components";
 
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import ReactSelect from "@src/components/atoms/Select";
 import { signupValidationSchema } from "@src/schema/auth/signup";
 import DateComponent from "@src/components/atoms/DateInput";
@@ -32,6 +32,8 @@ interface ISignupProps {
   isLoading: boolean;
 }
 const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
+  const { search } = useLocation();
+  const referalCode = search.slice(1);
   const [checked, setChecked] = useState({
     terms: false,
     offers: false,
@@ -47,6 +49,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
       roleId: 2,
       nationalityId: data.nationalityId?.value,
       propertyId: data.propertyId?.value,
+      referalCode: referalCode,
     });
   };
 
@@ -139,6 +142,8 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             placeholder="Enter Referal Code (optional)"
             label="Referal Code"
             register={register}
+            defaultValue={referalCode}
+            isDisabled={referalCode}
             error={errors.referalCode?.message || ""}
           />
           <VStack alignItems="flex-start" mt={4} mb={12} fontWeight="600">

@@ -1,5 +1,4 @@
 import { imageList } from "@src/assets/images";
-import { MemberCard } from "../../../organisms/member-card";
 import { Box } from "@chakra-ui/layout";
 import { Container } from "@chakra-ui/react";
 
@@ -30,6 +29,7 @@ import { Redeem } from "@src/components/organisms/reward-points";
 import { Hotel } from "@src/components/molecules/hotels";
 import { Latestoffer } from "../latest-offer";
 import { BookForm } from "../book-form";
+import { MemberCard } from "@src/components/organisms/member-card";
 
 export const Userpage = () => {
   const [_scrolled, setScrolled] = useState(false);
@@ -99,7 +99,6 @@ export const Userpage = () => {
     fullName: data?.fullName,
     customerId: data?.customerId,
     pointsToNextTier: data?.pointsToNextTier,
-    tierDescription: data?.nextTierDescription,
     totalRewardPoints: data?.totalRewardPoints,
     nextMembershipTier: data?.nextMembershipTier,
   };
@@ -108,11 +107,13 @@ export const Userpage = () => {
       ...commonTier,
       image: imageSrc,
       tierName: data?.tierName,
+      tierDescription: data?.tierDescription,
     },
     {
       ...commonTier,
       image: nextImageSrc,
       tierName: data?.nextMembershipTier,
+      tierDescription: data?.nextTierDescription,
     },
   ];
   const offerResponse = useOfferData(initialOffer);
@@ -140,7 +141,8 @@ export const Userpage = () => {
                   fullName={item?.fullName}
                   customerId={item?.customerId}
                   pointsToNextTier={item?.pointsToNextTier}
-                  tierDescription={item?.nextTierDescription}
+                  tierDescription={item?.tierDescription}
+                  nextTierDescription={item?.nextTierDescription}
                   totalRewardPoints={item?.totalRewardPoints}
                   nextMembershipTier={item?.nextMembershipTier}
                 />
@@ -186,7 +188,7 @@ export const Userpage = () => {
                 <SwiperSlide key={item?.offerId}>
                   <SpecialOffer
                     title={item?.offerName}
-                    desc={item?.description}
+                    desc={item?.description?.substring(0, 160).concat("...")}
                     buttonText={"View More"}
                     img={item?.offerImage}
                     viewDetail={() => fetchOfferDetail(item.offerId)}
