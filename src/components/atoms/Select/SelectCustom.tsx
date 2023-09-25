@@ -34,17 +34,18 @@ export const SelectCustom = <T extends FieldValues = FieldValues>(
     field,
     fieldState: { error },
   } = useController({ name, control });
-
+  const placeholderText =
+    selectOptions.length === 1
+      ? ""
+      : isError
+      ? "No Data Available"
+      : placeholder.charAt(0).toUpperCase() + placeholder.slice(1);
   return (
     <FormControl id={name} isInvalid={!!get(errors, name)}>
       <Select
         size={"sm"}
         iconColor={colors.primary}
-        placeholder={
-          isError
-            ? "No Data Available"
-            : placeholder.charAt(0).toUpperCase() + placeholder.slice(1)
-        }
+        placeholder={placeholderText}
         transform={"capitalize"}
         onChange={(e) => {
           field.onChange(e);

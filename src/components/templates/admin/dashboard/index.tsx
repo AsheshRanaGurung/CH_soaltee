@@ -58,7 +58,7 @@ export const DashboardAdmin = ({
                 bg={"#FEF3E0"}
                 icon={<FileIcon />}
                 title={"Members Enrolled"}
-                value={data?.totalOnboardUser}
+                value={data?.totalOnboardUser || 0}
               />
               <Tabs
                 variant="soft-rounded"
@@ -107,8 +107,10 @@ export const DashboardAdmin = ({
               </Tabs>
             </Box>
             <DashboardCard
-              distributed={data?.totalRewardPoints?.toLocaleString("en-US")}
-              claimed={data?.totalReedemPoints?.toLocaleString("en-US")}
+              distributed={
+                data?.totalRewardPoints?.toLocaleString("en-US") || 0
+              }
+              claimed={data?.totalReedemPoints?.toLocaleString("en-US") || 0}
             />
           </Card>
           <EarnPoint />

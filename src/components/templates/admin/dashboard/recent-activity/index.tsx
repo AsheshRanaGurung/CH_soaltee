@@ -35,11 +35,12 @@ const RecentActivityList: React.FC<IGetRecentActivityProps> = ({
           userImageUrl: string;
           memberName: string;
           tierName: string;
+          tierColorCode?: string;
         }>) => {
           return (
             <MemberRow>
               <Box>
-                {row.original.userImageUrl == "" ? (
+                {row.original.userImageUrl == null ? (
                   <img src={imageList.AvatarImg} />
                 ) : (
                   <img src={row.original.userImageUrl} />
@@ -51,7 +52,9 @@ const RecentActivityList: React.FC<IGetRecentActivityProps> = ({
                 </Text>
                 <Text color={colors.black_1}>
                   Tier -{" "}
-                  <span style={{ color: "red" }}>{row.original.tierName}</span>
+                  <span style={{ color: row.original.tierColorCode }}>
+                    {row.original.tierName}
+                  </span>
                 </Text>
               </Box>
             </MemberRow>

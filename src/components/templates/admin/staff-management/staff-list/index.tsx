@@ -4,6 +4,7 @@ import TableActions from "@src/components/molecules/table/TableActions";
 import BasicTable from "@src/components/molecules/table";
 import { usePageParams } from "@src/components/organisms/layout";
 import { useMemo } from "react";
+import Switch from "@src/components/atoms/Switch";
 
 interface IMemberProps {
   setUpdateId: any;
@@ -50,6 +51,18 @@ const StaffManagementList: React.FC<IMemberProps> = ({
         header: "Nationality",
         accessorKey: "nationality",
         width: "10%",
+      },
+      {
+        header: "Is Blocked?",
+        accessorKey: "isBlocked",
+        cell: ({ row }: CellProps<{ isBlocked: boolean }>) => {
+          const status = row?.original?.isBlocked;
+          return status === true ? (
+            <Switch value={true} variant="red" />
+          ) : (
+            <Switch disabled />
+          );
+        },
       },
 
       {

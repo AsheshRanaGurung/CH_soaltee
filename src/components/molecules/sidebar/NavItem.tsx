@@ -51,8 +51,10 @@ const NavItem = ({
   const isDropdownOpen =
     localStorage.getItem(`dropdown_${index}`) === String(activeParent);
   useEffect(() => {
-    setActive(to === location.pathname);
-  }, [location.pathname]);
+    if (to) {
+      setActive(location.pathname.startsWith(to));
+    }
+  }, [location.pathname, to]);
   const handleToggleDropdown = () => {
     if (openIndex === index) {
       setOpenIndex(-1);

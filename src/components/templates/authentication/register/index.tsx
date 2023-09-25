@@ -15,6 +15,7 @@ import { Link as RouterLink } from "react-router-dom";
 import ReactSelect from "@src/components/atoms/Select";
 import { signupValidationSchema } from "@src/schema/auth/signup";
 import DateComponent from "@src/components/atoms/DateInput";
+import GoBackButton from "@src/components/atoms/GoBackButton";
 
 export const AccountDetailStyle = styled.div`
   font-weight: 600;
@@ -66,6 +67,7 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
 
   return (
     <>
+      <GoBackButton />
       <Heading title="Sign Up" text="Enter your details to sign up" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormWrapper>

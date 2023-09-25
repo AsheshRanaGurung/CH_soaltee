@@ -9,10 +9,10 @@ interface IChartIcon {
 
 export const ChartIcon: React.FC<IChartIcon> = ({ icon, bg, title, value }) => {
   return (
-    <Flex p={"20px"}>
+    <Flex p={"10px"}>
       <Box
-        width="52px"
-        height="52px"
+        width="38px"
+        height="38px"
         borderRadius={"50%"}
         bg={bg ? bg : "transparent"}
         display={"flex"}
@@ -21,9 +21,9 @@ export const ChartIcon: React.FC<IChartIcon> = ({ icon, bg, title, value }) => {
       >
         {icon}
       </Box>
-      <Box marginLeft={"15px"}>
-        <Text>{title}</Text>
-        <Heading fontSize={"24px"}>{value}</Heading>
+      <Box marginLeft={"14px"}>
+        <Text fontSize={"14px"}>{title}</Text>
+        <Heading fontSize={"18px"}>{value}</Heading>
       </Box>
     </Flex>
   );

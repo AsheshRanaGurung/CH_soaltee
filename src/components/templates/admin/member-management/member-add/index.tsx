@@ -208,7 +208,19 @@ export const CreateMemberManagementForm = ({
           onCloseModal={onModalClose}
           resetButtonText={"Cancel"}
           isLoading={isLoading}
-          submitButtonText={isUpdate ? "Update Member" : "Add Member"}
+          submitButtonText={
+            isUpdate
+              ? querykey === "member_management"
+                ? "Update Member"
+                : querykey === "staff_management"
+                ? "Update Staff"
+                : ""
+              : querykey === "staff_management"
+              ? "Add Staff"
+              : querykey === "member_management"
+              ? "Add Member"
+              : ""
+          }
         />
         <Spacer />
       </Box>

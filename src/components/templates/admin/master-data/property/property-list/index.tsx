@@ -43,15 +43,15 @@ const PropertyList: React.FC<IPropertyProps> = ({
         width: "10%",
       },
       {
-        Header: "Property Code",
+        header: "Property Code",
         accessorKey: "code",
       },
       {
-        Header: "Phone Number",
+        header: "Phone Number",
         accessorKey: "phoneNumber",
       },
       {
-        Header: "Contact person",
+        header: "Contact Person",
         accessorKey: "contactPerson",
       },
       {
