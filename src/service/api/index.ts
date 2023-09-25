@@ -58,6 +58,7 @@ export const api = {
     fetchRecentActivity: "dashboard/get-recent-activity",
   },
   staff_management: {
+    qr_fetch: "/staff/get-property-link",
     fetch:
       "/users/get-staff-details?pageIndex={page}&pageSize={limit}&name={name}",
   },

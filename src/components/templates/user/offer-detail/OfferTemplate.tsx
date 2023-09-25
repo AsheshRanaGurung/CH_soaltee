@@ -10,7 +10,6 @@ export const OfferTemplate = ({
   image,
   description,
 }: any) => {
-  console.log(title, subtitle, heading);
   return (
     <>
       <BackgroundTextWithImage

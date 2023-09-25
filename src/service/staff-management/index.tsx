@@ -13,3 +13,8 @@ export const getAllStaff = (pageParams: any) => {
   );
   // return HttpClient.get(api.staff_management.fetch);
 };
+
+export const getStaffQR = () => {
+  return HttpClient.get(api.staff_management.qr_fetch);
+  // return HttpClient.get(api.staff_management.fetch);
+};
