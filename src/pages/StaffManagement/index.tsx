@@ -49,7 +49,6 @@ const StaffManagementPage = () => {
             onStaffManagementModalOpen();
           }}
         />
-
         <StaffManagementList
           setIsUpdate={setIsUpdate}
           setUpdateId={setUpdateId}

@@ -81,7 +81,6 @@ const ReactSelect = ({
       label: option[labelKey],
       value: option[valueKey],
     }));
-
   return (
     <FormControl
       id={name}
