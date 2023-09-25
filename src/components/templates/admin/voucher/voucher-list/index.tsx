@@ -1,92 +1,120 @@
-import { useDisclosure } from "@chakra-ui/react";
-import ModalForm from "@src/components/organisms/modal";
-import { useState } from "react";
-import { useFormHook } from "@src/hooks/useFormhook";
-import { IVoucher } from "@src/interface/voucher";
-import { useDeleteVoucher } from "@src/service/voucher";
-import VoucherTable from "../voucher-table";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router-dom";
-import { VoucherPage } from "../voucher-page";
+import BasicTable from "@src/components/molecules/table";
+import TableActions from "@src/components/molecules/table/TableActions";
+import { Stack } from "@chakra-ui/react";
+import { usePageParams } from "@src/components/organisms/layout";
+import { CellProps } from "react-table";
+import { IVoucher } from "@src/interface/voucher";
+import { useMemo } from "react";
 interface IVoucherList {
-  tableData: IVoucher[];
+  tableData: any;
   tableDataFetching: boolean;
+  onDeleteVoucherOpen: any;
+  onDeleteVoucher: any;
+  setDeleteId: any;
+  setViewId: any;
+  onViewVoucherOpen: any;
 }
 
-const defaultValues = {
-  voucherName: "",
-  service: "",
-  discountPercentage: "",
-  maximumAmounts: "",
-  maximumLimits: "",
-  description: "",
-  voucherImage: "",
-};
+// const defaultValues = {
+//   voucherName: "",
+//   service: "",
+//   discountPercentage: "",
+//   maximumAmounts: "",
+//   maximumLimits: "",
+//   description: "",
+//   voucherImage: "",
+// };
 
 const VoucherList: React.FC<IVoucherList> = ({
   tableData,
   tableDataFetching,
+  onDeleteVoucherOpen,
+  onViewVoucherOpen,
+  setDeleteId,
+  setViewId,
 }) => {
   const navigate = useNavigate();
-  const [deleteId, setDeleteId] = useState("");
-  const [viewId, setViewId] = useState("");
+  const { pageParams } = usePageParams();
 
-  const {
-    isOpen: isDeleteMemberOpen,
-    onOpen: onDeleteMemberOpen,
-    onClose: onDeleteMemberClose,
-  } = useDisclosure();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { reset } = useFormHook({});
+  // const { reset } = useFormHook({});
 
-  const { mutateAsync: deleteVoucher, isLoading: isDeleting } =
-    useDeleteVoucher();
-  const onDelete = async (id: string) => {
-    const result = await deleteVoucher({
-      id: id,
-    });
-    result.status === 200 && onDeleteMemberClose();
-  };
+  // const onCloseHandler = () => {
+  //   reset(defaultValues);
+  //   setDeleteId("");
+  // };
+  const columns = useMemo(
+    () => [
+      {
+        header: "S.N",
+        accessorFn: (_: IVoucher, index: number) =>
+          (pageParams.page - 1) * pageParams.limit + (index + 1),
+      },
 
-  const onCloseHandler = () => {
-    reset(defaultValues);
-    setDeleteId("");
-  };
+      {
+        header: "Voucher Name",
+        accessorKey: "voucherName",
+      },
+      {
+        header: "Service",
+        accessorKey: "serviceCategory.serviceName",
+      },
+      {
+        header: "Discount Percentage",
+        accessorKey: "discountPercentage",
+      },
+      {
+        header: "Maximum Amount",
+        accessorKey: "maximumAmounts",
+      },
+      {
+        header: "Maximum limit",
+        accessorKey: "maximumLimits",
+      },
+
+      {
+        header: "Action",
+        cell: ({ row }: CellProps<{ id: string; name: string }>) => {
+          const onEdit = () => {
+            navigate(NAVIGATION_ROUTES.VOUCHER_ADD, {
+              state: row.original,
+            });
+          };
+          const onDelete = () => {
+            setDeleteId(row.original.id);
+            onDeleteVoucherOpen();
+          };
+          const onView = () => {
+            setViewId(row.original.id);
+            onViewVoucherOpen();
+          };
+          return (
+            <Stack alignItems={"flex-start"}>
+              <TableActions
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onView={onView}
+              />
+            </Stack>
+          );
+        },
+
+        width: 120,
+      },
+    ],
+    [pageParams]
+  );
   return (
     <>
-      <VoucherTable
-        tableData={tableData}
-        tableDataFetching={tableDataFetching}
-        title="Filter By"
-        btnText="Add Voucher"
-        CurrentText="Voucher List"
-        onAction={() => {
-          onCloseHandler();
-          navigate(NAVIGATION_ROUTES.VOUCHER_ADD);
-        }}
-        onDeleteData={(id: string) => {
-          setDeleteId(id);
-          onDeleteMemberOpen();
-        }}
-        onViewData={(id: string) => {
-          setViewId(id);
-          onOpen();
-        }}
+      <BasicTable
+        data={tableData?.data || []}
+        columns={columns}
+        isLoading={tableDataFetching}
+        totalPages={tableData?.totalPages}
       />
 
-      <ModalForm
-        title={"Delete"}
-        isLoading={isDeleting}
-        isModalOpen={isDeleteMemberOpen}
-        onCloseModal={onDeleteMemberClose}
-        resetButtonText={"No"}
-        submitButtonText={"Yes"}
-        handleSubmit={() => onDelete(deleteId)}
-        showFooter={true}
-      >
-        Are you sure you want to delete the Voucher ?
-      </ModalForm>
-      <VoucherPage isOpen={isOpen} onClose={onClose} viewId={viewId} />
+      {/* <VoucherPage isOpen={isOpen} onClose={onClose} viewId={viewId} /> */}
     </>
   );
 };

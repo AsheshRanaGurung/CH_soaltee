@@ -15,20 +15,32 @@ import Profile from "@src/components/molecules/profile";
 import { useNavigate } from "react-router-dom";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { Link } from "react-scroll";
+import { font } from "@src/theme/font";
 interface Props {
   id: string;
   name: string;
   path: string | undefined;
 }
 const Links = [
-  { id: "earn_point", name: "Earn Point" },
-  { id: "redeem_point", name: "Redeem Point" },
-  { id: "History", name: "History", path: NAVIGATION_ROUTES.HISTORY },
+  { id: "home", name: "Home", path: "/" },
+  { id: "dine", name: "Dine", path: "/" },
+  { id: "explore", name: "Explore", path: "/" },
+  { id: "stay", name: "Stay", path: "/" },
+  { id: "gallery", name: "Gallery", path: "/" },
+  { id: "redeem_offer", name: "Redeem Offer" },
+  { id: "voucher", name: "Voucher" },
+  // { id: "History", name: "History", path: NAVIGATION_ROUTES.HISTORY },
 ];
 const NavLink = (props: Props) => {
   const { id, name } = props;
   return (
-    <Box px={2} py={1} color={"white"} cursor="pointer">
+    <Box
+      px={2}
+      py={1}
+      cursor="pointer"
+      fontFamily={font.josefin}
+      fontWeight="600"
+    >
       <Link to={id} smooth={true} duration={500} spy={true} offset={-60}>
         {name}
       </Link>

@@ -6,8 +6,17 @@ import { AxiosError } from "axios";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
-export const getAllVoucher = () => {
-  return HttpClient.get(api.voucher.fetch);
+export const getAllVoucher = (pageParams: any) => {
+  const pageIndex = pageParams.queryKey[1].page;
+  const pageSize = pageParams.queryKey[1].limit;
+  const name = pageParams.queryKey[1].name;
+  return HttpClient.get(
+    api.voucher.fetch.replace(
+      `pageIndex={page}&pageSize={limit}&name={name}`,
+      `pageIndex=${pageIndex}&pageSize=${pageSize}&name=${name}`
+    )
+  );
+  // return HttpClient.get(api.voucher.fetch);
 };
 
 const createVoucher = (data: any) => {

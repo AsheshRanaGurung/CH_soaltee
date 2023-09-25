@@ -11,9 +11,16 @@ import { useParams } from "react-router";
 interface ISignupProps {
   mutate: any;
   isLoading: boolean;
+  type?: string;
+  email?: string;
 }
 
-const SetPasswordTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
+const SetPasswordTemplate: React.FC<ISignupProps> = ({
+  mutate,
+  isLoading,
+  type,
+  email,
+}) => {
   const { token = "" } = useParams<{
     token: string;
   }>();
@@ -46,7 +53,11 @@ const SetPasswordTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
   });
 
   const onSubmit = (data: any) => {
-    mutate({ ...data, email: decodedEmail });
+    if (type === "change_password") {
+      mutate({ ...data, email: email });
+    } else {
+      mutate({ ...data, email: decodedEmail });
+    }
   };
 
   return (

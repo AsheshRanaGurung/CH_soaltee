@@ -12,7 +12,7 @@ interface IProps {
   images: IImageProps[];
 }
 
-const SliderContainer = styled.div`
+export const SliderContainer = styled.div`
   img {
     width: 100%;
     height: 100vh;
@@ -49,13 +49,13 @@ const SliderContainer = styled.div`
   }
 `;
 
-const SliderImage = styled.img`
+export const SliderImage = styled.img`
   max-width: 100%;
   height: auto;
   transition: transform 0.5s ease-in-out;
 `;
 
-const DotsContainer = styled.div`
+export const DotsContainer = styled.div`
   display: flex;
   margin-top: 10px;
   position: absolute;
@@ -65,7 +65,7 @@ const DotsContainer = styled.div`
   transition: all 0.5s ease-in-out;
 `;
 
-const Dot = styled.div<{ isActive: boolean }>`
+export const Dot = styled.div<{ isActive: boolean }>`
   height: 5px;
   border-radius: 5px;
   margin: 0 5px;
@@ -74,7 +74,7 @@ const Dot = styled.div<{ isActive: boolean }>`
     props.isActive ? colors.primary : colors.white};
   cursor: pointer;
 `;
-const DotItems = styled.div`
+export const DotItems = styled.div`
   position: absolute;
   z-index: 999;
   bottom: 150px;

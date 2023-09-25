@@ -4,7 +4,6 @@ import { IProperty } from "@src/interface/master-data/property";
 import { usePageParams } from "@src/components/organisms/layout";
 import { CellProps } from "react-table";
 import TableActions from "@src/components/molecules/table/TableActions";
-import TableHeadings from "@src/components/molecules/table-heading";
 import BasicTable from "@src/components/molecules/table";
 
 interface IPropertyProps {
@@ -24,7 +23,6 @@ const PropertyList: React.FC<IPropertyProps> = ({
   setIsUpdate,
   onPropertyModalOpen,
   onDeletePropertyOpen,
-  onCloseHandler,
   data,
   isLoading,
   setDeleteId,
@@ -82,14 +80,6 @@ const PropertyList: React.FC<IPropertyProps> = ({
 
   return (
     <>
-      <TableHeadings
-        btnText="Add Property"
-        CurrentText="Property List"
-        onAction={() => {
-          onCloseHandler();
-          onPropertyModalOpen();
-        }}
-      />
       <BasicTable
         data={data?.data || []}
         columns={columns}

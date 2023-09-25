@@ -1,41 +1,79 @@
+import { useDisclosure } from "@chakra-ui/react";
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
-import { getPaginatedData } from "@src/components/organisms/table/pagination";
+import ModalForm from "@src/components/molecules/modal";
+import TableHeadings from "@src/components/molecules/table-heading";
+import { CreateMemberManagementForm } from "@src/components/templates/admin/member-management/member-add";
 import StaffManagementList from "@src/components/templates/admin/staff-management/staff-list";
+import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import { getAllStaff } from "@src/service/staff-management";
 import { useState } from "react";
-import { useQuery } from "react-query";
 
 const StaffManagementPage = () => {
-  const [pageParams, setPageParams] = useState({
-    page: 1,
-    limit: 10,
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [updateId, setUpdateId] = useState("");
+  const [keyword, setKeyword] = useState("");
+
+  const { data, isLoading } = usePageinationHook({
+    key: "staff_management",
+    url: getAllStaff,
+    extraParams: { name: keyword },
   });
-  const { data, isLoading } = useQuery("staff_management", getAllStaff, {
-    select: ({ data }) => data.datalist,
-  });
-  const paginatedData = getPaginatedData({
-    tableData: data,
-    pageParams,
-  });
-  const _pageChange = (page: number) => {
-    setPageParams({ ...pageParams, page });
+
+  const handleSearch = (e: any) => {
+    setKeyword(e);
   };
-  const _pageSizeChange = (limit: number) =>
-    setPageParams({ ...pageParams, limit, page: 1 });
+
+  const {
+    isOpen: isStaffManagementOpen,
+    onOpen: onStaffManagementModalOpen,
+    onClose: onStaffManagementModalClose,
+  } = useDisclosure();
+
+  const onCloseHandler = () => {
+    setUpdateId("");
+    setIsUpdate(false);
+    onStaffManagementModalClose();
+  };
 
   return (
     <>
       <BreadCrumb name="Staff Management" />
       <Content>
-        <StaffManagementList
-          paginatedData={paginatedData}
-          _pageChange={_pageChange}
-          _pageSizeChange={_pageSizeChange}
-          tableData={data}
-          tableDataFetching={isLoading}
-          pageParams={pageParams}
+        <TableHeadings
+          onSearch={(e: any) => handleSearch(e)}
+          btnText="Add Staff"
+          CurrentText="Staff List"
+          onAction={() => {
+            onCloseHandler();
+            onStaffManagementModalOpen();
+          }}
         />
+        =
+        <StaffManagementList
+          setIsUpdate={setIsUpdate}
+          setUpdateId={setUpdateId}
+          onStaffManagementModalOpen={onStaffManagementModalOpen}
+          onCloseHandler={onCloseHandler}
+          data={data}
+          isLoading={isLoading}
+        />
+        <ModalForm
+          isModalOpen={isStaffManagementOpen}
+          onCloseModal={onStaffManagementModalClose}
+          title={isUpdate ? "Update Staff" : "Add Staff"}
+        >
+          <CreateMemberManagementForm
+            isUpdate={isUpdate}
+            updateId={updateId}
+            tableData={data}
+            setUpdateId={setUpdateId}
+            setIsUpdate={setIsUpdate}
+            onModalClose={onStaffManagementModalClose}
+            roleId="3"
+            querykey="staff_management"
+          />
+        </ModalForm>
       </Content>
     </>
   );

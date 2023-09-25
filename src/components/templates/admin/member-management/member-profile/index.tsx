@@ -8,7 +8,6 @@ import { FaGlobeAsia, FaPhoneAlt, FaRegCalendarAlt } from "react-icons/fa";
 import { Button } from "@chakra-ui/button";
 import { useLocation } from "react-router";
 import { useDisclosure, Box, Heading } from "@chakra-ui/react";
-import ModalForm from "@src/components/organisms/modal";
 import ProfileForm from "@src/components/templates/admin/member-management/member-profile/add-point";
 import {
   fetchOneMember,
@@ -20,6 +19,7 @@ import MemberHistory from "../member-history";
 import { ProfileImage } from "@src/components/atoms/ProfileImage";
 import { MembershipIcon } from "@src/assets/svgs";
 import NoDataAvailable from "@src/components/organisms/nodata";
+import ModalForm from "@src/components/molecules/modal";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -272,7 +272,7 @@ const MemberProfile = () => {
         <ModalForm
           isModalOpen={isProfileOpen}
           onCloseModal={onProfileModalClose}
-          showFooter={false}
+          title="Add points"
         >
           <ProfileForm
             userId={state}

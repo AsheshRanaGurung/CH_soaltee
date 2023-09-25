@@ -10,7 +10,7 @@ export const theme = extendTheme({
   styles: {
     global: {
       body: {
-        fontFamily: "Roboto",
+        fontFamily: "Roboto, Josefin Sans,Cormorant Garamond ",
         fontWeight: 400,
         scrollBehavior: "smooth",
       },

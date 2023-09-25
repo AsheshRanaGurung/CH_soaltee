@@ -36,6 +36,14 @@ const Button = {
     link: {
       color: colors.primary,
     },
+    ghost: {
+      bg: "transparent",
+      color: colors.white,
+      border: `1px solid ${colors.white}`,
+      _hover: {
+        color: colors.primary,
+      },
+    },
   },
   sizes: {
     md: {

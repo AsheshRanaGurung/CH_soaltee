@@ -6,8 +6,11 @@ import TableHeadings from "@src/components/molecules/table-heading";
 import { usePageParams } from "@src/components/organisms/layout";
 import UserFilter from "@src/components/templates/admin/report/user-filter";
 import { usePageinationHook } from "@src/hooks/usePaginationHook";
+import { exportUserReport, getAllReport } from "@src/service/report";
+import { exportToCSV } from "@src/utility/exportCSV";
+import moment from "moment";
 import { useMemo, useState } from "react";
-import { getAllReport } from "@src/service/report";
+
 const UserReport = () => {
   const [para, setPara] = useState({});
   const {
@@ -21,7 +24,15 @@ const UserReport = () => {
     extraParams: para,
     enabled: true,
   });
+
   const { pageParams } = usePageParams();
+  const exportUserReports = async () => {
+    const dataList = await exportUserReport({ ...pageParams, ...para });
+    if (dataList && data && data.data.length > 0) {
+      exportToCSV({ data: dataList.data, fileName: "user_report" });
+    }
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -57,11 +68,23 @@ const UserReport = () => {
       {
         header: "Last Active",
         accessorKey: "lastActive",
+        cell: ({ row }: any) => {
+          return moment(row.original.lastActive).format("YYYY-MM-DD");
+        },
       },
       {
         header: "Current Tier",
         accessorKey: "membershipName",
       },
+      {
+        header: "Created By",
+        accessorKey: "createdBy",
+      },
+      {
+        header: "Created From",
+        accessorKey: "propertyName",
+      },
+
       {
         header: "Total Spend",
         accessorKey: "redeemPoints",
@@ -80,6 +103,7 @@ const UserReport = () => {
           isDrawerOpen={isDrawerOpen}
           onDrawerModalOpen={onDrawerModalOpen}
           onDrawerModalClose={onDrawerModalClose}
+          onClick={exportUserReports}
         >
           <UserFilter
             setPara={setPara}

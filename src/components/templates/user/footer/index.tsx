@@ -2,7 +2,6 @@ import { ArrowForwardIcon, EmailIcon, PhoneIcon } from "@chakra-ui/icons";
 import {
   Box,
   Container,
-  Flex,
   Grid,
   GridItem,
   Heading,
@@ -14,14 +13,22 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
-import { Facebook, Instragram, LocationIcon, Twitter } from "@src/assets/svgs";
-import { SocialCustom } from "@src/components/atoms/Icons/SocialCustom";
+import { LocationIcon } from "@src/assets/svgs";
+import { font } from "@src/theme/font";
 import { FaRegCopyright } from "react-icons/fa";
 
-const pages = ["Home", "Earn Points", "Redeem Points"];
+const pages = [
+  "Home",
+  "Dine",
+  "Explore",
+  "Stay",
+  "Gallery",
+  "Redeem Offer",
+  "Voucher",
+];
 export const Footer = () => {
   return (
-    <Box bg={"#2E2E2D"} color={"white"}>
+    <Box bg={"#2E2E2D"} color={"white"} fontFamily={font.josefin}>
       <Container maxW={"1400px"}>
         <Grid
           gap={8}
@@ -34,7 +41,7 @@ export const Footer = () => {
         >
           <GridItem>
             <Image src={imageList.Logo} />
-
+            {/* 
             <Flex justifyContent={"space-between"} w={"22%"} mt={"10px"}>
               <SocialCustom
                 icon={
@@ -47,7 +54,7 @@ export const Footer = () => {
               />
               <SocialCustom icon={<Facebook />} />
               <SocialCustom icon={<Twitter />} />
-            </Flex>
+            </Flex> */}
           </GridItem>
           <GridItem marginTop={"30px"}>
             <List spacing={2}>

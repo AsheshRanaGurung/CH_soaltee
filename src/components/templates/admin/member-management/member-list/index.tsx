@@ -1,7 +1,6 @@
 import { Stack } from "@chakra-ui/react";
 import Switch from "@src/components/atoms/Switch";
 import BasicTable from "@src/components/molecules/table";
-import TableHeadings from "@src/components/molecules/table-heading";
 import TableActions from "@src/components/molecules/table/TableActions";
 import { usePageParams } from "@src/components/organisms/layout";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
@@ -22,7 +21,6 @@ const MemberManagementList: React.FC<IMemberProps> = ({
   setUpdateId,
   setIsUpdate,
   onMemberModalOpen,
-  onCloseHandler,
   data,
   isLoading,
 }) => {
@@ -96,14 +94,6 @@ const MemberManagementList: React.FC<IMemberProps> = ({
 
   return (
     <>
-      <TableHeadings
-        btnText="Add Member"
-        CurrentText="Member List"
-        onAction={() => {
-          onCloseHandler();
-          onMemberModalOpen();
-        }}
-      />
       <BasicTable
         data={data?.data || []}
         columns={columns}

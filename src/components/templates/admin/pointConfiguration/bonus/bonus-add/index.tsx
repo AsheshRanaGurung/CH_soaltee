@@ -1,66 +1,96 @@
 import "react-datepicker/dist/react-datepicker.css";
 import FormControl from "@src/components/atoms/FormControl";
-import { Button, Flex } from "@chakra-ui/react";
+import { Box, Spacer } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "react-query";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import { createBonus, updateBonus } from "@src/service/point-config/bonus";
 import { useServiceList } from "@src/constant/useServiceList";
+import { useEffect } from "react";
+import { bonusValidationSchema } from "@src/schema/pointConfigiration/bonus";
+import { IBonus } from "@src/interface/pointConfig";
+import ModalFooterForm from "@src/components/molecules/modal/footer";
+import { useFormHook } from "@src/hooks/useFormhook";
+import ReactSelect from "@src/components/atoms/Select";
 import DateComponent from "@src/components/atoms/DateInput";
-import { useState } from "react";
-import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
-export const AddBonus = ({
-  register,
-  errors,
-  setValue,
-  handleSubmit,
-  onCloseModal,
-  updateId,
-  watch,
-}: any) => {
-  const queryClient = useQueryClient();
 
+const defaultValues = {
+  bonusName: "",
+  bonusValue: "",
+  validFrom: "",
+  validTo: "",
+  serviceId: "",
+};
+export const AddBonus = ({
+  isUpdate,
+  updateId,
+  tableData,
+  setIsUpdate,
+  setUpdateId,
+  onBonusModalClose,
+}: any) => {
+  const { register, errors, reset, handleSubmit, control } = useFormHook({
+    validationSchema: bonusValidationSchema,
+    defaultValues,
+  });
+
+  useEffect(() => {
+    if (isUpdate && updateId) {
+      const data = tableData?.data.find((x: IBonus) => x.id === updateId);
+      reset({
+        ...data,
+        serviceId: { label: data.serviceName, value: data.serviceId },
+      });
+    }
+  }, [isUpdate, updateId, tableData?.data]);
+
+  const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createBonus, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
       queryClient.refetchQueries("bonus");
       queryClient.invalidateQueries("bonus");
-      onCloseModal();
+      onCloseHandler();
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
+
+  const onCloseHandler = () => {
+    reset(defaultValues);
+    setUpdateId("");
+    setIsUpdate(false);
+    onBonusModalClose();
+  };
   const { mutate: update, isLoading: isUpdating } = useMutation(updateBonus, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Bonus Updated!!");
       queryClient.invalidateQueries("bonus");
-      onCloseModal();
+      onCloseHandler();
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
-  const [validFrom, setValidFrom] = useState();
   const serviceList = useServiceList();
-  const changeValidFromDate = (date: any) => {
-    setValidFrom(date);
-    setValue("validFrom", formatDateToYYYYMMDD(date));
-  };
-  const changeValidToDate = (date: any) => {
-    setValue("validTo", formatDateToYYYYMMDD(date));
-  };
+
   const onSubmit = (data: any) => {
+    const { serviceId, ...rest } = data;
     if (updateId) {
       update({
         id: updateId,
         data: {
-          ...data,
+          ...rest,
+          serviceId: serviceId?.value,
           id: updateId,
         },
       });
     } else {
-      mutate(data);
+      mutate({
+        ...rest,
+        serviceId: serviceId?.value,
+      });
     }
   };
   return (
@@ -74,35 +104,38 @@ export const AddBonus = ({
         error={errors?.bonusName?.message || ""}
         required
       />
-      <FormControl
-        control="reactSelect"
-        register={register}
+      <ReactSelect
+        control={control}
         name="serviceId"
         placeholder="Choose Service"
-        onChange={(e: any) => setValue("serviceId", e.value)}
         label="Bonus for"
         labelKey={"serviceName"}
         valueKey={"id"}
         required
+        error={errors?.serviceId?.message || ""}
         options={serviceList || []}
       />
-      <DateComponent
-        name="validFrom"
-        label="Valid From"
-        endIcons="true"
-        error={errors.validFrom?.message || ""}
-        changeDate={changeValidFromDate}
-        defaultValue={updateId && new Date(watch("validFrom"))}
-      />
-      <DateComponent
-        name="validTo"
-        label="Valid To"
-        endIcons="true"
-        error={errors.validFrom?.message || ""}
-        changeDate={changeValidToDate}
-        minDate={validFrom}
-        defaultValue={updateId && new Date(watch("validTo"))}
-      />
+      <Box position="relative" zIndex={2}>
+        <DateComponent
+          control={control}
+          name="validFrom"
+          label="Valid From"
+          endIcons="true"
+          error={errors.validFrom?.message || ""}
+          required
+        />
+      </Box>
+
+      <Box>
+        <DateComponent
+          control={control}
+          name="validTo"
+          label="Valid To"
+          endIcons="true"
+          error={errors.validTo?.message || ""}
+          required
+        />
+      </Box>
       <FormControl
         control="input"
         name="bonusValue"
@@ -113,27 +146,13 @@ export const AddBonus = ({
         required
       />
 
-      <Flex gap={3} mt={3}>
-        <Button
-          py={6}
-          variant="outlined"
-          borderRadius={0}
-          w="100%"
-          onClick={onCloseModal}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          py={6}
-          variant="primary"
-          borderRadius={0}
-          w="100%"
-          isLoading={isLoading || isUpdating}
-        >
-          {updateId ? "Update Bonus" : "Add Bonus"}
-        </Button>
-      </Flex>
+      <ModalFooterForm
+        onCloseModal={onBonusModalClose}
+        resetButtonText={"Cancel"}
+        isLoading={isLoading || isUpdating}
+        submitButtonText={isUpdate ? "Update Bonus" : "Add Bonus"}
+      />
+      <Spacer />
     </form>
   );
 };

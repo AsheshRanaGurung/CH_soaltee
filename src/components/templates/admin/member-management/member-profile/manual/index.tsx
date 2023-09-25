@@ -7,21 +7,31 @@ import { useMutation } from "react-query";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { createManual } from "@src/service/profile/manual";
 import FormControl from "@src/components/atoms/FormControl";
+import ReactSelect from "@src/components/atoms/Select";
+import { usePropertyList } from "@src/constant/usePropertyList";
 
 const defaultValues = {
   propertyname: "",
   rewardPoints: "",
 };
 const validationSchema = yup.object().shape({
-  propertyname: yup.string().required("Property Name is required"),
+  propertyname: yup
+    .mixed()
+    .test("is-property-valid", "Please select Property", function (value) {
+      if (typeof value === "object") {
+        return true;
+      }
+      return false;
+    }),
   rewardPoints: yup.string().required("Reward Points is required"),
 });
 
 const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
-  const { register, handleSubmit, errors, setValue } = useFormHook({
+  const { register, handleSubmit, errors, control } = useFormHook({
     validationSchema,
     defaultValues,
   });
+  const propertyList = usePropertyList();
 
   const { id } = data.userId;
   const { mutate, isLoading } = useMutation(createManual, {
@@ -37,7 +47,7 @@ const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
   const onSubmit = (data: any) => {
     mutate({
       userId: id,
-      propertyId: data.propertyname,
+      propertyId: data.propertyname?.value,
       rewardPoints: data.rewardPoints,
       transactionType: "MANUALLY",
     });
@@ -47,20 +57,16 @@ const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
       <Grid rowGap={3}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <GridItem>
-            <FormControl
-              control="reactSelect"
-              register={register}
+            <ReactSelect
+              control={control}
               name="propertyname"
-              label="Property Name"
               placeholder="Select property"
-              labelKey={"name"}
-              onChange={(e: any) => {
-                setValue(`propertyname`, e.value);
-              }}
-              valueKey="id"
-              required
+              label="Property Name"
               error={errors.propertyname?.message || ""}
-              options={data?.propertyList || []}
+              labelKey={"name"}
+              valueKey={"id"}
+              required
+              options={propertyList || []}
             />
           </GridItem>
           <GridItem>

@@ -1,202 +1,164 @@
-import { useDisclosure } from "@chakra-ui/react";
-import ModalForm from "@src/components/organisms/modal";
-import { useEffect, useState } from "react";
-import { useFormHook } from "@src/hooks/useFormhook";
-import * as yup from "yup";
-import { CreateServiceForm } from "../service-add";
+import { Stack } from "@chakra-ui/react";
+import { useMemo } from "react";
+import { usePageParams } from "@src/components/organisms/layout";
+import { CellProps } from "react-table";
+import TableActions from "@src/components/molecules/table/TableActions";
+import BasicTable from "@src/components/molecules/table";
+import { colors } from "@src/theme/colors";
+import styled from "styled-components";
 import {
-  useCreateService,
-  useDeleteService,
-  useUpdateService,
-} from "@src/service/point-config/service";
-import { IService } from "@src/interface/pointConfig";
-import ServiceTable from "../service-table";
-import { getAllMemberTier } from "@src/service/master-data/member-tier";
-import { useQuery } from "react-query";
+  IMemberTierOne,
+  IMembershipServiceRequest,
+  IService,
+} from "@src/interface/pointConfig";
 
 interface IServiceProps {
-  tableData: IService[];
-  tableDataFetching: boolean;
+  setUpdateId: any;
+  setIsUpdate: any;
+  onServiceModalOpen: any;
+  onCloseHandler: any;
+  data: any;
+  isLoading: any;
+  onDeleteServiceOpen: any;
+  onDeleteService: any;
+  setDeleteId: any;
 }
 
-const ServiceList: React.FC<IServiceProps> = ({
-  tableData,
-  tableDataFetching,
-}) => {
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [updateId, setUpdateId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  // gap: 4%;
+  flex-wrap: wrap;
+  text-align: center;
+  position: relative;
+  div {
+    position: relative;
 
-  const {
-    isOpen: isServiceOpen,
-    onOpen: onServiceModalOpen,
-    onClose: onServiceModalClose,
-  } = useDisclosure();
+    flex: 0 0 20%;
+    margin-bottom: 10px;
 
-  const {
-    isOpen: isDeleteServiceOpen,
-    onOpen: onDeleteServiceOpen,
-    onClose: onDeleteServiceClose,
-  } = useDisclosure();
-
-  const validationSchema = yup.object().shape({
-    serviceName: yup.string().required("serviceName is required"),
-    serviceCode: yup.string().required("serviceCode is required"),
-  });
-  const defaultValues = {
-    serviceName: "",
-    serviceCode: "",
-    // membershipServiceResponseDtos: [],
-  };
-  const [formDataArray, setFormDataArray] = useState<IService[]>([]);
-  const { handleSubmit, register, errors, reset, watch, setValue } =
-    useFormHook({
-      validationSchema,
-      defaultValues,
-    });
-  const { data } = useQuery("member_tier", getAllMemberTier, {
-    select: ({ data }) => data.datalist,
-  });
-  const defaultVal =
-    data?.map((item: any) => ({
-      id: item.id,
-      membershipName: item.membershipName,
-      rewardPercentage: "0",
-    })) || [];
-  useEffect(() => {
-    if (!isUpdate) {
-      if (defaultVal?.length > 0) {
-        setValue("membershipServiceResponseDtos", defaultVal);
+    &::after {
+      content: "";
+      position: absolute;
+      border-right: 1px solid #ccc;
+      height: 90%;
+      top: 0;
+      right: 0px;
+    }
+    &:first-child {
+      &::before {
+        content: "";
+        position: absolute;
+        border-right: 1px solid #ccc;
+        height: 90%;
+        top: 0;
+        left: 0;
       }
     }
-  }, [data]);
-  useEffect(() => {
-    if (isUpdate && updateId) {
-      const dataValue = tableData.find((x: any) => x.id === updateId);
+  }
+  .title {
+    font-size: 14px;
+    color: ${colors.primary};
+    font-weight: 500;
+  }
+  .percent {
+    font-size: 14px;
+    color: ${colors.secondary_black};
+    font-weight: 500;
+    margin-top: 5px;
+  }
+`;
+const ServiceList: React.FC<IServiceProps> = ({
+  setUpdateId,
+  setIsUpdate,
+  onServiceModalOpen,
+  data,
+  isLoading,
+  onDeleteServiceOpen,
+  setDeleteId,
+}) => {
+  const { pageParams } = usePageParams();
 
-      const filteredData1 = defaultVal.filter(
-        (item1: any) =>
-          !dataValue?.membershipServiceResponseDtos?.some(
-            (item2: any) => item2.membershipName === item1.membershipName
-          )
-      );
+  const columns = useMemo(
+    () => [
+      {
+        header: "S.N",
+        accessorFn: (_: IService, index: number) =>
+          (pageParams.page - 1) * pageParams.limit + (index + 1),
+        width: "10%",
+      },
 
-      const combinedData =
-        dataValue?.membershipServiceResponseDtos?.concat(filteredData1);
-
-      reset({
-        id: dataValue?.id,
-        serviceName: dataValue?.serviceName,
-        serviceCode: dataValue?.serviceCode,
-        membershipServiceResponseDtos: combinedData,
-      });
-    }
-  }, [isUpdate, updateId, tableData]);
-
-  const { mutateAsync: mutate, isLoading } = useCreateService();
-  const { mutateAsync: update, isLoading: isUpdating } = useUpdateService();
-
-  const onCloseHandler = () => {
-    reset({
-      serviceName: "",
-      serviceCode: "",
-      membershipServiceResponseDtos: defaultVal,
-    });
-    setDeleteId("");
-    setUpdateId("");
-    setIsUpdate(false);
-    onServiceModalClose();
-  };
-  const onSubmitHandler = (data: IService) => {
-    if (updateId) {
-      update({
-        id: updateId,
-        data: {
-          id: data.id,
-          serviceCode: data.serviceCode,
-          serviceName: data.serviceName,
-          membershipServiceRequestDto: formDataArray,
+      {
+        header: "Service",
+        accessorKey: "serviceName",
+        width: "20%",
+      },
+      {
+        header: "Code",
+        accessorKey: "serviceCode",
+        width: "10%",
+      },
+      {
+        header: "Member",
+        accessorKey: "membershipServiceResponseDtos",
+        width: "50%",
+        textAlign: "center",
+        cell: ({
+          row,
+        }: {
+          row: {
+            original: {
+              membershipServiceResponseDtos?: IMembershipServiceRequest[];
+            };
+          };
+        }) => {
+          return (
+            <Wrapper>
+              {row?.original?.membershipServiceResponseDtos?.map(
+                (itmm: IMemberTierOne, index: number) => (
+                  <div key={index}>
+                    <h1 className="title">{itmm.membershipName}</h1>
+                    <h1 className="percent">{`${itmm.rewardPercentage}%`}</h1>
+                  </div>
+                )
+              )}
+            </Wrapper>
+          );
         },
-      });
-      onCloseHandler();
-    } else {
-      mutate({
-        id: data.id,
-        serviceCode: data.serviceCode,
-        serviceName: data.serviceName,
-        membershipServiceRequestDto: formDataArray,
-      });
-      onCloseHandler();
-    }
-  };
+      },
+      {
+        header: "Action",
+        width: "10%",
 
-  const { mutateAsync: deleteService, isLoading: isDeleting } =
-    useDeleteService();
-
-  const onDelete = async (id: string) => {
-    const result = await deleteService({
-      id: id,
-    });
-    result.status === 200 && onDeleteServiceClose();
-  };
+        cell: ({ row }: CellProps<{ id: string; name: string }>) => {
+          const onEdit = () => {
+            setUpdateId(row.original.id);
+            setIsUpdate(true);
+            onServiceModalOpen();
+          };
+          const onDelete = () => {
+            setDeleteId(row.original.id);
+            onDeleteServiceOpen();
+          };
+          return (
+            <Stack alignItems={"flex-start"}>
+              <TableActions onEdit={onEdit} onDelete={onDelete} />
+            </Stack>
+          );
+        },
+      },
+    ],
+    [pageParams]
+  );
 
   return (
     <>
-      <ServiceTable
-        tableData={tableData}
-        tableDataFetching={tableDataFetching}
-        title="Filter By"
-        btnText="Add Service"
-        CurrentText="Service List"
-        onAction={() => {
-          onCloseHandler();
-          onServiceModalOpen();
-        }}
-        onMemberModalOpen={onServiceModalOpen}
-        onEditData={(id: string) => {
-          setUpdateId(id);
-          setIsUpdate(true);
-          onServiceModalOpen();
-        }}
-        onDeleteData={(id: string) => {
-          setDeleteId(id);
-          onDeleteServiceOpen();
-        }}
+      <BasicTable
+        data={data?.data || []}
+        columns={columns}
+        isLoading={isLoading}
+        totalPages={data?.totalPages}
       />
-
-      <ModalForm
-        isModalOpen={isServiceOpen}
-        title={isUpdate ? "Update Service" : "Add Service"}
-        onCloseModal={onServiceModalClose}
-        isLoading={isLoading || isUpdating}
-        resetButtonText={"Cancel"}
-        submitButtonText={isUpdate ? "Update Service" : "Add Service"}
-        submitHandler={handleSubmit(onSubmitHandler)}
-        showFooter={true}
-      >
-        <CreateServiceForm
-          register={register}
-          errors={errors}
-          formDataArray={formDataArray}
-          setFormDataArray={setFormDataArray}
-          setValue={setValue}
-          watch={watch}
-          data={data}
-        />
-      </ModalForm>
-
-      <ModalForm
-        title={"Delete"}
-        isModalOpen={isDeleteServiceOpen}
-        onCloseModal={onDeleteServiceClose}
-        resetButtonText={"No"}
-        isLoading={isDeleting}
-        submitButtonText={"Yes"}
-        handleSubmit={() => onDelete(deleteId ?? "")}
-        showFooter={true}
-      >
-        Are you sure you want to delete the Service detail?
-      </ModalForm>
     </>
   );
 };

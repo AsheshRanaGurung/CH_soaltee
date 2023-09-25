@@ -22,7 +22,7 @@ interface IMemberTier {
   isOpen: boolean;
   viewId: string;
 }
-export const VoucherPage = ({ onClose, isOpen, viewId }: IMemberTier) => {
+export const VoucherViewPage = ({ onClose, isOpen, viewId }: IMemberTier) => {
   const { data: voucherData } = useGetVoucherID(viewId);
 
   return (
