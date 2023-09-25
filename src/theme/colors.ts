@@ -49,4 +49,7 @@ export const colors = {
   slider_nav: "#3E3C3C",
   primary_light_500: "#FFDEDE",
   light_bg: "#F2F2F2",
+  light_green: "rgba(0, 251, 40, 0.09)",
+  dark_green: "#5CB85C",
+  dark_red: "#C50000",
 };

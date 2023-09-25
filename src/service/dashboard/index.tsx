@@ -86,7 +86,18 @@ const useGetTotalTier = ({ tier, proverty }: IDashboard) => {
     }
   );
 };
+const fetchRecentActivity = () => {
+  return HttpClient.get(`${api.dashboard.fetchRecentActivity}`);
+};
 
+export const useGetRecentActivity = () => {
+  return useQuery("recent-activity", fetchRecentActivity, {
+    select: (data: { data: { data: any } }) => data?.data?.data || {},
+    onError: (error: AxiosError) => {
+      console.error(error);
+    },
+  });
+};
 // export const CreateTierPoint = (data) => {
 //   return HttpClient.post(`${api.dashboard.add}`, data);
 // };

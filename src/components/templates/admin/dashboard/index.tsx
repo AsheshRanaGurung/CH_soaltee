@@ -16,6 +16,7 @@ import { EarnPoint } from "../earn-point";
 import { Graphcard } from "@src/components/organisms/graph";
 import { PieChartCard } from "@src/components/organisms/piechart";
 import { GraphUser } from "@src/components/molecules/graph-user";
+import RecentActivityCard from "@src/components/molecules/dashboard/RecentActivity";
 
 export const DashboardAdmin = ({
   data,
@@ -123,6 +124,7 @@ export const DashboardAdmin = ({
           <PieChartCard />
         </GridItem>
       </SimpleGrid>
+      <RecentActivityCard />
     </>
   );
 };

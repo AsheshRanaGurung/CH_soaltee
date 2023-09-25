@@ -22,7 +22,7 @@ const Dashboard = () => {
   return (
     <>
       <BreadCrumb name="Dashboard" />
-      <Content>
+      <Content bg_color="transparent">
         <DashboardAdmin
           data={data}
           setTimeDuration={setTimeDuration}
