@@ -7,15 +7,10 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import Historytable from "./history-table";
-import Header from "@src/components/atoms/Header";
-import { HeaderWrapper } from "../UserMain-index";
 
 const HistoryTransaction = () => {
   return (
     <>
-      <HeaderWrapper>
-        <Header navigation={true} />
-      </HeaderWrapper>
       <Card>
         <Tabs variant="soft-rounded" colorScheme="green">
           <TabList>

@@ -1,5 +1,5 @@
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
-import { DashboardAdmin } from "@src/components/molecules/Dashboard/Index";
+import { DashboardAdmin } from "@src/components/templates/admin/dashboard";
 import Content from "@src/components/molecules/content";
 import {
   getTopRewardUsers,

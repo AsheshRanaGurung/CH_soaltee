@@ -5,8 +5,7 @@ import styled from "styled-components";
 import { Text } from "@chakra-ui/react";
 import { get } from "lodash";
 import { Controller } from "react-hook-form";
-
-const SelectWrapper = styled(Select)<{
+export const SelectWrapper = styled(Select)<{
   error: boolean;
   bg_color: string;
   labelColor: string;
@@ -51,6 +50,7 @@ const SelectWrapper = styled(Select)<{
     color: ${colors.black};
   }
 `;
+
 export const colourStyles = {
   option: (styles: any) => {
     return {
@@ -81,6 +81,7 @@ const ReactSelect = ({
       label: option[labelKey],
       value: option[valueKey],
     }));
+
   return (
     <FormControl
       id={name}
@@ -104,21 +105,26 @@ const ReactSelect = ({
       <Controller
         name={name}
         control={control}
+        rules={{ required: "Field is required" }}
         render={({ field }) => {
           const hasError = !!error;
+
           return (
             <>
-              <SelectWrapper
-                {...field}
-                {...rest}
-                defaultValue={field.value}
-                isClearable={isClearable}
-                options={formattedOptions.map((option: any) => ({
-                  ...option,
-                  isDisabled: isSelected?.includes(option.value),
-                }))}
-                error={hasError}
-              />
+              <>
+                <SelectWrapper
+                  {...field}
+                  {...rest}
+                  defaultValue={field.value}
+                  isClearable={isClearable}
+                  options={formattedOptions.map((option: any) => ({
+                    ...option,
+                    isDisabled: isSelected?.includes(option.value),
+                  }))}
+                  error={hasError}
+                />
+              </>
+
               {error && (
                 <Text color={colors.red} fontSize={"12px"} mt={2}>
                   {error}
