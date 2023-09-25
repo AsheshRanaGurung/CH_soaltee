@@ -27,7 +27,7 @@ const EarningReport = () => {
   const exportUserReports = async () => {
     const dataList = await exportEarningReport({ ...pageParams, ...para });
     if (dataList && data && data.data.length > 0) {
-      exportToCSV({ data: dataList.data, fileName: "earning_report" });
+      exportToCSV({ data: { ...pageParams, ...para } });
     }
   };
 
