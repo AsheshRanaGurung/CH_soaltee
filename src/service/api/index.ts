@@ -55,7 +55,8 @@ export const api = {
     fetchTier: "/dashboard/get-total-user-tier?propertyId={provertyID}&type=",
     fetchBlock: "/dashboard/total-active-block-user",
     update: "",
-    fetchRecentActivity: "dashboard/get-recent-activity",
+    fetchRecentActivity:
+      "dashboard/get-recent-activity?propertyId={provertyID}",
   },
   staff_management: {
     qr_fetch: "/staff/get-property-link",

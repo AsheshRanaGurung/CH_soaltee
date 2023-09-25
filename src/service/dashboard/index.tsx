@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 // import { toastFail, toastSuccess } from "../service-toast";
 // import { AxiosError } from "axios";
 interface IDashboard {
-  tier: string;
+  tier?: string;
   proverty: string;
 }
 const getTopReward = (duration: string) => () => {
@@ -86,17 +86,26 @@ const useGetTotalTier = ({ tier, proverty }: IDashboard) => {
     }
   );
 };
-const fetchRecentActivity = () => {
-  return HttpClient.get(`${api.dashboard.fetchRecentActivity}`);
-};
+const fetchRecentActivity =
+  ({ proverty }: IDashboard) =>
+  () => {
+    return HttpClient.get(
+      `${api.dashboard.fetchRecentActivity.replace("{provertyID}", proverty)}`
+    );
+  };
 
-export const useGetRecentActivity = () => {
-  return useQuery("recent-activity", fetchRecentActivity, {
-    select: (data: { data: { data: any } }) => data?.data?.data || {},
-    onError: (error: AxiosError) => {
-      console.error(error);
-    },
-  });
+export const useGetRecentActivity = ({ proverty }: IDashboard) => {
+  return useQuery(
+    [`${(api.dashboard.fetchRecentActivity, proverty)}`],
+    fetchRecentActivity({ proverty }),
+    {
+      enabled: !!proverty,
+      select: (data: { data: { data: any } }) => data?.data?.data || {},
+      onError: (error: AxiosError) => {
+        console.error(error);
+      },
+    }
+  );
 };
 // export const CreateTierPoint = (data) => {
 //   return HttpClient.post(`${api.dashboard.add}`, data);
