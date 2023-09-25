@@ -5,14 +5,17 @@ import { FieldErrorsImpl, useForm } from "react-hook-form";
 import { usePropertyList } from "@src/constant/usePropertyList";
 import { useGetRecentActivity } from "@src/service/dashboard";
 import { colors } from "@src/theme/colors";
+import { useState } from "react";
 
 const RecentActivityCard = () => {
-  const { data: getActivity, isLoading } = useGetRecentActivity();
   const {
     control,
     formState: { errors },
   } = useForm();
-  // const [prov, setProv] = useState("-1");
+  const [prov, setProv] = useState("-1");
+  const { data: getActivity, isLoading } = useGetRecentActivity({
+    proverty: prov,
+  });
 
   const propertyList = usePropertyList();
   return (
@@ -41,7 +44,7 @@ const RecentActivityCard = () => {
                 };
               }) ?? []
             }
-            // onAdditionalOnChange={(e) => setProv(e.target.value || "-1")}
+            onAdditionalOnChange={(e) => setProv(e.target.value || "-1")}
           />
         </Flex>
       </Flex>
