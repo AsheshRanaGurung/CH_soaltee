@@ -9,23 +9,23 @@ import SetPassword from "@src/pages/Auth/set-password";
 import Verification from "@src/pages/Auth/verification";
 import PrivateRoute from "./privateRoute";
 import RestrictedRoute from "./restrictedRoute";
-import UserDashboard from "@src/userPages/UserDashboard";
-import ServicePage from "@src/pages/PointConfig/Service";
+import UserDashboard from "@src/pages/UserDashboard";
 import MemberManagementPage from "@src/pages/MemberManagement";
 import ProfileDetail from "@src/pages/MemberManagement/ProfileDetail";
 import BonusPage from "@src/pages/PointConfig/Bonus";
 import ForgotPasswordPage from "@src/pages/Auth/forgot-password";
-import ProfilePage from "@src/components/templates/user/Profile";
+import ProfilePage from "@src/pages/UserProfile";
 import VoucherPage from "@src/pages/Voucher";
 import VoucherAdd from "@src/pages/Voucher/add";
 import OfferPage from "@src/pages/Offers";
 import StaffManagementPage from "@src/pages/StaffManagement";
 import PageNotFound from "@src/pages/NotFound";
-import HistoryTransaction from "@src/components/templates/user/History";
 import UserReport from "@src/pages/Report/UserReport";
 import EarningReport from "@src/pages/Report/EarningReport";
-import { OfferDetail } from "@src/components/templates/user/offer-detail";
+import { OfferDetail } from "@src/pages/OfferDetail";
 import SettingPage from "@src/pages/Settings";
+import HistoryTransaction from "@src/components/templates/user/History";
+import ServicePage from "@src/pages/PointConfig/Service";
 
 const routes = [
   {

@@ -55,6 +55,7 @@ export const api = {
     fetchTier: "/dashboard/get-total-user-tier?propertyId={provertyID}&type=",
     fetchBlock: "/dashboard/total-active-block-user",
     update: "",
+    fetchRecentActivity: "dashboard/get-recent-activity",
   },
   staff_management: {
     fetch:
@@ -98,6 +99,8 @@ export const api = {
   },
   fetchImage: "/membership/get-tier-image/:id",
   nationality: "/nationality/fetch-all",
+  referal_link: "/users/get-referral-link",
+  send_email: "/email/send-ref-email",
 };
 export interface IResponse<T = any> {
   data: T;

@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import { colors } from "@src/theme/colors";
 import { font } from "@src/theme/font";
 
@@ -39,6 +39,33 @@ export const HeadingText = ({
         >
           {titletext}
         </Heading>
+      </Box>
+    </>
+  );
+};
+
+export const SimpleHeadingText = ({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle: string;
+}) => {
+  return (
+    <>
+      <Box>
+        <Text fontSize="xl" fontWeight="600" width="100%">
+          {title}
+        </Text>
+        <Text
+          fontWeight="400"
+          fontSize="md"
+          color={colors.black_1}
+          width="100%"
+          overflowWrap="break-word"
+        >
+          {subtitle}
+        </Text>
       </Box>
     </>
   );

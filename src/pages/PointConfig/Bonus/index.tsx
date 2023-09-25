@@ -1,14 +1,14 @@
 import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
 import { getAllBonus, useDeleteBonus } from "@src/service/point-config/bonus";
-import BonusList from "@src/components/templates/admin/pointConfiguration/bonus/bonus-list";
 import { useState } from "react";
 import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import { useDisclosure } from "@chakra-ui/react";
 import ModalForm from "@src/components/molecules/modal";
-import { AddBonus } from "@src/components/templates/admin/pointConfiguration/bonus/bonus-add";
 import DeleteContent from "@src/components/organisms/delete-content";
 import TableHeadings from "@src/components/molecules/table-heading";
+import BonusList from "@src/components/templates/admin/point-configuration/bonus/bonus-list";
+import { AddBonus } from "@src/components/templates/admin/point-configuration/bonus/bonus-add";
 
 const BonusPage = () => {
   const [isUpdate, setIsUpdate] = useState(false);

@@ -4,8 +4,9 @@ import Content from "@src/components/molecules/content";
 import ModalForm from "@src/components/molecules/modal";
 import TableHeadings from "@src/components/molecules/table-heading";
 import DeleteContent from "@src/components/organisms/delete-content";
-import { CreateServiceForm } from "@src/components/templates/admin/pointConfiguration/services/service-add";
-import ServiceList from "@src/components/templates/admin/pointConfiguration/services/service-list";
+import { CreateServiceForm } from "@src/components/templates/admin/point-configuration/services/service-add";
+import ServiceList from "@src/components/templates/admin/point-configuration/services/service-list";
+
 import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import {
   getAllService,

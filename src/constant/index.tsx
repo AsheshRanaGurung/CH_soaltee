@@ -90,3 +90,22 @@ export const stepCardData = [
     key: 3,
   },
 ];
+
+export const HotelImage = [
+  {
+    img: imageList.Soaltee,
+    key: 1,
+  },
+  {
+    img: imageList.Resort,
+    key: 2,
+  },
+  {
+    img: imageList.Westend,
+    key: 3,
+  },
+  {
+    img: imageList.Premier,
+    key: 4,
+  },
+];
