@@ -10,6 +10,8 @@ services:
       - .env
     ports:
       - 3000:80
+    networks:
+      - postgres_soaltee
     restart: always
   uat:
     container_name: soaltee_frontend_uat
@@ -33,3 +35,8 @@ services:
     ports:
       - 4000:80
     restart: always
+
+networks:
+  postgres_soaltee:
+    external: true
+
