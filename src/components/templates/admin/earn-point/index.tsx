@@ -34,7 +34,7 @@ export const EarnPoint = () => {
     isLoading,
     isError,
   } = useGetTopTier({
-    proverty: prov,
+    property: prov,
     tier: tiers,
   });
   return (

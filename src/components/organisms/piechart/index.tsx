@@ -155,7 +155,7 @@ export const PieChartCard = () => {
   } = useForm();
   const propertyList = usePropertyList();
   const { data, isLoading, isError } = useGetTotalTier({
-    proverty: prov,
+    property: prov,
     tier: tiers,
   });
 
