@@ -16,9 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { imageList } from "@src/assets/images";
 import { AwardIcon, GlobalIcon, MailIcon, PhoneIcon } from "@src/assets/svgs";
-import Header from "@src/components/organisms/header";
-import { EditProfile } from "./EditProfile/Index";
-import { Footer } from "@src/components/organisms/footer";
+
 import { getUserDetail } from "@src/service/user";
 import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
@@ -26,9 +24,9 @@ import { useLocation } from "react-router-dom";
 import { baseURL } from "@src/service/config/api";
 import { font } from "@src/theme/font";
 import { colors } from "@src/theme/colors";
-import { HeaderWrapper } from "../UserMain-index";
 import { ReferalLayout } from "../referal";
-import { ChangePassword } from "./ChangePassword";
+import { ChangePassword } from "./change-password";
+import { EditProfile } from "./edit-profile";
 const ProfilePage = () => {
   const {
     isOpen: isOpenEdit,
@@ -71,18 +69,6 @@ const ProfilePage = () => {
         marginTop="100px"
         position={"relative"}
       >
-        <HeaderWrapper>
-          <Box
-            position={"fixed"}
-            top={0}
-            left={0}
-            right={0}
-            zIndex={99}
-            background={colors.white}
-          >
-            <Header navigation={true} />
-          </Box>
-        </HeaderWrapper>
         <Box
           display={"flex"}
           justifyContent={"center"}
@@ -245,7 +231,6 @@ const ProfilePage = () => {
         data={updatedData}
         dataProfile={data}
       />
-      <Footer />
     </>
   );
 };

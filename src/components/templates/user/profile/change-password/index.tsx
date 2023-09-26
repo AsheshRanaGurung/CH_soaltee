@@ -16,7 +16,11 @@ export const ChangePassword = ({
   dataProfile: any;
 }) => {
   return (
-    <ModalForm isModalOpen={isOpen} onCloseModal={onClose} title="Edit Profile">
+    <ModalForm
+      isModalOpen={isOpen}
+      onCloseModal={onClose}
+      title="Change Password"
+    >
       <ChangePasswordPage dataProfile={data} onClose={onClose} />
     </ModalForm>
   );
