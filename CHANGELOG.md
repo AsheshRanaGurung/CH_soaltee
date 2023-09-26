@@ -6,7 +6,6 @@
 * add page params in property list and voucher folder ([7ccb314](https://gitlab.com/paras205/boilerplate-react/commit/7ccb3143474e3d5de8db3f1afd2c602b5762bb5e))
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
-* changes in ui ([ec977f0](https://gitlab.com/paras205/boilerplate-react/commit/ec977f03177d96afaecde7326ec516ec14c8fdc2))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
 * fix ([a0797d9](https://gitlab.com/paras205/boilerplate-react/commit/a0797d9070451ef411bc8149c7f259810907942d))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
