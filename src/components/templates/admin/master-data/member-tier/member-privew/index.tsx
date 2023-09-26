@@ -48,10 +48,10 @@ export const MemberPreview = ({ isViewOpen, onClose, viewId }: IMemberTier) => {
                   <Text fontSize={"21px"}>{data?.pointsFrom}</Text>
                 </Box>
               </Flex>
-              <Box>
-                <Heading fontSize={"16px"}>Membership Name</Heading>
+              {/* <Box>
+                <Heading fontSize={"16px"}>Points to Next Tier</Heading>
                 <Text fontSize={"21px"}>{data?.pointsTo}</Text>
-              </Box>
+              </Box> */}
             </Box>{" "}
           </ModalBody>
         </ModalContent>
