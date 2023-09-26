@@ -62,7 +62,12 @@ const SetPasswordTemplate: React.FC<ISignupProps> = ({
 
   return (
     <>
-      <Heading title="Set Password" text="Choose your password" />
+      {type === "change_password" ? (
+        <></>
+      ) : (
+        <Heading title="Set Password" text="Choose your password" />
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormWrapper>
           <FormControl

@@ -7,7 +7,7 @@ import { AiFillMail, AiOutlinePlus } from "react-icons/ai";
 import { FaGlobeAsia, FaPhoneAlt, FaRegCalendarAlt } from "react-icons/fa";
 import { Button } from "@chakra-ui/button";
 import { useLocation } from "react-router";
-import { useDisclosure, Box, Heading } from "@chakra-ui/react";
+import { useDisclosure, Box, Heading, Flex } from "@chakra-ui/react";
 import ProfileForm from "@src/components/templates/admin/member-management/member-profile/add-point";
 import {
   fetchOneMember,
@@ -20,6 +20,7 @@ import { ProfileImage } from "@src/components/atoms/ProfileImage";
 import { MembershipIcon } from "@src/assets/svgs";
 import NoDataAvailable from "@src/components/organisms/nodata";
 import ModalForm from "@src/components/molecules/modal";
+import { baseURL } from "@src/service/config/api";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -70,18 +71,16 @@ const Card = styled.div`
   .basic-info {
     margin-left: 150px;
     margin-top: 10px;
-    display: grid;
-    grid-template-rows: auto auto;
-    grid-template-columns: auto auto;
     gap: 10px 40px;
+    // flex:0 0 auto
   }
   .basic-info-item {
     padding-top: 10px;
-    text-align: center;
     display: flex;
     align-items: center;
     gap: 10px;
   }
+
   .detail-card {
     display: flex;
     justify-content: space-between;
@@ -94,6 +93,8 @@ const Card = styled.div`
     align-items: center;
     padding: 7px;
     height: 125px;
+    flex 0 0 165px;
+
   }
   .reward-card-title {
     display: flex;
@@ -181,7 +182,7 @@ const MemberProfile = () => {
         display={"flex"}
         justifyContent={"center"}
         alignItems={"center"}
-        background={`url(http://172.30.1.9:8050/membership/get-tier-image/${data?.tierImage}) center center/cover no-repeat`}
+        background={`url(${baseURL}membership/get-tier-image/${data?.tierImage}) center center/cover no-repeat`}
         h={"220px"}
         position={"relative"}
       >
@@ -246,18 +247,20 @@ const MemberProfile = () => {
                   Membership number : {state?.customerId}
                 </Text>
               </div>
-              <div className="basic-info-item">
-                <Icons icon={<FaRegCalendarAlt />} />
-                <Text color={colors.secondary_dark}>
-                  Date of birth : {state?.dateOfBirth}
-                </Text>
-              </div>
-              <div className="basic-info-item">
-                <Icons icon={<FaRegCalendarAlt />} />
-                <Text color={colors.secondary_dark}>
-                  Last active : {state?.lastActive}
-                </Text>
-              </div>
+              <Flex gap={10}>
+                <div className="basic-info-item">
+                  <Icons icon={<FaRegCalendarAlt />} />
+                  <Text color={colors.secondary_dark}>
+                    Date of birth : {state?.dateOfBirth}
+                  </Text>
+                </div>
+                <div className="basic-info-item">
+                  <Icons icon={<FaRegCalendarAlt />} />
+                  <Text color={colors.secondary_dark}>
+                    Last active : {state?.lastActive}
+                  </Text>
+                </div>
+              </Flex>
 
               <div className="basic-info-item">
                 <Icons icon={<MembershipIcon />} />
@@ -266,6 +269,8 @@ const MemberProfile = () => {
                 </Text>
               </div>
             </div>
+            <div className=""></div>
+
             <div className="reward-card">
               <div>
                 <div className="reward-card-title">

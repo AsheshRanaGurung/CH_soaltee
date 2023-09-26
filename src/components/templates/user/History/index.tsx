@@ -9,7 +9,6 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import Historytable from "./history-table";
 import { BackgroundTextWithImage } from "@src/components/molecules/bg-text-image";
 import { imageList } from "@src/assets/images";
 import { font } from "@src/theme/font";
@@ -17,6 +16,7 @@ import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import { getTransactionHistory } from "@src/service/transaction-history";
 import { useState } from "react";
 import { useQueryClient } from "react-query";
+import Historytable from "./history-table";
 
 const HistoryTransaction = () => {
   const [para, setPara] = useState({});
@@ -30,7 +30,6 @@ const HistoryTransaction = () => {
     url: getTransactionHistory,
     extraParams: para,
   });
-  console.log("paraww", para);
   return (
     <>
       <BackgroundTextWithImage

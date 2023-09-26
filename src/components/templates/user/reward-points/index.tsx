@@ -1,5 +1,5 @@
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
-import { RedeemPoint } from "./RedeemPoint";
+import { RedeemPoint } from "@src/components/molecules/reward-points";
 import { ICard } from "@src/interface/user";
 
 export const Redeem = ({ data }: ICard) => {

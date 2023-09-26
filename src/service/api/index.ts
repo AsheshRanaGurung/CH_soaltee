@@ -50,13 +50,13 @@ export const api = {
   },
   dashboard: {
     fetch: "/dashboard/total-user-reward-report?type=",
-    fetchreward: "/dashboard/top-reward-users?propertyId={provertyID}&tier=",
+    fetchreward: "/dashboard/top-reward-users?propertyId={propertyID}&tier=",
     fetchTotal: "/dashboard/total-members-mw?type=",
-    fetchTier: "/dashboard/get-total-user-tier?propertyId={provertyID}&type=",
+    fetchTier: "/dashboard/get-total-user-tier?propertyId={propertyID}&type=",
     fetchBlock: "/dashboard/total-active-block-user",
     update: "",
     fetchRecentActivity:
-      "dashboard/get-recent-activity?propertyId={provertyID}",
+      "dashboard/get-recent-activity?propertyId={propertyID}",
   },
   staff_management: {
     qr_fetch: "/staff/get-property-link",

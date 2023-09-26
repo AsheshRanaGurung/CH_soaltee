@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import { EarnCard } from "./EarnCard";
+import { EarnCard } from "@src/components/molecules/earn-card";
 import { HeadingText } from "@src/components/molecules/heading-text";
 import { ICard } from "@src/interface/user";
 

@@ -4,7 +4,7 @@ import ModalFooterForm from "@src/components/molecules/modal/footer";
 import { useMemberTierList } from "@src/constant/useMemberTierList";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { IService } from "@src/interface/pointConfig";
-import { serviceValidationSchema } from "@src/schema/pointConfigiration/service";
+import { serviceValidationSchema } from "@src/schema/point-configuration/service";
 import {
   createServiceApi,
   updateService,

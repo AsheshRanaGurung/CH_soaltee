@@ -7,12 +7,12 @@ import { AxiosError } from "axios";
 import { createBonus, updateBonus } from "@src/service/point-config/bonus";
 import { useServiceList } from "@src/constant/useServiceList";
 import { useEffect } from "react";
-import { bonusValidationSchema } from "@src/schema/pointConfigiration/bonus";
 import { IBonus } from "@src/interface/pointConfig";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
 import { useFormHook } from "@src/hooks/useFormhook";
 import ReactSelect from "@src/components/atoms/Select";
 import DateComponent from "@src/components/atoms/DateInput";
+import { bonusValidationSchema } from "@src/schema/point-configuration/bonus";
 
 const defaultValues = {
   bonusName: "",
