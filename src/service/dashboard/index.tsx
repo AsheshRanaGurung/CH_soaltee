@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 // import { AxiosError } from "axios";
 interface IDashboard {
   tier?: string;
-  proverty: string;
+  property: string;
 }
 const getTopReward = (duration: string) => () => {
   return HttpClient.get(`${api.dashboard.fetch}${duration}`);
@@ -29,18 +29,18 @@ export const getTopRewardUsers = () => {
 };
 
 const getTopTier =
-  ({ tier, proverty }: IDashboard) =>
+  ({ tier, property }: IDashboard) =>
   () => {
     return HttpClient.get(
-      `${api.dashboard.fetchreward.replace("{provertyID}", proverty)}${tier}`
+      `${api.dashboard.fetchreward.replace("{propertyID}", property)}${tier}`
     );
   };
-const useGetTopTier = ({ tier, proverty }: IDashboard) => {
+const useGetTopTier = ({ tier, property }: IDashboard) => {
   return useQuery(
-    [`${(api.dashboard.fetchreward, proverty)}${tier}`],
-    getTopTier({ tier, proverty }),
+    [`${(api.dashboard.fetchreward, property)}${tier}`],
+    getTopTier({ tier, property }),
     {
-      enabled: !!tier && !!proverty,
+      enabled: !!tier && !!property,
       select: (data: { data: { data: any } }) => data?.data?.data || {},
       onError: (error: AxiosError) => {
         console.error(error);
@@ -66,19 +66,19 @@ const useGetTotalReward = (duration: string) => {
   );
 };
 const getTotalTier =
-  ({ tier, proverty }: IDashboard) =>
+  ({ tier, property }: IDashboard) =>
   () => {
     return HttpClient.get(
-      `${api.dashboard.fetchTier.replace("{provertyID}", proverty)}${tier}`
+      `${api.dashboard.fetchTier.replace("{propertyID}", property)}${tier}`
     );
   };
 
-const useGetTotalTier = ({ tier, proverty }: IDashboard) => {
+const useGetTotalTier = ({ tier, property }: IDashboard) => {
   return useQuery(
-    [`${(api.dashboard.fetchTier, proverty)}${tier}`],
-    getTotalTier({ tier, proverty }),
+    [`${(api.dashboard.fetchTier, property)}${tier}`],
+    getTotalTier({ tier, property }),
     {
-      enabled: !!tier && !!proverty,
+      enabled: !!tier && !!property,
       select: (data: { data: { data: any } }) => data?.data?.data || {},
       onError: (error: AxiosError) => {
         console.error(error);
@@ -87,19 +87,19 @@ const useGetTotalTier = ({ tier, proverty }: IDashboard) => {
   );
 };
 const fetchRecentActivity =
-  ({ proverty }: IDashboard) =>
+  ({ property }: IDashboard) =>
   () => {
     return HttpClient.get(
-      `${api.dashboard.fetchRecentActivity.replace("{provertyID}", proverty)}`
+      `${api.dashboard.fetchRecentActivity.replace("{propertyID}", property)}`
     );
   };
 
-export const useGetRecentActivity = ({ proverty }: IDashboard) => {
+export const useGetRecentActivity = ({ property }: IDashboard) => {
   return useQuery(
-    [`${(api.dashboard.fetchRecentActivity, proverty)}`],
-    fetchRecentActivity({ proverty }),
+    [`${(api.dashboard.fetchRecentActivity, property)}`],
+    fetchRecentActivity({ property }),
     {
-      enabled: !!proverty,
+      enabled: !!property,
       select: (data: { data: { data: any } }) => data?.data?.data || {},
       onError: (error: AxiosError) => {
         console.error(error);

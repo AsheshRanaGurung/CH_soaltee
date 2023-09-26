@@ -14,7 +14,7 @@ const RecentActivityCard = () => {
   } = useForm();
   const [prov, setProv] = useState("-1");
   const { data: getActivity, isLoading } = useGetRecentActivity({
-    proverty: prov,
+    property: prov,
   });
 
   const propertyList = usePropertyList();

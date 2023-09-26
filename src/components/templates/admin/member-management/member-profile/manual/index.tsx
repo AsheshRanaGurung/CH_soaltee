@@ -3,7 +3,7 @@ import * as yup from "yup";
 
 import { AxiosError } from "axios";
 import { useFormHook } from "@src/hooks/useFormhook";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { createManual } from "@src/service/profile/manual";
 import FormControl from "@src/components/atoms/FormControl";
@@ -34,9 +34,11 @@ const ManualForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
   const propertyList = usePropertyList();
 
   const { id } = data.userId;
+  const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createManual, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
+      queryClient.invalidateQueries("member_history");
       handleFormSubmit(response?.data?.data?.rewardPoints);
       onCloseModal();
     },

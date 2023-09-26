@@ -7,7 +7,7 @@ import { useFieldArray } from "react-hook-form";
 import { useFormHook } from "@src/hooks/useFormhook";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { createByService } from "@src/service/profile/byservice";
 import { colors } from "@src/theme/colors";
 import ReactSelect from "@src/components/atoms/Select";
@@ -58,9 +58,12 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
     Number(item.service.value)
   );
   const { id } = data.userId;
+  const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createByService, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
+      queryClient.invalidateQueries("member_history");
+
       handleFormSubmit(response?.data?.data?.rewardPoints);
 
       onCloseModal();
