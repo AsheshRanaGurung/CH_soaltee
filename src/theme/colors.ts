@@ -52,4 +52,5 @@ export const colors = {
   light_green: "rgba(0, 251, 40, 0.09)",
   dark_green: "#5CB85C",
   dark_red: "#C50000",
+  red_primary: "#B4304B",
 };

@@ -12,7 +12,14 @@ import moment from "moment";
 import { useMemo, useState } from "react";
 
 const UserReport = () => {
-  const [para, setPara] = useState({});
+  const [para, setPara] = useState({
+    tier: "",
+    property: "",
+    nationality: "",
+    totalAmount: "",
+    fromDate: "",
+    toDate: "",
+  });
   const {
     isOpen: isDrawerOpen,
     onOpen: onDrawerModalOpen,
@@ -29,10 +36,9 @@ const UserReport = () => {
   const exportUserReports = async () => {
     const dataList = await exportUserReport({ ...pageParams, ...para });
     if (dataList && data && data.data.length > 0) {
-      exportToCSV({ data: { ...pageParams, ...para } });
+      exportToCSV({ data: { ...pageParams, ...para }, path: "overall-report" });
     }
   };
-
   const columns = useMemo(
     () => [
       {
@@ -107,6 +113,7 @@ const UserReport = () => {
         >
           <UserFilter
             setPara={setPara}
+            para={para}
             isLoading={isLoading}
             onDrawerModalClose={onDrawerModalClose}
           />

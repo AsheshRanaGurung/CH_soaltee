@@ -153,9 +153,10 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
           );
         })}
         <Button
-          bg={"#FFF3F3"}
+          bg={colors.secondary}
           borderRadius={0}
-          color={"#B4304B"}
+          isDisabled={selectedServiceIds.length === data?.serviceList?.length}
+          color={colors.red_primary}
           onClick={() =>
             append({
               service: "",

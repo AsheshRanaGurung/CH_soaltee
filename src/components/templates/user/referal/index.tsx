@@ -14,7 +14,14 @@ import React, { KeyboardEventHandler } from "react";
 import { sendEmail } from "@src/service/email";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
+import styled from "styled-components";
 
+const CreatableSelectStyled = styled(CreatableSelect)`
+  width: 100%;
+  .css-4xgw5l-IndicatorsContainer2 {
+    display: none;
+  }
+`;
 export const ReferalLayout = () => {
   const { control, handleSubmit, setValue, getValues } = useForm();
 
@@ -105,24 +112,29 @@ export const ReferalLayout = () => {
         />
         <form
           onSubmit={handleSubmit(submitHandler)}
-          style={{ display: "flex" }}
+          style={{
+            display: "flex",
+            width: "100%",
+            gap: "15px",
+            justifyContent: "space-between",
+          }}
         >
           <Controller
             name="email"
             control={control}
             defaultValue={[]}
             render={({ field }) => (
-              <CreatableSelect
+              <CreatableSelectStyled
                 {...field}
                 inputValue={inputValue}
                 defaultInputValue={inputValue}
                 isClearable
                 isMulti
                 menuIsOpen={false}
-                onChange={(newValue) => {
+                onChange={(newValue: any) => {
                   field.onChange(newValue);
                 }}
-                onInputChange={(newValue) => {
+                onInputChange={(newValue: any) => {
                   setInputValue(newValue);
                 }}
                 onKeyDown={handleKeyDown}

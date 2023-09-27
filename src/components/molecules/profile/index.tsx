@@ -29,6 +29,7 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 import { colors } from "@src/theme/colors";
 import html2canvas from "html2canvas";
+import { ReferalLayout } from "@src/components/templates/user/referal";
 
 const Profile = ({ type }: any) => {
   const navigate = useNavigate();
@@ -75,7 +76,6 @@ const Profile = ({ type }: any) => {
           },
         });
       } catch (err) {
-        console.error("Failed to copy text: ", err);
         alert("Failed to copy text to clipboard");
       }
     }
@@ -159,6 +159,7 @@ const Profile = ({ type }: any) => {
                         <CopyIcon color={colors.primary} />
                       </Button>
                     </Box>
+                    <ReferalLayout />
                   </ModalBody>
                 </ModalContent>
               </Modal>
