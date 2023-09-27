@@ -77,10 +77,8 @@ export const OfferTemplate = ({
 
           <Text
             fontFamily={font.josefin}
-            fontWeight="400"
-            dangerouslySetInnerHTML={{
-              __html: description,
-            }}
+            padding={"16px"}
+            dangerouslySetInnerHTML={{ __html: description }}
           />
         </Stack>
       </Container>

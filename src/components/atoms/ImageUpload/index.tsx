@@ -120,7 +120,7 @@ const ImageUpload: React.FC<IProps> = ({
         <>
           {imageSrc ? (
             <img
-              src={imageSrc || selectedImage}
+              src={selectedImage ? selectedImage : imageSrc}
               alt="Uploaded Image"
               style={{
                 width: "100px",

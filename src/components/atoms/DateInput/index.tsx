@@ -17,7 +17,7 @@ import { DatePickerIcon } from "@src/assets/svgs";
 import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
 
 const DateInput = styled.div<any>`
-  z-index: 1;
+  z-index: 2;
   position: relative;
   .react-datepicker-wrapper {
     width: 100%;

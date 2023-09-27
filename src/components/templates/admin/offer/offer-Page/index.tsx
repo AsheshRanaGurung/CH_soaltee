@@ -10,8 +10,6 @@ import {
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
-  ListItem,
-  UnorderedList,
   Image,
 } from "@chakra-ui/react";
 import { useGetAllOfferId } from "@src/service/offer";
@@ -43,39 +41,30 @@ export const OfferViewPage = ({ onClose, isOpen, viewId }: IMemberTier) => {
                 rowGap={4}
               >
                 <GridItem>
-                  <Heading
-                    color={colors.voucher_heading}
-                    fontSize={"14px"}
-                    fontWeight={"400"}
-                  >
+                  <Heading fontSize={"18px"} fontWeight={"600"} py={"3px"}>
                     Offer Title
                   </Heading>
-                  <Text fontSize={"16px"}>{offerData?.offerName}</Text>
+                  <Text color={colors.voucher_heading} fontSize={"16px"}>
+                    {offerData?.offerName}
+                  </Text>
                 </GridItem>
                 <GridItem>
-                  <Heading
-                    color={colors.voucher_heading}
-                    fontSize={"14px"}
-                    fontWeight={"400"}
-                  >
+                  <Heading fontSize={"18px"} fontWeight={"600"} py={"3px"}>
                     Offer Sub-Title
                   </Heading>
-                  <Text fontSize={"16px"}>{offerData?.subTitle}</Text>
+                  <Text color={colors.voucher_heading} fontSize={"16px"}>
+                    {offerData?.subTitle}
+                  </Text>
                 </GridItem>
               </SimpleGrid>
               <Box marginTop={"20px"} paddingBottom={"20px"}>
-                <Heading
-                  color={colors.voucher_heading}
-                  fontSize={"14px"}
-                  fontWeight={"400"}
-                >
+                <Heading fontSize={"18px"} fontWeight={"600"} py={"3px"}>
                   Offer Description
                 </Heading>
-                <UnorderedList marginTop={"15px"}>
-                  <ListItem>
-                    {offerData?.description.replace(/(<([^>]+)>)/gi, "")}
-                  </ListItem>
-                </UnorderedList>
+                <Text
+                  padding={"16px"}
+                  dangerouslySetInnerHTML={{ __html: offerData?.description }}
+                />
               </Box>
             </Box>
           </ModalBody>
