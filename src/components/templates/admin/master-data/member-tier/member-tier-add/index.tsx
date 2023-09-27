@@ -82,6 +82,8 @@ export const CreateMemberForm = ({
         membershipName: data?.membershipName,
         pointsFrom: data?.pointsFrom,
         pointsTo: data?.pointsTo,
+        image: data?.imageUrl,
+        description: data?.description,
       });
       setValue("colorCode", individualData?.colorCode);
     }

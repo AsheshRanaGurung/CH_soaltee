@@ -1,6 +1,14 @@
 import * as yup from "yup";
 import { createPhoneNumberSchema } from "@src/utility/phoneValidation";
+import { formatDateToYYYYMMDD } from "@src/utility/formatDateToYYYYMMDD";
 
+const today = new Date();
+const eighteenYearsAgo: any = new Date(
+  today.getFullYear() - 18,
+  today.getMonth(),
+  today.getDate()
+);
+const validDate: any = formatDateToYYYYMMDD(eighteenYearsAgo);
 export const signupValidationSchema = yup.object().shape({
   fullName: yup.string().required("Name is required"),
   email: yup
@@ -21,7 +29,7 @@ export const signupValidationSchema = yup.object().shape({
   dateOfBirth: yup
     .string()
     .required("DOB is required")
-    .max(+new Date(), "Date of Birth cannot be in the future")
+    .max(validDate, "You must be at least 18 years old")
     .test("is-valid-dob", "Invalid DOB", function (value) {
       if (!value) {
         return false;

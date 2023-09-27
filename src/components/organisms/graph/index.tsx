@@ -15,13 +15,13 @@ function handleGraphData(
   totalReward: any,
   newData: {
     name: string;
-    uv: number;
+    user: number;
   }[],
   setNewData: Dispatch<
     SetStateAction<
       {
         name: string;
-        uv: number;
+        user: number;
       }[]
     >
   >
@@ -30,11 +30,10 @@ function handleGraphData(
   totalReward.forEach((item: { dayOrMonth: string; totalMembers: any }) => {
     const name = item.dayOrMonth.trim().slice(0, 3);
     const existingDataItem = newDataMap.get(name);
-
     if (existingDataItem) {
       const updatedDataItem = {
         name: existingDataItem.name,
-        uv: item.totalMembers,
+        user: item.totalMembers,
       };
       setNewData((prevData) =>
         prevData.map((prevItem) =>
@@ -67,115 +66,123 @@ const Card = styled.div`
     font-weight: 600;
   }
 `;
-
+const GraphStyled = styled.div`
+  .recharts-wrapper {
+    .recharts-cartesian-axis-line {
+      width: 330px !important;
+    }
+  }
+`;
 const GraphComponent = ({ data }: any) => {
   return (
-    <Box marginTop={"30px"}>
-      <ResponsiveContainer height={300} width="100%">
-        <AreaChart
-          data={data || []}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Area
-            type="monotone"
-            dataKey="uv"
-            stroke="#FF764C3D"
-            fill="#FF764C3D"
-            fillOpacity={0.3}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </Box>
+    <GraphStyled>
+      <Box marginTop={"30px"}>
+        <ResponsiveContainer height={300} width="100%">
+          <AreaChart
+            data={data || []}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <XAxis dataKey="name" />
+            <YAxis allowDecimals={false} />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="user"
+              stroke="#FF764C3D"
+              fill="#FF764C3D"
+              fillOpacity={0.3}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </Box>
+    </GraphStyled>
   );
 };
 
 export const Graphcard = ({ setTimeDuration, data }: any) => {
-  const [newMonth, setNewMonth] = useState<{ name: string; uv: number }[]>([
+  const [newMonth, setNewMonth] = useState<{ name: string; user: number }[]>([
     {
       name: "Jan",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Feb",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Mar",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Apr",
-      uv: 0,
+      user: 0,
     },
     {
       name: "May",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Jun",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Jul",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Aug",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Sep",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Oct",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Nov",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Dec",
-      uv: 0,
+      user: 0,
     },
   ]);
-  const [newData, setNewData] = useState<{ name: string; uv: number }[]>([
+  const [newData, setNewData] = useState<{ name: string; user: number }[]>([
     {
       name: "Sun",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Mon",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Tue",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Wed",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Thu",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Fri",
-      uv: 0,
+      user: 0,
     },
     {
       name: "Sat",
-      uv: 0,
+      user: 0,
     },
   ]);
   useEffect(() => {

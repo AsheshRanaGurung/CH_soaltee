@@ -1,16 +1,20 @@
-## 0.0.14 (2023-09-26)
+## 0.0.14 (2023-09-27)
 
 
 ### Bug Fixes
 
 * add page params in property list and voucher folder ([7ccb314](https://gitlab.com/paras205/boilerplate-react/commit/7ccb3143474e3d5de8db3f1afd2c602b5762bb5e))
+* added show more & less in history ([913763e](https://gitlab.com/paras205/boilerplate-react/commit/913763eb4b40f6d0eb33e7c85b6b8a5c137bec6a))
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
 * fix ([a0797d9](https://gitlab.com/paras205/boilerplate-react/commit/a0797d9070451ef411bc8149c7f259810907942d))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
 * fixed ck editor ([9f29ce6](https://gitlab.com/paras205/boilerplate-react/commit/9f29ce6426b605d9f09ccfb6b18a9a39359346a2))
+* fixed folder import ([8980e42](https://gitlab.com/paras205/boilerplate-react/commit/8980e42dd3623461ed7fbb8875ff471f65644a9c))
+* fixed offer page ([7c32985](https://gitlab.com/paras205/boilerplate-react/commit/7c3298563769950135817531705b86ed545a9dfc))
 * fixed signup validation ([3fcd71e](https://gitlab.com/paras205/boilerplate-react/commit/3fcd71e491c636a116e68085e8a9326db227cd9e))
+* fixed update reset member tier ([9d40ec6](https://gitlab.com/paras205/boilerplate-react/commit/9d40ec61af7fa0bd6188a74174998dbe237b512f))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
 * hotfix: change border ([c4d5812](https://gitlab.com/paras205/boilerplate-react/commit/c4d5812510889d03c1f90b6910cc2ca2f45950e9))

@@ -38,18 +38,31 @@ const WrapperContent = styled.div`
 const MemberHistory: React.FC<IMemberHistoryProps> = ({ data }) => {
   const { formatDateToCustomFormat } = useDateFormatter();
   const [showMoreData, setShowMoreData] = useState<IMemberHistory[]>([]);
+  const batchSize = 5;
   useEffect(() => {
     // Initially, display the first batch of data
     if (data) {
-      setShowMoreData(data.slice(0, 5));
+      setShowMoreData(data.slice(0, batchSize));
     }
   }, [data]);
+
   const fetchMore = () => {
     if (data) {
       const currentDataLength = showMoreData.length;
-      const newData = data.slice(currentDataLength, currentDataLength + 5);
+      const newData = data.slice(
+        currentDataLength,
+        currentDataLength + batchSize
+      );
       setShowMoreData((prevData) => [...prevData, ...newData]);
     }
+  };
+  const showLess = () => {
+    setShowMoreData(
+      showMoreData.slice(
+        0,
+        showMoreData.length - (showMoreData.length - batchSize)
+      )
+    );
   };
   return (
     <Wrapper>
@@ -83,8 +96,14 @@ const MemberHistory: React.FC<IMemberHistoryProps> = ({ data }) => {
       ) : (
         <NoDataAvailable content="No history available" />
       )}
-      {data && data?.length > 0 && (
-        <Button onClick={fetchMore}>Show more</Button>
+      {data && data?.length > batchSize && (
+        <>
+          {showMoreData.length < data.length ? (
+            <Button onClick={fetchMore}>Show more</Button>
+          ) : (
+            <Button onClick={showLess}>Show less</Button>
+          )}
+        </>
       )}
     </Wrapper>
   );
