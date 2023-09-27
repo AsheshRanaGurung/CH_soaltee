@@ -17,7 +17,6 @@ import { getUserDetail } from "@src/service/user";
 import { useQuery } from "react-query";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { baseURL } from "@src/service/config/api";
 import { font } from "@src/theme/font";
 import { colors } from "@src/theme/colors";
 import { ReferalLayout } from "../../components/templates/user/referal";
@@ -58,7 +57,7 @@ const ProfilePage = () => {
   //   setUpdatedData(data);
   // };
   const imageUrl = data?.userImageUrl !== undefined ? data?.userImageUrl : "";
-  const imgProfile = `${baseURL}users/get-profile-image/${data?.userImageUrl}`;
+  const imgProfile = `${data?.userImageUrl}`;
   return (
     <>
       <>

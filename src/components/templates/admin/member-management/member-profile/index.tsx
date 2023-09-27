@@ -20,9 +20,8 @@ import { ProfileImage } from "@src/components/atoms/ProfileImage";
 import { MembershipIcon } from "@src/assets/svgs";
 import NoDataAvailable from "@src/components/organisms/nodata";
 import ModalForm from "@src/components/molecules/modal";
-import { baseURL } from "@src/service/config/api";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<any>`
   position: relative;
   .profile-img {
     position: absolute;
@@ -47,6 +46,10 @@ export const Wrapper = styled.div`
     color: ${colors.white};
     // border: 1px solid ${colors.light_gray_border};
     background-color: ${colors.primary};
+    background: ${(props) =>
+      props.src
+        ? `url(${props.src}) center center/cover no-repeat`
+        : ""}; // Use props.src here
   }
   @media screen and (max-width: 720px) {
     .profile-img {
@@ -182,7 +185,7 @@ const MemberProfile = () => {
         display={"flex"}
         justifyContent={"center"}
         alignItems={"center"}
-        background={`url(${baseURL}membership/get-tier-image/${data?.tierImage}) center center/cover no-repeat`}
+        background={`url(${data?.tierImage}) center center/cover no-repeat`}
         h={"220px"}
         position={"relative"}
       >
@@ -200,8 +203,8 @@ const MemberProfile = () => {
           {data?.tierName?.toUpperCase() || null}
         </Heading>
       </Box>
-      <Wrapper>
-        <ProfileImage name={state?.fullName} />
+      <Wrapper src={data?.userImageUrl}>
+        <ProfileImage name={state?.fullName} src={data?.userImageUrl} />
         <Card>
           <div className="profile-card">
             <div>
