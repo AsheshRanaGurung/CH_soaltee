@@ -18,7 +18,6 @@ import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router-dom";
 import { getUserDetail } from "@src/service/user";
 import { useQuery } from "react-query";
-import { baseURL } from "@src/service/config/api";
 import { Text } from "@chakra-ui/react";
 import jwt_decode from "jwt-decode";
 import { DecodedToken } from "@src/interface/decodedToken";
@@ -40,7 +39,7 @@ const Profile = ({ type }: any) => {
     select: ({ data }) => data.data,
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const imageUrl = `${baseURL}users/get-profile-image/${data?.userImageUrl?.trim()}`;
+  const imageUrl = `${data?.userImageUrl}`;
 
   const isAuthenticated = localStorage.getItem("token");
   const role = isAuthenticated && jwt_decode<DecodedToken>(isAuthenticated);
