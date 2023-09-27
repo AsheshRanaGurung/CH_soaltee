@@ -96,8 +96,7 @@ const Card = styled.div`
     align-items: center;
     padding: 7px;
     height: 125px;
-    flex 0 0 165px;
-
+    flex: 0 0 165px;
   }
   .reward-card-title {
     display: flex;

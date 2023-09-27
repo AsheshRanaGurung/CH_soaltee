@@ -11,7 +11,14 @@ import { exportToCSV } from "@src/utility/exportCSV";
 import { useMemo, useState } from "react";
 
 const EarningReport = () => {
-  const [para, setPara] = useState({});
+  const [para, setPara] = useState({
+    tier: "",
+    property: "",
+    nationality: "",
+    totalAmount: "",
+    fromDate: "",
+    toDate: "",
+  });
   const {
     isOpen: isDrawerOpen,
     onOpen: onDrawerModalOpen,
@@ -24,10 +31,10 @@ const EarningReport = () => {
     enabled: true,
   });
   const { pageParams } = usePageParams();
-  const exportUserReports = async () => {
+  const exportEarningReports = async () => {
     const dataList = await exportEarningReport({ ...pageParams, ...para });
     if (dataList && data && data.data.length > 0) {
-      exportToCSV({ data: { ...pageParams, ...para } });
+      exportToCSV({ data: { ...pageParams, ...para }, path: "earning-report" });
     }
   };
 
@@ -90,9 +97,10 @@ const EarningReport = () => {
           isDrawerOpen={isDrawerOpen}
           onDrawerModalOpen={onDrawerModalOpen}
           onDrawerModalClose={onDrawerModalClose}
-          onClick={exportUserReports}
+          onClick={exportEarningReports}
         >
           <UserFilter
+            para={para}
             setPara={setPara}
             isLoading={isLoading}
             onDrawerModalClose={onDrawerModalClose}

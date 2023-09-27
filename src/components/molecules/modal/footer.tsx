@@ -16,7 +16,6 @@ const ModalFooterForm: FC<IModal> = ({
   direction,
   resetButtonText,
   submitButtonText,
-  onClick,
 }) => {
   return (
     <Box
@@ -46,7 +45,6 @@ const ModalFooterForm: FC<IModal> = ({
         w="100%"
         size={"md"}
         isLoading={isLoading}
-        onClick={onClick}
       >
         {submitButtonText}
       </Button>

@@ -135,8 +135,8 @@ const ProfilePage = () => {
                     <Button
                       bg={"white"}
                       borderRadius={"8px"}
-                      color={"#B4304B"}
-                      border={"1px solid #B4304B"}
+                      color={colors.red_primary}
+                      border={`1px solid ${colors.red_primary}`}
                       onClick={onOpenChange}
                     >
                       Change Password

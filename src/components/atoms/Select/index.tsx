@@ -10,7 +10,13 @@ export const SelectWrapper = styled(Select)<{
   bg_color: string;
   labelColor: string;
 }>`
+  .css-w9q2zk-Input2 {
+    padding: 0;
+  }
   .css-13cymwt-control {
+    max-height: 31px;
+    min-height: 31px;
+    margin-bottom: 20px;
     border: none;
     border-bottom: ${(props) =>
       props.error
@@ -81,12 +87,12 @@ const ReactSelect = ({
       label: option[labelKey],
       value: option[valueKey],
     }));
+
   return (
     <FormControl
       id={name}
       isInvalid={!!get(error, name)}
       isRequired={isRequired}
-      mb={3}
     >
       {label && (
         <FormLabel
@@ -94,7 +100,7 @@ const ReactSelect = ({
           fontWeight={500}
           fontSize={"14px"}
           style={labelColor ? { color: labelColor } : {}}
-          mb={2}
+          mb={0}
         >
           {" "}
           {label}
@@ -104,17 +110,14 @@ const ReactSelect = ({
       <Controller
         name={name}
         control={control}
-        rules={{ required: "Field is required" }}
         render={({ field }) => {
           const hasError = !!error;
-
           return (
             <>
               <>
                 <SelectWrapper
                   {...field}
                   {...rest}
-                  defaultValue={field.value}
                   isClearable={isClearable}
                   options={formattedOptions.map((option: any) => ({
                     ...option,
