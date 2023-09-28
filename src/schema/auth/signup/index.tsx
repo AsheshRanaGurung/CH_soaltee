@@ -27,7 +27,7 @@ export const signupValidationSchema = yup.object().shape({
     .required("Please select country"),
 
   dateOfBirth: yup
-    .string()
+    .date()
     .required("DOB is required")
     .max(validDate, "You must be at least 18 years old")
     .test("is-valid-dob", "Invalid DOB", function (value) {
