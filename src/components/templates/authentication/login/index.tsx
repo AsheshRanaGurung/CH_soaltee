@@ -17,10 +17,13 @@ interface ISignInProps {
 export const FormWrapper = styled.div`
   margin-top: 5%;
   width: 450px;
-
   label {
     margin-bottom: 5px;
   }
+`;
+export const ChangePasswordWrapper = styled.div`
+  width: 400px;
+  margin-top: 5%;
 `;
 export const AccountDetailStyle = styled.div`
   font-weight: 600;

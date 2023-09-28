@@ -4,7 +4,7 @@ import { useFormHook } from "@src/hooks/useFormhook";
 import * as yup from "yup";
 import Heading from "@src/components/atoms/Heading";
 import FormControl from "@src/components/atoms/FormControl";
-import { FormWrapper } from "../login";
+import { ChangePasswordWrapper } from "../login";
 import { createPasswordSchema } from "@src/utility/passwordValidation";
 import { useParams } from "react-router";
 
@@ -69,7 +69,7 @@ const SetPasswordTemplate: React.FC<ISignupProps> = ({
       )}
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormWrapper>
+        <ChangePasswordWrapper>
           <FormControl
             control="password"
             register={register}
@@ -117,7 +117,7 @@ const SetPasswordTemplate: React.FC<ISignupProps> = ({
           >
             Change Password
           </Button>
-        </FormWrapper>
+        </ChangePasswordWrapper>
       </form>
     </>
   );

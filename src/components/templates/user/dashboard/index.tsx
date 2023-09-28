@@ -9,7 +9,6 @@ import { Navigation, Autoplay, Pagination } from "swiper";
 
 import { useQuery } from "react-query";
 import { getUserDetail } from "@src/service/user";
-import { getImage } from "@src/service/image";
 import { useState, useEffect } from "react";
 
 import "swiper/css";
@@ -55,45 +54,6 @@ export const Userpage = () => {
   const { data } = useQuery("user_detail", getUserDetail, {
     select: ({ data }) => data.data,
   });
-  const { tierImage } = data ?? "";
-  const { nextTierImage } = data ?? "";
-
-  const { data: imageData } = useQuery("image", () => getImage(tierImage), {
-    enabled: !!tierImage,
-  });
-  //get next tier image
-  const { data: nextTier } = useQuery(
-    "next_image",
-    () => getImage(nextTierImage),
-    {
-      enabled: !!nextTierImage,
-    }
-  );
-  const [imageSrc, setImageSrc] = useState<string | null>(tierImage);
-  const [nextImageSrc, setNextImageSrc] = useState<string | null>(
-    nextTierImage
-  );
-
-  useEffect(() => {
-    const blobDataCurrent = new Blob([imageData?.data], { type: "image/jpeg" });
-    const blobDataNext = new Blob([nextTier?.data], { type: "image/jpeg" });
-
-    const imageUrlCurrent = URL.createObjectURL(blobDataCurrent);
-    const imageUrlNext = URL.createObjectURL(blobDataNext);
-
-    // Set the URL as the image source
-    setImageSrc(imageUrlCurrent);
-    setNextImageSrc(imageUrlNext);
-
-    // Clean up the URL when the component unmounts
-    return () => {
-      URL.revokeObjectURL(imageUrlCurrent);
-      URL.revokeObjectURL(imageUrlNext);
-
-      setImageSrc("");
-      setNextImageSrc("");
-    };
-  }, [imageData, nextTier]);
 
   const commonTier = {
     fullName: data?.fullName,
@@ -105,13 +65,13 @@ export const Userpage = () => {
   const tierInfoData = [
     {
       ...commonTier,
-      image: imageSrc,
+      image: data?.tierImage,
       tierName: data?.tierName,
       tierDescription: data?.tierDescription,
     },
     {
       ...commonTier,
-      image: nextImageSrc,
+      image: data?.nextTierImage,
       tierName: data?.nextMembershipTier,
       tierDescription: data?.nextTierDescription,
     },
