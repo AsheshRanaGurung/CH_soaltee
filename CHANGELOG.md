@@ -1,4 +1,4 @@
-## 0.0.14 (2023-09-26)
+## 0.0.14 (2023-09-27)
 
 
 ### Bug Fixes
@@ -7,11 +7,11 @@
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
-* disable add service button ([9a3e185](https://gitlab.com/paras205/boilerplate-react/commit/9a3e185bf1d8a972e4a254978baa41c85b83f377))
-* export garda undefined handle ([b3a2531](https://gitlab.com/paras205/boilerplate-react/commit/b3a25317593e203a5fe0c2788e1201c2d421df13))
 * fix ([a0797d9](https://gitlab.com/paras205/boilerplate-react/commit/a0797d9070451ef411bc8149c7f259810907942d))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
 * fixed ck editor ([9f29ce6](https://gitlab.com/paras205/boilerplate-react/commit/9f29ce6426b605d9f09ccfb6b18a9a39359346a2))
+* fixed folder import ([8980e42](https://gitlab.com/paras205/boilerplate-react/commit/8980e42dd3623461ed7fbb8875ff471f65644a9c))
+* fixed offer page ([7c32985](https://gitlab.com/paras205/boilerplate-react/commit/7c3298563769950135817531705b86ed545a9dfc))
 * fixed signup validation ([3fcd71e](https://gitlab.com/paras205/boilerplate-react/commit/3fcd71e491c636a116e68085e8a9326db227cd9e))
 * hotfix name ([b5f3174](https://gitlab.com/paras205/boilerplate-react/commit/b5f3174965cf44d92cc63d22ff92d0939ee2c23f))
 * hotfix scroll ([438a61e](https://gitlab.com/paras205/boilerplate-react/commit/438a61e7518981f21d03c1c578901a6922bdaf5e))
@@ -26,13 +26,9 @@
 * hotfix: userdata added ([f393c2c](https://gitlab.com/paras205/boilerplate-react/commit/f393c2cf04136aab694edc3b31aee7460eba330e))
 * minor issues ([e5b8a8c](https://gitlab.com/paras205/boilerplate-react/commit/e5b8a8c4de098ec32fa8f684b19ccb061dded3b1))
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
-* refactor export CSV ([a435791](https://gitlab.com/paras205/boilerplate-react/commit/a43579108c667ec1e8edbe7dd8bfe15f7ed38b9b))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
 * remove console ([b88c476](https://gitlab.com/paras205/boilerplate-react/commit/b88c476a0c58d18c628bf21657472ce251ab81b8))
-* remove unwanted code from select component ([33323d7](https://gitlab.com/paras205/boilerplate-react/commit/33323d75fcd976f2cfd6ac5ed9ed50b9b19943c3))
-* report bind and export issue ([9be0e8e](https://gitlab.com/paras205/boilerplate-react/commit/9be0e8e1d1bf1bd3345251d9d81975a9516aa5f4))
 * routing issue, update issue ([a29aa53](https://gitlab.com/paras205/boilerplate-react/commit/a29aa534fa6fda413d9adecc1d623caffeda9a42))
-* select design ([a6f9c31](https://gitlab.com/paras205/boilerplate-react/commit/a6f9c31b4562edb87f6ba0a2229f17c9a3c5d061))
 * user report fix ([62c45e3](https://gitlab.com/paras205/boilerplate-react/commit/62c45e3692de7e0d914a6a9d22ef86d10f2b9bc9))
 
 

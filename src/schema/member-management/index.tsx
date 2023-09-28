@@ -34,7 +34,7 @@ export const memberManagementValidation = yup.object().shape({
       return false;
     }),
   dateOfBirth: yup
-    .string()
+    .date()
     .required("DOB is required")
     .max(validDate, "Member must be at least 18 years old")
     .test("is-valid-dob", "Invalid DOB", function (value) {
