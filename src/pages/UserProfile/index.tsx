@@ -105,13 +105,23 @@ const ProfilePage = () => {
           {imageUrl ? (
             <Image
               src={imgProfile}
-              style={{ borderRadius: "50%", height: "100%", width: "100%" }}
+              style={{
+                borderRadius: "50%",
+                height: "100%",
+                width: "100%",
+                objectFit: "cover",
+              }}
             />
           ) : (
             <Avatar
               src={imageUrl}
               name={data?.fullName}
-              style={{ borderRadius: "50%", width: "100%", height: "100%" }}
+              style={{
+                borderRadius: "50%",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
             />
           )}
         </Box>

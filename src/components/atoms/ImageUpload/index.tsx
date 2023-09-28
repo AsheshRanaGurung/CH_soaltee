@@ -130,6 +130,7 @@ const ImageUpload: React.FC<IProps> = ({
                 marginBottom: "12px",
                 position: "relative",
                 borderRadius: "50%",
+                objectFit: "cover",
               }}
             />
           ) : (
@@ -143,6 +144,7 @@ const ImageUpload: React.FC<IProps> = ({
                 alignItems: "center",
                 margin: "0 auto",
                 marginBottom: "10px",
+                objectFit: "cover",
               }}
             />
           )}

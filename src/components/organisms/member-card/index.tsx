@@ -83,7 +83,7 @@ export const MemberCard = ({
           zIndex={tierName === nextMembershipTier ? 0 : 3}
         >
           <CardBody>
-            <Grid gap={16} mt={4} templateColumns={"repeat(1,2fr 4fr 1fr)"}>
+            <Grid gap={16} mt={4} templateColumns={"repeat(1,2fr 4fr 230px)"}>
               <GridItem>
                 <Card
                   width={"430px"}
@@ -163,8 +163,8 @@ export const MemberCard = ({
                     {tierDescription && (
                       <Text
                         color={colors.white}
-                        fontSize="sm"
-                        fontWeight="400"
+                        // fontSize="sm"
+                        // fontWeight="400"
                         dangerouslySetInnerHTML={{
                           __html: tierDescription || nextTierDescription,
                         }}
@@ -183,7 +183,7 @@ export const MemberCard = ({
                   >
                     <Text>Reward Points</Text>
                     <HStack>
-                      <Heading>
+                      <Heading width="80%">
                         {
                           isVisible ? totalRewardPoints?.toFixed(2) : "XX.XX"
                           //   ?.toFixed(2)
