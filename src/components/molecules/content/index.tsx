@@ -15,6 +15,7 @@ const Container = styled.div<any>`
     props.bg_color ? props.bg_color : `${colors.white}`};
   padding: 20px;
 `;
+
 const Content: React.FC<IProps> = ({ children, bg_color }) => {
   return (
     <Wrapper>

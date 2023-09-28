@@ -90,3 +90,11 @@ const useDeleteProperty = () => {
 };
 
 export { useDeleteProperty };
+
+//get property by id
+export const gePropertyById = (id: any) => {
+  const response = HttpClient.get(
+    api.master_data.property_list.single_property.replace(`:id`, id)
+  );
+  return response;
+};

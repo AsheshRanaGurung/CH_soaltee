@@ -30,6 +30,7 @@ const ToggleIconWrapper = styled.div`
   button {
     color: ${colors.white};
     font-size: 20px;
+    margin-bottom: 0;
   }
 `;
 interface IMemberCard {
@@ -183,12 +184,12 @@ export const MemberCard = ({
                     <Text>Reward Points</Text>
                     <HStack>
                       <Heading>
-                        {isVisible
-                          ? totalRewardPoints?.toFixed(2)
-                          : totalRewardPoints
-                              ?.toFixed(2)
-                              ?.toString()
-                              .replace(/[0-9]/g, "X")}
+                        {
+                          isVisible ? totalRewardPoints?.toFixed(2) : "XX.XX"
+                          //   ?.toFixed(2)
+                          //   ?.toString()
+                          // .replace(/[0-9]/g, "XX")
+                        }
                       </Heading>
                       <ToggleIconWrapper>
                         <PasswordViewIcon

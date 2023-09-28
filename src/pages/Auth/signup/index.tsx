@@ -19,6 +19,7 @@ const Signup = () => {
       toastFail(error?.response?.data?.message || "Something went wrong");
     },
   });
+
   return (
     <Authentication>
       <SignupTemplate mutate={mutate} isLoading={isLoading} />
