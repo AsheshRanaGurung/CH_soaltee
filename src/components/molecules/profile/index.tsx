@@ -29,7 +29,7 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 import { colors } from "@src/theme/colors";
 import html2canvas from "html2canvas";
-import { ReferalLayout } from "@src/components/templates/user/referal";
+import { SendEmail } from "@src/components/organisms/send-email";
 
 const Profile = ({ type }: any) => {
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ const Profile = ({ type }: any) => {
             {QRData && (
               <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent paddingBottom={5}>
                   <ModalHeader style={{ borderBottom: "solid 1px #ccc" }}>
                     Invite Members
                   </ModalHeader>
@@ -159,7 +159,7 @@ const Profile = ({ type }: any) => {
                         <CopyIcon color={colors.primary} />
                       </Button>
                     </Box>
-                    <ReferalLayout />
+                    <SendEmail referal={QRData?.referrallink} />
                   </ModalBody>
                 </ModalContent>
               </Modal>

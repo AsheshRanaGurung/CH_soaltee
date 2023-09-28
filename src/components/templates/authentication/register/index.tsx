@@ -1,4 +1,4 @@
-import { Button, VStack, Link } from "@chakra-ui/react";
+import { Button, VStack, Link, Flex } from "@chakra-ui/react";
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useEffect, useState } from "react";
 import { colors } from "@src/theme/colors";
@@ -7,7 +7,10 @@ import { useFormHook } from "@src/hooks/useFormhook";
 import Heading from "@src/components/atoms/Heading";
 import { FormWrapper } from "../login";
 import FormControl from "@src/components/atoms/FormControl";
-import { usePropertyList } from "@src/constant/usePropertyList";
+import {
+  usePropertyById,
+  usePropertyList,
+} from "@src/constant/usePropertyList";
 import { useNationalityList } from "@src/constant/useNationalityList";
 import styled from "styled-components";
 
@@ -16,6 +19,10 @@ import ReactSelect from "@src/components/atoms/Select";
 import { signupValidationSchema } from "@src/schema/auth/signup";
 import DateComponent from "@src/components/atoms/DateInput";
 import GoBackButton from "@src/components/atoms/GoBackButton";
+import { useMutation } from "react-query";
+import { decryptPid } from "@src/service/decrypt-pid";
+import { toastFail } from "@src/service/service-toast";
+import { AxiosError } from "axios";
 
 export const AccountDetailStyle = styled.div`
   font-weight: 600;
@@ -32,14 +39,31 @@ interface ISignupProps {
   isLoading: boolean;
 }
 const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
+  const [property, setProperty] = useState(null);
+  const { mutate: postKey } = useMutation(decryptPid, {
+    onSuccess: (res) => {
+      setProperty(res?.data?.value);
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toastFail(error?.response?.data?.message || "Something went wrong");
+    },
+  });
   const { search } = useLocation();
-  const referalCode = search.slice(1);
+
+  const propertyVal = search.includes("pid") && search.split("pid=")[1];
+  const referalCode = search.includes("ref") ? search.split("ref=")[1] : "";
+
+  useEffect(() => {
+    if (propertyVal) {
+      return postKey(propertyVal);
+    }
+  }, [propertyVal]);
   const [checked, setChecked] = useState({
     terms: false,
     offers: false,
   });
 
-  const { handleSubmit, register, errors, control } = useFormHook({
+  const { handleSubmit, register, reset, errors, control } = useFormHook({
     validationSchema: signupValidationSchema,
   });
   const onSubmit = (data: any) => {
@@ -63,10 +87,19 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
 
   const nationalityList = useNationalityList();
   const propertyList = usePropertyList();
+  const propertyById = usePropertyById(property);
   let isSubmitDisabled = !checked.terms;
   useEffect(() => {
     isSubmitDisabled = true;
   }, [isLoading]);
+  useEffect(() => {
+    reset({
+      propertyId: {
+        label: propertyById?.name,
+        value: propertyById?.id,
+      },
+    });
+  }, [propertyById]);
 
   return (
     <>
@@ -104,48 +137,54 @@ const SignupTemplate: React.FC<ISignupProps> = ({ mutate, isLoading }) => {
             maxDate={new Date()}
             bg_color={colors.secondary}
           />
-          <FormControl
-            control="input"
-            type="number"
-            name="phoneNumber"
-            required
-            placeholder="Enter your mobile number"
-            label="Mobile Number"
-            register={register}
-            error={errors.phoneNumber?.message || ""}
-          />
+          <Flex gap={3}>
+            <FormControl
+              control="input"
+              type="number"
+              name="phoneNumber"
+              required
+              placeholder="Enter your mobile number"
+              label="Mobile Number"
+              register={register}
+              error={errors.phoneNumber?.message || ""}
+            />
 
-          <ReactSelect
-            control={control}
-            name="propertyId"
-            placeholder="Choose Property Name"
-            label="Property Name"
-            error={errors.propertyId?.message || ""}
-            labelKey={"name"}
-            valueKey={"id"}
-            options={propertyList || []}
-          />
-          <ReactSelect
-            control={control}
-            name="nationalityId"
-            placeholder="Choose your country"
-            label="Country"
-            required
-            error={errors.nationalityId?.message || ""}
-            options={nationalityList || []}
-            labelKey={"countryName"}
-            valueKey={"id"}
-          />
-          <FormControl
-            control="input"
-            name="referalCode"
-            placeholder="Enter Referal Code (optional)"
-            label="Referal Code"
-            register={register}
-            defaultValue={referalCode}
-            isDisabled={referalCode}
-            error={errors.referalCode?.message || ""}
-          />
+            <ReactSelect
+              control={control}
+              name="propertyId"
+              placeholder="Choose Property Name"
+              label="Property Name"
+              defaultValue={propertyById?.id || ""}
+              error={errors.propertyId?.message || ""}
+              labelKey={"name"}
+              isDisabled={propertyVal}
+              valueKey={"id"}
+              options={propertyList || []}
+            />
+          </Flex>
+          <Flex gap={3}>
+            <ReactSelect
+              control={control}
+              name="nationalityId"
+              placeholder="Choose your country"
+              label="Country"
+              required
+              error={errors.nationalityId?.message || ""}
+              options={nationalityList || []}
+              labelKey={"countryName"}
+              valueKey={"id"}
+            />
+            <FormControl
+              control="input"
+              name="referalCode"
+              placeholder="Enter Referal Code (optional)"
+              label="Referal Code"
+              register={register}
+              defaultValue={referalCode}
+              isDisabled={referalCode}
+              error={errors.referalCode?.message || ""}
+            />
+          </Flex>
           <VStack alignItems="flex-start" mt={4} mb={12} fontWeight="600">
             <Checkbox
               name="terms"

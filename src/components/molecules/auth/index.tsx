@@ -6,18 +6,28 @@ import useWindowSize from "@src/hooks/useWindowResize";
 import { Logo } from "@src/assets/svgs";
 interface IProps {
   children: React.ReactNode;
+  height?: string;
 }
-const Wrapper = styled.div`
+
+const Wrapper = styled.div<IProps>`
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: ${colors.secondary};
+  min-height: 100vh;
+  overflow: hidden;
   @media screen and (max-width: 720px) {
     height: 100vh;
   }
 `;
-const FormContent = styled.div`
-  width: 60%;
+const FormContent = styled.div<IProps>`
+  width: 65%;
   margin-left: 100px;
+  .login {
+    display: flex;
+    flex-direction: column;
+  }
+
   .img {
     position: absolute;
     top: 15px;
@@ -36,6 +46,8 @@ const Footer = styled.div`
   gap: 35px;
   font-size: 14px;
   margin-top: 20px;
+  background-color: ${colors.secondary};
+
   bottom: 30px;
 
   gap: 35px;

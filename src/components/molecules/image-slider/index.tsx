@@ -25,9 +25,12 @@ export const SliderContainer = styled.div`
     background-color: black;
     -webkit-clip-path: polygon(0 0, 85% 0%, 100% 100%, 0% 100%);
     clip-path: polygon(0 0, 85% 0%, 100% 100%, 0% 100%);
+    position: fixed;
+    width: 58%;
+    top: 0;
   }
   .overlay {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     left: 0;
@@ -38,12 +41,12 @@ export const SliderContainer = styled.div`
   }
   &::before {
     content: "";
-    position: absolute;
+    position: fixed;
     top: 0;
-    right: 0;
+    right: 42%;
     bottom: 0;
     left: 0;
-    border: 220px solid ${colors.primary};
+    border-right: 220px solid ${colors.primary};
     -webkit-clip-path: polygon(0 0, 85% 0%, 100% 100%, 0% 100%);
     clip-path: polygon(0 0, 86% 0%, 100% 100%, 0% 100%);
   }

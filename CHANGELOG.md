@@ -4,12 +4,17 @@
 ### Bug Fixes
 
 * add page params in property list and voucher folder ([7ccb314](https://gitlab.com/paras205/boilerplate-react/commit/7ccb3143474e3d5de8db3f1afd2c602b5762bb5e))
+* bug fixes ([d08c3b7](https://gitlab.com/paras205/boilerplate-react/commit/d08c3b7049bfb71418e2cf3d5ef49422014df0dd))
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
 * fix ([a0797d9](https://gitlab.com/paras205/boilerplate-react/commit/a0797d9070451ef411bc8149c7f259810907942d))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
 * fixed ck editor ([9f29ce6](https://gitlab.com/paras205/boilerplate-react/commit/9f29ce6426b605d9f09ccfb6b18a9a39359346a2))
+<<<<<<< HEAD
+* fixed conditional api hit for signup ([7dbd9d9](https://gitlab.com/paras205/boilerplate-react/commit/7dbd9d98d9bb9fc309d7827699abd80bd5e88ab6))
+=======
+>>>>>>> 4ffaa274f4adfe70d1bbe64b64eb267adcd15810
 * fixed folder import ([8980e42](https://gitlab.com/paras205/boilerplate-react/commit/8980e42dd3623461ed7fbb8875ff471f65644a9c))
 * fixed offer page ([7c32985](https://gitlab.com/paras205/boilerplate-react/commit/7c3298563769950135817531705b86ed545a9dfc))
 * fixed signup validation ([3fcd71e](https://gitlab.com/paras205/boilerplate-react/commit/3fcd71e491c636a116e68085e8a9326db227cd9e))
@@ -59,6 +64,7 @@
 * logot session clear from font side ([29ac586](https://gitlab.com/paras205/boilerplate-react/commit/29ac5861e27e9b8d2e15e114cc47f0b540ea00ee))
 * new MemberTier ([09b7d5b](https://gitlab.com/paras205/boilerplate-react/commit/09b7d5b206b69c4971f215b514ee7c5535749c88))
 * password validation ([a14954c](https://gitlab.com/paras205/boilerplate-react/commit/a14954c5935baa2dcd783af303ed3b8ea450aab0))
+* property bind in signup ([b5870b3](https://gitlab.com/paras205/boilerplate-react/commit/b5870b3badd9c705227adb0accb8963c5c1664aa))
 * refetched point for manual and added phone validation ([1d51211](https://gitlab.com/paras205/boilerplate-react/commit/1d51211fd510cf093aab1d4739037ff4e30ab572))
 * resolved modal issue, integrated api for update property ([56fc7b3](https://gitlab.com/paras205/boilerplate-react/commit/56fc7b3dce0062608340685fa86dcee7ab0d45da))
 * table changes ([efc1491](https://gitlab.com/paras205/boilerplate-react/commit/efc1491a997cc0f44fd7720a21fed789d69c01df))

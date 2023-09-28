@@ -46,6 +46,7 @@ export const api = {
         "/property/get-all-properties?pageIndex={page}&pageSize={limit}&name={name}",
       delete: "/property/delete-property/:id",
       update: "/property/update-property/:id",
+      single_property: "/property/get-property/:id",
     },
   },
   dashboard: {
@@ -105,6 +106,7 @@ export const api = {
   send_email: "/email/send-ref-email",
   transcaction_history:
     "/users/user-txn-history?pageIndex={page}&pageSize={limit}&type={type}&propertyId={propertyId}&dates={dates}",
+  decrypt_pid: "/users/decrypt-key?value={value}",
 };
 export interface IResponse<T = any> {
   data: T;

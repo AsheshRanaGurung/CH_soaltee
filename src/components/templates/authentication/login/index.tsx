@@ -1,4 +1,4 @@
-import { Button, useDisclosure, Link } from "@chakra-ui/react";
+import { Button, useDisclosure, Link, Stack } from "@chakra-ui/react";
 import Checkbox from "@src/components/atoms/Checkbox";
 import FormControl from "@src/components/atoms/FormControl";
 import Heading from "@src/components/atoms/Heading";
@@ -16,7 +16,11 @@ interface ISignInProps {
 }
 export const FormWrapper = styled.div`
   margin-top: 5%;
-  width: 400px;
+  width: 450px;
+
+  label {
+    margin-bottom: 5px;
+  }
 `;
 export const AccountDetailStyle = styled.div`
   font-weight: 600;
@@ -75,7 +79,7 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
     }
   };
   return (
-    <>
+    <Stack className="login">
       <Heading title="Welcome Back" text="Enter your details to sign in" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormWrapper>
@@ -139,7 +143,7 @@ const LoginComponent: React.FC<ISignInProps> = ({ mutate, isLoading }) => {
           </AccountDetailStyle>
         </FormWrapper>
       </form>
-    </>
+    </Stack>
   );
 };
 export default LoginComponent;
