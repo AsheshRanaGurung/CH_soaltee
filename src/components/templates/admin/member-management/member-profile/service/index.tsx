@@ -134,7 +134,6 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
                     placeholder="Amount"
                     label="Amount"
                     error={(errors?.services as any)?.amount?.message || ""}
-                    marginBottom="16px"
                     required
                   />
                 </GridItem>
