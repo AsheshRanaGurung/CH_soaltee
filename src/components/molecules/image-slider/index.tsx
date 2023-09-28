@@ -121,3 +121,6 @@ const ImageSlider: React.FC<IProps> = ({ images }) => {
 };
 
 export default ImageSlider;
+
+//delete later
+//check git commit on previous history
