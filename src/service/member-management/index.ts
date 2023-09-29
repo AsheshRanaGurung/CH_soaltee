@@ -19,6 +19,11 @@ export const createMember = (data: IMember) => {
     data: data,
   });
 };
+export const createMemberByStaff = (data: IMember) => {
+  return HttpClient.post(`${api.member_management.add_by_staff}`, {
+    data: data,
+  });
+};
 
 export const fetchOneMember = ({ id }: { id: string }) => {
   return HttpClient.get(api.member_management.fetchById.replace(":id", id));

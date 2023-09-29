@@ -65,12 +65,13 @@ export const api = {
       "/users/get-staff-details?pageIndex={page}&pageSize={limit}&name={name}",
   },
   member_management: {
-    add: "/auth/save-users",
+    add: "/master/save-users",
     fetch: "/auth/get-users?pageIndex={page}&pageSize={limit}&name={name}",
     update: "/auth/update-user/:id",
     fetchById: "/users/get-all-user-details/:id",
     get_history:
       "/report/transaction-history?pageIndex={page}&pageSize={limit}&userId={id}",
+    add_by_staff: "/staff/save-users",
   },
   profile: {
     manual: {

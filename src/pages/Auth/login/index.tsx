@@ -21,6 +21,7 @@ const Login = () => {
       TokenService.setToken(tokens);
       if (response.data.responseCode === "200") {
         const token = jwt_decode<DecodedToken>(response.data.data.token);
+        localStorage.setItem("role", token?.role);
         !token?.role.includes("USER")
           ? navigate(NAVIGATION_ROUTES.DASHBOARD)
           : navigate(NAVIGATION_ROUTES.USER_DASHBOARD);

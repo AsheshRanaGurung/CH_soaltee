@@ -7,7 +7,10 @@ import { memberManagementValidation } from "@src/schema/member-management";
 import { usePropertyList } from "@src/constant/usePropertyList";
 import { IMember } from "@src/interface/member-management";
 import { useMutation, useQueryClient } from "react-query";
-import { createMember } from "@src/service/member-management";
+import {
+  createMember,
+  createMemberByStaff,
+} from "@src/service/member-management";
 import { toastFail, toastSuccess } from "@src/service/service-toast";
 import { AxiosError } from "axios";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
@@ -60,7 +63,11 @@ export const CreateMemberManagementForm = ({
   }, [isUpdate, updateId, tableData?.data]);
 
   const queryClient = useQueryClient();
-  const { mutate, isLoading } = useMutation(createMember, {
+  const role = localStorage.getItem("role");
+  const queryFunction =
+    role === "SUPERADMIN" ? createMember : createMemberByStaff;
+
+  const { mutate, isLoading } = useMutation(queryFunction, {
     onSuccess: (response) => {
       toastSuccess(response?.data?.message || "Congratulations!");
       queryClient.refetchQueries(querykey);
