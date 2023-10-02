@@ -14,9 +14,6 @@ interface IMemberTier {
   onCloseHandler: any;
   data: any;
   isLoading: any;
-  onDeleteMemberTierOpen: any;
-  onDeleteMemberTier: any;
-  setDeleteId: any;
   setViewId: any;
   onViewMemberTierOpen: any;
 }
@@ -34,8 +31,6 @@ const MemberList: React.FC<IMemberTier> = ({
   onMemberModalOpen,
   data,
   isLoading,
-  onDeleteMemberTierOpen,
-  setDeleteId,
   setViewId,
   onViewMemberTierOpen,
 }) => {
@@ -91,21 +86,14 @@ const MemberList: React.FC<IMemberTier> = ({
             setIsUpdate(true);
             onMemberModalOpen();
           };
-          const onDelete = () => {
-            setDeleteId(row.original.id);
-            onDeleteMemberTierOpen();
-          };
+
           const onView = () => {
             setViewId(row.original.id);
             onViewMemberTierOpen();
           };
           return (
             <Stack alignItems={"flex-start"}>
-              <TableActions
-                onEdit={onEdit}
-                onDelete={onDelete}
-                onView={onView}
-              />
+              <TableActions onEdit={onEdit} onView={onView} />
             </Stack>
           );
         },

@@ -18,8 +18,6 @@ export const usePropertyList = () => {
 };
 
 export const usePropertyById = (id: any) => {
-  console.log(!!id, "idSS");
-
   const { data: propertyData } = useQuery(
     api.master_data.property_list.single_property,
     () => gePropertyById(id),
