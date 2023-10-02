@@ -13,19 +13,14 @@ interface IPropertyProps {
   onCloseHandler: any;
   data: any;
   isLoading: any;
-  onDeletePropertyOpen: any;
-  onDeleteProperty: any;
-  setDeleteId: any;
 }
 
 const PropertyList: React.FC<IPropertyProps> = ({
   setUpdateId,
   setIsUpdate,
   onPropertyModalOpen,
-  onDeletePropertyOpen,
   data,
   isLoading,
-  setDeleteId,
 }) => {
   const { pageParams } = usePageParams();
 
@@ -63,13 +58,10 @@ const PropertyList: React.FC<IPropertyProps> = ({
             setIsUpdate(true);
             onPropertyModalOpen();
           };
-          const onDelete = () => {
-            setDeleteId(row.original.id);
-            onDeletePropertyOpen();
-          };
+
           return (
             <Stack alignItems={"flex-start"}>
-              <TableActions onEdit={onEdit} onDelete={onDelete} />
+              <TableActions onEdit={onEdit} />
             </Stack>
           );
         },

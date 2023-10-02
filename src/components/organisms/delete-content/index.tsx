@@ -10,6 +10,7 @@ const DeleteContent = ({
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        handleSubmit();
       }}
     >
       <Text> {`Are you sure you want to delete the ${title} ?`}</Text>
@@ -18,7 +19,6 @@ const DeleteContent = ({
         resetButtonText={"Cancel"}
         isLoading={isLoading}
         submitButtonText={"Yes"}
-        onClick={handleSubmit}
       />
     </form>
   );

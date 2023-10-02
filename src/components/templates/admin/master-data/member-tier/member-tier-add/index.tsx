@@ -18,6 +18,7 @@ import {
 } from "@src/service/master-data/member-tier";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
 import { useFormHook } from "@src/hooks/useFormhook";
+import CKEditorWrapper from "@src/components/atoms/Editor";
 
 const defaultValues = {
   membershipName: "",
@@ -64,6 +65,9 @@ export const CreateMemberForm = ({
 
   const [isColorPicked, setIsColorPicked] = useState(false);
 
+  const handleEditorDataChange = (newData: string) => {
+    setValue("description", newData);
+  };
   const handleColorChange = (newColor: any) => {
     setColor(newColor.hex);
     setValue("colorCode", newColor.hex);
@@ -127,6 +131,7 @@ export const CreateMemberForm = ({
     }
     reset();
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box mx={{ base: "none", md: "auto" }}>
@@ -160,18 +165,12 @@ export const CreateMemberForm = ({
             error={errors?.pointsTo?.message || ""}
             required
           />
-          <FormControl
-            onChange={(data: string) => setValue("description", data)}
-            control="editor"
-            name="description"
-            label={"Description"}
-            required
-            placeholder={"description"}
-            data={
-              (updateId && individualData && individualData?.description) ?? ""
-            }
-            error={errors?.description?.message ?? ""}
+          <CKEditorWrapper
+            label="Description"
+            data={individualData?.description || ""}
+            onDataChange={handleEditorDataChange}
           />
+
           <Flex
             justifyContent="space-between"
             onClick={() => {

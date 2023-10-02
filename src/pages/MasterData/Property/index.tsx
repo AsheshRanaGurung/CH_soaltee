@@ -4,19 +4,15 @@ import { usePageinationHook } from "@src/hooks/usePaginationHook";
 import { useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import ModalForm from "@src/components/molecules/modal";
-import {
-  getAllProperty,
-  useDeleteProperty,
-} from "@src/service/master-data/property";
+import { getAllProperty } from "@src/service/master-data/property";
 import { CreatePropertyForm } from "@src/components/templates/admin/master-data/property/property-add";
 import PropertyList from "@src/components/templates/admin/master-data/property/property-list";
-import DeleteContent from "@src/components/organisms/delete-content";
+
 import TableHeadings from "@src/components/molecules/table-heading";
 
 const PropertyPage = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
   const [keyword, setKeyword] = useState("");
 
   const { data, isLoading } = usePageinationHook({
@@ -34,25 +30,11 @@ const PropertyPage = () => {
     onOpen: onPropertyModalOpen,
     onClose: onPropertyModalClose,
   } = useDisclosure();
-  const {
-    isOpen: isDeletePropertyOpen,
-    onOpen: onDeletePropertyOpen,
-    onClose: onDeletePropertyClose,
-  } = useDisclosure();
 
   const onCloseHandler = () => {
     setUpdateId("");
     setIsUpdate(false);
     onPropertyModalClose();
-  };
-  const { mutateAsync: deleteProperty, isLoading: isDeleting } =
-    useDeleteProperty();
-
-  const onDeleteProperty = async (id: string) => {
-    const result = await deleteProperty({
-      id: id,
-    });
-    result.status === 200 && onDeletePropertyClose();
   };
 
   return (
@@ -74,10 +56,7 @@ const PropertyPage = () => {
           onPropertyModalOpen={onPropertyModalOpen}
           onCloseHandler={onCloseHandler}
           data={data}
-          onDeletePropertyOpen={onDeletePropertyOpen}
           isLoading={isLoading}
-          onDeleteProperty={onDeleteProperty}
-          setDeleteId={setDeleteId}
         />
         <ModalForm
           isModalOpen={isPropertyOpen}
@@ -91,18 +70,6 @@ const PropertyPage = () => {
             setUpdateId={setUpdateId}
             setIsUpdate={setIsUpdate}
             onPropertyModalClose={onPropertyModalClose}
-          />
-        </ModalForm>
-        <ModalForm
-          isModalOpen={isDeletePropertyOpen}
-          onCloseModal={onDeletePropertyClose}
-          title={"Delete Property"}
-        >
-          <DeleteContent
-            handleSubmit={() => onDeleteProperty(deleteId)}
-            title="Property"
-            isLoading={isDeleting}
-            onCloseModal={onDeletePropertyClose}
           />
         </ModalForm>
       </Content>

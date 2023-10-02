@@ -1,43 +1,36 @@
-import {
-  FormControl,
-  FormLabel,
-  FormHelperText,
-  FormErrorMessage,
-} from "@chakra-ui/react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import styled from "styled-components";
-
-export interface IEditor {
-  data?: string;
-  height?: string;
+import { FormErrorMessage, FormLabel } from "@chakra-ui/react";
+interface CKEditorWrapperProps {
+  data: string;
+  onDataChange: (newData: string) => void;
   label?: string;
-  helperText?: string;
-  error?: string;
-  onChange?: (data: string) => void;
-  onBlur?: (data: string | undefined) => void;
-  onInit?: (editor: ClassicEditor) => void;
   required?: boolean;
+  height?: string;
+  error?: string;
 }
+const EditorStyled = styled.div`
+  .ck.ck-editor__editable_inline {
+    padding: 0 25px;
+  }
+`;
 
-const Editor = ({
+const CKEditorWrapper: React.FC<CKEditorWrapperProps> = ({
   data,
-  height,
-  onInit,
-  onChange,
-  onBlur,
+  onDataChange,
   label,
-  helperText,
   required,
+  height,
   error,
-}: IEditor) => {
-  const EditorStyled = styled.div`
-    .ck.ck-editor__editable_inline {
-      padding: 0 25px;
-    }
-  `;
+}) => {
+  const handleEditorDataChange = (_: any, editor: any) => {
+    const newData = editor.getData();
+    onDataChange(newData);
+  };
+
   return (
-    <FormControl isInvalid={!!error}>
+    <>
       {label && (
         <FormLabel fontWeight={500} fontSize={"14px"}>
           {label}{" "}
@@ -61,22 +54,13 @@ const Editor = ({
                 editor.editing.view.document.getRoot()
               );
             });
-            onInit && onInit(editor);
           }}
-          onChange={(_event, editor) => {
-            const data = editor.getData();
-            onChange && onChange(data);
-          }}
-          onBlur={(_event, editor) => {
-            const data = editor.getData();
-            onChange && onChange(data);
-            onBlur && onBlur(data);
-          }}
+          onChange={handleEditorDataChange}
         />
       </EditorStyled>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && <FormErrorMessage fontSize={12}>{error}</FormErrorMessage>}
-    </FormControl>
+    </>
   );
 };
-export default Editor;
+
+export default CKEditorWrapper;

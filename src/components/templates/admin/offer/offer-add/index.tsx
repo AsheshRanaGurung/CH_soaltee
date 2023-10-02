@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { IOffers } from "@src/interface/offers";
 import { useCreateOffer, useUpdateOffer } from "@src/service/offer";
 import ModalFooterForm from "@src/components/molecules/modal/footer";
+import CKEditorWrapper from "@src/components/atoms/Editor";
 
 const defaultValues = {
   offerId: "",
@@ -34,7 +35,9 @@ export const CreateOfferForm = ({
     defaultValues,
   });
   const [individualData, setIndividualData] = useState<IndividualDataType>({});
-
+  const handleEditorDataChange = (newData: string) => {
+    setValue("description", newData);
+  };
   useEffect(() => {
     if (isUpdate && updateId) {
       const data = tableData?.data.find((x: IOffers) => x.offerId === updateId);
@@ -100,17 +103,10 @@ export const CreateOfferForm = ({
           error={errors?.subTitle?.message || ""}
           required
         />
-        <FormControl
-          onChange={(data: string) => setValue("description", data)}
-          control="editor"
-          name="description"
-          label={"Description"}
-          required
-          placeholder={"description"}
-          data={
-            (updateId && individualData && individualData?.description) ?? ""
-          }
-          error={errors?.description?.message ?? ""}
+        <CKEditorWrapper
+          label="Description"
+          data={individualData?.description || ""}
+          onDataChange={handleEditorDataChange}
         />
 
         <Text fontSize={"sm"} mt={5} mb={2} fontWeight={"500"}>

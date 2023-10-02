@@ -11,6 +11,7 @@ import { colors } from "@src/theme/colors";
 import { useServiceList } from "@src/constant/useServiceList";
 import { voucherValidationSchema } from "@src/schema/voucher";
 import ReactSelect from "@src/components/atoms/Select";
+import CKEditorWrapper from "@src/components/atoms/Editor";
 
 interface IVoucherProps {
   mutate?: any;
@@ -52,7 +53,9 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
       defaultValues,
     });
   const [individualData, setIndividualData] = useState<IndividualDataType>({});
-
+  const handleEditorDataChange = (newData: string) => {
+    setValue("voucherDescription", newData);
+  };
   const serviceList = useServiceList();
   useEffect(() => {
     if (state?.id) {
@@ -151,22 +154,12 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             required
           />
         </Wrapper>
-        <FormControl
-          onChange={(data: string) => setValue("voucherDescription", data)}
-          control="editor"
-          name="voucherDescription"
-          label={"Voucher Description"}
-          required
-          placeholder={"description"}
-          error={errors?.voucherDescription?.message ?? ""}
-          data={
-            (state?.id &&
-              individualData &&
-              individualData?.voucherDescription) ??
-            ""
-          }
-        />
 
+        <CKEditorWrapper
+          label="Voucher Description"
+          data={individualData?.voucherDescription || ""}
+          onDataChange={handleEditorDataChange}
+        />
         <Text fontSize={"sm"} my={2} fontWeight={500}>
           Voucher Image
           <span style={{ color: colors.red }}>&nbsp;*</span>

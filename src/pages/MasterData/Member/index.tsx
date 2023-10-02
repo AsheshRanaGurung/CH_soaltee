@@ -3,21 +3,16 @@ import { BreadCrumb } from "@src/components/atoms/Breadcrumb";
 import Content from "@src/components/molecules/content";
 import ModalForm from "@src/components/molecules/modal";
 import TableHeadings from "@src/components/molecules/table-heading";
-import DeleteContent from "@src/components/organisms/delete-content";
 import { MemberPreview } from "@src/components/templates/admin/master-data/member-tier/member-privew";
 import { CreateMemberForm } from "@src/components/templates/admin/master-data/member-tier/member-tier-add";
 import MemberList from "@src/components/templates/admin/master-data/member-tier/member-tier-list";
 import { usePageinationHook } from "@src/hooks/usePaginationHook";
-import {
-  getAllMemberTier,
-  useDeleteMemberTier,
-} from "@src/service/master-data/member-tier";
+import { getAllMemberTier } from "@src/service/master-data/member-tier";
 import { useState } from "react";
 
 const MemberPage = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateId, setUpdateId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
   const [viewId, setViewId] = useState("");
   const [keyword, setKeyword] = useState("");
 
@@ -36,11 +31,7 @@ const MemberPage = () => {
     onOpen: onMemberModalOpen,
     onClose: onMemberModalClose,
   } = useDisclosure();
-  const {
-    isOpen: isDeleteMemberTierOpen,
-    onOpen: onDeleteMemberTierOpen,
-    onClose: onDeleteMemberTierClose,
-  } = useDisclosure();
+
   const onCloseHandler = () => {
     setUpdateId("");
     setIsUpdate(false);
@@ -51,16 +42,6 @@ const MemberPage = () => {
     onOpen: onViewMemberTierOpen,
     onClose: onViewMemberTierClose,
   } = useDisclosure();
-
-  const { mutateAsync: deleteMemberTier, isLoading: isDeleting } =
-    useDeleteMemberTier();
-
-  const onDeleteMemberTier = async (id: string) => {
-    const result = await deleteMemberTier({
-      id: id,
-    });
-    result.status === 200 && onDeleteMemberTierClose();
-  };
 
   return (
     <>
@@ -82,9 +63,6 @@ const MemberPage = () => {
           onCloseHandler={onCloseHandler}
           data={data}
           isLoading={isLoading}
-          onDeleteMemberTierOpen={onDeleteMemberTierOpen}
-          onDeleteMemberTier={onDeleteMemberTier}
-          setDeleteId={setDeleteId}
           setViewId={setViewId}
           onViewMemberTierOpen={onViewMemberTierOpen}
         />
@@ -102,18 +80,7 @@ const MemberPage = () => {
             onMemberModalClose={onMemberModalClose}
           />
         </ModalForm>
-        <ModalForm
-          isModalOpen={isDeleteMemberTierOpen}
-          onCloseModal={onDeleteMemberTierClose}
-          title={"Delete MemberTier"}
-        >
-          <DeleteContent
-            handleSubmit={() => onDeleteMemberTier(deleteId)}
-            title="MemberTier"
-            isLoading={isDeleting}
-            onCloseModal={onDeleteMemberTierClose}
-          />
-        </ModalForm>
+
         <ModalForm
           isModalOpen={isViewMemberTierOpen}
           onCloseModal={onViewMemberTierClose}
