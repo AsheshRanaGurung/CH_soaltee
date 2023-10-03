@@ -1,4 +1,4 @@
-## 0.0.14 (2023-10-02)
+## 0.0.14 (2023-09-29)
 
 
 ### Bug Fixes
@@ -6,7 +6,6 @@
 * add page params in property list and voucher folder ([7ccb314](https://gitlab.com/paras205/boilerplate-react/commit/7ccb3143474e3d5de8db3f1afd2c602b5762bb5e))
 * build issue ([89b7bab](https://gitlab.com/paras205/boilerplate-react/commit/89b7bab7ed5f7fe63870961d67610dc0bfacf3c6))
 * change list type ([50f0470](https://gitlab.com/paras205/boilerplate-react/commit/50f0470ed7db2a76014e86cf63faf62b18a7538c))
-* ck editor issue ([2ec0bac](https://gitlab.com/paras205/boilerplate-react/commit/2ec0bac882fe9fae0920d186f2caf496c6a704a9))
 * colour, design and api response changes ([72990a9](https://gitlab.com/paras205/boilerplate-react/commit/72990a9e3a85297001f6462d54cfa1c5722eb6d3))
 * fix ([a0797d9](https://gitlab.com/paras205/boilerplate-react/commit/a0797d9070451ef411bc8149c7f259810907942d))
 * fix spacing issues in admin ([88974cf](https://gitlab.com/paras205/boilerplate-react/commit/88974cf4ea87f8f0e80a4477dc5225f3ed32f274))
@@ -31,7 +30,6 @@
 * refactor code ([7e26a3b](https://gitlab.com/paras205/boilerplate-react/commit/7e26a3bc30eb42c9bb385f334b448c7aaccd916e))
 * remove comment ([af0713c](https://gitlab.com/paras205/boilerplate-react/commit/af0713cfc99343cee95b131be67ba43855644b6d))
 * remove console ([b88c476](https://gitlab.com/paras205/boilerplate-react/commit/b88c476a0c58d18c628bf21657472ce251ab81b8))
-* remove delete from master data ([d726d97](https://gitlab.com/paras205/boilerplate-react/commit/d726d97055134ecb5326a78a0934e1f80b556d80))
 * routing issue, update issue ([a29aa53](https://gitlab.com/paras205/boilerplate-react/commit/a29aa534fa6fda413d9adecc1d623caffeda9a42))
 * user report fix ([62c45e3](https://gitlab.com/paras205/boilerplate-react/commit/62c45e3692de7e0d914a6a9d22ef86d10f2b9bc9))
 

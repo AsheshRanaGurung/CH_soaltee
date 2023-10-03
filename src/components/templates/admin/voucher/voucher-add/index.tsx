@@ -11,6 +11,8 @@ import { colors } from "@src/theme/colors";
 import { useServiceList } from "@src/constant/useServiceList";
 import { voucherValidationSchema } from "@src/schema/voucher";
 import ReactSelect from "@src/components/atoms/Select";
+import DateComponent from "@src/components/atoms/DateInput";
+import Checkbox from "@src/components/atoms/Checkbox";
 import CKEditorWrapper from "@src/components/atoms/Editor";
 
 interface IVoucherProps {
@@ -23,6 +25,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px 65px;
+  margin-bottom: 32px;
 `;
 type IndividualDataType = {
   voucherDescription?: string;
@@ -37,7 +40,24 @@ const defaultValues = {
   maximumLimits: "",
   voucherDescription: "",
 };
-
+const CheckboxStyled = styled.div<any>`
+  display: flex;
+  // gap: 32px;
+  .css-1op0oxr {
+    max-width: 50%;
+  }
+`;
+const CheckboxWrapper = styled.div<any>`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 50%;
+`;
+// const WrapperEditorStyled = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 16px;
+// `;
 export const CreateVoucherForm: React.FC<IVoucherProps> = ({
   mutate,
   isLoading,
@@ -91,6 +111,9 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
     }
     reset();
   };
+  const handleCheckBox = () => {
+    // console.log("here");
+  };
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <Box
@@ -124,6 +147,7 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             labelKey={"serviceName"}
             valueKey={"id"}
             required
+            isMulti={true}
             options={serviceList || []}
           />
           <FormControl
@@ -135,24 +159,84 @@ export const CreateVoucherForm: React.FC<IVoucherProps> = ({
             error={errors?.discountPercentage?.message || ""}
             required
           />
+          <DateComponent
+            control={control}
+            name="validFrom"
+            label="Valid From"
+            endIcons="true"
+            error={errors.validFrom?.message || ""}
+            required
+          />
+
+          <DateComponent
+            control={control}
+            name="validTo"
+            label="Valid To"
+            endIcons="true"
+            error={errors.validTo?.message || ""}
+            required
+          />
+
           <FormControl
             control="input"
             name="maximumAmounts"
             register={register}
-            placeholder={"Maximum Amount"}
+            placeholder={"Maximum Discount Amount"}
             label={"Maximum Amount"}
             error={errors?.maximumAmounts?.message || ""}
             required
           />
-          <FormControl
-            control="input"
-            name="maximumLimits"
-            register={register}
-            placeholder={"Maximum Limit"}
-            label={"Maximum Limit"}
-            error={errors?.maximumLimits?.message || ""}
-            required
-          />
+          <CheckboxStyled>
+            <CheckboxWrapper>
+              <Checkbox
+                name="terms"
+                onChange={handleCheckBox}
+                control={control}
+                colorScheme="red"
+              >
+                {" "}
+                Free
+              </Checkbox>
+              <Checkbox
+                name="terms"
+                onChange={handleCheckBox}
+                control={control}
+                colorScheme="red"
+              >
+                {" "}
+                Featured
+              </Checkbox>
+            </CheckboxWrapper>
+            <FormControl
+              control="input"
+              name="maximumLimits"
+              register={register}
+              placeholder={"Required Points"}
+              label={"Required Points"}
+              error={errors?.maximumLimits?.message || ""}
+              required
+            />
+          </CheckboxStyled>
+          <CheckboxStyled>
+            <Checkbox
+              name="terms"
+              onChange={handleCheckBox}
+              control={control}
+              colorScheme="red"
+            >
+              {" "}
+              Limited Voucher
+            </Checkbox>
+            <FormControl
+              control="input"
+              name="voucherLimit"
+              register={register}
+              placeholder={"Voucher Limit"}
+              label={"Voucher Limit"}
+              error={errors?.maximumLimits?.message || ""}
+              required
+            />
+          </CheckboxStyled>
         </Wrapper>
 
         <CKEditorWrapper

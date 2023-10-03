@@ -4,6 +4,7 @@ export const api = {
     set_password: "/users/change-password",
     login: "/auth/login",
     reset_password: "/users/reset-password",
+    logout: "/authentication/logout",
   },
   configuration: {
     service: {

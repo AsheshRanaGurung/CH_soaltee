@@ -17,7 +17,7 @@ import {
 import { NAVIGATION_ROUTES } from "@src/routes/routes.constant";
 import { useNavigate } from "react-router-dom";
 import { getUserDetail } from "@src/service/user";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { Text } from "@chakra-ui/react";
 import jwt_decode from "jwt-decode";
 import { DecodedToken } from "@src/interface/decodedToken";
@@ -30,6 +30,7 @@ import toast from "react-hot-toast";
 import { colors } from "@src/theme/colors";
 import html2canvas from "html2canvas";
 import { SendEmail } from "@src/components/organisms/send-email";
+import { logoutApi } from "@src/service/auth";
 
 const Profile = ({ type }: any) => {
   const navigate = useNavigate();
@@ -38,6 +39,12 @@ const Profile = ({ type }: any) => {
   });
   const { data: QRData } = useQuery("user_qr_detail", getStaffQR, {
     select: ({ data }) => data.data,
+  });
+  const { mutate } = useMutation(logoutApi, {
+    onSuccess: () => {
+      localStorage.removeItem("token"), navigate(NAVIGATION_ROUTES.LOGIN);
+      localStorage.removeItem("role");
+    },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const imageUrl = `${data?.userImageUrl}`;
@@ -201,14 +208,7 @@ const Profile = ({ type }: any) => {
             </MenuItem>
           </>
         )}
-        <MenuItem
-          onClick={() => {
-            localStorage.removeItem("token"), navigate(NAVIGATION_ROUTES.LOGIN);
-            localStorage.removeItem("role");
-          }}
-        >
-          Logout
-        </MenuItem>
+        <MenuItem onClick={() => mutate()}>Logout</MenuItem>
       </MenuList>
     </Menu>
   );

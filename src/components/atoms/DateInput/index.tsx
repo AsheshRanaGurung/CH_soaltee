@@ -23,7 +23,8 @@ const DateInput = styled.div<any>`
     width: 100%;
   }
   .picker {
-    padding: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     background: ${(props) => (props.bg_color ? props.bg_color : "transparent")};
   }
   input {
