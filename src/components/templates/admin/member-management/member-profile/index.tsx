@@ -292,7 +292,6 @@ const MemberProfile = () => {
         <ModalForm
           isModalOpen={isProfileOpen}
           onCloseModal={onProfileModalClose}
-          title="Add points"
         >
           <ProfileForm
             userId={state}

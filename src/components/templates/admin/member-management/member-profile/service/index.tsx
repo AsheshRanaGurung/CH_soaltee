@@ -11,14 +11,16 @@ import { useMutation, useQueryClient } from "react-query";
 import { createByService } from "@src/service/profile/byservice";
 import { colors } from "@src/theme/colors";
 import ReactSelect from "@src/components/atoms/Select";
-// type FormValues = {
-//   propertyname: string;
-//   services: {
-//     service: string | number;
-//     amount: number | null | string;
-//   }[];
-// };
-const defaultValues = {
+interface Service {
+  service: string;
+  amount: number | null;
+}
+
+interface FormValues {
+  propertyname: string;
+  services: Service[];
+}
+const defaultValues: FormValues = {
   propertyname: "",
   services: [
     {
@@ -31,14 +33,21 @@ const validationSchema: any = yup.object().shape({
   propertyname: yup
     .mixed()
     .test("is-property-valid", "Please select Property", function (value) {
-      if (typeof value === "object") {
+      if (value !== null && typeof value === "object") {
         return true;
       }
       return false;
     }),
   services: yup.array().of(
     yup.object().shape({
-      service: yup.mixed().required("Service is required"),
+      service: yup
+        .mixed()
+        .test("is-service-valid", "Service is required", function (value) {
+          if (value !== null && typeof value === "object") {
+            return true;
+          }
+          return false;
+        }),
       amount: yup.mixed().required("Amount is required"),
     })
   ),
@@ -55,7 +64,7 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
   const selectedValue = watch("services");
 
   const selectedServiceIds = selectedValue.map((item: any) =>
-    Number(item.service.value)
+    Number(item?.service?.value)
   );
   const { id } = data.userId;
   const queryClient = useQueryClient();
@@ -76,13 +85,13 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
   const onSubmit = (data: any) => {
     const serviceArray = data.services.map((item: any) => {
       return {
-        serviceId: Number(item.service?.value),
+        serviceId: Number(item?.service?.value),
         totalAmount: Number(item.amount),
       };
     });
     mutate({
       userId: id,
-      propertyId: Number(data.propertyname.value),
+      propertyId: Number(data?.propertyname?.value),
       transactionType: "SERVICE",
       lpServiceListDtos: serviceArray,
     });
@@ -102,6 +111,11 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
           options={data.propertyList || []}
         />
         {fields.map((field, i) => {
+          const errorMessage = errors?.services?.[
+            i as unknown as keyof typeof errors.services
+          ] as {
+            [key: string]: any;
+          };
           return (
             <Box key={field.id}>
               <Grid
@@ -117,7 +131,7 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
                     name={`services.${i}.service`}
                     placeholder="Select service"
                     label="Service"
-                    error={(errors?.services as any)?.service?.message || ""}
+                    error={errorMessage?.service?.message ?? ""}
                     labelKey={"serviceName"}
                     valueKey={"id"}
                     required
@@ -133,7 +147,7 @@ export const ServiceForm = ({ data, onCloseModal, handleFormSubmit }: any) => {
                     name={`services.${i}.amount`}
                     placeholder="Amount"
                     label="Amount"
-                    error={(errors?.services as any)?.amount?.message || ""}
+                    error={errorMessage?.amount?.message || ""}
                     required
                   />
                 </GridItem>

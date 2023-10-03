@@ -32,6 +32,9 @@ export const SelectWrapper = styled(Select)<{
     font-size: 14px;
   }
   .css-t3ipsp-control {
+    max-height: 31px;
+    min-height: 31px;
+    margin-bottom: 20px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0px;
@@ -54,6 +57,19 @@ export const SelectWrapper = styled(Select)<{
   }
   .css-1dimb5e-singleValue {
     color: ${colors.black};
+  }
+  .css-1p3m7a8-multiValue {
+    background-color: rgba(171, 29, 63, 0.05);
+    margin-bottom: 6px !important;
+    margin-right: 8px !important;
+  }
+  .css-1y7rh0y-MultiValueGeneric2 {
+    color: ${colors.primary};
+  }
+  .css-12a83d4-MultiValueRemove {
+    svg {
+      fill: ${colors.primary};
+    }
   }
 `;
 
@@ -79,6 +95,7 @@ const ReactSelect = ({
   labelColor,
   isClearable = true,
   onChange,
+  isMulti = false,
   ...rest
 }: any) => {
   const formattedOptions =
@@ -119,6 +136,7 @@ const ReactSelect = ({
                   {...field}
                   {...rest}
                   isClearable={isClearable}
+                  isMulti={isMulti}
                   options={formattedOptions.map((option: any) => ({
                     ...option,
                     isDisabled: isSelected?.includes(option.value),

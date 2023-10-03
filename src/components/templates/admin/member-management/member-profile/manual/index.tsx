@@ -18,7 +18,7 @@ const validationSchema = yup.object().shape({
   propertyname: yup
     .mixed()
     .test("is-property-valid", "Please select Property", function (value) {
-      if (typeof value === "object") {
+      if (value !== null && typeof value === "object") {
         return true;
       }
       return false;

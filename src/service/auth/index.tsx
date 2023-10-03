@@ -8,6 +8,9 @@ export const signUpApi = (data: ISignup) => {
     data: data,
   });
 };
+export const logoutApi = () => {
+  return HttpClient.post(`${api.auth.logout}`);
+};
 
 export const setPasswordApi = (data: ISetPassword) => {
   return HttpClient.post(`${api.auth.set_password}`, {
